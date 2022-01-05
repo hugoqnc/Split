@@ -26,6 +26,8 @@ struct TextRecognition {
                     let textItem = TextModel()
                     try requestHandler.perform([getTextRecognitionRequest(with: textItem)])
                     
+                    textItem.getListOfProductsAndPrices()
+                    
                     DispatchQueue.main.async {
                         recognizedContent.items.append(textItem)
                     }

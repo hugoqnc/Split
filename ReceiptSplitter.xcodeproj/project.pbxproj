@@ -23,6 +23,7 @@
 		4F309E652784F9E700F55BC6 /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F309E642784F9E700F55BC6 /* StartView.swift */; };
 		4F309E672785AB5500F55BC6 /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F309E662785AB5400F55BC6 /* ModelData.swift */; };
 		4F309E6A2785EB7600F55BC6 /* CurrentExpensesRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F309E692785EB7600F55BC6 /* CurrentExpensesRow.swift */; };
+		4F309E6C2785F80600F55BC6 /* AttributionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F309E6B2785F80600F55BC6 /* AttributionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +63,7 @@
 		4F309E642784F9E700F55BC6 /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
 		4F309E662785AB5400F55BC6 /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
 		4F309E692785EB7600F55BC6 /* CurrentExpensesRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentExpensesRow.swift; sourceTree = "<group>"; };
+		4F309E6B2785F80600F55BC6 /* AttributionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributionView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,7 +172,6 @@
 		4F309E622784F9BA00F55BC6 /* Scanner */ = {
 			isa = PBXGroup;
 			children = (
-				4F309E542784F68200F55BC6 /* HomeView.swift */,
 				4F309E562784F68200F55BC6 /* ScannerView.swift */,
 				4F309E572784F68200F55BC6 /* TextPreviewView.swift */,
 				4F309E582784F68200F55BC6 /* TextRecognition.swift */,
@@ -182,6 +183,7 @@
 			isa = PBXGroup;
 			children = (
 				4F309E642784F9E700F55BC6 /* StartView.swift */,
+				4F309E542784F68200F55BC6 /* HomeView.swift */,
 			);
 			path = Start;
 			sourceTree = "<group>";
@@ -190,6 +192,7 @@
 			isa = PBXGroup;
 			children = (
 				4F309E692785EB7600F55BC6 /* CurrentExpensesRow.swift */,
+				4F309E6B2785F80600F55BC6 /* AttributionView.swift */,
 			);
 			path = Repartition;
 			sourceTree = "<group>";
@@ -324,6 +327,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F309E6C2785F80600F55BC6 /* AttributionView.swift in Sources */,
 				4F309E6A2785EB7600F55BC6 /* CurrentExpensesRow.swift in Sources */,
 				4F309E652784F9E700F55BC6 /* StartView.swift in Sources */,
 				4F309E592784F68200F55BC6 /* HomeView.swift in Sources */,
