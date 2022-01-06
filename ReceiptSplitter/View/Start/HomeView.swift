@@ -9,13 +9,14 @@ import SwiftUI
 import simd
 
 struct HomeView: View {
+    @EnvironmentObject var model: ModelData
     @ObservedObject var recognizedContent = TextData()
     @State var showScanner = true // TODO: add private when done, and remove Preview
     @State private var isRecognizing = false
     @State private var isValidated = false
     @State private var itemCounter = 0
     
-    @State private var listOfProductsAndPrices: [PairProductPrice] = []
+    //@State private var listOfProductsAndPrices: [PairProductPrice] = []
     
     
     var body: some View {
@@ -36,13 +37,15 @@ struct HomeView: View {
 //                    }
                     CurrentExpensesRow()
 
-                    if itemCounter<listOfProductsAndPrices.count {
-                        AttributionView(pair: listOfProductsAndPrices[itemCounter], isValidated: $isValidated)
+                    if itemCounter<model.listOfProductsAndPrices.count {
+                        AttributionView(pair: $model.listOfProductsAndPrices[itemCounter], isValidated: $isValidated)
                             .onChange(of: isValidated) { newValue in
                                 print("AAA")
                                 print(newValue)
                                 print(isValidated)
-                                print(listOfProductsAndPrices.count)
+                                print(model.listOfProductsAndPrices.count)
+                                print(model.listOfProductsAndPrices)
+                                print(model.listOfProductsAndPrices[itemCounter])
                                 print(itemCounter)
                                 print("AAAA")
                                 if newValue {
@@ -51,7 +54,7 @@ struct HomeView: View {
                                 }
                         }
                     } else {
-                        Text("E1")
+                        Text("Finished")
                     }
 
 
@@ -79,7 +82,7 @@ struct HomeView: View {
                                         recognizedContent: recognizedContent) {
                             for item in recognizedContent.items{
                                 let content: [PairProductPrice] = item.list
-                                listOfProductsAndPrices.append(contentsOf: content)
+                                model.listOfProductsAndPrices.append(contentsOf: content)
                             }
                             // print(listOfProductsAndPrices)
                         }
@@ -103,8 +106,14 @@ struct HomeView: View {
     }
 }
 
-//struct HomeView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        HomeView(showScanner: false)
-//    }
-//}
+struct HomeView_Previews: PreviewProvider {
+    static let model = ModelData()
+    static var previews: some View {
+        HomeView(showScanner: false)
+            .environmentObject(model)
+            .onAppear {
+                model.users = [User(name: "Hugo"), User(name: "Lucas"), User(name: "Thomas")]
+                model.listOfProductsAndPrices = [PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 4.99), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBC", name: "Finger Fish", price: 1.27), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBD", name: "Ice Cream Strawberry", price: 3.20)]
+            }
+    }
+}

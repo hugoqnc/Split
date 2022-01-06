@@ -9,4 +9,5 @@ import Foundation
 
 final class ModelData: ObservableObject {
     @Published var users: [User] = UsersModel().users
+    @Published var listOfProductsAndPrices: [PairProductPrice] = []
 }

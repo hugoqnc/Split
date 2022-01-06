@@ -15,7 +15,7 @@ struct CurrentExpensesRow: View {
             HStack {
                 ForEach(model.users) { user in
                     VStack{
-                        Text(user.name)
+                        Text(user.name.uppercased())
                             .font(.caption)
                         Text(String(round(user.balance * 100) / 100.0)+"€")
                             .font(.headline)
@@ -29,8 +29,13 @@ struct CurrentExpensesRow: View {
 }
 
 struct CurrentExpensesRow_Previews: PreviewProvider {
+    static let model = ModelData()
     static var previews: some View {
         CurrentExpensesRow()
-            .environmentObject(ModelData())
+            .environmentObject(model)
+            .onAppear {
+                model.users = [User(name: "Hugo"), User(name: "Lucas"), User(name: "Thomas")]
+                model.listOfProductsAndPrices = [PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 4.99), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBC", name: "Finger Fish", price: 1.27), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBD", name: "Ice Cream Strawberry", price: 3.20)]
+            }
     }
 }

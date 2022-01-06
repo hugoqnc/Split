@@ -15,17 +15,21 @@ struct SelectableItems: View {
         ScrollView(.horizontal) {
             HStack {
                 ForEach(users) { item in
-                    MultipleSelectionRow(title: item.name, isSelected: self.selections.contains(item.id)) {
-                        if self.selections.contains(item.id) {
-                            self.selections.removeAll(where: { $0 == item.id })
+                    
+                        MultipleSelectionRow(title: item.name, isSelected: self.selections.contains(item.id)) {
+                            if self.selections.contains(item.id) {
+                                self.selections.removeAll(where: { $0 == item.id })
+                            }
+                            else {
+                                self.selections.append(item.id)
+                            }
                         }
-                        else {
-                            self.selections.append(item.id)
-                        }
-                    }
+                        //.offset(x: 30)
+                    
                 }
             }
         }
+
         
     }
 }
@@ -39,7 +43,7 @@ struct MultipleSelectionRow: View {
         
         if isSelected {
             Button(action: self.action) {
-                HStack {
+                VStack {
                     Image(systemName: "checkmark.circle.fill")
                     Text(self.title)
                 }
@@ -47,7 +51,7 @@ struct MultipleSelectionRow: View {
             .buttonStyle(.borderedProminent)
         } else {
             Button(action: self.action) {
-                HStack {
+                VStack {
                     Image(systemName: "circle")
                     Text(self.title)
                 }
@@ -75,6 +79,6 @@ extension View {
 
 struct SelectableItems_Previews: PreviewProvider {
     static var previews: some View {
-        SelectableItems(users: [User(name: "Hugo"), User(name: "Olivier"), User(name: "Catherine"), User(name: "Lucas"), User(name: "Thomas")], selections: .constant([]))
+        SelectableItems(users: [User(name: "Hugo"), User(name: "Lucas"), User(name: "Thomas")], selections: .constant([]))
     }
 }
