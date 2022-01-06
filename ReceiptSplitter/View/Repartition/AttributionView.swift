@@ -39,7 +39,8 @@ struct AttributionView: View {
                 for id in selections{
                     for user in model.users {
                         if user.id==id {
-                            //user.balance+=pair.price/Float(divider)
+                            let index = model.users.firstIndex{$0.id == id}!
+                            model.users[index].balance+=pair.price/Double(divider)
                         }
                     }
                 }
@@ -74,5 +75,6 @@ struct AttributionView: View {
 struct AttributionView_Previews: PreviewProvider {    
     static var previews: some View {
         AttributionView(pair: PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 4.99))
+            .environmentObject(ModelData())
     }
 }

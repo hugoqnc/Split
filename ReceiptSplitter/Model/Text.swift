@@ -32,8 +32,8 @@ class TextModel: Identifiable {
                 price = price.replacingOccurrences(of: price.suffix(2), with: "")
                 
                 pair.name = product
-                if let priceFloat = Float(price) {
-                    pair.price = priceFloat
+                if let priceDouble = Double(price) {
+                    pair.price = priceDouble
                 }
                 if !product.trimmingCharacters(in: .whitespaces).isEmpty && !price.trimmingCharacters(in: .whitespaces).isEmpty{ //do not add if the line is empty
                     self.list.append(pair)
@@ -50,13 +50,13 @@ class TextModel: Identifiable {
 struct PairProductPrice: Identifiable {
     var id: String
     var name: String = ""
-    var price: Float = 0
+    var price: Double = 0
     
     init() {
         id = UUID().uuidString
     }
     
-    init(id: String, name: String, price: Float) {
+    init(id: String, name: String, price: Double) {
         self.id = id
         self.name = name
         self.price = price
