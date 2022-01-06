@@ -10,7 +10,7 @@ import Foundation
 class TextModel: Identifiable {
     var id: String
     var text: String = ""
-    var list: [pairProductPrice] = []
+    var list: [PairProductPrice] = []
     
     init() {
         id = UUID().uuidString
@@ -23,7 +23,7 @@ class TextModel: Identifiable {
         let productDivision = text.ranges(of: "(?!= A\\n| B\\n)(.|\\n)+? [A,B]\\n", options: .regularExpression).map { text[$0].trimmingCharacters(in: .whitespaces) }
         
         for productString in productDivision {
-            var pair = pairProductPrice()
+            var pair = PairProductPrice()
             
             let productString = productString.prefix(productString.count-1)
             if let divider = productString.lastIndex(of:"\n"){
@@ -47,16 +47,16 @@ class TextModel: Identifiable {
     }
 }
 
-struct pairProductPrice: Identifiable {
+struct PairProductPrice: Identifiable {
     var id: String
     var name: String = ""
-    var price: Float?
+    var price: Float = 0
     
     init() {
         id = UUID().uuidString
     }
     
-    init(id: String, name: String, price: Float?) {
+    init(id: String, name: String, price: Float) {
         self.id = id
         self.name = name
         self.price = price

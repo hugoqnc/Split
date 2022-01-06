@@ -24,6 +24,7 @@
 		4F309E672785AB5500F55BC6 /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F309E662785AB5400F55BC6 /* ModelData.swift */; };
 		4F309E6A2785EB7600F55BC6 /* CurrentExpensesRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F309E692785EB7600F55BC6 /* CurrentExpensesRow.swift */; };
 		4F309E6C2785F80600F55BC6 /* AttributionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F309E6B2785F80600F55BC6 /* AttributionView.swift */; };
+		4F309E732786DA4700F55BC6 /* SelectableItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F309E722786DA4700F55BC6 /* SelectableItems.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,7 @@
 		4F309E662785AB5400F55BC6 /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
 		4F309E692785EB7600F55BC6 /* CurrentExpensesRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentExpensesRow.swift; sourceTree = "<group>"; };
 		4F309E6B2785F80600F55BC6 /* AttributionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributionView.swift; sourceTree = "<group>"; };
+		4F309E722786DA4700F55BC6 /* SelectableItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableItems.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +119,7 @@
 				4F309E222784B49900F55BC6 /* ReceiptSplitterApp.swift */,
 				4F309E5E2784F7D900F55BC6 /* Model */,
 				4F309E5F2784F7E300F55BC6 /* View */,
+				4F309E712786D90B00F55BC6 /* Tools */,
 				4F309E262784B49A00F55BC6 /* Assets.xcassets */,
 				4F309E282784B49A00F55BC6 /* Preview Content */,
 			);
@@ -195,6 +198,14 @@
 				4F309E6B2785F80600F55BC6 /* AttributionView.swift */,
 			);
 			path = Repartition;
+			sourceTree = "<group>";
+		};
+		4F309E712786D90B00F55BC6 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				4F309E722786DA4700F55BC6 /* SelectableItems.swift */,
+			);
+			path = Tools;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -330,6 +341,7 @@
 				4F309E6C2785F80600F55BC6 /* AttributionView.swift in Sources */,
 				4F309E6A2785EB7600F55BC6 /* CurrentExpensesRow.swift in Sources */,
 				4F309E652784F9E700F55BC6 /* StartView.swift in Sources */,
+				4F309E732786DA4700F55BC6 /* SelectableItems.swift in Sources */,
 				4F309E592784F68200F55BC6 /* HomeView.swift in Sources */,
 				4F309E5D2784F68200F55BC6 /* TextRecognition.swift in Sources */,
 				4F309E532784B55900F55BC6 /* ContentView.swift in Sources */,

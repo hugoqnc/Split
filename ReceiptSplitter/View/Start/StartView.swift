@@ -57,8 +57,9 @@ struct StartView: View {
                         } else if Set(finalUsers).count < finalUsers.count { // presence of duplicates
                             showAlert2 = true
                         } else {
-                            
-                            model.users.names = finalUsers
+                            for name in finalUsers{
+                                model.users.append(User(name: name))
+                            }
                             isClicked = true
                         }
                     } label: {

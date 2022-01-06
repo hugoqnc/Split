@@ -13,8 +13,6 @@ struct HomeView: View {
     @State var showScanner = true // TODO: add private when done, and remove Preview
     @State private var isRecognizing = false
     
-    var testPairs: [pairProductPrice] = [pairProductPrice(id: "408C6FAC-85E1-4E59-A6ED-ADEC900100C7", name: "Lachsfilet 2x125g oCHFLachsfilet 2x125gPotatoWedges 1kgO", price: Optional(4.79)), pairProductPrice(id: "0E988C08-0D81-42DA-8A40-7A5B7677F0F9", name: "", price: Optional(4.79)), pairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg (", price: Optional(4.99)), pairProductPrice(id: "D26461AA-F0D0-49D9-B1B8-5A41D0284E0C", name: "Fish", price: Optional(4.99))]
-    
     
     var body: some View {
         NavigationView {
@@ -28,13 +26,11 @@ struct HomeView: View {
                     //Text(String(recognizedContent.items[0].text))
                     ForEach(recognizedContent.items, id: \.id) { textItem in
                         List() {
-                            ForEach(textItem.list) { pairProductPrice in
+                            ForEach(textItem.list) { pair in
                                 HStack {
-                                    Text(pairProductPrice.name)
+                                    Text(pair.name)
                                     Spacer()
-                                    if let price = pairProductPrice.price{
-                                        Text(String(price)+"€")
-                                    }
+                                    Text(String(pair.price)+"€")
                                 }
                             }
                         }

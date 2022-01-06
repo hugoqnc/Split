@@ -8,17 +8,16 @@
 import SwiftUI
 
 struct CurrentExpensesRow: View {
-    var names: [String]
-    var balance: [String: Float]
+    var users: [User]
     
     var body: some View {
         ScrollView(.horizontal){
             HStack {
-                ForEach(names, id: \.self) { name in
+                ForEach(users) { user in
                     VStack{
-                        Text(name)
+                        Text(user.name)
                             .font(.caption)
-                        Text(String(balance[name]!)+"€")
+                        Text(String(user.balance)+"€")
                             .font(.headline)
                     }
                     .padding()
@@ -31,6 +30,6 @@ struct CurrentExpensesRow: View {
 
 struct CurrentExpensesRow_Previews: PreviewProvider {
     static var previews: some View {
-        CurrentExpensesRow(names: ["Hugo", "Lucas", "Thomas"], balance: ["Hugo": 17.3, "Lucas": 12.65, "Thomas": 18.90])
+        CurrentExpensesRow(users: [User(name: "Hugo"), User(name: "Olivier")])
     }
 }

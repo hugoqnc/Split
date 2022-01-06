@@ -8,5 +8,5 @@
 import Foundation
 
 final class ModelData: ObservableObject {
-    @Published var users = UsersModel(names: [], balance: [:])
+    @Published var users: [User] = UsersModel().users
 }
