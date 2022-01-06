@@ -12,29 +12,49 @@ struct HomeView: View {
     @ObservedObject var recognizedContent = TextData()
     @State var showScanner = true // TODO: add private when done, and remove Preview
     @State private var isRecognizing = false
+    @State private var isValidated = false
+    @State private var itemCounter = 0
+    
+    @State private var listOfProductsAndPrices: [PairProductPrice] = []
     
     
     var body: some View {
         NavigationView {
             ZStack() {
                 VStack{
-//                    List(recognizedContent.items, id: \.id) { textItem in
-//                        NavigationLink(destination: TextPreviewView(text: textItem.text)) {
-//                            Text(String(textItem.text.prefix(50)).appending("..."))
+
+//                    ForEach(recognizedContent.items, id: \.id) { textItem in
+//                        List() {
+//                            ForEach(textItem.list) { pair in
+//                                HStack {
+//                                    Text(pair.name)
+//                                    Spacer()
+//                                    Text(String(pair.price)+"€")
+//                                }
+//                            }
 //                        }
 //                    }
-                    //Text(String(recognizedContent.items[0].text))
-                    ForEach(recognizedContent.items, id: \.id) { textItem in
-                        List() {
-                            ForEach(textItem.list) { pair in
-                                HStack {
-                                    Text(pair.name)
-                                    Spacer()
-                                    Text(String(pair.price)+"€")
+                    CurrentExpensesRow()
+
+                    if itemCounter<listOfProductsAndPrices.count {
+                        AttributionView(pair: listOfProductsAndPrices[itemCounter], isValidated: $isValidated)
+                            .onChange(of: isValidated) { newValue in
+                                print("AAA")
+                                print(newValue)
+                                print(isValidated)
+                                print(listOfProductsAndPrices.count)
+                                print(itemCounter)
+                                print("AAAA")
+                                if newValue {
+                                    itemCounter += 1
+                                    isValidated = false
                                 }
-                            }
                         }
+                    } else {
+                        Text("E1")
                     }
+
+
                 }
                 
                 
@@ -57,10 +77,16 @@ struct HomeView: View {
                         
                         TextRecognition(scannedImages: scannedImages,
                                         recognizedContent: recognizedContent) {
+                            for item in recognizedContent.items{
+                                let content: [PairProductPrice] = item.list
+                                listOfProductsAndPrices.append(contentsOf: content)
+                            }
+                            // print(listOfProductsAndPrices)
                         }
                         .recognizeText()
                     
                         // Text recognition is finished, hide the progress indicator.
+
                         isRecognizing = false
                         
                     case .failure(let error):
@@ -77,8 +103,8 @@ struct HomeView: View {
     }
 }
 
-struct HomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeView(showScanner: false)
-    }
-}
+//struct HomeView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        HomeView(showScanner: false)
+//    }
+//}

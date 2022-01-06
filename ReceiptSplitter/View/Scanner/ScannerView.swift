@@ -57,3 +57,4 @@ struct ScannerView: UIViewControllerRepresentable {
     }
     
 }
+

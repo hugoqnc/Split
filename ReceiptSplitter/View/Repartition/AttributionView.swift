@@ -11,6 +11,7 @@ struct AttributionView: View {
     var pair: PairProductPrice
     @EnvironmentObject var model: ModelData
     @State var selections: [UUID] = []
+    @Binding var isValidated: Bool
 //    @ObservedObject var input = NumbersOnly()
     
     var body: some View {
@@ -35,15 +36,24 @@ struct AttributionView: View {
                 .padding()
             
             Button {
+//                print("BBB")
+//                print(selections)
                 let divider = selections.count
                 for id in selections{
                     for user in model.users {
                         if user.id==id {
                             let index = model.users.firstIndex{$0.id == id}!
+                            print(model.users[index].name)
+                            print(model.users[index].balance)
                             model.users[index].balance+=pair.price/Double(divider)
+                            print(model.users[index].balance)
                         }
                     }
                 }
+                selections = []
+                isValidated = true
+//                print(isValidated)
+//                print("BBBB")
             } label: {
                 Image(systemName: "checkmark.circle.fill")
                     .resizable(resizingMode: .tile)
@@ -54,8 +64,7 @@ struct AttributionView: View {
         }
         .cornerRadius(10)
         .overlay(RoundedRectangle(cornerRadius: 10)
-                    .stroke(.gray, lineWidth: 1)
-                )
+                    .stroke(.gray, lineWidth: 1))
         .padding()
     }
 }
@@ -74,7 +83,7 @@ struct AttributionView: View {
 
 struct AttributionView_Previews: PreviewProvider {    
     static var previews: some View {
-        AttributionView(pair: PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 4.99))
+        AttributionView(pair: PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 4.99), isValidated: .constant(false))
             .environmentObject(ModelData())
     }
 }
