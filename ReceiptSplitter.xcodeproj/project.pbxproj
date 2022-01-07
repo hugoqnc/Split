@@ -26,6 +26,7 @@
 		4F309E6C2785F80600F55BC6 /* AttributionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F309E6B2785F80600F55BC6 /* AttributionView.swift */; };
 		4F309E732786DA4700F55BC6 /* SelectableItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F309E722786DA4700F55BC6 /* SelectableItems.swift */; };
 		4F37A8982787AF4900947426 /* SafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F37A8972787AF4800947426 /* SafariView.swift */; };
+		4F37A89A27883C2B00947426 /* ListSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F37A89927883C2A00947426 /* ListSheetView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,7 @@
 		4F309E6B2785F80600F55BC6 /* AttributionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributionView.swift; sourceTree = "<group>"; };
 		4F309E722786DA4700F55BC6 /* SelectableItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableItems.swift; sourceTree = "<group>"; };
 		4F37A8972787AF4800947426 /* SafariView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariView.swift; sourceTree = "<group>"; };
+		4F37A89927883C2A00947426 /* ListSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSheetView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -189,6 +191,7 @@
 			children = (
 				4F309E642784F9E700F55BC6 /* StartView.swift */,
 				4F309E542784F68200F55BC6 /* HomeView.swift */,
+				4F37A89927883C2A00947426 /* ListSheetView.swift */,
 			);
 			path = Start;
 			sourceTree = "<group>";
@@ -341,6 +344,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F37A89A27883C2B00947426 /* ListSheetView.swift in Sources */,
 				4F309E6C2785F80600F55BC6 /* AttributionView.swift in Sources */,
 				4F309E6A2785EB7600F55BC6 /* CurrentExpensesRow.swift in Sources */,
 				4F309E652784F9E700F55BC6 /* StartView.swift in Sources */,
