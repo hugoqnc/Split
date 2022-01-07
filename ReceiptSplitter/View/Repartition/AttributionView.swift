@@ -9,11 +9,16 @@ import SwiftUI
 
 struct AttributionView: View {
     @Binding var pair: PairProductPrice
+    @Binding var isValidated: Bool
+    var itemCounter: Int
+    
     @EnvironmentObject var model: ModelData
     @State var selections: [UUID] = []
-    @Binding var isValidated: Bool
     @State private var showAlert1 = false
     @State private var isEditorMode = false
+    @State private var showSafariView = false
+    
+    private let textOfNewItem = "Additional Product"
     
     var body: some View {
         VStack {
@@ -21,8 +26,15 @@ struct AttributionView: View {
                 
                 HStack {
                     VStack(alignment: .leading) {
-                        Text(pair.name)
-                            .font(.title2)
+                        if pair.name==textOfNewItem {
+                            Text(pair.name)
+                                .font(.title2)
+                                .italic()
+                                .foregroundColor(.gray)
+                        } else {
+                            Text(pair.name)
+                                .font(.title2)
+                        }
                         if isEditorMode {
                             TextField(String(pair.price)+"€", value: $pair.price, format: .number)
                                 .keyboardType(.decimalPad)
@@ -43,10 +55,25 @@ struct AttributionView: View {
                     }
                     
                     Spacer()
+                    
+                    Button(action: {
+                            showSafariView = true
+                    }) {
+                            Image(systemName: "info.circle")
+                                .resizable(resizingMode: .tile)
+                                .frame(width: 25.0, height: 25.0)
+                                .foregroundColor(.blue)
+                    }
                 }
+                .fullScreenCover(isPresented: $showSafariView) {
+                    SafariView(url: URL(string: "http://www.google.com/images?q="+pair.name.replacingOccurrences(of: " ", with: "%20"))!).edgesIgnoringSafeArea(.all)}
+                .padding(.top,10)
+                
                 
                 
                 SelectableItems(users: model.users, selections: $selections)
+                    .padding(.top)
+                    .padding(.bottom,25)
         
                 
                 HStack {
@@ -63,7 +90,8 @@ struct AttributionView: View {
                     }
                     
                     Button {
-                        
+                        let newPair = PairProductPrice(id: UUID().uuidString, name: textOfNewItem, price: 0.0)
+                        model.listOfProductsAndPrices.insert(newPair, at: itemCounter)
                     } label: {
                         Image(systemName: "plus.circle.fill")
                             .resizable(resizingMode: .tile)
@@ -92,9 +120,6 @@ struct AttributionView: View {
                     
                     Button {
                         if !isEditorMode {
-                            print("BBB")
-                            print(pair)
-                            print("BBBB")
                             let divider = selections.count
                             if divider==0 {
                                 showAlert1 = true
@@ -124,14 +149,16 @@ struct AttributionView: View {
                     
                 }
             }
-            .padding()
+            .padding(20)
+            .background(pair.price==0 ? Color(red: 255 / 255, green: 0 / 255, blue: 0 / 255).opacity(0.15) : nil)
         }
         .cornerRadius(10)
         .overlay(RoundedRectangle(cornerRadius: 10)
-                    .stroke(.gray, lineWidth: 1))
+                    .stroke(pair.price==0 ? .red : .gray, lineWidth: 1))
         .padding()
         .alert("Select the users who participate in this expense", isPresented: $showAlert1) {
             Button("OK") { }
+        
         }
     }
     
@@ -153,7 +180,7 @@ struct AttributionView_Previews: PreviewProvider {
     static let model = ModelData()
 
     static var previews: some View {
-        AttributionView(pair: .constant(PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 4.99)), isValidated: .constant(false))
+        AttributionView(pair: .constant(PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 4.99)), isValidated: .constant(false), itemCounter: 0)
             .environmentObject(model)
             .onAppear {
                 model.users = [User(name: "Hugo"), User(name: "Lucas"), User(name: "Thomas")]

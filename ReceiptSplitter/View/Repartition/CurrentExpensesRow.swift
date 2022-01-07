@@ -11,19 +11,29 @@ struct CurrentExpensesRow: View {
     @EnvironmentObject var model: ModelData
     
     var body: some View {
-        ScrollView(.horizontal){
-            HStack {
-                ForEach(model.users) { user in
-                    VStack{
-                        Text(user.name.uppercased())
-                            .font(.caption)
-                        Text(String(round(user.balance * 100) / 100.0)+"€")
-                            .font(.headline)
+        HStack {
+            VStack{
+                Text("Total".uppercased())
+                Text(String(round(model.totalPrice * 100) / 100.0)+"€")
+                    .font(.title2)
+                    .fontWeight(.semibold)
+            }
+            .padding(.leading)
+            .padding(.trailing, 8)
+            Divider()
+            ScrollView(.horizontal){
+                HStack {
+                    ForEach(model.users) { user in
+                        VStack{
+                            Text(user.name.uppercased())
+                                .font(.caption)
+                            Text(String(round(user.balance * 100) / 100.0)+"€")
+                                .font(.headline)
+                        }
+                        .padding(8)
                     }
-                    .padding()
                 }
             }
-            .padding()
         }
     }
 }

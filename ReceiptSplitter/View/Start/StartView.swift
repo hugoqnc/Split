@@ -9,7 +9,7 @@ import SwiftUI
 
 struct StartView: View {
     @EnvironmentObject var model: ModelData
-    @State private var names = [String](repeating: "", count: 10)
+    @State private var names = [String](repeating: "", count: 8)
     @State private var numberOfUsers = 2
     @State private var isClicked = false
     @State private var showAlert1 = false
@@ -63,10 +63,7 @@ struct StartView: View {
                             isClicked = true
                         }
                     } label: {
-                        
                         Label("Scan", systemImage: "doc.text.viewfinder")
-                        
-                        
                     }
                     .buttonStyle(.borderedProminent)
                     .padding(15)
@@ -75,6 +72,7 @@ struct StartView: View {
                     
                 }
                 .navigationTitle("ReceiptSplitter")
+                .background(Color(red: 0 / 255, green: 130 / 255, blue: 255 / 255).opacity(0.15), ignoresSafeAreaEdges: .bottom)
             }
             .alert("Please fill in all user names", isPresented: $showAlert1) {
                 Button("OK") { }
