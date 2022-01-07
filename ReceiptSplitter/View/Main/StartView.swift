@@ -11,13 +11,12 @@ struct StartView: View {
     @EnvironmentObject var model: ModelData
     @State private var names = [String](repeating: "", count: 8)
     @State private var numberOfUsers = 2
-    @State private var isClicked = false
     @State private var showAlert1 = false
     @State private var showAlert2 = false
         
     var body: some View {
         
-        if isClicked {
+        if model.startTheProcess {
             HomeView()
         } else {
             NavigationView {
@@ -60,13 +59,13 @@ struct StartView: View {
                             for name in finalUsers{
                                 model.users.append(User(name: name))
                             }
-                            isClicked = true
+                            model.startTheProcess = true
                         }
                     } label: {
                         Label("Scan", systemImage: "doc.text.viewfinder")
                     }
                     .buttonStyle(.borderedProminent)
-                    .padding(15)
+                    .padding(7)
                     
                     Spacer()
                     

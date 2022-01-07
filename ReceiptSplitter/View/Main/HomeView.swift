@@ -12,9 +12,8 @@ struct HomeView: View {
     @EnvironmentObject var model: ModelData
     @ObservedObject var recognizedContent = TextData()
     @State var showScanner = true // TODO: add private when done, and remove Preview
-    @State private var showAllList = false
+    @State  var showAllList = false // TODO: add private when done, and remove Preview
     @State private var isFirstTimeShowingList = true
-    @State private var isRecognizing = false
     @State private var isValidated = false
     @State private var itemCounter = 0
     
@@ -25,51 +24,47 @@ struct HomeView: View {
         NavigationView {
             ZStack() {
                 VStack{
-
-                    CurrentExpensesRow()
-                        .padding()
-                        .frame(height: 100)
                     
-                    Spacer()
+                    if itemCounter<model.listOfProductsAndPrices.count {
+                        
+                        CurrentExpensesRow()
+                            .padding()
+                            .frame(height: 100)
+                        
+                        Spacer()
                     
-                    ZStack{
-                        if itemCounter<model.listOfProductsAndPrices.count {
-                            ZStack {
-                                ForEach(0..<model.listOfProductsAndPrices.count) { number in
-                                    if number==itemCounter {
-                                        AttributionView(pair: $model.listOfProductsAndPrices[number], isValidated: $isValidated, itemCounter: itemCounter)
-                                            .onChange(of: isValidated) { newValue in
-                                                if newValue {
-                                                    itemCounter += 1
-                                                    isValidated = false
-                                                }
+                        
+                        ZStack {
+                            ForEach(0..<model.listOfProductsAndPrices.count) { number in
+                                if number==itemCounter {
+                                    AttributionView(pair: $model.listOfProductsAndPrices[number], isValidated: $isValidated, itemCounter: itemCounter)
+                                        .onChange(of: isValidated) { newValue in
+                                            if newValue {
+                                                itemCounter += 1
+                                                isValidated = false
                                             }
-                                            .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
-                                    }
+                                        }
+                                        .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
                                 }
                             }
-                            
-                        } else {
-                            Text("Finished")
                         }
+                        
+                        Button {
+                            showAllList = true
+                        } label: {
+                            Label("See all list", systemImage: "list.bullet")
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .padding(15)
+                        
+                    } else {
+                        Text("Finished")
                     }
-                    .animation(.easeInOut, value: itemCounter)
-                    
-                    Spacer()
-                    
-                    Button {
-                        showAllList = true
-                    } label: {
-                        Label("See all list", systemImage: "list.bullet")
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .padding(15)
-
-
                 }
+                .animation(.easeInOut, value: itemCounter)
+
                 
-                
-                if isRecognizing {
+                if model.listOfProductsAndPrices.isEmpty {
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle())
                         .scaleEffect(2)
@@ -85,7 +80,6 @@ struct HomeView: View {
                 ScannerView { result in
                     switch result {
                         case .success(let scannedImages):
-                            isRecognizing = true
                             
                             TextRecognition(scannedImages: scannedImages,
                                             recognizedContent: recognizedContent) {
@@ -96,10 +90,6 @@ struct HomeView: View {
                                 // print(listOfProductsAndPrices)
                             }
                             .recognizeText()
-                        
-                            // Text recognition is finished, hide the progress indicator.
-
-                            isRecognizing = false
                             
                         case .failure(let error):
                             print(error.localizedDescription)
@@ -110,13 +100,23 @@ struct HomeView: View {
 
                 } didCancelScanning: {
                     // Dismiss the scanner controller and the sheet.
+                    model.startTheProcess = false
+                    model.users = UsersModel().users
+                    model.listOfProductsAndPrices = []
+                    
                     showScanner = false
                 }
             }.ignoresSafeArea(.all)
         })
         .sheet(isPresented: $showAllList, content: {
-            ListSheetView(listOfProductsAndPrices: model.listOfProductsAndPrices, itemCounter: itemCounter, isFirstTimeShowingList: $isFirstTimeShowingList)
-                .background(Color(red: 255 / 255, green: 255 / 255, blue: 55 / 255).opacity(0.2).ignoresSafeArea(.all))
+            if model.listOfProductsAndPrices.isEmpty {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle())
+                    .scaleEffect(2)
+            } else {
+                ListSheetView(itemCounter: itemCounter, isFirstTimeShowingList: $isFirstTimeShowingList)
+                    .background(Color(red: 255 / 255, green: 255 / 255, blue: 55 / 255).opacity(0.2).ignoresSafeArea(.all))
+            }
         })
     }
 }
@@ -124,7 +124,7 @@ struct HomeView: View {
 struct HomeView_Previews: PreviewProvider {
     static let model = ModelData()
     static var previews: some View {
-        HomeView(showScanner: false)
+        HomeView(showScanner: false, showAllList: true)
             .environmentObject(model)
             .onAppear {
                 model.users = [User(name: "Hugo"), User(name: "Lucas"), User(name: "Thomas")]

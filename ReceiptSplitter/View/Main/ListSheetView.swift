@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ListSheetView: View {
-    var listOfProductsAndPrices: [PairProductPrice]
+    @EnvironmentObject var model: ModelData
     var itemCounter: Int
     @Binding var isFirstTimeShowingList: Bool
     @Environment(\.dismiss) var dismiss
@@ -36,9 +36,9 @@ struct ListSheetView: View {
 
                 List() {
                     Section(header: Text("All transactions")){
-                    ForEach(listOfProductsAndPrices) { pair in
+                        ForEach(model.listOfProductsAndPrices) { pair in
                         HStack {
-                            if pair.id == listOfProductsAndPrices[itemCounter].id {
+                            if pair.id == model.listOfProductsAndPrices[itemCounter].id {
                                 VStack(alignment: .leading) {
                                     Text("Current item".uppercased())
                                         .font(.caption)
@@ -52,7 +52,7 @@ struct ListSheetView: View {
                             Spacer()
                             Text(String(pair.price)+"€")
                         }
-                        .foregroundColor(pair.id == listOfProductsAndPrices[itemCounter].id ? .blue : nil)
+                        .foregroundColor(pair.id == model.listOfProductsAndPrices[itemCounter].id ? .blue : nil)
                     }
                     }
                 }
@@ -60,13 +60,27 @@ struct ListSheetView: View {
             .toolbar {
                 ToolbarItem(placement: .bottomBar) {
                     Button {
+                        model.startTheProcess = false
+                        model.users = UsersModel().users
+                        model.listOfProductsAndPrices = []
+                        
+                        dismiss()
+                    } label: {
+                        if isFirstTimeShowingList{
+                            Text("Cancel")
+                        }
+                    }
+                    .padding()
+                    .foregroundColor(.red)
+                }
+                ToolbarItem(placement: .bottomBar) {
+                    Button {
                         dismiss()
                     } label: {
                         Text("Done")
                     }
                     .buttonStyle(.borderedProminent)
-                    .padding(15)
-                    .padding(.bottom, 10)
+                    .padding()
                 }
             }
             .navigationBarTitle("")
@@ -77,10 +91,16 @@ struct ListSheetView: View {
 
 
 struct ListSheetView_Previews: PreviewProvider {
+    static let model = ModelData()
     static var previews: some View {
         Text("Test")
             .sheet(isPresented: .constant(true)) {
-                ListSheetView(listOfProductsAndPrices: [PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 4.99), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBC", name: "Finger Fish", price: 1.27), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBD", name: "Ice Cream Strawberry", price: 3.20)], itemCounter: 1, isFirstTimeShowingList: .constant(true))
+                ListSheetView(itemCounter: 1, isFirstTimeShowingList: .constant(true))
+                    .environmentObject(model)
+                    .onAppear {
+                        model.users = [User(name: "Hugo"), User(name: "Lucas"), User(name: "Thomas")]
+                        model.listOfProductsAndPrices = [PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 4.99), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBC", name: "Finger Fish", price: 1.27), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBD", name: "Ice Cream Strawberry", price: 3.20)]
+                    }
             }
 
     }
