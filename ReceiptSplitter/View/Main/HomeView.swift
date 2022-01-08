@@ -10,7 +10,7 @@ import SwiftUI
 struct HomeView: View {
     @EnvironmentObject var model: ModelData
     @ObservedObject var recognizedContent = TextData()
-    @State var showScanner = true // TODO: add private when done, and remove Preview
+    @State var showScanner = false // TODO: add private when done, and remove Preview
     @State  var showAllList = false // TODO: add private when done, and remove Preview
     @State private var isFirstTimeShowingList = true
     @State private var isValidated = false
@@ -61,6 +61,11 @@ struct HomeView: View {
                     }
                 }
                 
+                if showScanner{
+                    // Weird SwiftUI bug: this invisible text is necessary to open the scanner onAppear of HomeView
+                    Text(String(showScanner))
+                }
+                
             }
             .navigationTitle("ReceiptSplitter")
             .navigationBarHidden(isKeyboardShown)
@@ -73,6 +78,11 @@ struct HomeView: View {
                 withAnimation(.easeInOut) {
                     isKeyboardShown = false
                 }
+            }
+            .onAppear {
+                print(showScanner)
+                showScanner.toggle()
+                print(showScanner)
             }
         }
         .sheet(isPresented: $showScanner, content: {
@@ -106,7 +116,9 @@ struct HomeView: View {
                     
                     showScanner = false
                 }
-            }.ignoresSafeArea(.all)
+            }
+            .ignoresSafeArea(.all)
+            .interactiveDismissDisabled(true)
         })
         .sheet(isPresented: $showAllList, content: {
             if model.listOfProductsAndPrices.isEmpty {
