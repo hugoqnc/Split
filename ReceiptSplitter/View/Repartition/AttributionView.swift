@@ -25,8 +25,8 @@ struct AttributionView: View {
     @State private var yOffset: CGFloat = 0.0
     @State private var opacity = 1.0
     
-    
     private let textOfNewItem = "Additional Product"
+    private let colorDisabledButton = Color(red: 140 / 255, green: 140 / 255, blue: 140 / 255).opacity(0.2)
         
     var body: some View {
         VStack {
@@ -115,7 +115,7 @@ struct AttributionView: View {
                     }
                     
                     Button {
-                        if !isEditorMode {
+                        if !isEditorMode && !(pair.name==textOfNewItem) {
                             withAnimation(.easeInOut(duration: 4)) {
                                 isNewItem = true
                             }
@@ -124,7 +124,7 @@ struct AttributionView: View {
                         Image(systemName: "plus.circle.fill")
                             .resizable(resizingMode: .tile)
                             .frame(width: 30.0, height: 30.0)
-                            .foregroundColor(isEditorMode ? .gray : .yellow)
+                            .foregroundColor(isEditorMode || (pair.name==textOfNewItem) ? colorDisabledButton : .yellow)
                             .padding(.top)
                             .padding(.trailing,5)
                     }
@@ -141,7 +141,7 @@ struct AttributionView: View {
                         Image(systemName: "trash.circle.fill")
                             .resizable(resizingMode: .tile)
                             .frame(width: 30.0, height: 30.0)
-                            .foregroundColor(isEditorMode ? .gray : .red)
+                            .foregroundColor(isEditorMode ? colorDisabledButton : .red)
                             .padding(.top)
                     }
                     
@@ -173,7 +173,7 @@ struct AttributionView: View {
                         Image(systemName: "checkmark.circle.fill")
                             .resizable(resizingMode: .tile)
                             .frame(width: 40.0, height: 40.0)
-                            .foregroundColor(isEditorMode ? .gray : .green)
+                            .foregroundColor(isEditorMode ? colorDisabledButton : .green)
                             .padding(.top,5)
                     }
                     
@@ -191,6 +191,29 @@ struct AttributionView: View {
         }
         .offset(x: xOffset, y: yOffset)
         .opacity(opacity)
+//        .onChange(of: isNewItem) { newValue in
+//                let newPair = PairProductPrice(id: UUID().uuidString, name: textOfNewItem, price: 0.0)
+//                model.listOfProductsAndPrices.insert(newPair, at: itemCounter)
+//        }
+//        .onChange(of: isDeleteItem) { newValue in
+//                if let index = model.listOfProductsAndPrices.firstIndex(where: {$0.id == pair.id}) {
+//                    model.listOfProductsAndPrices.remove(at: index)
+//                }
+//        }
+//        .transition(
+//            pair.name==textOfNewItem && isNewItem ?
+//            .asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .trailing)) :
+//            pair.name==textOfNewItem && isDeleteItem ?
+//            .asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .bottom)) :
+//            pair.name==textOfNewItem ?
+//            .asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .leading)) :
+//            isNewItem ?
+//            .asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .trailing)) :
+//            isDeleteItem ?
+//            .asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .bottom)) :
+//            .asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading))
+//        )
+
         .onChange(of: isNewItem) { newValue in
             if newValue {
                 withAnimation(.easeInOut(duration: 0.35)) {
@@ -201,7 +224,7 @@ struct AttributionView: View {
                 DispatchQueue.main.asyncAfter(deadline: .now() + secondsToDelay) {
                     isNewItem = false
                 }
-                
+
             } else {
                 let newPair = PairProductPrice(id: UUID().uuidString, name: textOfNewItem, price: 0.0)
                 model.listOfProductsAndPrices.insert(newPair, at: itemCounter)
@@ -217,7 +240,7 @@ struct AttributionView: View {
                 DispatchQueue.main.asyncAfter(deadline: .now() + secondsToDelay) {
                     isDeleteItem = false
                 }
-                
+
             } else {
                 if let index = model.listOfProductsAndPrices.firstIndex(where: {$0.id == pair.id}) {
                     model.listOfProductsAndPrices.remove(at: index)
@@ -228,7 +251,6 @@ struct AttributionView: View {
             pair.name==textOfNewItem ?
                 .asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .leading)) :
                     .asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
-
     }
     
 }
