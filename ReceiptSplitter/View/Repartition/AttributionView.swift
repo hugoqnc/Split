@@ -89,7 +89,8 @@ struct AttributionView: View {
                     }
                 }
                 .fullScreenCover(isPresented: $showSafariView) {
-                    SafariView(url: URL(string: "http://www.google.com/images?q="+pair.name.replacingOccurrences(of: " ", with: "%20"))!).edgesIgnoringSafeArea(.all)}
+                    let urlString = ("http://www.google.com/images?q="+pair.name).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+                    SafariView(url: URL(string: urlString!)!).edgesIgnoringSafeArea(.all)}
                 .padding(.top,5)
                 
                 Divider()

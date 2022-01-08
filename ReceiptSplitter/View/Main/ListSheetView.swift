@@ -15,79 +15,80 @@ struct ListSheetView: View {
 
     var body: some View {
         VStack {
-        if isFirstTimeShowingList {
-            VStack {
-                Image(systemName: "exclamationmark.triangle")
-                    .resizable(resizingMode: .tile)
-                    .frame(width: 30.0, height: 30.0)
-                    .foregroundColor(.orange)
-                    .padding(.top)
-                Text("Please check that most of the transactions are correct, meaning that most names are associated with the right prices. If it is not the case, please cancel and start again.")
-                    .padding(.bottom)
-                    .padding(.leading)
-                    .padding(.trailing)
-                    .onDisappear(){
-                        isFirstTimeShowingList = false
+            if isFirstTimeShowingList {
+                VStack {
+                    Image(systemName: "exclamationmark.triangle")
+                        .resizable(resizingMode: .tile)
+                        .frame(width: 30.0, height: 30.0)
+                        .foregroundColor(.orange)
+                        .padding(.top)
+                    Text("Please check that most of the transactions are correct, meaning that most names are associated with the right prices. If it is not the case, please cancel and start again.")
+                        .padding(.bottom)
+                        .padding(.leading)
+                        .padding(.trailing)
+                        .onDisappear(){
+                            isFirstTimeShowingList = false
+                    }
                 }
             }
-        }
-        
-        NavigationView {
-            VStack{
+            
+            NavigationView {
+                VStack{
 
-                List() {
-                    Section(header: Text("All transactions")){
-                        ForEach(model.listOfProductsAndPrices) { pair in
-                        HStack {
-                            if pair.id == model.listOfProductsAndPrices[itemCounter].id && !isFirstTimeShowingList{
-                                VStack(alignment: .leading) {
-                                    Text("Current item".uppercased())
-                                        .font(.caption)
-                                        .padding(.top,3)
+                    List() {
+                        Section(header: Text("All transactions")){
+                            ForEach(model.listOfProductsAndPrices) { pair in
+                            HStack {
+                                if pair.id == model.listOfProductsAndPrices[itemCounter].id && !isFirstTimeShowingList{
+                                    VStack(alignment: .leading) {
+                                        Text("Current item".uppercased())
+                                            .font(.caption)
+                                            .padding(.top,3)
+                                        Text(pair.name)
+                                    }
+                                } else {
                                     Text(pair.name)
                                 }
-                            } else {
-                                Text(pair.name)
-                            }
 
-                            Spacer()
-                            Text(String(pair.price)+"€")
+                                Spacer()
+                                Text(String(pair.price)+"€")
+                            }
+                            .foregroundColor(pair.id == model.listOfProductsAndPrices[itemCounter].id && !isFirstTimeShowingList ? .blue : nil)
                         }
-                        .foregroundColor(pair.id == model.listOfProductsAndPrices[itemCounter].id && !isFirstTimeShowingList ? .blue : nil)
-                    }
-                    }
-                }
-            }
-            .toolbar {
-                ToolbarItem(placement: .bottomBar) {
-                    Button {
-                        model.startTheProcess = false
-                        model.users = UsersModel().users
-                        model.listOfProductsAndPrices = []
-                        
-                        dismiss()
-                    } label: {
-                        if isFirstTimeShowingList{
-                            Text("Cancel")
                         }
                     }
-                    .padding()
-                    .foregroundColor(.red)
                 }
-                ToolbarItem(placement: .bottomBar) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Text("Done")
+                .toolbar {
+                    ToolbarItem(placement: .bottomBar) {
+                        Button {
+                            model.startTheProcess = false
+                            model.users = UsersModel().users
+                            model.listOfProductsAndPrices = []
+                            
+                            dismiss()
+                        } label: {
+                            if isFirstTimeShowingList{
+                                Text("Cancel")
+                            }
+                        }
+                        .padding()
+                        .foregroundColor(.red)
                     }
-                    .padding()
+                    ToolbarItem(placement: .bottomBar) {
+                        Button {
+                            dismiss()
+                        } label: {
+                            Text("Done")
+                        }
+                        .padding()
+                    }
                 }
+                .navigationBarTitle("")
+                .navigationBarHidden(true)
             }
-            .navigationBarTitle("")
-            .navigationBarHidden(true)
-        }
         }
         .background(Color(red: 255 / 255, green: 225 / 255, blue: 51 / 255).opacity(0.2).ignoresSafeArea(.all))
+        .interactiveDismissDisabled(isFirstTimeShowingList)
     }
 }
 

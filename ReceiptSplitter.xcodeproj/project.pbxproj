@@ -27,6 +27,7 @@
 		4F309E732786DA4700F55BC6 /* SelectableItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F309E722786DA4700F55BC6 /* SelectableItems.swift */; };
 		4F37A8982787AF4900947426 /* SafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F37A8972787AF4800947426 /* SafariView.swift */; };
 		4F37A89A27883C2B00947426 /* ListSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F37A89927883C2A00947426 /* ListSheetView.swift */; };
+		4F43BDFD2789A9CD005CDD6D /* LoadItemsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F43BDFC2789A9CD005CDD6D /* LoadItemsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,7 @@
 		4F309E722786DA4700F55BC6 /* SelectableItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableItems.swift; sourceTree = "<group>"; };
 		4F37A8972787AF4800947426 /* SafariView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariView.swift; sourceTree = "<group>"; };
 		4F37A89927883C2A00947426 /* ListSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSheetView.swift; sourceTree = "<group>"; };
+		4F43BDFC2789A9CD005CDD6D /* LoadItemsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadItemsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -210,6 +212,7 @@
 			children = (
 				4F309E722786DA4700F55BC6 /* SelectableItems.swift */,
 				4F37A8972787AF4800947426 /* SafariView.swift */,
+				4F43BDFC2789A9CD005CDD6D /* LoadItemsView.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -355,6 +358,7 @@
 				4F309E532784B55900F55BC6 /* ContentView.swift in Sources */,
 				4F309E232784B49900F55BC6 /* ReceiptSplitterApp.swift in Sources */,
 				4F309E5A2784F68200F55BC6 /* Text.swift in Sources */,
+				4F43BDFD2789A9CD005CDD6D /* LoadItemsView.swift in Sources */,
 				4F309E5C2784F68200F55BC6 /* TextPreviewView.swift in Sources */,
 				4F309E672785AB5500F55BC6 /* ModelData.swift in Sources */,
 				4F309E612784F89900F55BC6 /* Users.swift in Sources */,

@@ -19,51 +19,42 @@ struct HomeView: View {
     
     var body: some View {
         NavigationView {
-            ZStack() {
-                VStack{
+            VStack{
+                
+                if itemCounter<model.listOfProductsAndPrices.count {
                     
-                    if itemCounter<model.listOfProductsAndPrices.count {
-                        
-                        CurrentExpensesRow()
-                            .padding()
-                            .frame(height: 100)
-                        
-                        Spacer()
-                        
-                        ZStack {
-                            ForEach(0..<model.listOfProductsAndPrices.count) { number in
-                                if number==itemCounter {
-                                    AttributionView(pair: $model.listOfProductsAndPrices[number], isValidated: $isValidated, itemCounter: itemCounter)
-                                        .onChange(of: isValidated) { newValue in
-                                            if newValue {
-                                                itemCounter += 1
-                                                isValidated = false
-                                            }
+                    CurrentExpensesRow()
+                        .padding()
+                        .frame(height: 100)
+                    
+                    Spacer()
+                    
+                    ZStack {
+                        ForEach(0..<model.listOfProductsAndPrices.count) { number in
+                            if number==itemCounter {
+                                AttributionView(pair: $model.listOfProductsAndPrices[number], isValidated: $isValidated, itemCounter: itemCounter)
+                                    .onChange(of: isValidated) { newValue in
+                                        if newValue {
+                                            itemCounter += 1
+                                            isValidated = false
                                         }
-                                        .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
-                                        .zIndex(1)
-                                }
+                                    }
+                                    .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
+                                    .zIndex(1)
                             }
                         }
-                        .animation(.easeInOut, value: itemCounter)
-                        
-                        Button {
-                            showAllList = true
-                        } label: {
-                            Label("See all transactions", systemImage: "list.bullet")
-                        }
-                        .padding(15)
-                        
-                    } else {
-                        Text("Finished")
                     }
-                }
-
-                
-                if model.listOfProductsAndPrices.isEmpty {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle())
-                        .scaleEffect(2)
+                    .animation(.easeInOut, value: itemCounter)
+                    
+                    Button {
+                        showAllList = true
+                    } label: {
+                        Label("See all transactions", systemImage: "list.bullet")
+                    }
+                    .padding(15)
+                    
+                } else {
+                    Text("Finished")
                 }
                 
             }
@@ -106,9 +97,7 @@ struct HomeView: View {
         })
         .sheet(isPresented: $showAllList, content: {
             if model.listOfProductsAndPrices.isEmpty {
-                ProgressView()
-                    .progressViewStyle(CircularProgressViewStyle())
-                    .scaleEffect(2)
+                LoadItemsView()
             } else {
                 ListSheetView(itemCounter: itemCounter, isFirstTimeShowingList: $isFirstTimeShowingList)
             }
@@ -123,7 +112,7 @@ struct HomeView_Previews: PreviewProvider {
             .environmentObject(model)
             .onAppear {
                 model.users = [User(name: "Hugo"), User(name: "Lucas"), User(name: "Thomas")]
-                model.listOfProductsAndPrices = [PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 4.99), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBC", name: "Finger Fish", price: 1.27), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBD", name: "Ice Cream Strawberry", price: 3.20)]
+                model.listOfProductsAndPrices = [PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Erbsen/Erbs-Karot•K Rahmsp/Hacksp NAT", price: 4.99), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBC", name: "Finger Fish", price: 1.27), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBD", name: "Ice Cream Strawberry", price: 3.20)]
             }
     }
 }
