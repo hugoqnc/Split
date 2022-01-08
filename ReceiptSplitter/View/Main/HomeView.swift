@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import simd
 
 struct HomeView: View {
     @EnvironmentObject var model: ModelData
@@ -30,8 +29,11 @@ struct HomeView: View {
                     Spacer()
                     
                     ZStack {
-                        ForEach(0..<model.listOfProductsAndPrices.count) { number in
-                            if number==itemCounter {
+                        ForEach(model.listOfProductsAndPrices) { pair in
+                            let number = model.listOfProductsAndPrices.firstIndex(of: pair)!
+                            Text(String(number))
+                                .offset(x: CGFloat(10*number), y: 0.0)
+                            if itemCounter==number {
                                 AttributionView(pair: $model.listOfProductsAndPrices[number], isValidated: $isValidated, itemCounter: itemCounter)
                                     .onChange(of: isValidated) { newValue in
                                         if newValue {
@@ -39,12 +41,12 @@ struct HomeView: View {
                                             isValidated = false
                                         }
                                     }
-                                    .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
-                                    .zIndex(1)
+
                             }
                         }
                     }
-                    .animation(.easeInOut, value: itemCounter)
+                    .animation(.easeInOut, value: model.listOfProductsAndPrices[itemCounter].id)
+                    //.animation(.easeInOut)
                     
                     Button {
                         showAllList = true
@@ -54,7 +56,9 @@ struct HomeView: View {
                     .padding(15)
                     
                 } else {
-                    Text("Finished")
+                    if !isFirstTimeShowingList {
+                        ResultView()
+                    }
                 }
                 
             }
@@ -112,7 +116,7 @@ struct HomeView_Previews: PreviewProvider {
             .environmentObject(model)
             .onAppear {
                 model.users = [User(name: "Hugo"), User(name: "Lucas"), User(name: "Thomas")]
-                model.listOfProductsAndPrices = [PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Erbsen/Erbs-Karot•K Rahmsp/Hacksp NAT", price: 4.99), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBC", name: "Finger Fish", price: 1.27), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBD", name: "Ice Cream Strawberry", price: 3.20)]
+                model.listOfProductsAndPrices = [PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 4.99), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBC", name: "Finger Fish", price: 1.27), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBD", name: "Ice Cream Strawberry", price: 3.20)]
             }
     }
 }

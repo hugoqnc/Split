@@ -180,7 +180,7 @@ struct AttributionView: View {
                 }
             }
             .padding(20)
-            .background(Color(red: 160 / 255, green: 160 / 255, blue: 160 / 255).opacity(0.1))
+            .background(isDeleteItem ? Color.red : Color(red: 160 / 255, green: 160 / 255, blue: 160 / 255).opacity(0.1))
         }
         .cornerRadius(10)
         .overlay(RoundedRectangle(cornerRadius: 10)
@@ -203,15 +203,8 @@ struct AttributionView: View {
                 }
                 
             } else {
-                xOffset = 0
-                yOffset = 300
                 let newPair = PairProductPrice(id: UUID().uuidString, name: textOfNewItem, price: 0.0)
                 model.listOfProductsAndPrices.insert(newPair, at: itemCounter)
-                
-                withAnimation() {
-                    yOffset = 0
-                    opacity = 1.0
-                }
             }
         }
         .onChange(of: isDeleteItem) { newValue in
@@ -226,18 +219,15 @@ struct AttributionView: View {
                 }
                 
             } else {
-                yOffset = 0
-                xOffset = 300
                 if let index = model.listOfProductsAndPrices.firstIndex(where: {$0.id == pair.id}) {
                     model.listOfProductsAndPrices.remove(at: index)
                 }
-                
-                withAnimation() {
-                    xOffset = 0
-                    opacity = 1.0
-                }
             }
         }
+        .transition(
+            pair.name==textOfNewItem ?
+                .asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .leading)) :
+                    .asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
 
     }
     

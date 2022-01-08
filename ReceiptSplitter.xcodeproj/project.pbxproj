@@ -28,6 +28,7 @@
 		4F37A8982787AF4900947426 /* SafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F37A8972787AF4800947426 /* SafariView.swift */; };
 		4F37A89A27883C2B00947426 /* ListSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F37A89927883C2A00947426 /* ListSheetView.swift */; };
 		4F43BDFD2789A9CD005CDD6D /* LoadItemsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F43BDFC2789A9CD005CDD6D /* LoadItemsView.swift */; };
+		4F43BDFF2789B0AD005CDD6D /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F43BDFE2789B0AD005CDD6D /* ResultView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,7 @@
 		4F37A8972787AF4800947426 /* SafariView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariView.swift; sourceTree = "<group>"; };
 		4F37A89927883C2A00947426 /* ListSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSheetView.swift; sourceTree = "<group>"; };
 		4F43BDFC2789A9CD005CDD6D /* LoadItemsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadItemsView.swift; sourceTree = "<group>"; };
+		4F43BDFE2789B0AD005CDD6D /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,6 +195,7 @@
 			children = (
 				4F309E642784F9E700F55BC6 /* StartView.swift */,
 				4F309E542784F68200F55BC6 /* HomeView.swift */,
+				4F43BDFE2789B0AD005CDD6D /* ResultView.swift */,
 				4F37A89927883C2A00947426 /* ListSheetView.swift */,
 			);
 			path = Main;
@@ -360,6 +363,7 @@
 				4F309E5A2784F68200F55BC6 /* Text.swift in Sources */,
 				4F43BDFD2789A9CD005CDD6D /* LoadItemsView.swift in Sources */,
 				4F309E5C2784F68200F55BC6 /* TextPreviewView.swift in Sources */,
+				4F43BDFF2789B0AD005CDD6D /* ResultView.swift in Sources */,
 				4F309E672785AB5500F55BC6 /* ModelData.swift in Sources */,
 				4F309E612784F89900F55BC6 /* Users.swift in Sources */,
 				4F309E5B2784F68200F55BC6 /* ScannerView.swift in Sources */,
