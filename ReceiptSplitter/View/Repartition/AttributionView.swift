@@ -81,6 +81,7 @@ struct AttributionView: View {
                         }) {
                                 Image(systemName: "photo.on.rectangle")
                                     .resizable(resizingMode: .tile)
+                                    .aspectRatio(contentMode: .fit)
                                     .frame(width: 30.0, height: 25.0)
                                     .foregroundColor(.blue)
                         }

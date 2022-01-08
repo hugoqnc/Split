@@ -15,6 +15,7 @@ struct HomeView: View {
     @State private var isFirstTimeShowingList = true
     @State private var isValidated = false
     @State private var itemCounter = 0
+    @State private var isKeyboardShown = false
     
     var body: some View {
         NavigationView {
@@ -24,15 +25,15 @@ struct HomeView: View {
                     
                     CurrentExpensesRow()
                         .padding()
-                        .frame(height: 100)
+                        .frame(height: 150)
                     
                     Spacer()
                     
                     ZStack {
                         ForEach(model.listOfProductsAndPrices) { pair in
                             let number = model.listOfProductsAndPrices.firstIndex(of: pair)!
-                            Text(String(number))
-                                .offset(x: CGFloat(10*number), y: 0.0)
+//                            Text(String(number))
+//                                .offset(x: CGFloat(10*number), y: 0.0)
                             if itemCounter==number {
                                 AttributionView(pair: $model.listOfProductsAndPrices[number], isValidated: $isValidated, itemCounter: itemCounter)
                                     .onChange(of: isValidated) { newValue in
@@ -46,7 +47,6 @@ struct HomeView: View {
                         }
                     }
                     .animation(.easeInOut, value: model.listOfProductsAndPrices[itemCounter].id)
-                    //.animation(.easeInOut)
                     
                     Button {
                         showAllList = true
@@ -63,8 +63,17 @@ struct HomeView: View {
                 
             }
             .navigationTitle("ReceiptSplitter")
-            
-
+            .navigationBarHidden(isKeyboardShown)
+            .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)) { _ in
+                withAnimation(.easeInOut(duration: 4)) {
+                    isKeyboardShown = true
+                }
+            }
+            .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)) { _ in
+                withAnimation(.easeInOut) {
+                    isKeyboardShown = false
+                }
+            }
         }
         .sheet(isPresented: $showScanner, content: {
             HStack {
