@@ -47,7 +47,7 @@ class TextModel: Identifiable {
     }
 }
 
-struct PairProductPrice: Identifiable {
+struct PairProductPrice: Identifiable, Equatable {
     var id: String
     var name: String = ""
     var price: Double = 0

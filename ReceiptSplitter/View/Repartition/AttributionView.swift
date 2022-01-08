@@ -18,14 +18,23 @@ struct AttributionView: View {
     @State private var isEditorMode = false
     @State private var showSafariView = false
     
-    private let textOfNewItem = "Additional Product"
+    @State private var isNewItem = false
+    @State private var isDeleteItem = false
     
+    @State private var xOffset: CGFloat = 0.0
+    @State private var yOffset: CGFloat = 0.0
+    @State private var opacity = 1.0
+    
+    
+    private let textOfNewItem = "Additional Product"
+        
     var body: some View {
         VStack {
             VStack {
-                
+                                
                 HStack {
                     VStack(alignment: .leading) {
+                    
                         if pair.name==textOfNewItem {
                             Text(pair.name)
                                 .font(.title2)
@@ -50,31 +59,46 @@ struct AttributionView: View {
                                 .fontWeight(.bold)
                                 .padding(.bottom,25)
                                 .offset(x: 0, y: 5)
+                                .foregroundColor(pair.price==0 ? .red : nil)
                                 
                         }
                     }
                     
                     Spacer()
                     
-                    Button(action: {
-                            showSafariView = true
-                    }) {
-                            Image(systemName: "info.circle")
-                                .resizable(resizingMode: .tile)
-                                .frame(width: 25.0, height: 25.0)
-                                .foregroundColor(.blue)
+                    VStack {
+                        
+                        Text("\(itemCounter+1)/\(model.listOfProductsAndPrices.count)")
+                            .font(.caption)
+                            .fontWeight(.bold)
+                            .padding(.trailing, 5)
+                            .padding(.bottom, 10)
+                            .padding(.top, -20)
+                            .foregroundColor(.secondary)
+                                                
+                        Button(action: {
+                                showSafariView = true
+                        }) {
+                                Image(systemName: "photo.on.rectangle")
+                                    .resizable(resizingMode: .tile)
+                                    .frame(width: 30.0, height: 25.0)
+                                    .foregroundColor(.blue)
+                        }
+                        .padding(.trailing, 5)
+                        
                     }
                 }
                 .fullScreenCover(isPresented: $showSafariView) {
                     SafariView(url: URL(string: "http://www.google.com/images?q="+pair.name.replacingOccurrences(of: " ", with: "%20"))!).edgesIgnoringSafeArea(.all)}
-                .padding(.top,10)
+                .padding(.top,5)
                 
-                
+                Divider()
                 
                 SelectableItems(users: model.users, selections: $selections)
                     .padding(.top)
                     .padding(.bottom,25)
-        
+                
+                Divider()
                 
                 HStack {
                     
@@ -90,8 +114,11 @@ struct AttributionView: View {
                     }
                     
                     Button {
-                        let newPair = PairProductPrice(id: UUID().uuidString, name: textOfNewItem, price: 0.0)
-                        model.listOfProductsAndPrices.insert(newPair, at: itemCounter)
+                        if !isEditorMode {
+                            withAnimation(.easeInOut(duration: 4)) {
+                                isNewItem = true
+                            }
+                        }
                     } label: {
                         Image(systemName: "plus.circle.fill")
                             .resizable(resizingMode: .tile)
@@ -103,9 +130,10 @@ struct AttributionView: View {
                     
                     Button {
                         if !isEditorMode {
-                            if let index = model.listOfProductsAndPrices.firstIndex(where: {$0.id == pair.id}) {
-                                model.listOfProductsAndPrices.remove(at: index)
+                            withAnimation(.easeInOut(duration: 4)) {
+                                isDeleteItem = true
                             }
+        
                         }
                         
                     } label: {
@@ -120,6 +148,7 @@ struct AttributionView: View {
                     
                     Button {
                         if !isEditorMode {
+                            
                             let divider = selections.count
                             if divider==0 {
                                 showAlert1 = true
@@ -150,7 +179,7 @@ struct AttributionView: View {
                 }
             }
             .padding(20)
-            .background(pair.price==0 ? Color(red: 255 / 255, green: 0 / 255, blue: 0 / 255).opacity(0.15) : nil)
+            .background(Color(red: 160 / 255, green: 160 / 255, blue: 160 / 255).opacity(0.1))
         }
         .cornerRadius(10)
         .overlay(RoundedRectangle(cornerRadius: 10)
@@ -158,23 +187,60 @@ struct AttributionView: View {
         .padding()
         .alert("Select the users who participate in this expense", isPresented: $showAlert1) {
             Button("OK") { }
-        
         }
+        .offset(x: xOffset, y: yOffset)
+        .opacity(opacity)
+        .onChange(of: isNewItem) { newValue in
+            if newValue {
+                withAnimation(.easeInOut(duration: 0.35)) {
+                    xOffset = 300
+                    opacity = 0.0
+                }
+                let secondsToDelay = 0.35
+                DispatchQueue.main.asyncAfter(deadline: .now() + secondsToDelay) {
+                    isNewItem = false
+                }
+                
+            } else {
+                xOffset = 0
+                yOffset = 300
+                let newPair = PairProductPrice(id: UUID().uuidString, name: textOfNewItem, price: 0.0)
+                model.listOfProductsAndPrices.insert(newPair, at: itemCounter)
+                
+                withAnimation() {
+                    yOffset = 0
+                    opacity = 1.0
+                }
+            }
+        }
+        .onChange(of: isDeleteItem) { newValue in
+            if newValue {
+                withAnimation(.easeInOut(duration: 0.35)) {
+                    yOffset = 300
+                    opacity = 0.0
+                }
+                let secondsToDelay = 0.35
+                DispatchQueue.main.asyncAfter(deadline: .now() + secondsToDelay) {
+                    isDeleteItem = false
+                }
+                
+            } else {
+                yOffset = 0
+                xOffset = 300
+                if let index = model.listOfProductsAndPrices.firstIndex(where: {$0.id == pair.id}) {
+                    model.listOfProductsAndPrices.remove(at: index)
+                }
+                
+                withAnimation() {
+                    xOffset = 0
+                    opacity = 1.0
+                }
+            }
+        }
+
     }
     
 }
-
-//class NumbersOnly: ObservableObject {
-//    @Published var value = "" {
-//        didSet {
-//            let filtered = value.filter { $0.isNumber }
-//
-//            if value != filtered {
-//                value = filtered
-//            }
-//        }
-//    }
-//}
 
 struct AttributionView_Previews: PreviewProvider {
     static let model = ModelData()

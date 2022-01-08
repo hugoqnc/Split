@@ -10,22 +10,45 @@ import SwiftUI
 struct SelectableItems: View {
     var users: [User]
     @Binding var selections: [UUID]
+    private var boolAllSelected: Bool {
+        get {
+            return users.count == selections.count
+        }
+    }
 
     var body: some View {
-        ScrollView(.horizontal) {
+        VStack {
             HStack {
-                ForEach(users) { item in
-                    
-                        MultipleSelectionRow(title: item.name, isSelected: self.selections.contains(item.id)) {
-                            if self.selections.contains(item.id) {
-                                self.selections.removeAll(where: { $0 == item.id })
-                            }
-                            else {
-                                self.selections.append(item.id)
-                            }
+                Button() {
+                    if boolAllSelected {
+                        self.selections.removeAll()
+                    }
+                    else {
+                        self.selections.removeAll()
+                        for user in users {
+                            self.selections.append(user.id)
                         }
-                        //.offset(x: 30)
-                    
+                    }
+                } label: {
+                    Text(boolAllSelected ? "Deselect all" : "Select all")
+                }
+                .padding(.leading, 3)
+                
+                Spacer()
+            }
+            
+            ScrollView(.horizontal) {
+                HStack {
+                    ForEach(users) { item in
+                        MultipleSelectionRow(title: item.name, isSelected: self.selections.contains(item.id)) {
+                                if self.selections.contains(item.id) {
+                                    self.selections.removeAll(where: { $0 == item.id })
+                                }
+                                else {
+                                    self.selections.append(item.id)
+                                }
+                        }
+                    }
                 }
             }
         }

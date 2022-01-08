@@ -17,9 +17,6 @@ struct HomeView: View {
     @State private var isValidated = false
     @State private var itemCounter = 0
     
-    //@State private var listOfProductsAndPrices: [PairProductPrice] = []
-    
-    
     var body: some View {
         NavigationView {
             ZStack() {
@@ -32,7 +29,6 @@ struct HomeView: View {
                             .frame(height: 100)
                         
                         Spacer()
-                    
                         
                         ZStack {
                             ForEach(0..<model.listOfProductsAndPrices.count) { number in
@@ -45,23 +41,23 @@ struct HomeView: View {
                                             }
                                         }
                                         .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
+                                        .zIndex(1)
                                 }
                             }
                         }
+                        .animation(.easeInOut, value: itemCounter)
                         
                         Button {
                             showAllList = true
                         } label: {
-                            Label("See all list", systemImage: "list.bullet")
+                            Label("See all transactions", systemImage: "list.bullet")
                         }
-                        .buttonStyle(.borderedProminent)
                         .padding(15)
                         
                     } else {
                         Text("Finished")
                     }
                 }
-                .animation(.easeInOut, value: itemCounter)
 
                 
                 if model.listOfProductsAndPrices.isEmpty {
@@ -115,7 +111,6 @@ struct HomeView: View {
                     .scaleEffect(2)
             } else {
                 ListSheetView(itemCounter: itemCounter, isFirstTimeShowingList: $isFirstTimeShowingList)
-                    .background(Color(red: 255 / 255, green: 255 / 255, blue: 55 / 255).opacity(0.2).ignoresSafeArea(.all))
             }
         })
     }
@@ -124,7 +119,7 @@ struct HomeView: View {
 struct HomeView_Previews: PreviewProvider {
     static let model = ModelData()
     static var previews: some View {
-        HomeView(showScanner: false, showAllList: true)
+        HomeView(showScanner: false, showAllList: false)
             .environmentObject(model)
             .onAppear {
                 model.users = [User(name: "Hugo"), User(name: "Lucas"), User(name: "Thomas")]

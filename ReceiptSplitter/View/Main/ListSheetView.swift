@@ -14,6 +14,7 @@ struct ListSheetView: View {
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
+        VStack {
         if isFirstTimeShowingList {
             VStack {
                 Image(systemName: "exclamationmark.triangle")
@@ -21,7 +22,7 @@ struct ListSheetView: View {
                     .frame(width: 30.0, height: 30.0)
                     .foregroundColor(.orange)
                     .padding(.top)
-                Text("Please check that most of the transactions are correct, meaning that most names are associated with the right prices. If it is not the case, please start again.")
+                Text("Please check that most of the transactions are correct, meaning that most names are associated with the right prices. If it is not the case, please cancel and start again.")
                     .padding(.bottom)
                     .padding(.leading)
                     .padding(.trailing)
@@ -38,7 +39,7 @@ struct ListSheetView: View {
                     Section(header: Text("All transactions")){
                         ForEach(model.listOfProductsAndPrices) { pair in
                         HStack {
-                            if pair.id == model.listOfProductsAndPrices[itemCounter].id {
+                            if pair.id == model.listOfProductsAndPrices[itemCounter].id && !isFirstTimeShowingList{
                                 VStack(alignment: .leading) {
                                     Text("Current item".uppercased())
                                         .font(.caption)
@@ -52,7 +53,7 @@ struct ListSheetView: View {
                             Spacer()
                             Text(String(pair.price)+"€")
                         }
-                        .foregroundColor(pair.id == model.listOfProductsAndPrices[itemCounter].id ? .blue : nil)
+                        .foregroundColor(pair.id == model.listOfProductsAndPrices[itemCounter].id && !isFirstTimeShowingList ? .blue : nil)
                     }
                     }
                 }
@@ -79,13 +80,14 @@ struct ListSheetView: View {
                     } label: {
                         Text("Done")
                     }
-                    .buttonStyle(.borderedProminent)
                     .padding()
                 }
             }
             .navigationBarTitle("")
             .navigationBarHidden(true)
         }
+        }
+        .background(Color(red: 255 / 255, green: 225 / 255, blue: 51 / 255).opacity(0.2).ignoresSafeArea(.all))
     }
 }
 
