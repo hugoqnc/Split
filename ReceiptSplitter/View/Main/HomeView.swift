@@ -10,8 +10,8 @@ import SwiftUI
 struct HomeView: View {
     @EnvironmentObject var model: ModelData
     @ObservedObject var recognizedContent = TextData()
-    @State var showScanner = false // TODO: add private when done, and remove Preview
-    @State  var showAllList = false // TODO: add private when done, and remove Preview
+    @State private var showScanner = false
+    @State private var showAllList = false
     @State private var isFirstTimeShowingList = true
     @State private var isValidated = false
     @State private var itemCounter = 0
@@ -57,7 +57,20 @@ struct HomeView: View {
                     
                 } else {
                     if !isFirstTimeShowingList {
-                        ResultView()
+                        VStack{
+                            ResultView()
+                            Button {
+                                model.startTheProcess = false
+                                model.users = UsersModel().users
+                                model.listOfProductsAndPrices = []
+                            } label: {
+                                Label("Done", systemImage: "checkmark")
+                            }
+                            .buttonStyle(.borderedProminent)
+                            .padding(7)
+                        }
+//                        .transition(.slide)
+//                        .animation(.easeInOut, value: itemCounter)
                     }
                 }
                 
@@ -80,9 +93,7 @@ struct HomeView: View {
                 }
             }
             .onAppear {
-                print(showScanner)
-                showScanner.toggle()
-                print(showScanner)
+                showScanner = true
             }
         }
         .sheet(isPresented: $showScanner, content: {
@@ -133,11 +144,11 @@ struct HomeView: View {
 struct HomeView_Previews: PreviewProvider {
     static let model = ModelData()
     static var previews: some View {
-        HomeView(showScanner: false, showAllList: false)
+        HomeView()
             .environmentObject(model)
             .onAppear {
                 model.users = [User(name: "Hugo"), User(name: "Lucas"), User(name: "Thomas")]
-                model.listOfProductsAndPrices = [PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 4.99), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBC", name: "Finger Fish", price: 1.27), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBD", name: "Ice Cream Strawberry", price: 3.20)]
+                model.listOfProductsAndPrices = []//PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 4.99), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBC", name: "Finger Fish", price: 1.27), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBD", name: "Ice Cream Strawberry", price: 3.20)]
             }
     }
 }

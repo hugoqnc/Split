@@ -23,4 +23,10 @@ struct User: Identifiable {
         id = UUID()
         self.name = name
     }
+    
+    init(name: String, balance: Double) {
+        id = UUID()
+        self.name = name
+        self.balance = balance
+    }
 }
