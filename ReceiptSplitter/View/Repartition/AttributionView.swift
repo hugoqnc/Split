@@ -77,13 +77,15 @@ struct AttributionView: View {
                             .foregroundColor(.secondary)
                                                 
                         Button(action: {
+                            if !(pair.name==AttributionView.textOfNewItem){
                                 showSafariView = true
+                            }
                         }) {
                                 Image(systemName: "photo.on.rectangle")
                                     .resizable(resizingMode: .tile)
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 30.0, height: 25.0)
-                                    .foregroundColor(.blue)
+                                    .foregroundColor(pair.name==AttributionView.textOfNewItem ? colorDisabledButton : .blue)
                         }
                         .padding(.trailing, 5)
                         
@@ -113,6 +115,11 @@ struct AttributionView: View {
                             .foregroundColor(.blue)
                             .padding(.top)
                             .padding(.trailing,5)
+                    }
+                    .onAppear {
+                        if pair.name==AttributionView.textOfNewItem {
+                            isEditorMode = true
+                        }
                     }
                     
                     Button {

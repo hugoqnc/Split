@@ -56,7 +56,8 @@ struct HomeView: View {
                                     //.animation(.easeInOut)
                             }
                         }
-                        .animation(.easeInOut)
+                        .animation(.easeInOut, value: model.listOfProductsAndPrices)
+                        .animation(.easeInOut, value: itemCounter)
                         
                         Button {
                             showAllList = true
@@ -69,6 +70,7 @@ struct HomeView: View {
                     if showScanner{
                         // Weird SwiftUI bug: this invisible text is necessary to open the scanner onAppear of HomeView
                         Text(String(showScanner))
+                            .opacity(0)
                     }
                     
                 }
