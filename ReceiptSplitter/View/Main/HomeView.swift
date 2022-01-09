@@ -21,33 +21,42 @@ struct HomeView: View {
     var body: some View {
             NavigationView {
                 VStack{
-                    if itemCounter<model.listOfProductsAndPrices.count {
-                        
+                    if !isFirstTimeShowingList { //don't show anything when the model is not ready yet
                         CurrentExpensesRow()
                             .padding()
                             .frame(height: 150)
                         
                         Spacer()
                         
-                        ZStack {
-                            ForEach(model.listOfProductsAndPrices) { pair in
-                                let number = model.listOfProductsAndPrices.firstIndex(of: pair)!
-                                if itemCounter==number {
-                                    AttributionView(pair: $model.listOfProductsAndPrices[number], isValidated: $isValidated, itemCounter: itemCounter)
-                                        .onChange(of: isValidated) { newValue in
-                                            if newValue {
-                                                itemCounter += 1
-                                                isValidated = false
-                                                if itemCounter==model.listOfProductsAndPrices.count && !isFirstTimeShowingList{
-                                                        showResult = true
+                        ZStack{
+                            if itemCounter<model.listOfProductsAndPrices.count {
+                                
+                                ZStack {
+                                    ForEach(model.listOfProductsAndPrices) { pair in
+                                        let number = model.listOfProductsAndPrices.firstIndex(of: pair)!
+                                        if itemCounter==number {
+                                            AttributionView(pair: $model.listOfProductsAndPrices[number], isValidated: $isValidated, itemCounter: itemCounter)
+                                                .onChange(of: isValidated) { newValue in
+                                                    if newValue {
+                                                        itemCounter += 1
+                                                        isValidated = false
+                                                        if itemCounter==model.listOfProductsAndPrices.count && !isFirstTimeShowingList{
+                                                                //showResult = true
+                                                        }
+                                                    }
                                                 }
-                                            }
-                                        }
 
+                                        }
+                                    }
                                 }
+                                //.animation(.easeInOut, value: model.listOfProductsAndPrices[itemCounter].id)
+                                
+                            } else {
+                                LastItemView(showResult: $showResult)
+                                    //.animation(.easeInOut)
                             }
                         }
-                        .animation(.easeInOut, value: model.listOfProductsAndPrices[itemCounter].id)
+                        .animation(.easeInOut)
                         
                         Button {
                             showAllList = true
@@ -55,9 +64,6 @@ struct HomeView: View {
                             Label("See all transactions", systemImage: "list.bullet")
                         }
                         .padding(15)
-                        
-                    } else {
-                        Text("Hello World") //TODO: we are here if we delete all items
                     }
                     
                     if showScanner{
@@ -121,7 +127,12 @@ struct HomeView: View {
             if model.listOfProductsAndPrices.isEmpty {
                 LoadItemsView()
             } else {
-                ListSheetView(itemCounter: itemCounter, isFirstTimeShowingList: $isFirstTimeShowingList)
+                if itemCounter<model.listOfProductsAndPrices.count {
+                    ListSheetView(itemCounter: itemCounter, isFirstTimeShowingList: $isFirstTimeShowingList)
+                } else {
+                    ListSheetView(itemCounter: -1, isFirstTimeShowingList: $isFirstTimeShowingList)
+                }
+                
             }
         })
         .sheet(isPresented: $showResult, content: {
@@ -138,7 +149,7 @@ struct HomeView_Previews: PreviewProvider {
             .environmentObject(model)
             .onAppear {
                 model.users = [User(name: "Hugo"), User(name: "Lucas"), User(name: "Thomas")]
-                model.listOfProductsAndPrices = [PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 4.99)]//, PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBC", name: "Finger Fish", price: 1.27), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBD", name: "Ice Cream Strawberry", price: 3.20)]
+                model.listOfProductsAndPrices = [PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 4.99), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBC", name: "Finger Fish", price: 1.27), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBD", name: "Ice Cream Strawberry", price: 3.20)]
             }
     }
 }

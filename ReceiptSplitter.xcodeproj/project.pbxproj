@@ -30,6 +30,7 @@
 		4F43BDFD2789A9CD005CDD6D /* LoadItemsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F43BDFC2789A9CD005CDD6D /* LoadItemsView.swift */; };
 		4F43BDFF2789B0AD005CDD6D /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F43BDFE2789B0AD005CDD6D /* ResultView.swift */; };
 		4F9219C6278A3E3F006D9E13 /* StatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9219C5278A3E3F006D9E13 /* StatView.swift */; };
+		4FF04F50278B0DF700650EBC /* LastItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF04F4F278B0DF700650EBC /* LastItemView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,7 @@
 		4F43BDFC2789A9CD005CDD6D /* LoadItemsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadItemsView.swift; sourceTree = "<group>"; };
 		4F43BDFE2789B0AD005CDD6D /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
 		4F9219C5278A3E3F006D9E13 /* StatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatView.swift; sourceTree = "<group>"; };
+		4FF04F4F278B0DF700650EBC /* LastItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastItemView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,6 +210,7 @@
 			children = (
 				4F309E692785EB7600F55BC6 /* CurrentExpensesRow.swift */,
 				4F309E6B2785F80600F55BC6 /* AttributionView.swift */,
+				4FF04F4F278B0DF700650EBC /* LastItemView.swift */,
 				4F9219C5278A3E3F006D9E13 /* StatView.swift */,
 			);
 			path = Repartition;
@@ -361,6 +364,7 @@
 				4F309E592784F68200F55BC6 /* HomeView.swift in Sources */,
 				4F309E5D2784F68200F55BC6 /* TextRecognition.swift in Sources */,
 				4F37A8982787AF4900947426 /* SafariView.swift in Sources */,
+				4FF04F50278B0DF700650EBC /* LastItemView.swift in Sources */,
 				4F309E532784B55900F55BC6 /* ContentView.swift in Sources */,
 				4F309E232784B49900F55BC6 /* ReceiptSplitterApp.swift in Sources */,
 				4F309E5A2784F68200F55BC6 /* Text.swift in Sources */,

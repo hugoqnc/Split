@@ -39,30 +39,35 @@ struct ListSheetView: View {
                     List() {
                         Section(header: Text("All transactions")){
                             ForEach(model.listOfProductsAndPrices) { pair in
-                                HStack {
-                                    if showCurrentItem {
-                                        VStack(alignment: .leading) {
-                                            Text("Current item".uppercased())
-                                                .font(.caption)
-                                                .padding(.top,3)
+                                if showCurrentItem {
+                                    HStack {
+                                        if  pair.id==model.listOfProductsAndPrices[itemCounter].id {
+                                            VStack(alignment: .leading) {
+                                                Text("Current item".uppercased())
+                                                    .font(.caption)
+                                                    .padding(.top,3)
+                                                Text(pair.name)
+                                            }
+                                        } else {
                                             Text(pair.name)
                                         }
-                                    } else {
+
+                                        Spacer()
+                                        Text(String(pair.price)+"€")
+                                    }
+                                    .foregroundColor(pair.id==model.listOfProductsAndPrices[itemCounter].id ? .blue : nil)
+                                } else {
+                                    HStack {
                                         Text(pair.name)
-                                    }
-
-                                    Spacer()
-                                    Text(String(pair.price)+"€")
-                                }
-                                .foregroundColor(showCurrentItem ? .blue : nil)
-                                .onAppear {
-                                    if itemCounter>=0 {
-                                        if pair.id == model.listOfProductsAndPrices[itemCounter].id && !isFirstTimeShowingList {
-                                            showCurrentItem = true
-                                        }
+                                        Spacer()
+                                        Text(String(pair.price)+"€")
                                     }
                                 }
-
+                            }
+                            .onAppear {
+                                if itemCounter>=0 && !isFirstTimeShowingList{
+                                    showCurrentItem = true
+                                }
                             }
                         }
                     }

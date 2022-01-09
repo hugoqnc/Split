@@ -25,7 +25,7 @@ struct AttributionView: View {
     @State private var yOffset: CGFloat = 0.0
     @State private var opacity = 1.0
     
-    private let textOfNewItem = "Additional Product"
+    static let textOfNewItem = "Additional Product"
     private let colorDisabledButton = Color(red: 140 / 255, green: 140 / 255, blue: 140 / 255).opacity(0.2)
         
     var body: some View {
@@ -35,7 +35,7 @@ struct AttributionView: View {
                 HStack {
                     VStack(alignment: .leading) {
                     
-                        if pair.name==textOfNewItem {
+                        if pair.name==AttributionView.textOfNewItem {
                             Text(pair.name)
                                 .font(.title2)
                                 .italic()
@@ -116,7 +116,7 @@ struct AttributionView: View {
                     }
                     
                     Button {
-                        if !isEditorMode && !(pair.name==textOfNewItem) {
+                        if !isEditorMode && !(pair.name==AttributionView.textOfNewItem) {
                             withAnimation(.easeInOut(duration: 4)) {
                                 isNewItem = true
                             }
@@ -125,7 +125,7 @@ struct AttributionView: View {
                         Image(systemName: "plus.circle.fill")
                             .resizable(resizingMode: .tile)
                             .frame(width: 30.0, height: 30.0)
-                            .foregroundColor(isEditorMode || (pair.name==textOfNewItem) ? colorDisabledButton : .yellow)
+                            .foregroundColor(isEditorMode || (pair.name==AttributionView.textOfNewItem) ? colorDisabledButton : .yellow)
                             .padding(.top)
                             .padding(.trailing,5)
                     }
@@ -227,7 +227,7 @@ struct AttributionView: View {
                 }
 
             } else {
-                let newPair = PairProductPrice(id: UUID().uuidString, name: textOfNewItem, price: 0.0)
+                let newPair = PairProductPrice(id: UUID().uuidString, name: AttributionView.textOfNewItem, price: 0.0)
                 model.listOfProductsAndPrices.insert(newPair, at: itemCounter)
             }
         }
@@ -249,7 +249,7 @@ struct AttributionView: View {
             }
         }
         .transition(
-            pair.name==textOfNewItem ?
+            pair.name==AttributionView.textOfNewItem ?
                 .asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .leading)) :
                     .asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
     }
