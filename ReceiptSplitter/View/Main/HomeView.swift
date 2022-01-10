@@ -11,6 +11,7 @@ struct HomeView: View {
     @EnvironmentObject var model: ModelData
     @ObservedObject var recognizedContent = TextData()
     @State private var showScanner = false
+    @State private var nothingFound = false
     @State private var showAllList = false
     @State var isFirstTimeShowingList = true //TODO: change
     @State private var isValidated = false
@@ -102,7 +103,9 @@ struct HomeView: View {
                                     let content: [PairProductPrice] = item.list
                                     model.listOfProductsAndPrices.append(contentsOf: content)
                                 }
-                                // print(listOfProductsAndPrices)
+                                if model.listOfProductsAndPrices.isEmpty{
+                                    nothingFound = true
+                                }
                             }
                             .recognizeText()
                             
@@ -127,7 +130,10 @@ struct HomeView: View {
         })
         .sheet(isPresented: $showAllList, content: {
             if model.listOfProductsAndPrices.isEmpty {
-                LoadItemsView()
+                VStack {
+                    //Text("nothingFound: \(String(nothingFound))")
+                    LoadItemsView(nothingFound: $nothingFound)
+                }
             } else {
                 if itemCounter<model.listOfProductsAndPrices.count {
                     ListSheetView(itemCounter: itemCounter, isFirstTimeShowingList: $isFirstTimeShowingList)

@@ -24,6 +24,7 @@ struct ListSheetView: View {
                         .foregroundColor(.orange)
                         .padding(.top)
                     Text("Please check that most of the transactions are correct, meaning that most names are associated with the right prices. If it is not the case, please cancel and start again.")
+                        .padding(.top,3)
                         .padding(.bottom)
                         .padding(.leading)
                         .padding(.trailing)
