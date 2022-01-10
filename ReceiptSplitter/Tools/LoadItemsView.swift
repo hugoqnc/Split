@@ -21,11 +21,22 @@ struct LoadItemsView: View {
                         .frame(width: 30.0, height: 30.0)
                         .foregroundColor(.orange)
                         .padding(.top)
-                    Text("No item was found on your scan.\nPlease make sure your receipt is compatible with this application.\nIf it is, you can try to scan it again.")
-                        .padding(.top,3)
-                        .padding(.bottom,10)
-                        .padding(.leading)
+                    HStack {
+                        Text("No item was found on your scan.")
+                            .fontWeight(.semibold)
+                            .padding(.top,3)
+                            .padding(.leading)
+                            .padding(.bottom,1)
+                            .padding(.trailing)
+                        Spacer()
+                    }
+                    HStack {
+                        Text("Please make sure your receipt is compatible with this application.\nIf it is, you can try to scan it again.")
+                            .padding(.bottom,10)
+                            .padding(.leading)
                         .padding(.trailing)
+                        Spacer()
+                    }
                     Button {
                         dismiss()
                         
@@ -39,7 +50,7 @@ struct LoadItemsView: View {
                     .padding(.bottom)
                     .tint(.orange)
                 }
-                .padding(5)
+                .padding(10)
             }
             .cornerRadius(10)
             .overlay(RoundedRectangle(cornerRadius: 10)
