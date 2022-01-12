@@ -1,8 +1,8 @@
 //
 //  TextRecognition.swift
-//  ScanAndRecognizeText
+//  ReceiptSplitter
 //
-//  Created by Gabriel Theodoropoulos.
+//  Created by Hugo Queinnec on 05/01/2022.
 //
 
 import SwiftUI
@@ -23,7 +23,7 @@ struct TextRecognition {
                 let requestHandler = VNImageRequestHandler(cgImage: cgImage, options: [:])
                 
                 do {
-                    let textItem = TextModel()
+                    let textItem = TextModel() //TODO: put multiple scanned images in a single TextModel
                     try requestHandler.perform([getTextRecognitionRequest(with: textItem)])
                     
                     textItem.getListOfProductsAndPrices()

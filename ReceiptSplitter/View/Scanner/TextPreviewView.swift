@@ -1,8 +1,8 @@
 //
 //  TextPreviewView.swift
-//  ScanAndRecognizeText
+//  ReceiptSplitter
 //
-//  Created by Gabriel Theodoropoulos.
+//  Created by Hugo Queinnec on 05/01/2022.
 //
 
 import SwiftUI
