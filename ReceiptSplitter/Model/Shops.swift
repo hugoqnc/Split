@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct Shop: Identifiable {
     var id: UUID
@@ -13,7 +14,7 @@ struct Shop: Identifiable {
     
     static let `default` = Shop(shop: .aldi_suisse)
     
-    enum ShopReceiptType {
+    enum ShopReceiptType: CaseIterable {
 
         case aldi_suisse
         case carrefour_france
@@ -68,12 +69,12 @@ struct Shop: Identifiable {
         }
     }
     
-    var image: String {
+    var image: Image {
         switch self.shop{
         case .aldi_suisse:
-            return ""
+            return Image("aldi_suisse")
         case .carrefour_france:
-            return ""
+            return Image("carrefour_france")
 //        default:
 //            return ""
         }

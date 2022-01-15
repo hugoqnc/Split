@@ -31,6 +31,8 @@
 		4F43BDFF2789B0AD005CDD6D /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F43BDFE2789B0AD005CDD6D /* ResultView.swift */; };
 		4F9219C6278A3E3F006D9E13 /* StatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9219C5278A3E3F006D9E13 /* StatView.swift */; };
 		4FB2F77A279357D70080D5DB /* Shops.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB2F779279357D70080D5DB /* Shops.swift */; };
+		4FB2F77C27938EBD0080D5DB /* ShopRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB2F77B27938EBD0080D5DB /* ShopRow.swift */; };
+		4FB2F77F2793916F0080D5DB /* ShopPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB2F77E2793916F0080D5DB /* ShopPickerView.swift */; };
 		4FF04F50278B0DF700650EBC /* LastItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF04F4F278B0DF700650EBC /* LastItemView.swift */; };
 /* End PBXBuildFile section */
 
@@ -79,6 +81,8 @@
 		4F43BDFE2789B0AD005CDD6D /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
 		4F9219C5278A3E3F006D9E13 /* StatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatView.swift; sourceTree = "<group>"; };
 		4FB2F779279357D70080D5DB /* Shops.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shops.swift; sourceTree = "<group>"; };
+		4FB2F77B27938EBD0080D5DB /* ShopRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopRow.swift; sourceTree = "<group>"; };
+		4FB2F77E2793916F0080D5DB /* ShopPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopPickerView.swift; sourceTree = "<group>"; };
 		4FF04F4F278B0DF700650EBC /* LastItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastItemView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -131,10 +135,10 @@
 			isa = PBXGroup;
 			children = (
 				4F309E222784B49900F55BC6 /* ReceiptSplitterApp.swift */,
+				4F309E262784B49A00F55BC6 /* Assets.xcassets */,
 				4F309E5E2784F7D900F55BC6 /* Model */,
 				4F309E5F2784F7E300F55BC6 /* View */,
-				4F309E712786D90B00F55BC6 /* Tools */,
-				4F309E262784B49A00F55BC6 /* Assets.xcassets */,
+				4F309E712786D90B00F55BC6 /* Others */,
 				4F309E282784B49A00F55BC6 /* Preview Content */,
 			);
 			path = ReceiptSplitter;
@@ -183,6 +187,7 @@
 				4F309E632784F9CD00F55BC6 /* Main */,
 				4F309E682785EB4400F55BC6 /* Repartition */,
 				4F309E622784F9BA00F55BC6 /* Scanner */,
+				4FB2F77D2793914F0080D5DB /* Shop */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -219,14 +224,23 @@
 			path = Repartition;
 			sourceTree = "<group>";
 		};
-		4F309E712786D90B00F55BC6 /* Tools */ = {
+		4F309E712786D90B00F55BC6 /* Others */ = {
 			isa = PBXGroup;
 			children = (
 				4F309E722786DA4700F55BC6 /* SelectableItems.swift */,
 				4F37A8972787AF4800947426 /* SafariView.swift */,
 				4F43BDFC2789A9CD005CDD6D /* LoadItemsView.swift */,
 			);
-			path = Tools;
+			path = Others;
+			sourceTree = "<group>";
+		};
+		4FB2F77D2793914F0080D5DB /* Shop */ = {
+			isa = PBXGroup;
+			children = (
+				4FB2F77B27938EBD0080D5DB /* ShopRow.swift */,
+				4FB2F77E2793916F0080D5DB /* ShopPickerView.swift */,
+			);
+			path = Shop;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -365,6 +379,7 @@
 				4F309E652784F9E700F55BC6 /* StartView.swift in Sources */,
 				4F309E732786DA4700F55BC6 /* SelectableItems.swift in Sources */,
 				4F309E592784F68200F55BC6 /* HomeView.swift in Sources */,
+				4FB2F77F2793916F0080D5DB /* ShopPickerView.swift in Sources */,
 				4F309E5D2784F68200F55BC6 /* TextRecognition.swift in Sources */,
 				4F37A8982787AF4900947426 /* SafariView.swift in Sources */,
 				4FF04F50278B0DF700650EBC /* LastItemView.swift in Sources */,
@@ -376,6 +391,7 @@
 				4F9219C6278A3E3F006D9E13 /* StatView.swift in Sources */,
 				4F309E5C2784F68200F55BC6 /* TextPreviewView.swift in Sources */,
 				4F43BDFF2789B0AD005CDD6D /* ResultView.swift in Sources */,
+				4FB2F77C27938EBD0080D5DB /* ShopRow.swift in Sources */,
 				4F309E672785AB5500F55BC6 /* ModelData.swift in Sources */,
 				4F309E612784F89900F55BC6 /* Users.swift in Sources */,
 				4F309E5B2784F68200F55BC6 /* ScannerView.swift in Sources */,
