@@ -98,7 +98,8 @@ struct HomeView: View {
                         case .success(let scannedImages):
                             
                             TextRecognition(scannedImages: scannedImages,
-                                            recognizedContent: recognizedContent) {
+                                            recognizedContent: recognizedContent,
+                                            shop: model.shop) {
                                 for item in recognizedContent.items{
                                     let content: [PairProductPrice] = item.list
                                     model.listOfProductsAndPrices.append(contentsOf: content)

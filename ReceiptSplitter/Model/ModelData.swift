@@ -11,6 +11,7 @@ final class ModelData: ObservableObject {
     @Published var startTheProcess = false
     @Published var users: [User] = UsersModel().users
     @Published var listOfProductsAndPrices: [PairProductPrice] = []
+    @Published var shop: Shop = Shop.default
     
     var totalPrice: Double {
         get {

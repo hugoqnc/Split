@@ -30,6 +30,7 @@
 		4F43BDFD2789A9CD005CDD6D /* LoadItemsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F43BDFC2789A9CD005CDD6D /* LoadItemsView.swift */; };
 		4F43BDFF2789B0AD005CDD6D /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F43BDFE2789B0AD005CDD6D /* ResultView.swift */; };
 		4F9219C6278A3E3F006D9E13 /* StatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9219C5278A3E3F006D9E13 /* StatView.swift */; };
+		4FB2F77A279357D70080D5DB /* Shops.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB2F779279357D70080D5DB /* Shops.swift */; };
 		4FF04F50278B0DF700650EBC /* LastItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF04F4F278B0DF700650EBC /* LastItemView.swift */; };
 /* End PBXBuildFile section */
 
@@ -77,6 +78,7 @@
 		4F43BDFC2789A9CD005CDD6D /* LoadItemsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadItemsView.swift; sourceTree = "<group>"; };
 		4F43BDFE2789B0AD005CDD6D /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
 		4F9219C5278A3E3F006D9E13 /* StatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatView.swift; sourceTree = "<group>"; };
+		4FB2F779279357D70080D5DB /* Shops.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shops.swift; sourceTree = "<group>"; };
 		4FF04F4F278B0DF700650EBC /* LastItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastItemView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -169,6 +171,7 @@
 				4F309E552784F68200F55BC6 /* Text.swift */,
 				4F309E662785AB5400F55BC6 /* ModelData.swift */,
 				4F309E602784F89900F55BC6 /* Users.swift */,
+				4FB2F779279357D70080D5DB /* Shops.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -367,6 +370,7 @@
 				4FF04F50278B0DF700650EBC /* LastItemView.swift in Sources */,
 				4F309E532784B55900F55BC6 /* ContentView.swift in Sources */,
 				4F309E232784B49900F55BC6 /* ReceiptSplitterApp.swift in Sources */,
+				4FB2F77A279357D70080D5DB /* Shops.swift in Sources */,
 				4F309E5A2784F68200F55BC6 /* Text.swift in Sources */,
 				4F43BDFD2789A9CD005CDD6D /* LoadItemsView.swift in Sources */,
 				4F9219C6278A3E3F006D9E13 /* StatView.swift in Sources */,

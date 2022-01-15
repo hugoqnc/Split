@@ -11,6 +11,7 @@ import Vision
 struct TextRecognition {
     var scannedImages: [UIImage]
     @ObservedObject var recognizedContent: TextData
+    var shop: Shop
     var didFinishRecognition: () -> Void
     
     
@@ -26,7 +27,7 @@ struct TextRecognition {
                     let textItem = TextModel() //TODO: put multiple scanned images in a single TextModel
                     try requestHandler.perform([getTextRecognitionRequest(with: textItem)])
                     
-                    textItem.getListOfProductsAndPrices()
+                    textItem.getListOfProductsAndPrices(textModel: textItem, shop: shop)
                     
                     DispatchQueue.main.async {
                         recognizedContent.items.append(textItem)
