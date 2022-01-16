@@ -18,6 +18,8 @@ struct Shop: Identifiable, Hashable {
 
         case aldi_suisse
         case carrefour_france
+        case coop_suisse
+        case migros
 
         func parse(textModel: TextModel) -> TextModel {
             switch self {
@@ -52,6 +54,10 @@ struct Shop: Identifiable, Hashable {
                 return textModel
             case .carrefour_france:
                 return textModel
+            case .coop_suisse:
+                return textModel
+            case .migros:
+                return textModel
 //            default:
 //                return textModel
             }
@@ -64,6 +70,10 @@ struct Shop: Identifiable, Hashable {
             return "Aldi Suisse"
         case .carrefour_france:
             return "Carrefour France"
+        case .coop_suisse:
+            return "Coop Suisse"
+        case .migros:
+            return "Migros"
 //        default:
 //            return ""
         }
@@ -75,6 +85,10 @@ struct Shop: Identifiable, Hashable {
             return Image("aldi_suisse")
         case .carrefour_france:
             return Image("carrefour_france")
+        case .coop_suisse:
+            return Image("coop_suisse")
+        case .migros:
+            return Image("migros")
 //        default:
 //            return ""
         }
