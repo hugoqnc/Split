@@ -16,8 +16,8 @@ class TextModel: Identifiable {
         id = UUID().uuidString
     }
     
-    func getListOfProductsAndPrices(textModel: TextModel, shop: Shop) {
-        self.list = shop.shop.parse(textModel: textModel).list
+    func getListOfProductsAndPrices(shop: Shop) {
+        self.list = shop.shop.parse(textModel: self).list
     }
 }
 

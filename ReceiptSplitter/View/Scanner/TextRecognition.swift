@@ -27,7 +27,7 @@ struct TextRecognition {
                     let textItem = TextModel() //TODO: put multiple scanned images in a single TextModel
                     try requestHandler.perform([getTextRecognitionRequest(with: textItem)])
                     
-                    textItem.getListOfProductsAndPrices(textModel: textItem, shop: shop)
+                    textItem.getListOfProductsAndPrices(shop: shop)
                     
                     DispatchQueue.main.async {
                         recognizedContent.items.append(textItem)

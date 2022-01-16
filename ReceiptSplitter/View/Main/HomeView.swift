@@ -88,7 +88,9 @@ struct HomeView: View {
                     }
                 }
                 .onAppear {
-                    showScanner = true //TODO: change
+                    if (ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == nil){ //TODO: remove at the end
+                        showScanner = true
+                    }
                 }
         }
         .sheet(isPresented: $showScanner, content: {
@@ -101,8 +103,11 @@ struct HomeView: View {
                                             recognizedContent: recognizedContent,
                                             shop: model.shop) {
                                 for item in recognizedContent.items{
-                                    let content: [PairProductPrice] = item.list
-                                    model.listOfProductsAndPrices.append(contentsOf: content)
+                                    if !model.listOfProductsAndPrices.contains(item.list.first ?? PairProductPrice()){
+                                        let content: [PairProductPrice] = item.list
+                                        model.listOfProductsAndPrices.append(contentsOf: content)
+                                    }
+
                                 }
                                 if model.listOfProductsAndPrices.isEmpty{
                                     nothingFound = true
