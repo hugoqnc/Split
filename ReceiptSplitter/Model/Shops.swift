@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct Shop: Identifiable {
+struct Shop: Identifiable, Hashable {
     var id: UUID
     var shop: ShopReceiptType
     

@@ -32,7 +32,6 @@
 		4F9219C6278A3E3F006D9E13 /* StatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9219C5278A3E3F006D9E13 /* StatView.swift */; };
 		4FB2F77A279357D70080D5DB /* Shops.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB2F779279357D70080D5DB /* Shops.swift */; };
 		4FB2F77C27938EBD0080D5DB /* ShopRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB2F77B27938EBD0080D5DB /* ShopRow.swift */; };
-		4FB2F77F2793916F0080D5DB /* ShopPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB2F77E2793916F0080D5DB /* ShopPickerView.swift */; };
 		4FF04F50278B0DF700650EBC /* LastItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF04F4F278B0DF700650EBC /* LastItemView.swift */; };
 /* End PBXBuildFile section */
 
@@ -82,7 +81,6 @@
 		4F9219C5278A3E3F006D9E13 /* StatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatView.swift; sourceTree = "<group>"; };
 		4FB2F779279357D70080D5DB /* Shops.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shops.swift; sourceTree = "<group>"; };
 		4FB2F77B27938EBD0080D5DB /* ShopRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopRow.swift; sourceTree = "<group>"; };
-		4FB2F77E2793916F0080D5DB /* ShopPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopPickerView.swift; sourceTree = "<group>"; };
 		4FF04F4F278B0DF700650EBC /* LastItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastItemView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -238,7 +236,6 @@
 			isa = PBXGroup;
 			children = (
 				4FB2F77B27938EBD0080D5DB /* ShopRow.swift */,
-				4FB2F77E2793916F0080D5DB /* ShopPickerView.swift */,
 			);
 			path = Shop;
 			sourceTree = "<group>";
@@ -379,7 +376,6 @@
 				4F309E652784F9E700F55BC6 /* StartView.swift in Sources */,
 				4F309E732786DA4700F55BC6 /* SelectableItems.swift in Sources */,
 				4F309E592784F68200F55BC6 /* HomeView.swift in Sources */,
-				4FB2F77F2793916F0080D5DB /* ShopPickerView.swift in Sources */,
 				4F309E5D2784F68200F55BC6 /* TextRecognition.swift in Sources */,
 				4F37A8982787AF4900947426 /* SafariView.swift in Sources */,
 				4FF04F50278B0DF700650EBC /* LastItemView.swift in Sources */,

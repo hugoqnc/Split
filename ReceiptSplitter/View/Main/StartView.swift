@@ -11,6 +11,7 @@ struct StartView: View {
     @EnvironmentObject var model: ModelData
     @State private var names = [String](repeating: "", count: 8)
     @State private var numberOfUsers = 2
+    @State private var shopType = Shop.default.shop
     @State private var showAlert1 = false
     @State private var showAlert2 = false
         
@@ -21,9 +22,18 @@ struct StartView: View {
         } else {
             NavigationView {
                 VStack{
-                    
-                    
                     Form {
+                        
+                        Section(header: Text("Shop")) {
+                            Picker("", selection: $shopType, content: {
+                                    ForEach(Shop.ShopReceiptType.allCases, id: \.self, content: { shopType in
+                                        ShopRow(shop: Shop(shop: shopType))
+                                    })
+                                })
+                                .foregroundColor(.primary)
+                        }
+
+                        
                         Section(header: Text("Number of people")) {
                             Picker("Number of people", selection: $numberOfUsers) {
                                 ForEach(2 ... names.count, id:\.self) { number in
@@ -59,6 +69,7 @@ struct StartView: View {
                             for name in finalUsers{
                                 model.users.append(User(name: name))
                             }
+                            model.shop = Shop(shop: shopType)
                             model.startTheProcess = true
                         }
                     } label: {
