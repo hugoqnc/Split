@@ -14,20 +14,23 @@ struct CurrentExpensesRow: View {
     var body: some View {
         VStack {
             HStack{
-                Text("Total".uppercased())
+                Text("Total:")
+                    .font(.system(size: 26))
                 Text(String(round(model.totalPrice * 100) / 100.0)+model.currency.value)
-                    .font(.title2)
+                    //.font(.title2)
                     .fontWeight(.semibold)
+                    .font(.system(size: 38))
             }
             .padding(.top,40)
+            .padding(.bottom,5)
             
             Divider()
             HStack {
                 VStack{
-                    Image(systemName: "person.3")
+                    Image(systemName: "person.2")
                         .resizable(resizingMode: .tile)
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 45.0, height: 30.0)
+                        .frame(width: 40.0, height: 30.0)
                         .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
                 }
                 .padding(.leading)
@@ -39,10 +42,10 @@ struct CurrentExpensesRow: View {
                     HStack {
                         ForEach(model.users) { user in
                             VStack{
-                                Text(user.name.uppercased())
-                                    .font(.caption)
+                                Text(user.name)
+                                    .font(.subheadline)
                                 Text(String(round(user.balance * 100) / 100.0)+model.currency.value)
-                                    .font(.headline)
+                                    .font(.title2)
                             }
                             .padding(8)
                         }
