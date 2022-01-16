@@ -12,16 +12,41 @@ struct ResultView: View {
     @State private var showAllList = false
     @Environment(\.dismiss) var dismiss
     
+    func fontSizeProportionalToPrice(total: Double, price: Double) -> Double {
+        let minSize = 12.0
+        let maxSize = 35.0
+        var size = 20.0
+        if !(total==0.0){
+            size = minSize + (price/total)*(maxSize-minSize)
+        }
+        return size
+    }
+    
     var body: some View {
             VStack {
-                VStack{
-                    Text("Total".uppercased())
-                        .font(.title2)
-                    Text(String(round(model.totalPrice * 100) / 100.0)+model.currency.value)
-                        .font(.largeTitle)
-                        .fontWeight(.semibold)
+                ZStack {
+                    VStack{
+                        Text("Total".uppercased())
+                            .font(.title2)
+                        Text(String(round(model.totalPrice * 100) / 100.0)+model.currency.value)
+                            .font(.largeTitle)
+                            .fontWeight(.semibold)
+                    }
+                    .padding(.top,60)
+                    
+                    HStack {
+                        Spacer()
+                        
+                        Button {
+                            showAllList = true
+                        } label: {
+                            Label("See all", systemImage: "square.and.arrow.up")
+                                .labelStyle(.iconOnly)
+                        }
+                        .padding(.trailing, 30)
+                        .padding(.bottom,60)
+                    }
                 }
-                .padding(.top,60)
                 
                 Divider()
                     .padding(.leading)
@@ -48,8 +73,9 @@ struct ResultView: View {
                                         .font(.title3)
                                     Spacer()
                                     Text(String(round(user.balance * 100) / 100.0)+model.currency.value)
-                                        .font(.title2)
+                                        //.font(.title2)
                                         .fontWeight(.semibold)
+                                        .font(.system(size: fontSizeProportionalToPrice(total: model.totalPrice, price: user.balance)))
                                 }
                                 .padding(8)
                             }
@@ -124,7 +150,7 @@ struct ResultView_Previews: PreviewProvider {
                 ResultView()
                     .environmentObject(model)
                     .onAppear {
-                        model.users = [User(name: "Hugo"), User(name: "Lucas"), User(name: "Thomas")]
+                        model.users = [User(name: "Hugo", balance: 13.8), User(name: "Lucas", balance: 17.21), User(name: "Thomas", balance: 3.22)]
                         model.listOfProductsAndPrices = [PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 4.99), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBC", name: "Finger Fish", price: 1.27), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBD", name: "Ice Cream Strawberry", price: 3.20)]
                     }
             }

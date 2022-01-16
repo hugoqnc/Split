@@ -25,6 +25,7 @@ struct CurrentExpensesRow: View {
             .padding(.bottom,5)
             
             Divider()
+            
             HStack {
                 VStack{
                     Image(systemName: "person.2")
@@ -45,7 +46,7 @@ struct CurrentExpensesRow: View {
                                 Text(user.name)
                                     .font(.subheadline)
                                 Text(String(round(user.balance * 100) / 100.0)+model.currency.value)
-                                    .font(.title2)
+                                    .font(.title3)
                             }
                             .padding(8)
                         }
