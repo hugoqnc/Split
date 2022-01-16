@@ -9,9 +9,10 @@ import SwiftUI
 
 struct StartView: View {
     @EnvironmentObject var model: ModelData
-    @State private var names = [String](repeating: "", count: 8)
+    @State private var names = [String](repeating: "", count: 10)
     @State private var numberOfUsers = 2
     @State private var shopType = Shop.default.shop
+    @State private var currencyType = Currency.default.symbol
     @State private var showAlert1 = false
     @State private var showAlert2 = false
         
@@ -24,27 +25,31 @@ struct StartView: View {
                 VStack{
                     Form {
                         
-                        Section(header: Text("Shop")) {
+                        Section(header: Text("Shop & Currency")) {
                             Picker("", selection: $shopType, content: {
                                     ForEach(Shop.ShopReceiptType.allCases, id: \.self, content: { shopType in
                                         ShopRow(shop: Shop(shop: shopType))
                                     })
                                 })
                                 .foregroundColor(.primary)
+                            
+                            Picker("Currency", selection: $currencyType) {
+                                ForEach(Currency.SymbolType.allCases, id: \.self, content: { currencyType in
+                                    Text(Currency(symbol: currencyType).value)
+                                })
+                            }
+                            .pickerStyle(.segmented)
+                            .padding(8)
                         }
-
                         
-                        Section(header: Text("Number of people")) {
+                        
+                        Section(header: Text("Names")) {
                             Picker("Number of people", selection: $numberOfUsers) {
                                 ForEach(2 ... names.count, id:\.self) { number in
                                     Text("\(number)")
                                 }
                             }
-                            .pickerStyle(.segmented)
-                        }
-                        
-                        
-                        Section(header: Text("Names")) {
+                            
                             ForEach(1 ... numberOfUsers, id:\.self) { number in
                                 TextField("Name of user \(number)", text: $names[number-1])
                             }
@@ -70,6 +75,7 @@ struct StartView: View {
                                 model.users.append(User(name: name))
                             }
                             model.shop = Shop(shop: shopType)
+                            model.currency = Currency(symbol: currencyType)
                             model.startTheProcess = true
                         }
                     } label: {

@@ -15,7 +15,7 @@ struct CurrentExpensesRow: View {
         VStack {
             HStack{
                 Text("Total".uppercased())
-                Text(String(round(model.totalPrice * 100) / 100.0)+"€")
+                Text(String(round(model.totalPrice * 100) / 100.0)+model.currency.value)
                     .font(.title2)
                     .fontWeight(.semibold)
             }
@@ -41,7 +41,7 @@ struct CurrentExpensesRow: View {
                             VStack{
                                 Text(user.name.uppercased())
                                     .font(.caption)
-                                Text(String(round(user.balance * 100) / 100.0)+"€")
+                                Text(String(round(user.balance * 100) / 100.0)+model.currency.value)
                                     .font(.headline)
                             }
                             .padding(8)

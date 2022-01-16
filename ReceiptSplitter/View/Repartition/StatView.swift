@@ -23,7 +23,7 @@ struct StatView: View {
             HStack{
                 Text("Average price of an item")
                 Spacer()
-                Text(String(round((model.totalPrice/Double(model.listOfProductsAndPrices.count))*100) / 100.0)+"€")
+                Text(String(round((model.totalPrice/Double(model.listOfProductsAndPrices.count))*100) / 100.0)+model.currency.value)
                     .font(.title3)
                     .fontWeight(.semibold)
             }
@@ -33,7 +33,7 @@ struct StatView: View {
                 Spacer()
                 Text(String(round((model.listOfProductsAndPrices.map({ pair in
                     pair.price
-                }).max() ?? 0.0)*100) / 100.0)+"€")
+                }).max() ?? 0.0)*100) / 100.0)+model.currency.value)
                     .font(.title3)
                     .fontWeight(.semibold)
             }
@@ -43,7 +43,7 @@ struct StatView: View {
                 Spacer()
                 Text(String(round((model.listOfProductsAndPrices.map({ pair in
                     pair.price
-                }).min() ?? 0.0)*100) / 100.0)+"€")
+                }).min() ?? 0.0)*100) / 100.0)+model.currency.value)
                     .font(.title3)
                     .fontWeight(.semibold)
             }

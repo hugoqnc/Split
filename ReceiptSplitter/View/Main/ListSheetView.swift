@@ -54,14 +54,14 @@ struct ListSheetView: View {
                                         }
 
                                         Spacer()
-                                        Text(String(pair.price)+"€")
+                                        Text(String(pair.price)+model.currency.value)
                                     }
                                     .foregroundColor(pair.id==model.listOfProductsAndPrices[itemCounter].id ? .blue : nil)
                                 } else {
                                     HStack {
                                         Text(pair.name)
                                         Spacer()
-                                        Text(String(pair.price)+"€")
+                                        Text(String(pair.price)+model.currency.value)
                                     }
                                 }
                             }

@@ -12,6 +12,7 @@ final class ModelData: ObservableObject {
     @Published var users: [User] = UsersModel().users
     @Published var listOfProductsAndPrices: [PairProductPrice] = []
     @Published var shop: Shop = Shop.default
+    @Published var currency: Currency = Currency.default
     
     var totalPrice: Double {
         get {

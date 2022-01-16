@@ -45,7 +45,7 @@ struct AttributionView: View {
                                 .font(.title2)
                         }
                         if isEditorMode {
-                            TextField(String(pair.price)+"€", value: $pair.price, format: .number)
+                            TextField(String(pair.price)+model.currency.value, value: $pair.price, format: .number)
                                 .keyboardType(.decimalPad)
                                 .textFieldStyle(.roundedBorder)
                                 .frame(width: 120)
@@ -54,7 +54,7 @@ struct AttributionView: View {
                                 .foregroundColor(.blue)
                                 
                         } else {
-                            Text(String(pair.price)+"€")
+                            Text(String(pair.price)+model.currency.value)
                                 .font(.title)
                                 .fontWeight(.bold)
                                 .padding(.bottom,25)

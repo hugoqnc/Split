@@ -17,7 +17,7 @@ struct ResultView: View {
                 VStack{
                     Text("Total".uppercased())
                         .font(.title2)
-                    Text(String(round(model.totalPrice * 100) / 100.0)+"€")
+                    Text(String(round(model.totalPrice * 100) / 100.0)+model.currency.value)
                         .font(.largeTitle)
                         .fontWeight(.semibold)
                 }
@@ -47,7 +47,7 @@ struct ResultView: View {
                                     Text(user.name)
                                         .font(.title3)
                                     Spacer()
-                                    Text(String(round(user.balance * 100) / 100.0)+"€")
+                                    Text(String(round(user.balance * 100) / 100.0)+model.currency.value)
                                         .font(.title2)
                                         .fontWeight(.semibold)
                                 }
