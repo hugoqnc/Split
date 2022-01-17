@@ -23,4 +23,33 @@ final class ModelData: ObservableObject {
             return total
         }
     }
+    
+    var sharedText: String {
+        get {
+            let date = Date()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = .medium
+            dateFormatter.timeStyle = .none
+            
+            var sharedText =
+            """
+            🛒 Shopping at \(self.shop.name)
+            🗓 Date: \(dateFormatter.string(from: date))\n\n
+            """
+            
+            for user in users {
+                sharedText.append("      \(user.name): \(String(round(user.balance * 100) / 100.0))\(currency.value)\n")
+            }
+            
+            sharedText.append(
+            """
+            ________________
+            💸 Total: \(String(round(self.totalPrice * 100) / 100.0))\(currency.value)
+            
+            Sent with ReceiptSplitter
+            """
+            )
+            return sharedText
+        }
+    }
 }

@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct ResultView: View {
     @EnvironmentObject var model: ModelData
     @State private var showAllList = false
+    @State private var showSharingOptions = false
     @Environment(\.dismiss) var dismiss
     
     func fontSizeProportionalToPrice(total: Double, price: Double) -> Double {
@@ -23,11 +25,6 @@ struct ResultView: View {
     }
     
     
-    func actionSheet() {
-//        guard let urlShare = URL(string: "https://developer.apple.com/xcode/swiftui/") else { return }
-//        let activityVC = UIActivityViewController(activityItems: [urlShare], applicationActivities: nil)
-//        UIWindowScene.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
-    }
     
     var body: some View {
             VStack {
@@ -45,7 +42,7 @@ struct ResultView: View {
                         Spacer()
                         
                         Button {
-                            actionSheet()
+                            showSharingOptions = true
                         } label: {
                             Label("See all", systemImage: "square.and.arrow.up")
                                 .labelStyle(.iconOnly)
@@ -145,8 +142,26 @@ struct ResultView: View {
         .sheet(isPresented: $showAllList, content: {
             ListSheetView(itemCounter: -1, isFirstTimeShowingList: .constant(false))
         })
+        .sheet(isPresented: $showSharingOptions, content: {
+            ActivityViewController(activityItems: [model.sharedText])
+                .edgesIgnoringSafeArea(.bottom)
+        })
         
     }
+}
+
+struct ActivityViewController: UIViewControllerRepresentable {
+
+    var activityItems: [Any]
+    var applicationActivities: [UIActivity]? = nil
+
+    func makeUIViewController(context: UIViewControllerRepresentableContext<ActivityViewController>) -> UIActivityViewController {
+        let controller = UIActivityViewController(activityItems: activityItems, applicationActivities: applicationActivities)
+        return controller
+    }
+
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: UIViewControllerRepresentableContext<ActivityViewController>) {}
+
 }
 
 struct ResultView_Previews: PreviewProvider {

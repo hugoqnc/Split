@@ -208,29 +208,6 @@ struct AttributionView: View {
         }
         .offset(x: xOffset, y: yOffset)
         .opacity(opacity)
-//        .onChange(of: isNewItem) { newValue in
-//                let newPair = PairProductPrice(id: UUID().uuidString, name: textOfNewItem, price: 0.0)
-//                model.listOfProductsAndPrices.insert(newPair, at: itemCounter)
-//        }
-//        .onChange(of: isDeleteItem) { newValue in
-//                if let index = model.listOfProductsAndPrices.firstIndex(where: {$0.id == pair.id}) {
-//                    model.listOfProductsAndPrices.remove(at: index)
-//                }
-//        }
-//        .transition(
-//            pair.name==textOfNewItem && isNewItem ?
-//            .asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .trailing)) :
-//            pair.name==textOfNewItem && isDeleteItem ?
-//            .asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .bottom)) :
-//            pair.name==textOfNewItem ?
-//            .asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .leading)) :
-//            isNewItem ?
-//            .asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .trailing)) :
-//            isDeleteItem ?
-//            .asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .bottom)) :
-//            .asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading))
-//        )
-
         .onChange(of: isNewItem) { newValue in
             if newValue {
                 withAnimation(.easeInOut(duration: 0.35)) {
