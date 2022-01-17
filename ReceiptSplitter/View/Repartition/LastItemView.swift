@@ -29,16 +29,21 @@ struct LastItemView: View {
                     Image(systemName: "cart")
                         .resizable(resizingMode: .tile)
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 45, height: 45)
+                        .frame(width: 40, height: 40)
                         .foregroundColor(.orange)
-                        .padding(.top,5)
-                        .padding(.bottom,15)
+                        .padding(.top,1)
+                        .padding(.bottom,5)
                     
                                     
                     HStack {
                         VStack(alignment: .leading) {
                             Text("Any additional item to add?")
                                 .font(.title2)
+                                .padding(.bottom,1)
+                            Text("Compare the total given here and the total written on the receipt. If they differ, there is a mistake, which can possibly be corrected by adding a new item here.")
+                                .font(.subheadline)
+                                .padding(.bottom,5)
+                                .fixedSize(horizontal: false, vertical: true) //for small screen sizes
                         }
                         
                         Spacer()
@@ -70,7 +75,7 @@ struct LastItemView: View {
                                 .padding(3)
                             }
                             .tint(.yellow)
-                            .padding(7)
+                            .padding(4)
                             
                             Spacer()
                         }
@@ -91,9 +96,9 @@ struct LastItemView: View {
                                 .padding(3)
                             }
                             .tint(.green)
-                            .padding(.top, 7)
-                            .padding(.leading, 7)
-                            .padding(.trailing, 7)
+                            .padding(.top, 4)
+                            .padding(.leading, 4)
+                            .padding(.trailing, 4)
                             
                             Spacer()
                         }
