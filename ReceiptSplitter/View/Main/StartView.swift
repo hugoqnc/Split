@@ -90,6 +90,7 @@ struct StartView: View {
                 .navigationTitle("ReceiptSplitter")
                 .background(Color(red: 0 / 255, green: 130 / 255, blue: 255 / 255).opacity(0.15), ignoresSafeAreaEdges: .bottom)
             }
+            .navigationViewStyle(StackNavigationViewStyle())
             .alert("Please fill in all user names", isPresented: $showAlert1) {
                 Button("OK") { }
             }

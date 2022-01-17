@@ -109,12 +109,21 @@ struct AttributionView: View {
                     Button {
                         isEditorMode.toggle()
                     } label: {
-                        Image(systemName: "pencil.circle.fill")
-                            .resizable(resizingMode: .tile)
-                            .frame(width: 30.0, height: 30.0)
-                            .foregroundColor(.blue)
-                            .padding(.top)
-                            .padding(.trailing,5)
+                        if isEditorMode {
+                            Image(systemName: "checkmark.circle.fill")
+                                .resizable(resizingMode: .tile)
+                                .frame(width: 30.0, height: 30.0)
+                                .foregroundColor(.blue)
+                                .padding(.top)
+                                .padding(.trailing,5)
+                        } else {
+                            Image(systemName: "pencil.circle.fill")
+                                .resizable(resizingMode: .tile)
+                                .frame(width: 30.0, height: 30.0)
+                                .foregroundColor(.blue)
+                                .padding(.top)
+                                .padding(.trailing,5)
+                        }
                     }
                     .onAppear {
                         if pair.name==AttributionView.textOfNewItem {

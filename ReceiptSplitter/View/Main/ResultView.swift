@@ -22,6 +22,13 @@ struct ResultView: View {
         return size
     }
     
+    
+    func actionSheet() {
+//        guard let urlShare = URL(string: "https://developer.apple.com/xcode/swiftui/") else { return }
+//        let activityVC = UIActivityViewController(activityItems: [urlShare], applicationActivities: nil)
+//        UIWindowScene.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
+    }
+    
     var body: some View {
             VStack {
                 ZStack {
@@ -38,7 +45,7 @@ struct ResultView: View {
                         Spacer()
                         
                         Button {
-                            showAllList = true
+                            actionSheet()
                         } label: {
                             Label("See all", systemImage: "square.and.arrow.up")
                                 .labelStyle(.iconOnly)

@@ -93,6 +93,7 @@ struct HomeView: View {
                     }
                 }
         }
+        .navigationViewStyle(StackNavigationViewStyle())
         .sheet(isPresented: $showScanner, content: {
             HStack {
                 ScannerView { result in

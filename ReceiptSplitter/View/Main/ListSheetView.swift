@@ -101,6 +101,7 @@ struct ListSheetView: View {
                 .navigationBarTitle("")
                 .navigationBarHidden(true)
             }
+            .navigationViewStyle(StackNavigationViewStyle())
         }
         .background(Color(red: 255 / 255, green: 225 / 255, blue: 51 / 255).opacity(0.2).ignoresSafeArea(.all))
         .interactiveDismissDisabled(isFirstTimeShowingList)
