@@ -199,11 +199,11 @@ struct AttributionView: View {
                 }
             }
             .padding(20)
-            .background(deletesItemCall ? Color.red : Color(red: 160 / 255, green: 160 / 255, blue: 160 / 255).opacity(0.1))
         }
+        .background(Color(uiColor: UIColor.systemBackground).brightness(0.06))
         .cornerRadius(10)
-        .overlay(RoundedRectangle(cornerRadius: 10)
-                    .stroke(pair.price==0 ? .red : .gray, lineWidth: 1))
+        .shadow(color: .black.opacity(0.2), radius: 15.0)
+        
         .padding()
         .alert("Select the users who participate in this expense", isPresented: $showAlert1) {
             Button("OK") { }
