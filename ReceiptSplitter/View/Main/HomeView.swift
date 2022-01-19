@@ -101,8 +101,7 @@ struct HomeView: View {
                         case .success(let scannedImages):
                             
                             TextRecognition(scannedImages: scannedImages,
-                                            recognizedContent: recognizedContent,
-                                            shop: model.shop) {
+                                            recognizedContent: recognizedContent) {
                                 for item in recognizedContent.items{
                                     if !model.listOfProductsAndPrices.contains(item.list.first ?? PairProductPrice()){
                                         let content: [PairProductPrice] = item.list

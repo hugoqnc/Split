@@ -11,7 +11,6 @@ final class ModelData: ObservableObject {
     @Published var startTheProcess = false
     @Published var users: [User] = UsersModel().users
     @Published var listOfProductsAndPrices: [PairProductPrice] = []
-    @Published var shop: Shop = Shop.default
     @Published var currency: Currency = Currency.default
     
     var totalPrice: Double {
@@ -33,7 +32,7 @@ final class ModelData: ObservableObject {
             
             var sharedText =
             """
-            🛒 Shopping at \(self.shop.name)
+            🛒 Shopping Repartition
             🗓 Date: \(dateFormatter.string(from: date))\n\n
             """
             

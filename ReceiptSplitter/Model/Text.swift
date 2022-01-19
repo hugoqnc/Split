@@ -9,15 +9,10 @@ import Foundation
 
 class TextModel: Identifiable {
     var id: String
-    var text: String = ""
     var list: [PairProductPrice] = []
     
     init() {
         id = UUID().uuidString
-    }
-    
-    func getListOfProductsAndPrices(shop: Shop) {
-        //self.list = shop.shop.parse(textModel: self).list
     }
 }
 

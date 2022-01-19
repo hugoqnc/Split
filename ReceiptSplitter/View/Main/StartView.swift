@@ -11,7 +11,6 @@ struct StartView: View {
     @EnvironmentObject var model: ModelData
     @State private var names = [String](repeating: "", count: 10)
     @State private var numberOfUsers = 2
-    @State private var shopType = Shop.default.shop
     @State private var currencyType = Currency.default.symbol
     @State private var showAlert1 = false
     @State private var showAlert2 = false
@@ -25,14 +24,7 @@ struct StartView: View {
                 VStack{
                     Form {
                         
-                        Section(header: Text("Shop & Currency")) {
-                            Picker("", selection: $shopType, content: {
-                                    ForEach(Shop.ShopReceiptType.allCases, id: \.self, content: { shopType in
-                                        ShopRow(shop: Shop(shop: shopType))
-                                    })
-                                })
-                                .foregroundColor(.primary)
-                            
+                        Section(header: Text("Currency")) {
                             Picker("Currency", selection: $currencyType) {
                                 ForEach(Currency.SymbolType.allCases, id: \.self, content: { currencyType in
                                     Text(Currency(symbol: currencyType).value)
@@ -74,7 +66,6 @@ struct StartView: View {
                             for name in finalUsers{
                                 model.users.append(User(name: name))
                             }
-                            model.shop = Shop(shop: shopType)
                             model.currency = Currency(symbol: currencyType)
                             model.startTheProcess = true
                         }

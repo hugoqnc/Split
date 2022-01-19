@@ -11,7 +11,6 @@ import Vision
 struct TextRecognition {
     var scannedImages: [UIImage]
     @ObservedObject var recognizedContent: TextData
-    var shop: Shop
     var didFinishRecognition: () -> Void
     
     // vision parameters
@@ -30,9 +29,7 @@ struct TextRecognition {
                 do {
                     let textItem = TextModel() //TODO: put multiple scanned images in a single TextModel
                     try requestHandler.perform([getTextRecognitionRequest(with: textItem)])
-                    
-                    textItem.getListOfProductsAndPrices(shop: shop)
-                    
+                                        
                     DispatchQueue.main.async {
                         recognizedContent.items.append(textItem)
                     }
@@ -53,12 +50,6 @@ struct TextRecognition {
             guard let observations = request.results as? [VNRecognizedTextObservation] else {
                 print("Error: \(error! as NSError)")
                 return
-            }
-            
-            observations.forEach { observation in
-                guard let recognizedText = observation.topCandidates(1).first else { return }
-                textItem.text += recognizedText.string
-                textItem.text += "\n"
             }
             
             var observationsCopy = observations
@@ -172,7 +163,7 @@ struct TextRecognition {
                 } else if listOfPrices.count==1 {
                     pairProductPrice.price=listOfPrices[0].price
                     priceIndex = 0
-                } else if let priceIndex1 = listOfPrices.lastIndex(where: { p in p.string.contains("€")}) { //TODO: other currencies
+                } else if let priceIndex1 = listOfPrices.lastIndex(where: { p in p.string.contains("€") || p.string.contains("$") || p.string.contains("¥") || p.string.contains("£")}) {
                     pairProductPrice.price=listOfPrices[priceIndex1].price
                     priceIndex=priceIndex1
                 } else if let priceIndex1 = listOfPrices.lastIndex(where: { p in p.string.contains(".")}) {
