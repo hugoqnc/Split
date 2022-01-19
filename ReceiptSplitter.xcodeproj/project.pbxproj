@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F2BCDB32798D2B200E6501E /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2BCDB22798D2B200E6501E /* TutorialView.swift */; };
 		4F309E232784B49900F55BC6 /* ReceiptSplitterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F309E222784B49900F55BC6 /* ReceiptSplitterApp.swift */; };
 		4F309E272784B49A00F55BC6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F309E262784B49A00F55BC6 /* Assets.xcassets */; };
 		4F309E2A2784B49A00F55BC6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F309E292784B49A00F55BC6 /* Preview Assets.xcassets */; };
@@ -51,6 +52,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4F2BCDB22798D2B200E6501E /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
 		4F309E1F2784B49900F55BC6 /* ReceiptSplitter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReceiptSplitter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F309E222784B49900F55BC6 /* ReceiptSplitterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptSplitterApp.swift; sourceTree = "<group>"; };
 		4F309E262784B49A00F55BC6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 				4F309E722786DA4700F55BC6 /* SelectableItems.swift */,
 				4F37A8972787AF4800947426 /* SafariView.swift */,
 				4F43BDFC2789A9CD005CDD6D /* LoadItemsView.swift */,
+				4F2BCDB22798D2B200E6501E /* TutorialView.swift */,
 			);
 			path = Others;
 			sourceTree = "<group>";
@@ -368,6 +371,7 @@
 				4F309E592784F68200F55BC6 /* HomeView.swift in Sources */,
 				4FB7813C2794821D00F5E2D8 /* Currency.swift in Sources */,
 				4F309E5D2784F68200F55BC6 /* TextRecognition.swift in Sources */,
+				4F2BCDB32798D2B200E6501E /* TutorialView.swift in Sources */,
 				4F37A8982787AF4900947426 /* SafariView.swift in Sources */,
 				4FF04F50278B0DF700650EBC /* LastItemView.swift in Sources */,
 				4F309E532784B55900F55BC6 /* ContentView.swift in Sources */,

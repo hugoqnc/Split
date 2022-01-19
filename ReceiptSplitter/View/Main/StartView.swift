@@ -14,6 +14,9 @@ struct StartView: View {
     @State private var currencyType = Currency.default.symbol
     @State private var showAlert1 = false
     @State private var showAlert2 = false
+    @State private var showTutorialScreen = false
+    
+    @State private var finalUsers: [String] = []
         
     var body: some View {
         
@@ -51,8 +54,8 @@ struct StartView: View {
                     
                     Button {
                         var isEmpty = false
-                        let finalUsers: [String] = Array(names[0..<numberOfUsers])
-                        
+                        finalUsers = Array(names[0..<numberOfUsers])
+
                         for name in finalUsers {
                             if name == "" {
                                 isEmpty = true
@@ -63,11 +66,7 @@ struct StartView: View {
                         } else if Set(finalUsers).count < finalUsers.count { // presence of duplicates
                             showAlert2 = true
                         } else {
-                            for name in finalUsers{
-                                model.users.append(User(name: name))
-                            }
-                            model.currency = Currency(symbol: currencyType)
-                            model.startTheProcess = true
+                            showTutorialScreen = true
                         }
                     } label: {
                         Label("Scan", systemImage: "doc.text.viewfinder")
@@ -88,6 +87,23 @@ struct StartView: View {
             .alert("Users must have distinct names", isPresented: $showAlert2) {
                 Button("OK") { }
             }
+            .sheet(isPresented: $showTutorialScreen, content: {
+                TutorialView()
+                
+                Button {
+                    for name in finalUsers{
+                        model.users.append(User(name: name))
+                    }
+                    model.currency = Currency(symbol: currencyType)
+                    model.startTheProcess = true
+                } label: {
+                    Label("OK", systemImage: "checkmark")
+                }
+                .buttonStyle(.borderedProminent)
+                .padding()
+                .tint(.yellow)
+            })
+
         }
     }
 }
