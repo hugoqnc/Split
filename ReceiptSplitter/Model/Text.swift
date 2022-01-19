@@ -17,7 +17,7 @@ class TextModel: Identifiable {
     }
     
     func getListOfProductsAndPrices(shop: Shop) {
-        self.list = shop.shop.parse(textModel: self).list
+        //self.list = shop.shop.parse(textModel: self).list
     }
 }
 

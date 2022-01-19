@@ -38,7 +38,7 @@ struct ListSheetView: View {
                 VStack{
 
                     List() {
-                        Section(header: Text("All transactions")){
+                        Section(header: Text("\(model.listOfProductsAndPrices.count) transactions")){
                             ForEach(model.listOfProductsAndPrices) { pair in
                                 if showCurrentItem {
                                     HStack {
