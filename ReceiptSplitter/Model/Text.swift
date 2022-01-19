@@ -20,6 +20,7 @@ struct PairProductPrice: Identifiable, Equatable {
     var id: String
     var name: String = ""
     var price: Double = 0
+    var isNewItem: Bool = false
     
     init() {
         id = UUID().uuidString

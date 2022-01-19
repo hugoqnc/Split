@@ -8,6 +8,13 @@
 import SwiftUI
 
 struct AttributionView: View {
+    internal init(pair: Binding<PairProductPrice>, isValidated: Binding<Bool>, itemCounter: Int) {
+        self._pair = pair
+        self._isValidated = isValidated
+        self.itemCounter = itemCounter
+        self.isEditorMode = pair.isNewItem.wrappedValue //edit mode activated for new products
+    }
+    
     @Binding var pair: PairProductPrice
     @Binding var isValidated: Bool
     var itemCounter: Int
@@ -15,11 +22,11 @@ struct AttributionView: View {
     @EnvironmentObject var model: ModelData
     @State var selections: [UUID] = []
     @State private var showAlert1 = false
-    @State private var isEditorMode = false
+    @State private var isEditorMode: Bool
     @State private var showSafariView = false
     
-    @State private var isNewItem = false
-    @State private var isDeleteItem = false
+    @State private var createsNewItemCall = false
+    @State private var deletesItemCall = false
     
     @State private var xOffset: CGFloat = 0.0
     @State private var yOffset: CGFloat = 0.0
@@ -35,7 +42,7 @@ struct AttributionView: View {
                 HStack {
                     VStack(alignment: .leading) {
                     
-                        if pair.name==AttributionView.textOfNewItem {
+                        if pair.isNewItem {
                             Text(pair.name)
                                 .font(.title2)
                                 .italic()
@@ -77,7 +84,7 @@ struct AttributionView: View {
                             .foregroundColor(.secondary)
                                                 
                         Button(action: {
-                            if !(pair.name==AttributionView.textOfNewItem){
+                            if !(pair.isNewItem){
                                 showSafariView = true
                             }
                         }) {
@@ -85,7 +92,7 @@ struct AttributionView: View {
                                     .resizable(resizingMode: .tile)
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 30.0, height: 25.0)
-                                    .foregroundColor(pair.name==AttributionView.textOfNewItem ? colorDisabledButton : .blue)
+                                    .foregroundColor(pair.isNewItem ? colorDisabledButton : .blue)
                         }
                         .padding(.trailing, 5)
                         
@@ -125,23 +132,18 @@ struct AttributionView: View {
                                 .padding(.trailing,5)
                         }
                     }
-                    .onAppear {
-                        if pair.name==AttributionView.textOfNewItem {
-                            isEditorMode = true
-                        }
-                    }
                     
                     Button {
-                        if !isEditorMode && !(pair.name==AttributionView.textOfNewItem) {
+                        if !isEditorMode && !pair.isNewItem {
                             withAnimation(.easeInOut(duration: 4)) {
-                                isNewItem = true
+                                createsNewItemCall = true
                             }
                         }
                     } label: {
                         Image(systemName: "plus.circle.fill")
                             .resizable(resizingMode: .tile)
                             .frame(width: 30.0, height: 30.0)
-                            .foregroundColor(isEditorMode || (pair.name==AttributionView.textOfNewItem) ? colorDisabledButton : .yellow)
+                            .foregroundColor(isEditorMode || pair.isNewItem ? colorDisabledButton : .yellow)
                             .padding(.top)
                             .padding(.trailing,5)
                     }
@@ -149,7 +151,7 @@ struct AttributionView: View {
                     Button {
                         if !isEditorMode {
                             withAnimation(.easeInOut(duration: 4)) {
-                                isDeleteItem = true
+                                deletesItemCall = true
                             }
         
                         }
@@ -197,7 +199,7 @@ struct AttributionView: View {
                 }
             }
             .padding(20)
-            .background(isDeleteItem ? Color.red : Color(red: 160 / 255, green: 160 / 255, blue: 160 / 255).opacity(0.1))
+            .background(deletesItemCall ? Color.red : Color(red: 160 / 255, green: 160 / 255, blue: 160 / 255).opacity(0.1))
         }
         .cornerRadius(10)
         .overlay(RoundedRectangle(cornerRadius: 10)
@@ -208,7 +210,7 @@ struct AttributionView: View {
         }
         .offset(x: xOffset, y: yOffset)
         .opacity(opacity)
-        .onChange(of: isNewItem) { newValue in
+        .onChange(of: createsNewItemCall) { newValue in
             if newValue {
                 withAnimation(.easeInOut(duration: 0.35)) {
                     xOffset = 300
@@ -216,15 +218,16 @@ struct AttributionView: View {
                 }
                 let secondsToDelay = 0.35
                 DispatchQueue.main.asyncAfter(deadline: .now() + secondsToDelay) {
-                    isNewItem = false
+                    createsNewItemCall = false
                 }
 
             } else {
-                let newPair = PairProductPrice(id: UUID().uuidString, name: AttributionView.textOfNewItem, price: 0.0)
+                var newPair = PairProductPrice(id: UUID().uuidString, name: AttributionView.textOfNewItem, price: 0.0)
+                newPair.isNewItem = true
                 model.listOfProductsAndPrices.insert(newPair, at: itemCounter)
             }
         }
-        .onChange(of: isDeleteItem) { newValue in
+        .onChange(of: deletesItemCall) { newValue in
             if newValue {
                 withAnimation(.easeInOut(duration: 0.35)) {
                     yOffset = 300
@@ -232,7 +235,7 @@ struct AttributionView: View {
                 }
                 let secondsToDelay = 0.35
                 DispatchQueue.main.asyncAfter(deadline: .now() + secondsToDelay) {
-                    isDeleteItem = false
+                    deletesItemCall = false
                 }
 
             } else {
@@ -242,7 +245,7 @@ struct AttributionView: View {
             }
         }
         .transition(
-            pair.name==AttributionView.textOfNewItem ?
+            pair.isNewItem ?
                 .asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .leading)) :
                     .asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
     }
