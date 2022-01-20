@@ -13,7 +13,7 @@ final class ModelData: ObservableObject {
     @Published var listOfProductsAndPrices: [PairProductPrice] = []
     @Published var currency: Currency = Currency.default
     
-    var totalPrice: Double {
+    var totalBalance: Double {
         get {
             var total: Double = 0
             for user in users{
@@ -23,6 +23,20 @@ final class ModelData: ObservableObject {
         }
     }
     
+    var totalPrice: Double {
+        get {
+            var total: Double = 0
+            for item in listOfProductsAndPrices{
+                total += item.price
+            }
+            return total
+        }
+    }
+    
+    func showPrice(price: Double) -> String {
+        return String(round(price * 100) / 100.0)+currency.value
+    }
+
     var sharedText: String {
         get {
             let date = Date()
@@ -37,13 +51,13 @@ final class ModelData: ObservableObject {
             """
             
             for user in users {
-                sharedText.append("      \(user.name): \(String(round(user.balance * 100) / 100.0))\(currency.value)\n")
+                sharedText.append("      \(user.name): \(showPrice(price: user.balance))\n")
             }
             
             sharedText.append(
             """
             ________________
-            💸 Total: \(String(round(self.totalPrice * 100) / 100.0))\(currency.value)
+            💸 Total: \(showPrice(price: totalBalance))
             
             Sent with ReceiptSplitter
             """

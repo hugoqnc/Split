@@ -96,6 +96,7 @@ struct StartView: View {
                     }
                     model.currency = Currency(symbol: currencyType)
                     model.startTheProcess = true
+                    showTutorialScreen = false
                 } label: {
                     Label("OK", systemImage: "checkmark")
                 }
