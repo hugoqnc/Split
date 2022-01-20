@@ -14,43 +14,56 @@ struct StartView: View {
     @State private var currencyType = Currency.default.symbol
     @State private var showAlert1 = false
     @State private var showAlert2 = false
-    @State private var showTutorialScreen = false
     
     @State private var finalUsers: [String] = []
         
     var body: some View {
         
         if model.startTheProcess {
-            HomeView()
+            //HomeView()
+            ShowScannerView()
         } else {
             NavigationView {
                 VStack{
                     Form {
+                        Section {} header: {} //necessary to fix bug https://www.hackingwithswift.com/forums/swiftui/issues-with-list-section-headers-in-ios-15/9891
                         
-                        Section(header: Text("Currency")) {
-                            Picker("Currency", selection: $currencyType) {
-                                ForEach(Currency.SymbolType.allCases, id: \.self, content: { currencyType in
-                                    Text(Currency(symbol: currencyType).value)
-                                })
-                            }
-                            .pickerStyle(.segmented)
-                            .padding(8)
-                        }
-                        
-                        
-                        Section(header: Text("Names")) {
-                            Picker("Number of people", selection: $numberOfUsers) {
-                                ForEach(2 ... names.count, id:\.self) { number in
-                                    Text("\(number)")
+
+                        Section {
+                            HStack {
+                                Text("Currency")
+                                Spacer()
+                                Picker("Currency", selection: $currencyType) {
+                                    ForEach(Currency.SymbolType.allCases, id: \.self, content: { currencyType in
+                                        Text(Currency(symbol: currencyType).value)
+                                    })
                                 }
+                                .pickerStyle(.menu)
                             }
                             
+                            HStack {
+                                Text("Number of people")
+                                Spacer()
+                                Picker("Number of people", selection: $numberOfUsers) {
+                                    ForEach(2 ... names.count, id:\.self) { number in
+                                        Text("\(number)")
+                                    }
+                                }
+                                .pickerStyle(.menu)
+                            }
+                        } header: {
+                            Text("Parameters")
+                        }
+
+                        Section {
                             ForEach(1 ... numberOfUsers, id:\.self) { number in
                                 TextField("Name of user \(number)", text: $names[number-1])
                             }
+                        } header: {
+                            Text("Names")
                         }
-
                     }
+                    
                     
                     Button {
                         var isEmpty = false
@@ -66,10 +79,12 @@ struct StartView: View {
                         } else if Set(finalUsers).count < finalUsers.count { // presence of duplicates
                             showAlert2 = true
                         } else {
-                            showTutorialScreen = true
+                            withAnimation() {
+                                model.startTheProcess = true
+                            }
                         }
                     } label: {
-                        Label("Scan", systemImage: "doc.text.viewfinder")
+                        Label("Next", systemImage: "arrow.right")
                     }
                     .buttonStyle(.borderedProminent)
                     .padding(7)
@@ -78,7 +93,7 @@ struct StartView: View {
                     
                 }
                 .navigationTitle("ReceiptSplitter")
-                .background(Color(red: 0 / 255, green: 130 / 255, blue: 255 / 255).opacity(0.15), ignoresSafeAreaEdges: .bottom)
+                .background(Color.accentColor.opacity(0.15), ignoresSafeAreaEdges: .bottom)
             }
             .navigationViewStyle(StackNavigationViewStyle())
             .alert("Please fill in all user names", isPresented: $showAlert1) {
@@ -87,24 +102,6 @@ struct StartView: View {
             .alert("Users must have distinct names", isPresented: $showAlert2) {
                 Button("OK") { }
             }
-            .sheet(isPresented: $showTutorialScreen, content: {
-                TutorialView()
-                
-                Button {
-                    for name in finalUsers{
-                        model.users.append(User(name: name))
-                    }
-                    model.currency = Currency(symbol: currencyType)
-                    model.startTheProcess = true
-                    showTutorialScreen = false
-                } label: {
-                    Label("OK", systemImage: "checkmark")
-                }
-                .buttonStyle(.borderedProminent)
-                .padding()
-                .tint(.yellow)
-            })
-
         }
     }
 }
