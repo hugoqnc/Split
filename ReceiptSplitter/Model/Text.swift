@@ -6,31 +6,58 @@
 //
 
 import Foundation
+import UIKit
+import Vision
 
 class TextModel: Identifiable {
     var id: String
     var list: [PairProductPrice] = []
+    var image: IdentifiedImage
     
     init() {
         id = UUID().uuidString
+        image = IdentifiedImage(id: self.id)
     }
 }
 
 struct PairProductPrice: Identifiable, Equatable {
+    
     var id: String
     var name: String = ""
     var price: Double = 0
     var isNewItem: Bool = false
     
+    var imageId: String?
+    var box: VNDetectedObjectObservation?
+    
     init() {
         id = UUID().uuidString
     }
     
+    //only for preview
     init(id: String, name: String, price: Double) {
         self.id = id
         self.name = name
         self.price = price
     }
+    init(id: String, name: String = "", price: Double = 0, isNewItem: Bool = false, imageId: String? = nil, box: VNDetectedObjectObservation? = nil) {
+        self.id = id
+        self.name = name
+        self.price = price
+        self.isNewItem = isNewItem
+        self.imageId = imageId
+        self.box = box
+    }
+}
+
+struct IdentifiedImage: Identifiable {
+    init(id: String, image: UIImage? = nil) {
+        self.id = id
+        self.image = image
+    }
+    
+    var id: String
+    var image: UIImage?
 }
 
 extension StringProtocol {

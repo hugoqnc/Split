@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct LoadItemsView: View {
+    @Binding var showScanningResults : Bool
     @Binding var nothingFound: Bool
     @EnvironmentObject var model: ModelData
     @Environment(\.dismiss) var dismiss
@@ -40,9 +41,11 @@ struct LoadItemsView: View {
                     Button {
                         dismiss()
                         
-                        model.startTheProcess = false
-                        model.users = UsersModel().users
                         model.listOfProductsAndPrices = []
+                        withAnimation() {
+                            showScanningResults = false
+                        }
+                        
                     } label: {
                         Label("Start again", systemImage: "arrow.clockwise")
                     }
@@ -72,6 +75,6 @@ struct LoadItemsView: View {
 
 struct LoadItemsView_Previews: PreviewProvider {
     static var previews: some View {
-        LoadItemsView(nothingFound: .constant(true))
+        LoadItemsView(showScanningResults: .constant(true), nothingFound: .constant(true))
     }
 }

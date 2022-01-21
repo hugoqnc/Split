@@ -27,7 +27,8 @@ struct TextRecognition {
                 let requestHandler = VNImageRequestHandler(cgImage: cgImage, options: [:])
                 
                 do {
-                    let textItem = TextModel() //TODO: put multiple scanned images in a single TextModel
+                    let textItem = TextModel()
+                    textItem.image = IdentifiedImage(id: textItem.id, image: image)
                     try requestHandler.perform([getTextRecognitionRequest(with: textItem)])
                                         
                     DispatchQueue.main.async {
@@ -100,44 +101,8 @@ struct TextRecognition {
                  }
             }
             
-            // 3. Compute the bigger bounding boxes that contains item+price
-            var listOfVisualizations: [VNDetectedObjectObservation] = []
-            for l in listOfMatchs {
-                var px = 1.0
-                var py = 1.0
-                var w = 0.0
-                var h = 0.0
-                
-                for o in l {
-                    if o.boundingBox.origin.x<px{
-                        px = o.boundingBox.origin.x
-                    }
-                    if o.boundingBox.origin.y<py{
-                        py = o.boundingBox.origin.y
-                    }
-                }
-                
-                for o in l {
-                    var current_w = 0.0
-                    current_w = o.boundingBox.origin.x-px + o.boundingBox.size.width
-                    if current_w>w{
-                        w=current_w
-                    }
-                    
-                    var current_h = 0.0
-                    current_h = o.boundingBox.origin.y-py + o.boundingBox.size.height
-                    if current_h>h{
-                        h=current_h
-                    }
-                }
-                
-                let bb = CGRect(x: px, y: py, width: w, height: h)
-                let v = VNDetectedObjectObservation(boundingBox: bb)
-                listOfVisualizations.append(v)
-            }
             
-            
-            // 4. Extract pairs of product and price
+            // 3. Extract pairs of product and price
             var listOfPairProductPrice: [PairProductPrice] = []
             for l in listOfMatchs {
                 var pairProductPrice = PairProductPrice()
@@ -180,6 +145,7 @@ struct TextRecognition {
                     }
                 }
                 
+                // Get content
                 var content = ""
                 var index = 0
                 for o in matchsCopy {
@@ -189,13 +155,48 @@ struct TextRecognition {
                         content.append(" ")
                     }
                 }
+                
+                // Get bounding box
+                var px = 1.0
+                var py = 1.0
+                var w = 0.0
+                var h = 0.0
+                
+                for o in l {
+                    if o.boundingBox.origin.x<px{
+                        px = o.boundingBox.origin.x
+                    }
+                    if o.boundingBox.origin.y<py{
+                        py = o.boundingBox.origin.y
+                    }
+                }
+                
+                for o in l {
+                    var current_w = 0.0
+                    current_w = o.boundingBox.origin.x-px + o.boundingBox.size.width
+                    if current_w>w{
+                        w=current_w
+                    }
+                    
+                    var current_h = 0.0
+                    current_h = o.boundingBox.origin.y-py + o.boundingBox.size.height
+                    if current_h>h{
+                        h=current_h
+                    }
+                }
+                
+                let bb = CGRect(x: px, y: py, width: w, height: h)
+                let v = VNDetectedObjectObservation(boundingBox: bb)
+                
                 pairProductPrice.name=content
+                pairProductPrice.imageId=textItem.id
+                pairProductPrice.box=v
                 
                 listOfPairProductPrice.append(pairProductPrice)
                 
             }
             
-            // 5. Result
+            // 4. Result
             textItem.list = listOfPairProductPrice
 //            print("\(listOfPairProductPrice.count) products found")
 //            for p in listOfPairProductPrice{

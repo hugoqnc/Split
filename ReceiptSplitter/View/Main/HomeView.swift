@@ -138,7 +138,7 @@ struct HomeView: View {
             if model.listOfProductsAndPrices.isEmpty {
                 VStack {
                     //Text("nothingFound: \(String(nothingFound))")
-                    LoadItemsView(nothingFound: $nothingFound)
+                    //LoadItemsView(nothingFound: $nothingFound)
                 }
             } else {
                 if itemCounter<model.listOfProductsAndPrices.count {

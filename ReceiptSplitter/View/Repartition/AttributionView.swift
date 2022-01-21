@@ -92,7 +92,7 @@ struct AttributionView: View {
                                     .resizable(resizingMode: .tile)
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 30.0, height: 25.0)
-                                    .foregroundColor(pair.isNewItem ? colorDisabledButton : .blue)
+                                    .foregroundColor(pair.isNewItem ? colorDisabledButton : Color.accentColor)
                         }
                         .padding(.trailing, 5)
                         
