@@ -143,12 +143,16 @@ public func visualization(_ image: UIImage, observations: [VNDetectedObjectObser
 
     context?.setLineWidth(2)
     context?.setLineJoin(CGLineJoin.round)
-    context?.setStrokeColor(UIColor.black.cgColor)
-    context?.setFillColor(red: 241, green: 184, blue: 0, alpha: 0.2)
+    context?.setStrokeColor(UIColor.gray.cgColor)
+    context?.setLineWidth(0)
+    context?.setFillColor(red: 241/255, green: 184/255, blue: 0, alpha: 0.4)
 
     observations.forEach { observation in
         let bounds = observation.boundingBox.applying(transform)
-        context?.addRect(bounds)
+        //context?.addRect(bounds)
+        let path = UIBezierPath(roundedRect: bounds, cornerRadius: 5)
+        context?.addPath(path.cgPath)
+        
     }
 
     context?.drawPath(using: CGPathDrawingMode.fillStroke)

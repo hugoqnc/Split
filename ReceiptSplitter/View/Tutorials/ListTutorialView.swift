@@ -18,18 +18,18 @@ struct ListTutorialView: View {
             
             VStack(alignment: .leading) {
                 HStack(alignment: .center) {
-                    Image(systemName: "viewfinder")
+                    Image(systemName: "text.magnifyingglass")
                         .frame(width: 30, height: 30)
                         .font(.largeTitle)
-                        .foregroundColor(.yellow)
+                        .foregroundColor(.accentColor)
                         .padding()
 
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("Center your scan ")
+                        Text("Check transactions")
                             .font(.headline)
                             .foregroundColor(.primary)
 
-                        Text("Scan the items and their prices, not what is above or below on the receipt")
+                        Text("Verify if most of the transactions have been correctly detected")
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                             .fixedSize(horizontal: false, vertical: true)
@@ -38,40 +38,64 @@ struct ListTutorialView: View {
                 }
                 
                 HStack(alignment: .center) {
-                    Image(systemName: "skew")
+                    Image(systemName: "pencil")
                         .frame(width: 30, height: 30)
                         .font(.largeTitle)
-                        .foregroundColor(.yellow)
+                        .foregroundColor(.accentColor)
                         .padding()
 
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("Adjust if necessary")
+                        Text("Modify at the next step")
                             .font(.headline)
                             .foregroundColor(.primary)
 
-                        Text("You can manually adjust the frame such that only the right content appears")
+                        Text("If there is only a few mistakes, you will be able to correct it later")
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                             .fixedSize(horizontal: false, vertical: true)
                     }
                 }
                 
-                HStack(alignment: .center) {
-                    Image(systemName: "goforward.plus")
-                        .frame(width: 30, height: 30)
-                        .font(.largeTitle)
-                        .foregroundColor(.yellow)
-                        .padding()
+                VStack {
+                    HStack(alignment: .center) {
+                        Image(systemName: "goforward")
+                            .frame(width: 30, height: 30)
+                            .font(.largeTitle)
+                            .foregroundColor(.accentColor)
+                            .padding()
 
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("Add several scans")
-                            .font(.headline)
-                            .foregroundColor(.primary)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Start again if necessary")
+                                .font(.headline)
+                                .foregroundColor(.primary)
 
-                        Text("If you have a long receipt, you can add multiple scans, but make sure not to scan the same item twice")
-                            .font(.subheadline)
+                            Text("If the recognition does not provide good results, try again")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                    }
+                    
+                    Divider()
+                        .padding(.vertical)
+                    
+                    HStack{
+                        Image(systemName: "scissors")
+                            .frame(width: 10, height: 10)
+                            .foregroundColor(.accentColor)
+                            .padding(7)
+                        Text("If your receipt is very long, try to scan it in several pictures for better results")
+                            .font(.caption)
                             .foregroundColor(.secondary)
-                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    HStack{
+                        Image(systemName: "exclamationmark.triangle")
+                            .frame(width: 10, height: 10)
+                            .foregroundColor(.accentColor)
+                            .padding(7)
+                        Text("If the recognition does not work reliably, the format of your shopping receipt may not be supported by this app")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
                     }
                 }
             }
