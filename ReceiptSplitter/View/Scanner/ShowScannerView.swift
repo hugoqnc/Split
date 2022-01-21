@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SlideOverCard
 
 struct ShowScannerView: View {
     @EnvironmentObject var model: ModelData
@@ -61,19 +62,11 @@ struct ShowScannerView: View {
                     showTutorialScreen = true
                 }
             })
-            .ignoresSafeArea(.all)
             .transition(.move(edge: .bottom))
-            .sheet(isPresented: $showTutorialScreen, content: {
-                TutorialView()
-
-                Button {
-                    showTutorialScreen=false
-                } label: {
-                    Label("OK", systemImage: "checkmark")
-                }
-                .buttonStyle(.borderedProminent)
-                .padding()
-        })
+            .slideOverCard(isPresented: $showTutorialScreen, content: {
+                ScanTutorialView()
+            })
+            .ignoresSafeArea(.all)
         }
     }
 }

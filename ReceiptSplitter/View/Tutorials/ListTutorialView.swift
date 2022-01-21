@@ -1,20 +1,20 @@
 //
-//  TutorialView.swift
+//  ListTutorialView.swift
 //  ReceiptSplitter
 //
-//  Created by Hugo Queinnec on 20/01/2022.
+//  Created by Hugo Queinnec on 21/01/2022.
 //
 
 import SwiftUI
 
-struct TutorialView: View {
+struct ListTutorialView: View {
     var body: some View {
         VStack {
-            Image("receipt_tutorial")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .padding()
-            //.frame(width: 300, alignment: .center)
+//            Image("receipt_tutorial")
+//                .resizable()
+//                .aspectRatio(contentMode: .fit)
+//                .padding()
+//                .frame(maxHeight: 300)
             
             VStack(alignment: .leading) {
                 HStack(alignment: .center) {
@@ -23,7 +23,6 @@ struct TutorialView: View {
                         .font(.largeTitle)
                         .foregroundColor(.yellow)
                         .padding()
-                        .accessibility(hidden: true)
 
                     VStack(alignment: .leading, spacing: 2) {
                         Text("Center your scan ")
@@ -44,7 +43,6 @@ struct TutorialView: View {
                         .font(.largeTitle)
                         .foregroundColor(.yellow)
                         .padding()
-                        .accessibility(hidden: true)
 
                     VStack(alignment: .leading, spacing: 2) {
                         Text("Adjust if necessary")
@@ -64,7 +62,6 @@ struct TutorialView: View {
                         .font(.largeTitle)
                         .foregroundColor(.yellow)
                         .padding()
-                        .accessibility(hidden: true)
 
                     VStack(alignment: .leading, spacing: 2) {
                         Text("Add several scans")
@@ -78,16 +75,28 @@ struct TutorialView: View {
                     }
                 }
             }
-            .padding(.horizontal)
         }
-            
+        .frame(maxWidth: 300)
         
 
     }
 }
 
-struct TutorialView_Previews: PreviewProvider {
+struct ListTutorialView_Previews: PreviewProvider {
     static var previews: some View {
-        TutorialView()
+        PreviewWrapper()
+    }
+    struct PreviewWrapper: View {
+        @State private var show = true
+
+        var body: some View {
+            Text("test")
+                .slideOverCard(isPresented: $show, content: {
+                    ListTutorialView()
+                })
+                .onTapGesture {
+                    show=true
+                }
+        }
     }
 }

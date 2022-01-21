@@ -13,6 +13,10 @@ struct FirstListView: View {
     @EnvironmentObject var model: ModelData
     @Binding var showScanningResults: Bool
     @Binding var nothingFound: Bool
+    @State private var showTutorialScreen = false
+    
+    var views = ["Scan","List"]
+    @State private var showList = "Scan"
 
     var body: some View {
 
@@ -37,35 +41,49 @@ struct FirstListView: View {
     //            }
                 
                 NavigationView {
-                    
+                                        
                     VStack{
-                        Text("Receipt Image")
-
-                        ForEach(model.images){ idImage in
-                            if let image = idImage.image {
-                                let boxes = model.listOfProductsAndPrices.compactMap({ pair -> VNDetectedObjectObservation? in
-                                    if pair.imageId==idImage.id && !(pair.box == nil){
-                                        return pair.box!
-                                    }
-                                    return nil
-                                })
-                                Image(uiImage: visualization(image, observations: boxes))
-                                    .resizable()
-                                    .scaledToFit()
+                        Picker("view", selection: $showList) {
+                            ForEach(views, id: \.self) {
+                                Text($0)
                             }
                         }
-
-                        List() {
-                            Section(header: Text("\(model.listOfProductsAndPrices.count) transactions — \(model.showPrice(price: model.totalPrice))")){
-                                ForEach(model.listOfProductsAndPrices) { pair in
-                                    HStack {
-                                        Text(pair.name)
-                                        Spacer()
-                                        Text(String(pair.price)+model.currency.value)
+                        .pickerStyle(.segmented)
+                        .padding()
+                        
+                        
+                        
+                        if showList=="Scan" {
+                            ScrollView {
+                                ForEach(model.images){ idImage in
+                                    if let image = idImage.image {
+                                        let boxes = model.listOfProductsAndPrices.compactMap({ pair -> VNDetectedObjectObservation? in
+                                            if pair.imageId==idImage.id && !(pair.box == nil){
+                                                return pair.box!
+                                            }
+                                            return nil
+                                        })
+                                        Image(uiImage: visualization(image, observations: boxes))
+                                            .resizable()
+                                            .scaledToFit()
+                                            .padding(5)
+                                    }
+                                }
+                            }
+                        } else {
+                            List() {
+                                Section(header: Text("\(model.listOfProductsAndPrices.count) transactions — \(model.showPrice(price: model.totalPrice))")){
+                                    ForEach(model.listOfProductsAndPrices) { pair in
+                                        HStack {
+                                            Text(pair.name)
+                                            Spacer()
+                                            Text(String(pair.price)+model.currency.value)
+                                        }
                                     }
                                 }
                             }
                         }
+
                     }
                     .toolbar {
                         ToolbarItem(placement: .bottomBar) {
@@ -97,8 +115,16 @@ struct FirstListView: View {
                 .navigationViewStyle(StackNavigationViewStyle())
             }
         }
-        .background(Color(red: 255 / 255, green: 225 / 255, blue: 51 / 255).opacity(0.2).ignoresSafeArea(.all))
+        .onAppear(perform: {
+            let secondsToDelay = 0.7
+            DispatchQueue.main.asyncAfter(deadline: .now() + secondsToDelay) {
+                showTutorialScreen = true
+            }
+        })
         .transition(.opacity)
+        .slideOverCard(isPresented: $showTutorialScreen, content: {
+            ListTutorialView()
+        })
     }
 
 }

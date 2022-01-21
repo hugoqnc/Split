@@ -35,7 +35,7 @@ struct LoadItemsView: View {
                         Text("Please make sure your receipt is compatible with this application.\nIf it is, you can try to scan it again.")
                             .padding(.bottom,10)
                             .padding(.leading)
-                        .padding(.trailing)
+                            .padding(.trailing)
                         Spacer()
                     }
                     Button {
