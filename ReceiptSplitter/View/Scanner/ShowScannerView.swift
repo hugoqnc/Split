@@ -25,7 +25,8 @@ struct ShowScannerView: View {
                         case .success(let scannedImages):
                             
                             TextRecognition(scannedImages: scannedImages,
-                                            recognizedContent: recognizedContent) {
+                                            recognizedContent: recognizedContent,
+                                            visionParameters: model.visionParameters) {
                                 for item in recognizedContent.items{
                                     if !model.listOfProductsAndPrices.contains(item.list.first ?? PairProductPrice()){
                                         let content: [PairProductPrice] = item.list

@@ -11,11 +11,8 @@ import Vision
 struct TextRecognition {
     var scannedImages: [UIImage]
     @ObservedObject var recognizedContent: TextData
+    var visionParameters: VisionParameters
     var didFinishRecognition: () -> Void
-    
-    // vision parameters
-    let epsilon = 0.02
-    let maxMargin = 0.20
     
     
     func recognizeText() {
@@ -46,12 +43,24 @@ struct TextRecognition {
     }
     
     
-    private func getTextRecognitionRequest(with textItem: TextModel) -> VNRecognizeTextRequest {
+    func getTextRecognitionRequest(with textItem: TextModel) -> VNRecognizeTextRequest {
+        // vision parameters
+        let epsilonHeight = visionParameters.epsilonHeight
+        let minAreaCoverage = visionParameters.minAreaCoverage
+        let maxMargin = visionParameters.maxMargin
+        
         let request = VNRecognizeTextRequest { (request, error) in
             guard let observations = request.results as? [VNRecognizedTextObservation] else {
                 print("Error: \(error! as NSError)")
                 return
             }
+            
+            //0. Get median heigth of bounding box
+            let heights: [CGFloat] = observations.map { obs in
+             obs.boundingBox.size.height
+            }
+            let medianHeight = heights.sorted(by: <)[heights.count / 2]
+            print("median height: \(medianHeight)")
             
             var observationsCopy = observations
             var listOfMatchs: [[VNRecognizedTextObservation]] = []
@@ -63,13 +72,20 @@ struct TextRecognition {
                 let h = obs.boundingBox.size.height
                 var matching: [VNRecognizedTextObservation] = [obs]
                 
-                for obs2 in observationsCopy {
-                    let px2 = obs2.boundingBox.origin.x
-                    let py2 = obs2.boundingBox.origin.y
-                    let h2 = obs2.boundingBox.size.height
-                    
-                    if (px<px2 && (py<py2+epsilon && py>py2-epsilon) && (h<h2+epsilon && h>h2-epsilon)) {
-                        matching.append(obs2)
+                let longRect: CGRect = CGRect(x: px, y: py, width: 1-px, height: h)
+
+                 if h<medianHeight*(1+epsilonHeight) && h>medianHeight*(1-epsilonHeight) {
+                     for obs2 in observationsCopy {
+                         let px2 = obs2.boundingBox.origin.x
+                         let h2 = obs2.boundingBox.size.height
+
+                         let areaCoverage = getsCoveredByArea(of: longRect, rect: obs2.boundingBox)
+                         //let globalHeight = h+h2-abs(py-py2)
+                         //if px<px2 && areaCoverage > minAreaCoverage {print(areaCoverage)}
+                         
+                         if (px<px2 && areaCoverage>minAreaCoverage && h2<medianHeight*(1+epsilonHeight) && h2>medianHeight*(1-epsilonHeight)) {
+                             matching.append(obs2)
+                         }
                     }
                 }
                 
@@ -210,6 +226,17 @@ struct TextRecognition {
         return request
     }
 }
+
+func getsCoveredByArea(of bigRect: CGRect, rect: CGRect) -> CGFloat {
+     if (bigRect.intersects(rect)) {
+
+        //let interRect:CGRect = r1.rectByIntersecting(r2); //OLD
+        let interRect:CGRect = bigRect.intersection(rect);
+
+        return ((interRect.width * interRect.height) / (rect.width * rect.height))
+     }
+     return 0;
+ }
 
 
 struct PairStringDouble: Identifiable {
