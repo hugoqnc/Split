@@ -56,7 +56,6 @@ struct ListTutorialView: View {
                     }
                 }
                 
-                VStack {
                     HStack(alignment: .center) {
                         Image(systemName: "goforward")
                             .frame(width: 30, height: 30)
@@ -84,6 +83,7 @@ struct ListTutorialView: View {
                             .frame(width: 10, height: 10)
                             .foregroundColor(.accentColor)
                             .padding(7)
+                            .padding(.trailing,5)
                         Text("If your receipt is very long, try to scan it in several pictures for better results")
                             .font(.caption)
                             .foregroundColor(.secondary)
@@ -93,11 +93,12 @@ struct ListTutorialView: View {
                             .frame(width: 10, height: 10)
                             .foregroundColor(.accentColor)
                             .padding(7)
+                            .padding(.trailing,5)
                         Text("If the recognition does not work reliably, the format of your shopping receipt may not be supported by this app")
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
-                }
+                
             }
         }
         .frame(maxWidth: 300)
