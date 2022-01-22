@@ -39,9 +39,8 @@ struct LoadItemsView: View {
                         Spacer()
                     }
                     Button {
-                        dismiss()
-                        
-                        model.listOfProductsAndPrices = []
+                        model.eraseScanData()
+                        nothingFound = false
                         withAnimation() {
                             showScanningResults = false
                         }

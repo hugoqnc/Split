@@ -10,7 +10,7 @@ import UIKit
 
 final class ModelData: ObservableObject {
     @Published var startTheProcess = false
-    @Published var users: [User] = UsersModel().users
+    @Published var users: [User] = []
     @Published var listOfProductsAndPrices: [PairProductPrice] = []
     @Published var currency: Currency = Currency.default
     @Published var images: [IdentifiedImage] = []
@@ -66,5 +66,17 @@ final class ModelData: ObservableObject {
             )
             return sharedText
         }
+    }
+    
+    func eraseModelData() {
+        self.startTheProcess = false
+        self.users = []
+        self.listOfProductsAndPrices = []
+        self.currency = Currency.default
+        self.images = []
+    }
+    func eraseScanData() {
+        self.listOfProductsAndPrices = []
+        self.images = []
     }
 }

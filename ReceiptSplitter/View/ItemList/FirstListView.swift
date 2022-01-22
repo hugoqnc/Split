@@ -14,117 +14,128 @@ struct FirstListView: View {
     @Binding var showScanningResults: Bool
     @Binding var nothingFound: Bool
     @State private var showTutorialScreen = false
+    @State private var startAttribution = false
     
     var views = ["Scan","List"]
     @State private var showList = "Scan"
 
     var body: some View {
-
-        VStack {
-            
-            if model.listOfProductsAndPrices.isEmpty {
-                VStack {
-                    LoadItemsView(showScanningResults: $showScanningResults, nothingFound: $nothingFound)
-                }
-            } else {
-    //            VStack {
-    //                Image(systemName: "exclamationmark.triangle")
-    //                    .resizable(resizingMode: .tile)
-    //                    .frame(width: 30.0, height: 30.0)
-    //                    .foregroundColor(.orange)
-    //                    .padding(.top)
-    //                Text("Please check that most of the transactions are correct, meaning that most names are associated with the right prices. If it is not the case, please cancel and start again.")
-    //                    .padding(.top,3)
-    //                    .padding(.bottom)
-    //                    .padding(.leading)
-    //                    .padding(.trailing)
-    //            }
+        if startAttribution {
+            HomeView()
+        } else {
+            VStack {
                 
-                NavigationView {
-                                        
-                    VStack{
-                        Picker("view", selection: $showList) {
-                            ForEach(views, id: \.self) {
-                                Text($0)
+                if model.listOfProductsAndPrices.isEmpty {
+                    VStack {
+                        LoadItemsView(showScanningResults: $showScanningResults, nothingFound: $nothingFound)
+                    }
+                } else {
+                    
+                    NavigationView {
+                                            
+                        VStack{
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Text("\(model.listOfProductsAndPrices.count) transactions")
+                                        .font(.title2)
+                                    .fontWeight(.semibold)
+                                    Text("\(model.showPrice(price: model.totalPrice))")
+                                        .font(.largeTitle)
+                                        .fontWeight(.bold)
+                                }
+                                Spacer()
                             }
-                        }
-                        .pickerStyle(.segmented)
-                        .padding()
-                        
-                        
-                        
-                        if showList=="Scan" {
-                            ScrollView {
-                                ForEach(model.images){ idImage in
-                                    if let image = idImage.image {
-                                        let boxes = model.listOfProductsAndPrices.compactMap({ pair -> VNDetectedObjectObservation? in
-                                            if pair.imageId==idImage.id && !(pair.box == nil){
-                                                return pair.box!
-                                            }
-                                            return nil
-                                        })
-                                        Image(uiImage: visualization(image, observations: boxes))
-                                            .resizable()
-                                            .scaledToFit()
-                                            .padding(5)
-                                    }
+                            .padding(.top, 30)
+                            .padding(.bottom, 10)
+                            .padding(.leading, 30)
+
+                            
+                            Picker("view", selection: $showList.animation()) {
+                                ForEach(views, id: \.self) {
+                                    Text($0)
                                 }
                             }
-                        } else {
-                            List() {
-                                Section(header: Text("\(model.listOfProductsAndPrices.count) transactions — \(model.showPrice(price: model.totalPrice))")){
-                                    ForEach(model.listOfProductsAndPrices) { pair in
-                                        HStack {
-                                            Text(pair.name)
-                                            Spacer()
-                                            Text(String(pair.price)+model.currency.value)
+                            .pickerStyle(.segmented)
+                            .padding(.horizontal)
+                            .padding(.bottom, 10)
+                            
+                            
+                            ZStack {
+                                if showList=="Scan" {
+                                    ScrollView {
+                                        ForEach(model.images){ idImage in
+                                            if let image = idImage.image {
+                                                let boxes = model.listOfProductsAndPrices.compactMap({ pair -> VNDetectedObjectObservation? in
+                                                    if pair.imageId==idImage.id && !(pair.box == nil){
+                                                        return pair.box!
+                                                    }
+                                                    return nil
+                                                })
+                                                Image(uiImage: visualization(image, observations: boxes))
+                                                    .resizable()
+                                                    .scaledToFit()
+                                                    .padding(5)
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    List() {
+                                        ForEach(model.listOfProductsAndPrices) { pair in
+                                            HStack {
+                                                Text(pair.name)
+                                                Spacer()
+                                                Text(String(pair.price)+model.currency.value)
+                                            }
                                         }
                                     }
                                 }
                             }
+                            .transition(.opacity)
                         }
-
-                    }
-                    .toolbar {
-                        ToolbarItem(placement: .bottomBar) {
-                            Button {
-                                model.listOfProductsAndPrices = []
-                                model.images = []
-                                
-                                withAnimation() {
-                                    showScanningResults = false
+                        .toolbar {
+                            ToolbarItem(placement: .bottomBar) {
+                                Button {
+                                    model.eraseScanData()
+                                    
+                                    withAnimation() {
+                                        showScanningResults = false
+                                    }
+                                } label: {
+                                    Text("Cancel")
                                 }
-                            } label: {
-                                Text("Cancel")
+                                .buttonStyle(.bordered)
+                                .padding()
+                                .tint(.red)
                             }
-                            .padding()
-                            .foregroundColor(.red)
-                        }
-                        ToolbarItem(placement: .bottomBar) {
-                            Button {
-                                
-                            } label: {
-                                Text("Done")
+                            ToolbarItem(placement: .bottomBar) {
+                                Button {
+                                    withAnimation(){
+                                        startAttribution = true
+                                    }
+                                } label: {
+                                    Text("Next")
+                                }
+                                .buttonStyle(.borderedProminent)
+                                .padding()
                             }
-                            .padding()
                         }
+                        .navigationBarTitle("")
+                        .navigationBarHidden(true)
                     }
-                    .navigationBarTitle("")
-                    .navigationBarHidden(true)
+                    .navigationViewStyle(StackNavigationViewStyle())
+                    .onAppear(perform: {
+                        let secondsToDelay = 0.7
+                        DispatchQueue.main.asyncAfter(deadline: .now() + secondsToDelay) {
+                            showTutorialScreen = true
+                        }
+                    })
                 }
-                .navigationViewStyle(StackNavigationViewStyle())
             }
+            .transition(.opacity)
+            .slideOverCard(isPresented: $showTutorialScreen, content: {
+                ListTutorialView()
+        })
         }
-        .onAppear(perform: {
-            let secondsToDelay = 0.7
-            DispatchQueue.main.asyncAfter(deadline: .now() + secondsToDelay) {
-                showTutorialScreen = true
-            }
-        })
-        .transition(.opacity)
-        .slideOverCard(isPresented: $showTutorialScreen, content: {
-            ListTutorialView()
-        })
     }
 
 }
@@ -144,13 +155,13 @@ public func visualization(_ image: UIImage, observations: [VNDetectedObjectObser
     context?.setLineWidth(2)
     context?.setLineJoin(CGLineJoin.round)
     context?.setStrokeColor(UIColor.gray.cgColor)
-    context?.setLineWidth(0)
+    context?.setLineWidth(2)
     context?.setFillColor(red: 241/255, green: 184/255, blue: 0, alpha: 0.4)
 
     observations.forEach { observation in
         let bounds = observation.boundingBox.applying(transform)
         //context?.addRect(bounds)
-        let path = UIBezierPath(roundedRect: bounds, cornerRadius: 5)
+        let path = UIBezierPath(roundedRect: bounds, cornerRadius: 30)
         context?.addPath(path.cgPath)
         
     }

@@ -79,6 +79,9 @@ struct StartView: View {
                         } else if Set(finalUsers).count < finalUsers.count { // presence of duplicates
                             showAlert2 = true
                         } else {
+                            for name in finalUsers{
+                                model.users.append(User(name: name))
+                            }
                             withAnimation() {
                                 model.startTheProcess = true
                             }

@@ -174,15 +174,20 @@ struct AttributionView: View {
                                 showAlert1 = true
                             } else {
                                 for id in selections{
-                                    for user in model.users {
-                                        if user.id==id {
-                                            let index = model.users.firstIndex{$0.id == id}!
-                                            //print(model.users[index].name)
-                                            //print(model.users[index].balance)
-                                            model.users[index].balance+=pair.price/Double(divider)
-                                            //print(model.users[index].balance)
-                                        }
+//                                    for user in model.users {
+//                                        if user.id==id {
+//                                            let index = model.users.firstIndex{$0.id == id}!
+//                                            //print(model.users[index].name)
+//                                            //print(model.users[index].balance)
+//                                            model.users[index].balance+=pair.price/Double(divider)
+//
+//                                            //print(model.users[index].balance)
+//                                        }
+//                                    }
+                                    if let row = model.users.firstIndex(where: {$0.id == id}) {
+                                        model.users[row].balance+=pair.price/Double(divider)
                                     }
+                                    
                                 }
                                 selections = []
                                 isValidated = true

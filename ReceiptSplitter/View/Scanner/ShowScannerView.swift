@@ -49,10 +49,8 @@ struct ShowScannerView: View {
 
                 } didCancelScanning: {
                     // Dismiss the scanner controller and the sheet.
-                    model.users = UsersModel().users
-                    model.listOfProductsAndPrices = []
                     withAnimation() {
-                        model.startTheProcess = false
+                        model.eraseModelData()
                     }
                 }
             }

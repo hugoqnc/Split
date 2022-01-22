@@ -129,9 +129,7 @@ struct ResultView: View {
                 Button {
                     dismiss()
                     
-                    model.startTheProcess = false
-                    model.users = UsersModel().users
-                    model.listOfProductsAndPrices = []
+                    model.eraseModelData()
                 } label: {
                     Label("Done", systemImage: "checkmark")
                 }
@@ -140,7 +138,7 @@ struct ResultView: View {
             }
         
         .sheet(isPresented: $showAllList, content: {
-            ListSheetView(itemCounter: -1, isFirstTimeShowingList: .constant(false))
+            ListSheetView(itemCounter: -1)
         })
         .sheet(isPresented: $showSharingOptions, content: {
             ActivityViewController(activityItems: [model.sharedText])
