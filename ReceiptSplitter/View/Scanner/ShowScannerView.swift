@@ -20,43 +20,55 @@ struct ShowScannerView: View {
             FirstListView(showScanningResults: $showScanningResults, nothingFound: $nothingFound)
         } else {
             HStack {
-                ScannerView { result in
-                    switch result {
-                        case .success(let scannedImages):
-                            
-                            TextRecognition(scannedImages: scannedImages,
-                                            recognizedContent: recognizedContent,
-                                            visionParameters: model.visionParameters) {
-                                for item in recognizedContent.items{
-                                    if !model.listOfProductsAndPrices.contains(item.list.first ?? PairProductPrice()){
-                                        let content: [PairProductPrice] = item.list
-                                        model.listOfProductsAndPrices.append(contentsOf: content)
+                if !showTutorialScreen {
+                    ScannerView { result in
+                        switch result {
+                            case .success(let scannedImages):
+                                
+                                TextRecognition(scannedImages: scannedImages,
+                                                recognizedContent: recognizedContent,
+                                                visionParameters: model.visionParameters) {
+                                    for item in recognizedContent.items{
+                                        if !model.listOfProductsAndPrices.contains(item.list.first ?? PairProductPrice()){
+                                            let content: [PairProductPrice] = item.list
+                                            model.listOfProductsAndPrices.append(contentsOf: content)
+                                        }
+                                        model.images.append(item.image)
                                     }
-                                    model.images.append(item.image)
+                                    if model.listOfProductsAndPrices.isEmpty{
+                                        nothingFound = true
+                                    }
+                                    recognizedContent.items = []
                                 }
-                                if model.listOfProductsAndPrices.isEmpty{
-                                    nothingFound = true
-                                }
-                                recognizedContent.items = []
-                            }
-                            .recognizeText()
-                            
-                        case .failure(let error):
-                            print(error.localizedDescription)
-                    }
-                    withAnimation() {
-                        showScanningResults = true
-                    }
+                                .recognizeText()
+                                
+                            case .failure(let error):
+                                print(error.localizedDescription)
+                        }
+                        withAnimation() {
+                            showScanningResults = true
+                        }
 
-                } didCancelScanning: {
-                    // Dismiss the scanner controller and the sheet.
-                    withAnimation() {
-                        model.eraseModelData()
+                    } didCancelScanning: {
+                        // Dismiss the scanner controller and the sheet.
+                        withAnimation() {
+                            model.eraseModelData()
+                        }
                     }
+                } else {
+                    //black screen
+                    HStack {
+                        VStack{
+                            Text("")
+                            Spacer()
+                        }
+                        Spacer()
+                    }
+                    .background(.black)
                 }
             }
             .onAppear(perform: {
-                let secondsToDelay = 0.7
+                let secondsToDelay = 0.6
                 DispatchQueue.main.asyncAfter(deadline: .now() + secondsToDelay) {
                     showTutorialScreen = true
                 }
@@ -70,8 +82,8 @@ struct ShowScannerView: View {
     }
 }
 
-//struct ShowScannerView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ShowScannerView()
-//    }
-//}
+struct ShowScannerView_Previews: PreviewProvider {
+    static var previews: some View {
+        ShowScannerView()
+    }
+}
