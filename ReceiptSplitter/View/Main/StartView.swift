@@ -68,6 +68,10 @@ struct StartView: View {
                     Button {
                         var isEmpty = false
                         finalUsers = Array(names[0..<numberOfUsers])
+                        
+                        for i in 0..<numberOfUsers {
+                            finalUsers[i] = finalUsers[i].trimmingCharacters(in: .whitespaces)
+                        }
 
                         for name in finalUsers {
                             if name == "" {
