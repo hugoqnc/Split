@@ -93,22 +93,22 @@ struct StartView: View {
                     } label: {
                         Label("Next", systemImage: "arrow.right")
                     }
-                    .buttonStyle(.borderedProminent)
-                    .padding(7)
+                        .buttonStyle(.borderedProminent)
+                        .padding(7)
+                        .alert(isPresented: $showAlert1) {
+                            Alert(title: Text("Missing information"), message: Text("Please fill in all usernames"), dismissButton: .default(Text("OK")))
+                        }
                     
                     Spacer()
+                        .alert(isPresented: $showAlert2) {
+                            Alert(title: Text("Incorrect names"), message: Text("Users must have distinct names"), dismissButton: .default(Text("OK")))
+                        }
                     
                 }
                 .navigationTitle("ReceiptSplitter")
                 .background(Color.accentColor.opacity(0.15), ignoresSafeAreaEdges: .bottom)
             }
             .navigationViewStyle(StackNavigationViewStyle())
-            .alert("Please fill in all user names", isPresented: $showAlert1) {
-                Button("OK") { }
-            }
-            .alert("Users must have distinct names", isPresented: $showAlert2) {
-                Button("OK") { }
-            }
         }
     }
 }

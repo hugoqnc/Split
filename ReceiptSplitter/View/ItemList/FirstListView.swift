@@ -16,7 +16,7 @@ struct FirstListView: View {
     @State private var startAttribution = false
     
     var views = ["Scan","List"]
-    @State private var showList = "Scan"
+    @State private var showList = "List" //TOCHANGE
 
     var body: some View {
         if startAttribution {
@@ -37,26 +37,26 @@ struct FirstListView: View {
                                 VStack(alignment: .leading) {
                                     Text("\(model.listOfProductsAndPrices.count) transactions")
                                         .font(.title2)
-                                    .fontWeight(.semibold)
+                                        .fontWeight(.semibold)
                                     Text("\(model.showPrice(price: model.totalPrice))")
                                         .font(.largeTitle)
                                         .fontWeight(.bold)
                                 }
+                                
                                 Spacer()
+                                
+                                Picker("view", selection: $showList) {
+                                    ForEach(views, id: \.self) {
+                                        Text($0)
+                                    }
+                                }
+                                .pickerStyle(.segmented)
+                                .padding(.horizontal, 30)
                             }
-                            .padding(.top, 30)
+                            .padding(.top, 10)
                             .padding(.bottom, 10)
                             .padding(.leading, 30)
 
-                            
-                            Picker("view", selection: $showList.animation()) {
-                                ForEach(views, id: \.self) {
-                                    Text($0)
-                                }
-                            }
-                            .pickerStyle(.segmented)
-                            .padding(.horizontal)
-                            .padding(.bottom, 10)
                             
                             
                             ZStack {
@@ -86,6 +86,9 @@ struct FirstListView: View {
                                                 Text(String(pair.price)+model.currency.value)
                                             }
                                         }
+                                        .onDelete { indexSet in
+                                            model.listOfProductsAndPrices.remove(atOffsets: indexSet)
+                                        }
                                     }
                                 }
                             }
@@ -102,7 +105,7 @@ struct FirstListView: View {
                                 } label: {
                                     Text("Cancel")
                                 }
-                                .buttonStyle(.bordered)
+                                //.buttonStyle(.bordered)
                                 .padding()
                                 .tint(.red)
                             }
@@ -112,20 +115,22 @@ struct FirstListView: View {
                                         startAttribution = true
                                     }
                                 } label: {
+                                    Image(systemName: "arrow.right")
                                     Text("Next")
                                 }
                                 .buttonStyle(.borderedProminent)
                                 .padding()
                             }
                         }
-                        .navigationBarTitle("")
-                        .navigationBarHidden(true)
+                        .navigationViewStyle(StackNavigationViewStyle())
+                        .navigationBarTitle(Text("ReceiptSplitter"), displayMode: .inline)
+                        .navigationBarItems(leading: showList=="List" ? EditButton() : nil, trailing: plusButton)
+                        //.navigationBarHidden(true)
                     }
-                    .navigationViewStyle(StackNavigationViewStyle())
                     .onAppear(perform: {
                         let secondsToDelay = 0.7
                         DispatchQueue.main.asyncAfter(deadline: .now() + secondsToDelay) {
-                            showTutorialScreen = true
+                            //showTutorialScreen = true //TOCHANGE
                         }
                     })
                 }
@@ -136,7 +141,36 @@ struct FirstListView: View {
         })
         }
     }
+    
+    private var plusButton: some View {
+        Button {
+            promptItem(pair: nil)
+        } label: {
+            Image(systemName: "plus")
+        }
+    }
+}
 
+private func promptItem(pair: PairProductPrice?) {
+    var name = ""
+    var price = "abc"
+    
+    let alert = UIAlertController(title: "Enter item details", message: "", preferredStyle: .alert)
+    alert.addTextField() { textField in
+        textField.placeholder = "..."
+        textField.text = name
+    }
+    alert.addTextField() { textField in
+        textField.placeholder = "..."
+        textField.text = price
+    }
+    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in })
+    alert.addAction(UIAlertAction(title: "Done", style: .default) { _ in
+//            if let textField = alert.textFields?[0], textField.text != ""{
+//               self.users.append(UserList(Name: textField.text ?? ""))
+//            }
+    })
+    //showAlert(alert: alert)
 }
 
 struct FirstListView_Previews: PreviewProvider {
