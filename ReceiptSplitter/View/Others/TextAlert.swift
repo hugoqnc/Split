@@ -11,31 +11,40 @@ import UIKit
 extension UIAlertController {
     convenience init(alert: TextAlert) {
         self.init(title: alert.title, message: alert.message, preferredStyle: .alert)
-        addTextField { $0.placeholder = alert.placeholder1 }
-        addTextField { $0.placeholder = alert.placeholder2 }
-        addAction(UIAlertAction(title: alert.cancel, style: .cancel) { _ in
-            alert.action(nil, nil)
-        })
+        addTextField {
+            $0.placeholder = alert.placeholder1
+            $0.text = alert.initialText
+        }
+        addTextField {
+            $0.placeholder = alert.placeholder2
+            if let double: Double = alert.initialDouble {
+                $0.text = String(format: "%.2f", double)
+            }
+        }
         let textField1 = self.textFields?.first
         let textField2 = self.textFields?.last
         textField2?.keyboardType = .decimalPad
-//        TextField(String(pair.price)+model.currency.value, value: $pair.price, format: .number)
-//            .keyboardType(.decimalPad)
-//            .textFieldStyle(.roundedBorder)
-//            .frame(width: 120)
-//            .font(.title)
-//            .offset(x: 0, y: -13)
-//            .foregroundColor(.blue)
-        addAction(UIAlertAction(title: alert.accept, style: .default) { _ in
-            let doubleText = textField2?.text
-            //print("DoubleText: \(doubleText)")
-            var double: Double? = nil
-            if !(doubleText == nil) {
-                double = Double(doubleText!.replacingOccurrences(of: ",", with: "."))
-                //print("Double: \(double)")
-            }
-            alert.action(textField1?.text, double)
+        
+        addAction(UIAlertAction(title: alert.cancel, style: .cancel) { _ in
+            alert.action(nil, nil)
         })
+
+        func double() -> Double? {
+                let doubleText = textField2?.text
+                if !(doubleText == nil) {
+                    return Double(doubleText!.replacingOccurrences(of: ",", with: "."))
+                } else {
+                    return nil
+                }
+        }
+        
+        addAction(UIAlertAction(title: alert.accept, style: .default) { _ in
+            alert.action(textField1?.text, double())
+        })
+        
+//        if textField1?.text == nil {
+//            self.actions.last?.isEnabled = false
+//        }
     }
 }
 
@@ -85,6 +94,8 @@ public struct TextAlert {
     public var message: String
     public var placeholder1: String = ""
     public var placeholder2: String = ""
+    public var initialText: String?
+    public var initialDouble: Double?
     public var accept: String = "OK"
     public var cancel: String = "Cancel"
     public var action: (String?, Double?) -> ()
@@ -99,8 +110,8 @@ extension View {
 struct TextAlertView: View {
     @State var showsAlert = false
     
-    @State var name = ""
-    @State var price: Double = 0.0
+    @State var name = "Potato Wedges"
+    @State var price: Double = 2.35
     
     var body: some View {
         VStack {
@@ -115,10 +126,12 @@ struct TextAlertView: View {
                                                    message:"Please enter item name and price",
                                                    placeholder1: "Name",
                                                    placeholder2: "Price",
+                                                   initialText: name,
+                                                   initialDouble: price,
                                                    action: {
                                                         //print("Callback \($0 ?? "<cancel>")")
                                                         //print("Callback \($1 ?? "<cancel>")")
-                                                        name = $0 ?? self.name
+                                                        name = $0==nil ? self.name : ($0!=="" ? self.name : $0!)
                                                         price = $1 ?? self.price
                                                     }))
     }
