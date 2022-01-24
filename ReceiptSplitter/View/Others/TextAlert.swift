@@ -18,8 +18,23 @@ extension UIAlertController {
         })
         let textField1 = self.textFields?.first
         let textField2 = self.textFields?.last
+        textField2?.keyboardType = .decimalPad
+//        TextField(String(pair.price)+model.currency.value, value: $pair.price, format: .number)
+//            .keyboardType(.decimalPad)
+//            .textFieldStyle(.roundedBorder)
+//            .frame(width: 120)
+//            .font(.title)
+//            .offset(x: 0, y: -13)
+//            .foregroundColor(.blue)
         addAction(UIAlertAction(title: alert.accept, style: .default) { _ in
-            alert.action(textField1?.text, textField2?.text)
+            let doubleText = textField2?.text
+            //print("DoubleText: \(doubleText)")
+            var double: Double? = nil
+            if !(doubleText == nil) {
+                double = Double(doubleText!.replacingOccurrences(of: ",", with: "."))
+                //print("Double: \(double)")
+            }
+            alert.action(textField1?.text, double)
         })
     }
 }
@@ -72,7 +87,7 @@ public struct TextAlert {
     public var placeholder2: String = ""
     public var accept: String = "OK"
     public var cancel: String = "Cancel"
-    public var action: (String?, String?) -> ()
+    public var action: (String?, Double?) -> ()
 }
 
 extension View {
@@ -85,7 +100,7 @@ struct TextAlertView: View {
     @State var showsAlert = false
     
     @State var name = ""
-    @State var price = ""
+    @State var price: Double = 0.0
     
     var body: some View {
         VStack {
@@ -101,10 +116,10 @@ struct TextAlertView: View {
                                                    placeholder1: "Name",
                                                    placeholder2: "Price",
                                                    action: {
-                                                        print("Callback \($0 ?? "<cancel>")")
-                                                        print("Callback \($1 ?? "<cancel>")")
-                                                        name = $0 ?? ""
-                                                        price = $1 ?? ""
+                                                        //print("Callback \($0 ?? "<cancel>")")
+                                                        //print("Callback \($1 ?? "<cancel>")")
+                                                        name = $0 ?? self.name
+                                                        price = $1 ?? self.price
                                                     }))
     }
 }
