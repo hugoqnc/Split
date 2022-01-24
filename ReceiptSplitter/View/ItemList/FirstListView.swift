@@ -12,12 +12,16 @@ struct FirstListView: View {
     @EnvironmentObject var model: ModelData
     
     @State var editMode: EditMode = .inactive
+    @State private var refresh = UUID() //to correct bug to make bottom bar appear: https://stackoverflow.com/questions/65126986/swiftui-bottombar-toolbar-disappears-when-going-back
     
     @Binding var showScanningResults: Bool
     @Binding var nothingFound: Bool
     @State private var showTutorialScreen = false
     @State private var startAttribution = false
+    
     @State private var newItemAlert = false
+    @State private var editItemAlert = false
+    @State private var editItemAlertPair = PairProductPrice()
     
     var views = ["Scan","List"]
     @State private var showView = "Scan" //TOCHANGE
@@ -26,7 +30,7 @@ struct FirstListView: View {
         if startAttribution {
             HomeView()
         } else {
-            VStack {
+            Group {
                 if model.listOfProductsAndPrices.isEmpty {
                     VStack {
                         LoadItemsView(showScanningResults: $showScanningResults, nothingFound: $nothingFound)
@@ -91,46 +95,99 @@ struct FirstListView: View {
                                         )
                                     )
                                 
-                                if showView=="Scan" {
-                                    ScrollView {
-                                        ForEach(model.images){ idImage in
-                                            if let image = idImage.image {
-                                                let boxes = model.listOfProductsAndPrices.compactMap({ pair -> VNDetectedObjectObservation? in
-                                                    if pair.imageId==idImage.id && !(pair.box == nil){
-                                                        return pair.box!
+                                EmptyView()
+                                    .alert(isPresented: $editItemAlert,
+                                        TextAlert(title: "Modify item",
+                                           message:"You can change the name and price of the item",
+                                           placeholder1: "Name",
+                                           placeholder2: "Price",
+                                           initialText: editItemAlertPair.name,
+                                           initialDouble: editItemAlertPair.price,
+                                           action: {
+                                                if $0 != nil && $1 != nil {
+                                                    if $0! != "" {
+                                                        let index = model.listOfProductsAndPrices.firstIndex(of: editItemAlertPair)!
+                                                        model.listOfProductsAndPrices[index].name = $0!
+                                                        model.listOfProductsAndPrices[index].price = $1!
                                                     }
-                                                    return nil
-                                                })
-                                                Image(uiImage: visualization(image, observations: boxes))
-                                                    .resizable()
-                                                    .scaledToFit()
-                                                    .padding(5)
+                                                }
+                                            }
+                                        )
+                                    )
+                                
+                                Group{
+                                    if showView=="Scan" {
+                                        ScrollView {
+                                            ForEach(model.images){ idImage in
+                                                if let image = idImage.image {
+                                                    let boxes = model.listOfProductsAndPrices.compactMap({ pair -> VNDetectedObjectObservation? in
+                                                        if pair.imageId==idImage.id && !(pair.box == nil){
+                                                            return pair.box!
+                                                        }
+                                                        return nil
+                                                    })
+                                                    Image(uiImage: visualization(image, observations: boxes))
+                                                        .resizable()
+                                                        .scaledToFit()
+                                                        .padding(5)
+                                                }
                                             }
                                         }
+                                    } else {
+                                        List() {
+                                            ForEach(model.listOfProductsAndPrices) { pair in
+                                                VStack(alignment: .leading) {
+                                                    HStack {
+                                                        Text(pair.name)
+                                                        Spacer()
+                                                        Text(String(pair.price)+model.currency.value)
+                                                    }
+                                                    if editMode == .active {
+                                                        Text("Long-press to edit")
+                                                            .font(.caption)
+                                                            .foregroundColor(Color.accentColor)
+                                                            .padding(0)
+                                                    }
+                                                }
+                                                .onLongPressGesture {
+                                                    if editMode == .active {
+                                                        editItemAlert = true
+                                                        editItemAlertPair = pair
+                                                    }
+                                                }
+                                            }
+                                            .onDelete { indexSet in
+                                                withAnimation() {
+                                                    model.listOfProductsAndPrices.remove(atOffsets: indexSet)
+                                                }
+                                            }
+                                        }
+                                        .environment(\.editMode, $editMode)
                                     }
-                                } else {
-                                    List() {
-                                        ForEach(model.listOfProductsAndPrices) { pair in
-                                            HStack {
-                                                Text(pair.name)
-                                                Spacer()
-                                                Text(String(pair.price)+model.currency.value)
-                                            }
-                                        }
-                                        .onDelete { indexSet in
-                                            withAnimation() {
-                                                model.listOfProductsAndPrices.remove(atOffsets: indexSet)
-                                            }
-                                        }
-                                    }
-                                    .environment(\.editMode, $editMode)
                                 }
                             }
-                            .transition(.opacity)
+                            //.transition(.opacity)
 
                         }
                         .toolbar {
-                            ToolbarItem(placement: .bottomBar) {
+                            ToolbarItem(placement: .navigationBarLeading) {
+                                EditButton()
+                                    .onChange(of: editMode) { mode in
+                                        if mode==EditMode.active {
+                                            showView="List"
+                                        } else {
+                                        }
+                                    }
+                                    .environment(\.editMode, $editMode)
+                            }
+                            ToolbarItem(placement: .navigationBarTrailing) {
+                                Button {
+                                    newItemAlert = true
+                                } label: {
+                                    Image(systemName: "plus")
+                                }
+                            }
+                            ToolbarItem(id: UUID().uuidString, placement: .bottomBar, showsByDefault: true) {
                                 Button {
                                     model.eraseScanData()
                                     
@@ -144,7 +201,7 @@ struct FirstListView: View {
                                 .padding()
                                 .tint(.red)
                             }
-                            ToolbarItem(placement: .bottomBar) {
+                            ToolbarItem(id: UUID().uuidString, placement: .bottomBar, showsByDefault: true) {
                                 Button {
                                     withAnimation(){
                                         startAttribution = true
@@ -157,9 +214,10 @@ struct FirstListView: View {
                                 .padding()
                             }
                         }
+                        .id(refresh)
                         .navigationViewStyle(StackNavigationViewStyle())
                         .navigationBarTitle(Text("ReceiptSplitter"), displayMode: .inline)
-                        .navigationBarItems(leading: customEditButton.environment(\.editMode, $editMode), trailing: plusButton)
+                        //.navigationBarItems(leading: customEditButton.environment(\.editMode, $editMode), trailing: plusButton)
                         //.navigationBarHidden(true)
                     }
                     .onAppear(perform: {
@@ -173,28 +231,9 @@ struct FirstListView: View {
             .transition(.opacity)
             .slideOverCard(isPresented: $showTutorialScreen, content: {
                 ListTutorialView()
-        })
+            })
         }
     }
-    
-    private var plusButton: some View {
-        Button {
-            newItemAlert = true
-        } label: {
-            Image(systemName: "plus")
-        }
-    }
-    
-    private var customEditButton: some View {
-        EditButton()
-            .onChange(of: editMode) { mode in
-                if mode==EditMode.active {
-                    showView="List"
-                } else {
-                }
-            }
-    }
-
 
 }
 
