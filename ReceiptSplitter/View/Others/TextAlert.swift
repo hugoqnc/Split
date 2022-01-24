@@ -42,9 +42,36 @@ extension UIAlertController {
             alert.action(textField1?.text, double())
         })
         
-//        if textField1?.text == nil {
-//            self.actions.last?.isEnabled = false
-//        }
+        // On appearance of the popup (before any modifications)
+        self.actions.last?.isEnabled = false
+        
+        // Observe the UITextFieldTextDidChange notification to be notified in the below block when text is changed
+        NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification, object: textField1, queue: OperationQueue.main, using:
+            {_ in
+                // Being in this block means that something fired the UITextFieldTextDidChange notification.
+                
+                // Access the textField object from alertController.addTextField(configurationHandler:) above and get the character count of its non whitespace characters
+                let textCount1 = textField1!.text?.trimmingCharacters(in: .whitespacesAndNewlines).count ?? 0
+                let textIsNotEmpty1 = textCount1 > 0
+                let textCount2 = textField2!.text?.trimmingCharacters(in: .whitespacesAndNewlines).count ?? 0
+                let textIsNotEmpty2 = textCount2 > 0
+                
+                // If the text contains non whitespace characters, enable the OK Button
+                self.actions.last?.isEnabled = textIsNotEmpty1 && textIsNotEmpty2
+        })
+        NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification, object: textField2, queue: OperationQueue.main, using:
+            {_ in
+                // Being in this block means that something fired the UITextFieldTextDidChange notification.
+                
+                // Access the textField object from alertController.addTextField(configurationHandler:) above and get the character count of its non whitespace characters
+                let textCount1 = textField1!.text?.trimmingCharacters(in: .whitespacesAndNewlines).count ?? 0
+                let textIsNotEmpty1 = textCount1 > 0
+                let textCount2 = textField2!.text?.trimmingCharacters(in: .whitespacesAndNewlines).count ?? 0
+                let textIsNotEmpty2 = textCount2 > 0
+                
+                // If the text contains non whitespace characters, enable the OK Button
+                self.actions.last?.isEnabled = textIsNotEmpty1 && textIsNotEmpty2
+        })
     }
 }
 
@@ -129,8 +156,6 @@ struct TextAlertView: View {
                                                    initialText: name,
                                                    initialDouble: price,
                                                    action: {
-                                                        //print("Callback \($0 ?? "<cancel>")")
-                                                        //print("Callback \($1 ?? "<cancel>")")
                                                         name = $0==nil ? self.name : ($0!=="" ? self.name : $0!)
                                                         price = $1 ?? self.price
                                                     }))

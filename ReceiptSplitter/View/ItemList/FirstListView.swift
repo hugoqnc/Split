@@ -17,6 +17,7 @@ struct FirstListView: View {
     @Binding var nothingFound: Bool
     @State private var showTutorialScreen = false
     @State private var startAttribution = false
+    @State private var newItemAlert = false
     
     var views = ["Scan","List"]
     @State private var showView = "Scan" //TOCHANGE
@@ -65,6 +66,31 @@ struct FirstListView: View {
                             
                             
                             ZStack {
+                                
+                                EmptyView()
+                                    .alert(isPresented: $newItemAlert,
+                                        TextAlert(title: "New item",
+                                           message:"Please enter name and price of the item",
+                                           placeholder1: "Name",
+                                           placeholder2: "Price",
+                                           initialText: nil,
+                                           initialDouble: nil,
+                                           action: {
+                                                var newPair = PairProductPrice()
+                                                if $0 != nil && $1 != nil {
+                                                    if $0! != "" {
+                                                        newPair.name = $0!
+                                                        newPair.price = $1!
+                                                        //newPair.isNewItem = true
+                                                        withAnimation() {
+                                                            model.listOfProductsAndPrices.insert(newPair, at: 0)
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        )
+                                    )
+                                
                                 if showView=="Scan" {
                                     ScrollView {
                                         ForEach(model.images){ idImage in
@@ -92,13 +118,16 @@ struct FirstListView: View {
                                             }
                                         }
                                         .onDelete { indexSet in
-                                            model.listOfProductsAndPrices.remove(atOffsets: indexSet)
+                                            withAnimation() {
+                                                model.listOfProductsAndPrices.remove(atOffsets: indexSet)
+                                            }
                                         }
                                     }
                                     .environment(\.editMode, $editMode)
                                 }
                             }
                             .transition(.opacity)
+
                         }
                         .toolbar {
                             ToolbarItem(placement: .bottomBar) {
@@ -150,7 +179,7 @@ struct FirstListView: View {
     
     private var plusButton: some View {
         Button {
-            // show alert
+            newItemAlert = true
         } label: {
             Image(systemName: "plus")
         }
