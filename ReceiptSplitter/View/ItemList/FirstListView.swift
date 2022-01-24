@@ -10,13 +10,14 @@ import Vision
 
 struct FirstListView: View {
     @EnvironmentObject var model: ModelData
+    @Environment(\.editMode) private var editMode
     @Binding var showScanningResults: Bool
     @Binding var nothingFound: Bool
     @State private var showTutorialScreen = false
     @State private var startAttribution = false
     
     var views = ["Scan","List"]
-    @State private var showList = "List" //TOCHANGE
+    @State private var showView = "List" //TOCHANGE
 
     var body: some View {
         if startAttribution {
@@ -45,7 +46,7 @@ struct FirstListView: View {
                                 
                                 Spacer()
                                 
-                                Picker("view", selection: $showList) {
+                                Picker("view", selection: $showView) {
                                     ForEach(views, id: \.self) {
                                         Text($0)
                                     }
@@ -60,7 +61,7 @@ struct FirstListView: View {
                             
                             
                             ZStack {
-                                if showList=="Scan" {
+                                if showView=="Scan" {
                                     ScrollView {
                                         ForEach(model.images){ idImage in
                                             if let image = idImage.image {
@@ -124,7 +125,7 @@ struct FirstListView: View {
                         }
                         .navigationViewStyle(StackNavigationViewStyle())
                         .navigationBarTitle(Text("ReceiptSplitter"), displayMode: .inline)
-                        .navigationBarItems(leading: showList=="List" ? EditButton() : nil, trailing: plusButton)
+                        .navigationBarItems(leading: customEditButton, trailing: plusButton)
                         //.navigationBarHidden(true)
                     }
                     .onAppear(perform: {
@@ -144,34 +145,40 @@ struct FirstListView: View {
     
     private var plusButton: some View {
         Button {
-            promptItem(pair: nil)
+            // show alert
         } label: {
             Image(systemName: "plus")
         }
     }
+    
+    private var customEditButton: some View {
+        ZStack {
+            if showView=="List" {
+                EditButton()
+            } else {
+                Button {
+                    showView="List"
+                } label: {
+                    Text("Edit")
+                }
+            }
+            
+//            EditButton()
+//                .onChange(of: editMode?.wrappedValue) { mode in
+//                    if mode==EditMode.active {
+//                        showView="List"
+//                    } else {
+//                        showView="List"
+//                    }
+//                }
+
+        }
+    }
+
+
 }
 
-private func promptItem(pair: PairProductPrice?) {
-    var name = ""
-    var price = "abc"
-    
-    let alert = UIAlertController(title: "Enter item details", message: "", preferredStyle: .alert)
-    alert.addTextField() { textField in
-        textField.placeholder = "..."
-        textField.text = name
-    }
-    alert.addTextField() { textField in
-        textField.placeholder = "..."
-        textField.text = price
-    }
-    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in })
-    alert.addAction(UIAlertAction(title: "Done", style: .default) { _ in
-//            if let textField = alert.textFields?[0], textField.text != ""{
-//               self.users.append(UserList(Name: textField.text ?? ""))
-//            }
-    })
-    //showAlert(alert: alert)
-}
+
 
 struct FirstListView_Previews: PreviewProvider {
     static let model = ModelData()
