@@ -10,26 +10,29 @@ import Vision
 
 struct FirstListView: View {
     @EnvironmentObject var model: ModelData
-    @Environment(\.editMode) private var editMode
+    
+    @State var editMode: EditMode = .inactive
+    
     @Binding var showScanningResults: Bool
     @Binding var nothingFound: Bool
     @State private var showTutorialScreen = false
     @State private var startAttribution = false
     
     var views = ["Scan","List"]
-    @State private var showView = "List" //TOCHANGE
+    @State private var showView = "Scan" //TOCHANGE
 
     var body: some View {
         if startAttribution {
             HomeView()
         } else {
             VStack {
-                
                 if model.listOfProductsAndPrices.isEmpty {
                     VStack {
                         LoadItemsView(showScanningResults: $showScanningResults, nothingFound: $nothingFound)
                     }
                 } else {
+
+                    //Text(String(editMode.isEditing))
                     
                     NavigationView {
                                             
@@ -53,6 +56,7 @@ struct FirstListView: View {
                                 }
                                 .pickerStyle(.segmented)
                                 .padding(.horizontal, 30)
+
                             }
                             .padding(.top, 10)
                             .padding(.bottom, 10)
@@ -91,6 +95,7 @@ struct FirstListView: View {
                                             model.listOfProductsAndPrices.remove(atOffsets: indexSet)
                                         }
                                     }
+                                    .environment(\.editMode, $editMode)
                                 }
                             }
                             .transition(.opacity)
@@ -125,13 +130,13 @@ struct FirstListView: View {
                         }
                         .navigationViewStyle(StackNavigationViewStyle())
                         .navigationBarTitle(Text("ReceiptSplitter"), displayMode: .inline)
-                        .navigationBarItems(leading: customEditButton, trailing: plusButton)
+                        .navigationBarItems(leading: customEditButton.environment(\.editMode, $editMode), trailing: plusButton)
                         //.navigationBarHidden(true)
                     }
                     .onAppear(perform: {
                         let secondsToDelay = 0.7
                         DispatchQueue.main.asyncAfter(deadline: .now() + secondsToDelay) {
-                            //showTutorialScreen = true //TOCHANGE
+                            showTutorialScreen = true //TOCHANGE
                         }
                     })
                 }
@@ -152,27 +157,13 @@ struct FirstListView: View {
     }
     
     private var customEditButton: some View {
-        ZStack {
-            if showView=="List" {
-                EditButton()
-            } else {
-                Button {
+        EditButton()
+            .onChange(of: editMode) { mode in
+                if mode==EditMode.active {
                     showView="List"
-                } label: {
-                    Text("Edit")
+                } else {
                 }
             }
-            
-//            EditButton()
-//                .onChange(of: editMode?.wrappedValue) { mode in
-//                    if mode==EditMode.active {
-//                        showView="List"
-//                    } else {
-//                        showView="List"
-//                    }
-//                }
-
-        }
     }
 
 
