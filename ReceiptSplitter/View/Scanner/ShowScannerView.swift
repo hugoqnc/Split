@@ -82,8 +82,8 @@ struct ShowScannerView: View {
     }
 }
 
-struct ShowScannerView_Previews: PreviewProvider {
-    static var previews: some View {
-        ShowScannerView()
-    }
-}
+//struct ShowScannerView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ShowScannerView()
+//    }
+//}
