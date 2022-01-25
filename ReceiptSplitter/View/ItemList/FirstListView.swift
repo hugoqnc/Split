@@ -24,6 +24,8 @@ struct FirstListView: View {
     
     var views = ["Scan","List"]
     @State private var showView = "Scan"
+    
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass //for iPad specificity
 
     var body: some View {
         if startAttribution {
@@ -92,7 +94,7 @@ struct FirstListView: View {
                             VStack{
                                 HStack {
                                     VStack(alignment: .leading) {
-                                        Text("\(model.listOfProductsAndPrices.count) transactions")
+                                        Text("\(model.listOfProductsAndPrices.count) items")
                                             .font(.title2)
                                             .fontWeight(.semibold)
                                         Text("\(model.showPrice(price: model.totalPrice))")
@@ -102,13 +104,15 @@ struct FirstListView: View {
                                     
                                     Spacer()
                                     
-                                    Picker("view", selection: $showView) {
-                                        ForEach(views, id: \.self) {
-                                            Text($0)
+                                    if horizontalSizeClass == .compact { //don't show on iPad's large screen
+                                        Picker("view", selection: $showView) {
+                                            ForEach(views, id: \.self) {
+                                                Text($0)
+                                            }
                                         }
+                                        .pickerStyle(.segmented)
+                                        .padding(.horizontal, 30)
                                     }
-                                    .pickerStyle(.segmented)
-                                    .padding(.horizontal, 30)
 
                                 }
                                 .padding(.top, 10)
@@ -116,8 +120,59 @@ struct FirstListView: View {
                                 .padding(.leading, 30)
 
                                 
-                                Group{
-                                    if showView=="Scan" {
+                                if horizontalSizeClass == .compact {
+                                    Group{
+                                        if showView=="Scan" {
+                                            ScrollView {
+                                                ForEach(model.images){ idImage in
+                                                    if let image = idImage.image {
+                                                        Image(uiImage: visualization(image, observations: idImage.boxes(listOfProductsAndPrices: model.listOfProductsAndPrices)))
+                                                            .resizable()
+                                                            .scaledToFit()
+                                                            .padding(5)
+                                                    }
+                                                }
+                                            }
+                                        } else {
+                                            List() {
+                                                ForEach(model.listOfProductsAndPrices) { pair in
+                                                    VStack(alignment: .leading) {
+                                                        HStack {
+                                                            Text(pair.name)
+                                                            Spacer()
+                                                            Text(model.showPrice(price: pair.price))
+                                                                .padding(.trailing, 10)
+                                                        }
+                                                        if editMode == .active {
+                                                            Text("Double-tap to edit")
+                                                                .font(.caption)
+                                                                .foregroundColor(Color.accentColor)
+                                                                .padding(0)
+                                                        }
+                                                    }
+                                                    .listRowBackground(Color.secondary.opacity(0.1))
+                                                    .onTapGesture(count: 2) {
+                                                        if editMode == .active {
+                                                            editItemAlert = true
+                                                            editItemAlertPair = pair
+                                                        }
+                                                    }
+                                                }
+                                                .onDelete { indexSet in
+                                                    withAnimation() {
+                                                        model.listOfProductsAndPrices.remove(atOffsets: indexSet)
+                                                    }
+                                                }
+                                            }
+                                            .environment(\.editMode, $editMode)
+                                            
+                                        }
+                                    }
+                                    .onAppear(perform: {
+                                        UITableView.appearance().backgroundColor = .clear
+                                    })
+                                } else { //iPad (large screen) version
+                                    HStack{
                                         ScrollView {
                                             ForEach(model.images){ idImage in
                                                 if let image = idImage.image {
@@ -128,7 +183,9 @@ struct FirstListView: View {
                                                 }
                                             }
                                         }
-                                    } else {
+                                        
+                                        Divider()
+                                        
                                         List() {
                                             ForEach(model.listOfProductsAndPrices) { pair in
                                                 VStack(alignment: .leading) {
@@ -145,6 +202,7 @@ struct FirstListView: View {
                                                             .padding(0)
                                                     }
                                                 }
+                                                .listRowBackground(Color.secondary.opacity(0.1))
                                                 .onTapGesture(count: 2) {
                                                     if editMode == .active {
                                                         editItemAlert = true
@@ -160,8 +218,10 @@ struct FirstListView: View {
                                         }
                                         .environment(\.editMode, $editMode)
                                     }
+                                    .onAppear(perform: {
+                                        UITableView.appearance().backgroundColor = .clear
+                                    })
                                 }
-                                //.transition(.opacity)
 
                             }
                             .toolbar {
@@ -209,11 +269,10 @@ struct FirstListView: View {
                                     .padding()
                                 }
                             }
-                            .navigationViewStyle(StackNavigationViewStyle())
                             .navigationBarTitle(Text("ReceiptSplitter"), displayMode: .inline)
-                            //.navigationBarItems(leading: customEditButton.environment(\.editMode, $editMode), trailing: plusButton)
-                            //.navigationBarHidden(true)
+
                         }
+                        .navigationViewStyle(StackNavigationViewStyle())
                         .onAppear(perform: {
                             let secondsToDelay = 0.7
                             DispatchQueue.main.asyncAfter(deadline: .now() + secondsToDelay) {

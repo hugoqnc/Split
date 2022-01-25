@@ -19,7 +19,7 @@ struct ListSheetView: View {
                 VStack{
 
                     List() {
-                        Section(header: Text("\(model.listOfProductsAndPrices.count) transactions — \(model.showPrice(price: model.totalPrice))")){
+                        Section(header: Text("\(model.listOfProductsAndPrices.count) items — \(model.showPrice(price: model.totalPrice))")){
                             ForEach(model.listOfProductsAndPrices) { pair in
                                 if showCurrentItem {
                                     HStack {
