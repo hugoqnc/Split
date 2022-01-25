@@ -40,6 +40,7 @@ struct StartView: View {
                                 }
                                 .pickerStyle(.menu)
                             }
+                            .listRowBackground(Color.secondary.opacity(0.1))
                             
                             HStack {
                                 Text("Number of people")
@@ -51,6 +52,7 @@ struct StartView: View {
                                 }
                                 .pickerStyle(.menu)
                             }
+                            .listRowBackground(Color.secondary.opacity(0.1))
                         } header: {
                             Text("Parameters")
                         }
@@ -58,6 +60,7 @@ struct StartView: View {
                         Section {
                             ForEach(1 ... numberOfUsers, id:\.self) { number in
                                 TextField("Name of user \(number)", text: $names[number-1])
+                                    .listRowBackground(Color.secondary.opacity(0.1))
                             }
                         } header: {
                             Text("Names")
@@ -106,7 +109,7 @@ struct StartView: View {
                     
                 }
                 .navigationTitle("ReceiptSplitter")
-                .background(Color.accentColor.opacity(0.15), ignoresSafeAreaEdges: .bottom)
+                //.background(Color.accentColor.opacity(0.15), ignoresSafeAreaEdges: .bottom)
             }
             .navigationViewStyle(StackNavigationViewStyle())
         }

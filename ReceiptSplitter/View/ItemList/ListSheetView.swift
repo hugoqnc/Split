@@ -37,6 +37,7 @@ struct ListSheetView: View {
                                         Spacer()
                                         Text(String(pair.price)+model.currency.value)
                                     }
+                                    .listRowBackground(Color.secondary.opacity(0.1))
                                     .foregroundColor(pair.id==model.listOfProductsAndPrices[itemCounter].id ? .blue : nil)
                                 } else {
                                     HStack {
@@ -44,6 +45,7 @@ struct ListSheetView: View {
                                         Spacer()
                                         Text(String(pair.price)+model.currency.value)
                                     }
+                                    .listRowBackground(Color.secondary.opacity(0.1))
                                 }
                             }
                             .onAppear {

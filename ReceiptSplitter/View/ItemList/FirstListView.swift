@@ -218,9 +218,6 @@ struct FirstListView: View {
                                         }
                                         .environment(\.editMode, $editMode)
                                     }
-                                    .onAppear(perform: {
-                                        UITableView.appearance().backgroundColor = .clear
-                                    })
                                 }
 
                             }
