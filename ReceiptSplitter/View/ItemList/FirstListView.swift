@@ -24,7 +24,7 @@ struct FirstListView: View {
     @State private var editItemAlertPair = PairProductPrice()
     
     var views = ["Scan","List"]
-    @State private var showView = "Scan" //TOCHANGE
+    @State private var showView = "Scan"
 
     var body: some View {
         if startAttribution {
@@ -39,81 +39,79 @@ struct FirstListView: View {
 
                     //Text(String(editMode.isEditing))
                     
-                    NavigationView {
-                                            
-                        VStack{
-                            HStack {
-                                VStack(alignment: .leading) {
-                                    Text("\(model.listOfProductsAndPrices.count) transactions")
-                                        .font(.title2)
-                                        .fontWeight(.semibold)
-                                    Text("\(model.showPrice(price: model.totalPrice))")
-                                        .font(.largeTitle)
-                                        .fontWeight(.bold)
-                                }
-                                
-                                Spacer()
-                                
-                                Picker("view", selection: $showView) {
-                                    ForEach(views, id: \.self) {
-                                        Text($0)
+                    ZStack {
+                        EmptyView()
+                            .alert(isPresented: $newItemAlert,
+                                TextAlert(title: "New item",
+                                   message:"Please enter name and price of the item",
+                                   placeholder1: "Name",
+                                   placeholder2: "Price",
+                                   initialText: nil,
+                                   initialDouble: nil,
+                                   action: {
+                                        var newPair = PairProductPrice()
+                                        if $0 != nil && $1 != nil {
+                                            if $0! != "" {
+                                                newPair.name = $0!
+                                                newPair.price = $1!
+                                                //newPair.isNewItem = true
+                                                withAnimation() {
+                                                    model.listOfProductsAndPrices.insert(newPair, at: 0)
+                                                }
+                                            }
+                                        }
                                     }
+                                )
+                            )
+                        
+                        EmptyView()
+                            .alert(isPresented: $editItemAlert,
+                                TextAlert(title: "Modify item",
+                                   message:"You can change the name and price of the item",
+                                   placeholder1: "Name",
+                                   placeholder2: "Price",
+                                   initialText: editItemAlertPair.name,
+                                   initialDouble: editItemAlertPair.price,
+                                   action: {
+                                        if $0 != nil && $1 != nil {
+                                            if $0! != "" {
+                                                let index = model.listOfProductsAndPrices.firstIndex(of: editItemAlertPair)!
+                                                model.listOfProductsAndPrices[index].name = $0!
+                                                model.listOfProductsAndPrices[index].price = $1!
+                                            }
+                                        }
+                                    }
+                                )
+                            )
+                        
+                        NavigationView {
+                                                
+                            VStack{
+                                HStack {
+                                    VStack(alignment: .leading) {
+                                        Text("\(model.listOfProductsAndPrices.count) transactions")
+                                            .font(.title2)
+                                            .fontWeight(.semibold)
+                                        Text("\(model.showPrice(price: model.totalPrice))")
+                                            .font(.largeTitle)
+                                            .fontWeight(.bold)
+                                    }
+                                    
+                                    Spacer()
+                                    
+                                    Picker("view", selection: $showView) {
+                                        ForEach(views, id: \.self) {
+                                            Text($0)
+                                        }
+                                    }
+                                    .pickerStyle(.segmented)
+                                    .padding(.horizontal, 30)
+
                                 }
-                                .pickerStyle(.segmented)
-                                .padding(.horizontal, 30)
+                                .padding(.top, 10)
+                                .padding(.bottom, 10)
+                                .padding(.leading, 30)
 
-                            }
-                            .padding(.top, 10)
-                            .padding(.bottom, 10)
-                            .padding(.leading, 30)
-
-                            
-                            
-                            ZStack {
-                                
-                                EmptyView()
-                                    .alert(isPresented: $newItemAlert,
-                                        TextAlert(title: "New item",
-                                           message:"Please enter name and price of the item",
-                                           placeholder1: "Name",
-                                           placeholder2: "Price",
-                                           initialText: nil,
-                                           initialDouble: nil,
-                                           action: {
-                                                var newPair = PairProductPrice()
-                                                if $0 != nil && $1 != nil {
-                                                    if $0! != "" {
-                                                        newPair.name = $0!
-                                                        newPair.price = $1!
-                                                        //newPair.isNewItem = true
-                                                        withAnimation() {
-                                                            model.listOfProductsAndPrices.insert(newPair, at: 0)
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        )
-                                    )
-                                
-                                EmptyView()
-                                    .alert(isPresented: $editItemAlert,
-                                        TextAlert(title: "Modify item",
-                                           message:"You can change the name and price of the item",
-                                           placeholder1: "Name",
-                                           placeholder2: "Price",
-                                           initialText: editItemAlertPair.name,
-                                           initialDouble: editItemAlertPair.price,
-                                           action: {
-                                                if $0 != nil && $1 != nil {
-                                                    if $0! != "" {
-                                                        let index = model.listOfProductsAndPrices.firstIndex(of: editItemAlertPair)!
-                                                        model.listOfProductsAndPrices[index].name = $0!
-                                                        model.listOfProductsAndPrices[index].price = $1!
-                                                    }
-                                                }
-                                            }
-                                        )
-                                    )
                                 
                                 Group{
                                     if showView=="Scan" {
@@ -149,6 +147,7 @@ struct FirstListView: View {
                                                             .padding(0)
                                                     }
                                                 }
+                                                .onTapGesture {  } //necessary for scrolling: https://developer.apple.com/forums/thread/127277
                                                 .onLongPressGesture {
                                                     if editMode == .active {
                                                         editItemAlert = true
@@ -165,67 +164,67 @@ struct FirstListView: View {
                                         .environment(\.editMode, $editMode)
                                     }
                                 }
-                            }
-                            //.transition(.opacity)
+                                //.transition(.opacity)
 
-                        }
-                        .toolbar {
-                            ToolbarItem(placement: .navigationBarLeading) {
-                                EditButton()
-                                    .onChange(of: editMode) { mode in
-                                        if mode==EditMode.active {
-                                            showView="List"
-                                        } else {
+                            }
+                            .toolbar {
+                                ToolbarItem(placement: .navigationBarLeading) {
+                                    EditButton()
+                                        .onChange(of: editMode) { mode in
+                                            if mode==EditMode.active {
+                                                showView="List"
+                                            } else {
+                                            }
                                         }
+                                        .environment(\.editMode, $editMode)
+                                }
+                                ToolbarItem(placement: .navigationBarTrailing) {
+                                    Button {
+                                        newItemAlert = true
+                                    } label: {
+                                        Image(systemName: "plus")
                                     }
-                                    .environment(\.editMode, $editMode)
-                            }
-                            ToolbarItem(placement: .navigationBarTrailing) {
-                                Button {
-                                    newItemAlert = true
-                                } label: {
-                                    Image(systemName: "plus")
+                                }
+                                ToolbarItem(id: UUID().uuidString, placement: .bottomBar, showsByDefault: true) {
+                                    Button {
+                                        model.eraseScanData()
+                                        
+                                        withAnimation() {
+                                            showScanningResults = false
+                                        }
+                                    } label: {
+                                        Text("Cancel")
+                                    }
+                                    //.buttonStyle(.bordered)
+                                    .padding()
+                                    .tint(.red)
+                                }
+                                ToolbarItem(id: UUID().uuidString, placement: .bottomBar, showsByDefault: true) {
+                                    Button {
+                                        withAnimation(){
+                                            startAttribution = true
+                                        }
+                                    } label: {
+                                        Image(systemName: "arrow.right")
+                                        Text("Next")
+                                    }
+                                    .buttonStyle(.borderedProminent)
+                                    .padding()
                                 }
                             }
-                            ToolbarItem(id: UUID().uuidString, placement: .bottomBar, showsByDefault: true) {
-                                Button {
-                                    model.eraseScanData()
-                                    
-                                    withAnimation() {
-                                        showScanningResults = false
-                                    }
-                                } label: {
-                                    Text("Cancel")
-                                }
-                                //.buttonStyle(.bordered)
-                                .padding()
-                                .tint(.red)
-                            }
-                            ToolbarItem(id: UUID().uuidString, placement: .bottomBar, showsByDefault: true) {
-                                Button {
-                                    withAnimation(){
-                                        startAttribution = true
-                                    }
-                                } label: {
-                                    Image(systemName: "arrow.right")
-                                    Text("Next")
-                                }
-                                .buttonStyle(.borderedProminent)
-                                .padding()
-                            }
+                            .id(refresh)
+                            .navigationViewStyle(StackNavigationViewStyle())
+                            .navigationBarTitle(Text("ReceiptSplitter"), displayMode: .inline)
+                            //.navigationBarItems(leading: customEditButton.environment(\.editMode, $editMode), trailing: plusButton)
+                            //.navigationBarHidden(true)
                         }
-                        .id(refresh)
-                        .navigationViewStyle(StackNavigationViewStyle())
-                        .navigationBarTitle(Text("ReceiptSplitter"), displayMode: .inline)
-                        //.navigationBarItems(leading: customEditButton.environment(\.editMode, $editMode), trailing: plusButton)
-                        //.navigationBarHidden(true)
-                    }
-                    .onAppear(perform: {
-                        let secondsToDelay = 0.7
-                        DispatchQueue.main.asyncAfter(deadline: .now() + secondsToDelay) {
-                            showTutorialScreen = true //TOCHANGE
-                        }
+                        .onAppear(perform: {
+                            let secondsToDelay = 0.7
+                            DispatchQueue.main.asyncAfter(deadline: .now() + secondsToDelay) {
+                                showTutorialScreen = true
+                            }
                     })
+                    }
                 }
             }
             .transition(.opacity)
