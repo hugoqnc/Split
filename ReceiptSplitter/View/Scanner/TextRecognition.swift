@@ -36,7 +36,7 @@ struct TextRecognition {
                 }
                 
                 DispatchQueue.main.async {
-                    let isLastImage = scannedImages.count==scannedImages.lastIndex(of: image)
+                    let isLastImage = scannedImages.count-1==scannedImages.lastIndex(of: image)
                     didFinishRecognition(isLastImage)
                 }
             }
