@@ -6,15 +6,17 @@
 //
 
 import Foundation
+import UIKit
 
 final class ModelData: ObservableObject {
     @Published var startTheProcess = false
-    @Published var users: [User] = UsersModel().users
+    @Published var users: [User] = []
     @Published var listOfProductsAndPrices: [PairProductPrice] = []
-    @Published var shop: Shop = Shop.default
     @Published var currency: Currency = Currency.default
+    @Published var images: [IdentifiedImage] = []
+    @Published var visionParameters = VisionParameters()
     
-    var totalPrice: Double {
+    var totalBalance: Double {
         get {
             var total: Double = 0
             for user in users{
@@ -24,6 +26,20 @@ final class ModelData: ObservableObject {
         }
     }
     
+    var totalPrice: Double {
+        get {
+            var total: Double = 0
+            for item in listOfProductsAndPrices{
+                total += item.price
+            }
+            return total
+        }
+    }
+    
+    func showPrice(price: Double) -> String {
+        return String(round(price * 100) / 100.0)+currency.value
+    }
+
     var sharedText: String {
         get {
             let date = Date()
@@ -33,23 +49,35 @@ final class ModelData: ObservableObject {
             
             var sharedText =
             """
-            🛒 Shopping at \(self.shop.name)
+            🛒 Shopping Repartition
             🗓 Date: \(dateFormatter.string(from: date))\n\n
             """
             
             for user in users {
-                sharedText.append("      \(user.name): \(String(round(user.balance * 100) / 100.0))\(currency.value)\n")
+                sharedText.append("      \(user.name): \(showPrice(price: user.balance))\n")
             }
             
             sharedText.append(
             """
             ________________
-            💸 Total: \(String(round(self.totalPrice * 100) / 100.0))\(currency.value)
+            💸 Total: \(showPrice(price: totalBalance))
             
             Sent with ReceiptSplitter
             """
             )
             return sharedText
         }
+    }
+    
+    func eraseModelData() {
+        self.startTheProcess = false
+        self.users = []
+        self.listOfProductsAndPrices = []
+        self.currency = Currency.default
+        self.images = []
+    }
+    func eraseScanData() {
+        self.listOfProductsAndPrices = []
+        self.images = []
     }
 }

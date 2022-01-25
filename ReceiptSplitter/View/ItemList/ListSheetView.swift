@@ -10,35 +10,16 @@ import SwiftUI
 struct ListSheetView: View {
     @EnvironmentObject var model: ModelData
     var itemCounter: Int
-    @Binding var isFirstTimeShowingList: Bool
     @Environment(\.dismiss) var dismiss
     @State private var showCurrentItem = false
 
     var body: some View {
         VStack {
-            if isFirstTimeShowingList {
-                VStack {
-                    Image(systemName: "exclamationmark.triangle")
-                        .resizable(resizingMode: .tile)
-                        .frame(width: 30.0, height: 30.0)
-                        .foregroundColor(.orange)
-                        .padding(.top)
-                    Text("Please check that most of the transactions are correct, meaning that most names are associated with the right prices. If it is not the case, please cancel and start again.")
-                        .padding(.top,3)
-                        .padding(.bottom)
-                        .padding(.leading)
-                        .padding(.trailing)
-                        .onDisappear(){
-                            isFirstTimeShowingList = false
-                    }
-                }
-            }
-            
             NavigationView {
                 VStack{
 
                     List() {
-                        Section(header: Text("All transactions")){
+                        Section(header: Text("\(model.listOfProductsAndPrices.count) transactions — \(model.showPrice(price: model.totalPrice))")){
                             ForEach(model.listOfProductsAndPrices) { pair in
                                 if showCurrentItem {
                                     HStack {
@@ -66,45 +47,28 @@ struct ListSheetView: View {
                                 }
                             }
                             .onAppear {
-                                if itemCounter>=0 && !isFirstTimeShowingList{
+                                if itemCounter>=0 {
                                     showCurrentItem = true
                                 }
                             }
                         }
                     }
                 }
-                .toolbar {
-                    ToolbarItem(placement: .bottomBar) {
-                        Button {
-                            model.startTheProcess = false
-                            model.users = UsersModel().users
-                            model.listOfProductsAndPrices = []
-                            
-                            dismiss()
-                        } label: {
-                            if isFirstTimeShowingList{
-                                Text("Cancel")
-                            }
-                        }
-                        .padding()
-                        .foregroundColor(.red)
-                    }
-                    ToolbarItem(placement: .bottomBar) {
-                        Button {
-                            dismiss()
-                        } label: {
-                            Text("Done")
-                        }
-                        .padding()
-                    }
-                }
+//                .toolbar {
+//                    ToolbarItem(placement: .bottomBar) {
+//                        Button {
+//                            dismiss()
+//                        } label: {
+//                            Text("Close")
+//                        }
+//                        .padding()
+//                    }
+//                }
                 .navigationBarTitle("")
                 .navigationBarHidden(true)
             }
             .navigationViewStyle(StackNavigationViewStyle())
         }
-        .background(Color(red: 255 / 255, green: 225 / 255, blue: 51 / 255).opacity(0.2).ignoresSafeArea(.all))
-        .interactiveDismissDisabled(isFirstTimeShowingList)
     }
 }
 
@@ -114,7 +78,7 @@ struct ListSheetView_Previews: PreviewProvider {
     static var previews: some View {
         Text("Test")
             .sheet(isPresented: .constant(true)) {
-                ListSheetView(itemCounter: 1, isFirstTimeShowingList: .constant(true))
+                ListSheetView(itemCounter: 1)
                     .environmentObject(model)
                     .onAppear {
                         model.users = [User(name: "Hugo"), User(name: "Lucas"), User(name: "Thomas")]

@@ -11,56 +11,68 @@ struct StartView: View {
     @EnvironmentObject var model: ModelData
     @State private var names = [String](repeating: "", count: 10)
     @State private var numberOfUsers = 2
-    @State private var shopType = Shop.default.shop
     @State private var currencyType = Currency.default.symbol
     @State private var showAlert1 = false
     @State private var showAlert2 = false
+    
+    @State private var finalUsers: [String] = []
         
     var body: some View {
         
         if model.startTheProcess {
-            HomeView()
+            //HomeView()
+            ShowScannerView()
         } else {
             NavigationView {
                 VStack{
                     Form {
+                        Section {} header: {} //necessary to fix bug https://www.hackingwithswift.com/forums/swiftui/issues-with-list-section-headers-in-ios-15/9891
                         
-                        Section(header: Text("Shop & Currency")) {
-                            Picker("", selection: $shopType, content: {
-                                    ForEach(Shop.ShopReceiptType.allCases, id: \.self, content: { shopType in
-                                        ShopRow(shop: Shop(shop: shopType))
+
+                        Section {
+                            HStack {
+                                Text("Currency")
+                                Spacer()
+                                Picker("Currency", selection: $currencyType) {
+                                    ForEach(Currency.SymbolType.allCases, id: \.self, content: { currencyType in
+                                        Text(Currency(symbol: currencyType).value)
                                     })
-                                })
-                                .foregroundColor(.primary)
-                            
-                            Picker("Currency", selection: $currencyType) {
-                                ForEach(Currency.SymbolType.allCases, id: \.self, content: { currencyType in
-                                    Text(Currency(symbol: currencyType).value)
-                                })
-                            }
-                            .pickerStyle(.segmented)
-                            .padding(8)
-                        }
-                        
-                        
-                        Section(header: Text("Names")) {
-                            Picker("Number of people", selection: $numberOfUsers) {
-                                ForEach(2 ... names.count, id:\.self) { number in
-                                    Text("\(number)")
                                 }
+                                .pickerStyle(.menu)
                             }
                             
+                            HStack {
+                                Text("Number of people")
+                                Spacer()
+                                Picker("Number of people", selection: $numberOfUsers) {
+                                    ForEach(2 ... names.count, id:\.self) { number in
+                                        Text("\(number)")
+                                    }
+                                }
+                                .pickerStyle(.menu)
+                            }
+                        } header: {
+                            Text("Parameters")
+                        }
+
+                        Section {
                             ForEach(1 ... numberOfUsers, id:\.self) { number in
                                 TextField("Name of user \(number)", text: $names[number-1])
                             }
+                        } header: {
+                            Text("Names")
                         }
-
                     }
+                    
                     
                     Button {
                         var isEmpty = false
-                        let finalUsers: [String] = Array(names[0..<numberOfUsers])
+                        finalUsers = Array(names[0..<numberOfUsers])
                         
+                        for i in 0..<numberOfUsers {
+                            finalUsers[i] = finalUsers[i].trimmingCharacters(in: .whitespaces)
+                        }
+
                         for name in finalUsers {
                             if name == "" {
                                 isEmpty = true
@@ -74,29 +86,29 @@ struct StartView: View {
                             for name in finalUsers{
                                 model.users.append(User(name: name))
                             }
-                            model.shop = Shop(shop: shopType)
-                            model.currency = Currency(symbol: currencyType)
-                            model.startTheProcess = true
+                            withAnimation() {
+                                model.startTheProcess = true
+                            }
                         }
                     } label: {
-                        Label("Scan", systemImage: "doc.text.viewfinder")
+                        Label("Next", systemImage: "arrow.right")
                     }
-                    .buttonStyle(.borderedProminent)
-                    .padding(7)
+                        .buttonStyle(.borderedProminent)
+                        .padding(7)
+                        .alert(isPresented: $showAlert1) {
+                            Alert(title: Text("Missing information"), message: Text("Please fill in all usernames"), dismissButton: .default(Text("OK")))
+                        }
                     
                     Spacer()
+                        .alert(isPresented: $showAlert2) {
+                            Alert(title: Text("Incorrect names"), message: Text("Users must have distinct names"), dismissButton: .default(Text("OK")))
+                        }
                     
                 }
                 .navigationTitle("ReceiptSplitter")
-                .background(Color(red: 0 / 255, green: 130 / 255, blue: 255 / 255).opacity(0.15), ignoresSafeAreaEdges: .bottom)
+                .background(Color.accentColor.opacity(0.15), ignoresSafeAreaEdges: .bottom)
             }
             .navigationViewStyle(StackNavigationViewStyle())
-            .alert("Please fill in all user names", isPresented: $showAlert1) {
-                Button("OK") { }
-            }
-            .alert("Users must have distinct names", isPresented: $showAlert2) {
-                Button("OK") { }
-            }
         }
     }
 }

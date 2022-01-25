@@ -9,8 +9,8 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        //ResultView()
         StartView()
+        //FirstListView_Previews.previews
     }
 }
 

@@ -32,7 +32,7 @@ struct ResultView: View {
                     VStack{
                         Text("Total".uppercased())
                             .font(.title2)
-                        Text(String(round(model.totalPrice * 100) / 100.0)+model.currency.value)
+                        Text(model.showPrice(price: model.totalBalance))
                             .font(.largeTitle)
                             .fontWeight(.semibold)
                     }
@@ -76,10 +76,10 @@ struct ResultView: View {
                                     Text(user.name)
                                         .font(.title3)
                                     Spacer()
-                                    Text(String(round(user.balance * 100) / 100.0)+model.currency.value)
+                                    Text(model.showPrice(price: user.balance))
                                         //.font(.title2)
                                         .fontWeight(.semibold)
-                                        .font(.system(size: fontSizeProportionalToPrice(total: model.totalPrice, price: user.balance)))
+                                        .font(.system(size: fontSizeProportionalToPrice(total: model.totalBalance, price: user.balance)))
                                 }
                                 .padding(8)
                             }
@@ -129,9 +129,7 @@ struct ResultView: View {
                 Button {
                     dismiss()
                     
-                    model.startTheProcess = false
-                    model.users = UsersModel().users
-                    model.listOfProductsAndPrices = []
+                    model.eraseModelData()
                 } label: {
                     Label("Done", systemImage: "checkmark")
                 }
@@ -140,7 +138,7 @@ struct ResultView: View {
             }
         
         .sheet(isPresented: $showAllList, content: {
-            ListSheetView(itemCounter: -1, isFirstTimeShowingList: .constant(false))
+            ListSheetView(itemCounter: -1)
         })
         .sheet(isPresented: $showSharingOptions, content: {
             ActivityViewController(activityItems: [model.sharedText])
