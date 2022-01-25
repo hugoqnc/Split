@@ -12,7 +12,7 @@ struct TextRecognition {
     var scannedImages: [UIImage]
     @ObservedObject var recognizedContent: TextData
     var visionParameters: VisionParameters
-    var didFinishRecognition: () -> Void
+    var didFinishRecognition: (Bool) -> Void
     
     
     func recognizeText() {
@@ -36,7 +36,8 @@ struct TextRecognition {
                 }
                 
                 DispatchQueue.main.async {
-                    didFinishRecognition()
+                    let isLastImage = scannedImages.count==scannedImages.lastIndex(of: image)
+                    didFinishRecognition(isLastImage)
                 }
             }
         }
@@ -59,7 +60,10 @@ struct TextRecognition {
             let heights: [CGFloat] = observations.map { obs in
              obs.boundingBox.size.height
             }
-            let medianHeight = heights.sorted(by: <)[heights.count / 2]
+            var medianHeight: CGFloat = 0.0
+            if (heights.count != 0) {
+                medianHeight = heights.sorted(by: <)[heights.count / 2]
+            }
             print("median height: \(medianHeight)")
             
             var observationsCopy = observations

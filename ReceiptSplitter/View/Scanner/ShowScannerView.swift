@@ -27,7 +27,7 @@ struct ShowScannerView: View {
                                 
                                 TextRecognition(scannedImages: scannedImages,
                                                 recognizedContent: recognizedContent,
-                                                visionParameters: model.visionParameters) {
+                                                visionParameters: model.visionParameters) { isLastImage in 
                                     for item in recognizedContent.items{
                                         if !model.listOfProductsAndPrices.contains(item.list.first ?? PairProductPrice()){
                                             let content: [PairProductPrice] = item.list
@@ -35,7 +35,7 @@ struct ShowScannerView: View {
                                         }
                                         model.images.append(item.image)
                                     }
-                                    if model.listOfProductsAndPrices.isEmpty{
+                                    if model.listOfProductsAndPrices.isEmpty && isLastImage {
                                         nothingFound = true
                                     }
                                     recognizedContent.items = []
