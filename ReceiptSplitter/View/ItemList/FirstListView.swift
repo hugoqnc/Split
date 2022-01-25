@@ -12,7 +12,6 @@ struct FirstListView: View {
     @EnvironmentObject var model: ModelData
     
     @State var editMode: EditMode = .inactive
-    @State private var refresh = UUID() //to correct bug to make bottom bar appear: https://stackoverflow.com/questions/65126986/swiftui-bottombar-toolbar-disappears-when-going-back
     
     @Binding var showScanningResults: Bool
     @Binding var nothingFound: Bool
@@ -138,7 +137,8 @@ struct FirstListView: View {
                                                     HStack {
                                                         Text(pair.name)
                                                         Spacer()
-                                                        Text(String(pair.price)+model.currency.value)
+                                                        Text(model.showPrice(price: pair.price))
+                                                            .padding(.trailing, 10)
                                                     }
                                                     if editMode == .active {
                                                         Text("Long-press to edit")
@@ -212,7 +212,6 @@ struct FirstListView: View {
                                     .padding()
                                 }
                             }
-                            .id(refresh)
                             .navigationViewStyle(StackNavigationViewStyle())
                             .navigationBarTitle(Text("ReceiptSplitter"), displayMode: .inline)
                             //.navigationBarItems(leading: customEditButton.environment(\.editMode, $editMode), trailing: plusButton)

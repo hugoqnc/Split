@@ -45,11 +45,11 @@ struct ListTutorialView: View {
                         .padding()
 
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("Modify at the next step")
+                        Text("Edit small mistakes")
                             .font(.headline)
                             .foregroundColor(.primary)
 
-                        Text("If there is only a few mistakes, you will be able to correct it later")
+                        Text("You can add new items, delete existing ones or change their names and prices")
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                             .fixedSize(horizontal: false, vertical: true)
