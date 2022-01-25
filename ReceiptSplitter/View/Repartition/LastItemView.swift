@@ -74,7 +74,7 @@ struct LastItemView: View {
                                 }
                                 .padding(3)
                             }
-                            .tint(.yellow)
+                            //.tint(.yellow)
                             .padding(4)
                             
                             Spacer()
@@ -106,12 +106,13 @@ struct LastItemView: View {
                     }
                 }
                 .padding(20)
-                .background(Color(red: 160 / 255, green: 160 / 255, blue: 160 / 255).opacity(0.1))
+                //.background(Color(red: 160 / 255, green: 160 / 255, blue: 160 / 255).opacity(0.1))
         }
+        .background(Color(uiColor: UIColor.systemBackground).brightness(0.06))
         .cornerRadius(10)
-        .overlay(RoundedRectangle(cornerRadius: 10)
-                    .stroke(.gray, lineWidth: 1))
+        .shadow(color: .black.opacity(0.2), radius: 15.0)
         .padding()
+
         .offset(x: xOffset, y: yOffset)
         .opacity(opacity)
         .onChange(of: isNewItem) { newValue in
@@ -129,7 +130,8 @@ struct LastItemView: View {
 
             } else {
                 //debug = "onChange 2, isNewItem: \(String(isNewItem))"
-                let newPair = PairProductPrice(id: UUID().uuidString, name: AttributionView.textOfNewItem, price: 0.0)
+                var newPair = PairProductPrice(id: UUID().uuidString, name: AttributionView.textOfNewItem, price: 0.0)
+                newPair.isNewItem = true
                 model.listOfProductsAndPrices.append(newPair)
             }
         }
