@@ -42,7 +42,7 @@ struct FirstListView: View {
                         EmptyView()
                             .alert(isPresented: $newItemAlert,
                                 TextAlert(title: "New item",
-                                   message:"Please enter name and price of the item",
+                                   message:"Please enter the name and the price of the new item",
                                    placeholder1: "Name",
                                    placeholder2: "Price",
                                    initialText: nil,
@@ -66,7 +66,7 @@ struct FirstListView: View {
                         EmptyView()
                             .alert(isPresented: $editItemAlert,
                                 TextAlert(title: "Modify item",
-                                   message:"You can change the name and price of the item",
+                                   message:"You can change the name and the price of this item",
                                    placeholder1: "Name",
                                    placeholder2: "Price",
                                    initialText: editItemAlertPair.name,
@@ -75,8 +75,12 @@ struct FirstListView: View {
                                         if $0 != nil && $1 != nil {
                                             if $0! != "" {
                                                 let index = model.listOfProductsAndPrices.firstIndex(of: editItemAlertPair)!
-                                                model.listOfProductsAndPrices[index].name = $0!
-                                                model.listOfProductsAndPrices[index].price = $1!
+                                                let name = $0!
+                                                let price = $1!
+                                                withAnimation() {                                                    model.listOfProductsAndPrices[index].name = name
+                                                    model.listOfProductsAndPrices[index].price = price
+                                                    return
+                                                }
                                             }
                                         }
                                     }
@@ -117,13 +121,7 @@ struct FirstListView: View {
                                         ScrollView {
                                             ForEach(model.images){ idImage in
                                                 if let image = idImage.image {
-                                                    let boxes = model.listOfProductsAndPrices.compactMap({ pair -> VNDetectedObjectObservation? in
-                                                        if pair.imageId==idImage.id && !(pair.box == nil){
-                                                            return pair.box!
-                                                        }
-                                                        return nil
-                                                    })
-                                                    Image(uiImage: visualization(image, observations: boxes))
+                                                    Image(uiImage: visualization(image, observations: idImage.boxes(listOfProductsAndPrices: model.listOfProductsAndPrices)))
                                                         .resizable()
                                                         .scaledToFit()
                                                         .padding(5)
@@ -141,14 +139,13 @@ struct FirstListView: View {
                                                             .padding(.trailing, 10)
                                                     }
                                                     if editMode == .active {
-                                                        Text("Long-press to edit")
+                                                        Text("Double-tap to edit")
                                                             .font(.caption)
                                                             .foregroundColor(Color.accentColor)
                                                             .padding(0)
                                                     }
                                                 }
-                                                .onTapGesture {  } //necessary for scrolling: https://developer.apple.com/forums/thread/127277
-                                                .onLongPressGesture {
+                                                .onTapGesture(count: 2) {
                                                     if editMode == .active {
                                                         editItemAlert = true
                                                         editItemAlertPair = pair

@@ -58,6 +58,16 @@ struct IdentifiedImage: Identifiable {
     
     var id: String
     var image: UIImage?
+    
+    func boxes(listOfProductsAndPrices: [PairProductPrice]) -> [VNDetectedObjectObservation] {
+        return listOfProductsAndPrices.compactMap({ pair -> VNDetectedObjectObservation? in
+            if pair.imageId==id && !(pair.box == nil){
+                return pair.box!
+            }
+            return nil
+        })
+    }
+
 }
 
 extension StringProtocol {
