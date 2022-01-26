@@ -9,13 +9,13 @@ import SwiftUI
 
 struct StartView: View {
     @EnvironmentObject var model: ModelData
-    @State private var names = [String](repeating: "", count: 10)
-    @State private var numberOfUsers = 2
+    @State private var names: [String] = []//(repeating: "", count: 10)
     @State private var currencyType = Currency.default.symbol
     @State private var showAlert1 = false
     @State private var showAlert2 = false
     
     @State private var finalUsers: [String] = []
+    @State private var newUserName: String = ""
         
     var body: some View {
         
@@ -42,52 +42,64 @@ struct StartView: View {
                             }
                             .listRowBackground(Color.secondary.opacity(0.1))
                             
-                            HStack {
-                                Text("Number of people")
-                                Spacer()
-                                Picker("Number of people", selection: $numberOfUsers) {
-                                    ForEach(2 ... names.count, id:\.self) { number in
-                                        Text("\(number)")
-                                    }
-                                }
-                                .pickerStyle(.menu)
-                            }
-                            .listRowBackground(Color.secondary.opacity(0.1))
+//                            HStack {
+//                                Text("Number of people")
+//                                Spacer()
+//                                Picker("Number of people", selection: $numberOfUsers) {
+//                                    ForEach(2 ... names.count, id:\.self) { number in
+//                                        Text("\(number)")
+//                                    }
+//                                }
+//                                .pickerStyle(.menu)
+//                            }
+//                            .listRowBackground(Color.secondary.opacity(0.1))
                         } header: {
                             Text("Parameters")
                         }
-
+                        
                         Section {
-                            ForEach(1 ... numberOfUsers, id:\.self) { number in
-                                TextField("Name of user \(number)", text: $names[number-1])
-                                    .listRowBackground(Color.secondary.opacity(0.1))
+                            ForEach(names, id:\.self) { name in
+                                Text(name)
                             }
+                            .onDelete { indices in
+                                names.remove(atOffsets: indices)
+                            }
+                            .listRowBackground(Color.secondary.opacity(0.1))
+                            
+                            HStack {
+                                TextField("New user", text: $newUserName)
+                                Button(action: {
+                                    checkAndAddName()
+                                }) {
+                                    Image(systemName: "plus.circle.fill")
+                                }
+                                .disabled(newUserName.isEmpty)
+                            }
+                            .listRowBackground(Color.secondary.opacity(0.1))
                         } header: {
                             Text("Names")
                         }
+//                        Section {
+//                            ForEach(1 ... numberOfUsers, id:\.self) { number in
+//                                TextField("Name of user \(number)", text: $names[number-1])
+//                                    .listRowBackground(Color.secondary.opacity(0.1))
+//                            }
+//                        } header: {
+//                            Text("Names")
+//                        }
                     }
                     
                     
                     Button {
-                        var isEmpty = false
-                        finalUsers = Array(names[0..<numberOfUsers])
-                        
-                        for i in 0..<numberOfUsers {
-                            finalUsers[i] = finalUsers[i].trimmingCharacters(in: .whitespaces)
+                        var ok = true
+                        finalUsers = names
+                        if !newUserName.isEmpty {
+                            ok = checkAndAddName()
                         }
-
-                        for name in finalUsers {
-                            if name == "" {
-                                isEmpty = true
-                            }
-                        }
-                        if isEmpty {
-                            showAlert1 = true
-                        } else if Set(finalUsers).count < finalUsers.count { // presence of duplicates
-                            showAlert2 = true
-                        } else {
+                        if ok {
                             for name in finalUsers{
                                 model.users.append(User(name: name))
+                                print(model.users)
                             }
                             withAnimation() {
                                 model.startTheProcess = true
@@ -113,6 +125,24 @@ struct StartView: View {
             }
             .navigationViewStyle(StackNavigationViewStyle())
         }
+    }
+    
+    func checkAndAddName() -> Bool {
+        let realName = newUserName.trimmingCharacters(in: .whitespaces)
+        if !realName.isEmpty {
+            if !names.contains(realName) {
+                withAnimation() {
+                    names.append(newUserName)
+                }
+                newUserName = ""
+                return true
+            } else {
+                showAlert2 = true
+            }
+        } else {
+            showAlert1 = true
+        }
+        return false
     }
 }
 

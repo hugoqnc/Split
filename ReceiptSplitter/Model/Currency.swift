@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct Currency {
+struct Currency: Codable {
     
     var symbol: SymbolType
     
     static let `default` = Currency(symbol: .euro)
     
-    enum SymbolType: CaseIterable {
+    enum SymbolType: CaseIterable, Codable {
         case euro
         case dollar
         case pound
