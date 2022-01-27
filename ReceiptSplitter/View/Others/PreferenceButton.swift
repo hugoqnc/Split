@@ -9,10 +9,15 @@ import SwiftUI
 
 struct PreferenceButton: View {
     @Binding var names: [String]
+    @Binding var newUserName: String
     @Binding var currencyType: Currency.SymbolType
+    @Binding var showAlert1: Bool
+    @Binding var showAlert2: Bool
     
     @State private var savedNames: [String] = []
     @State private var savedCurrency = Currency.default
+    
+    var buttonHeight: CGFloat = 55.0
     
     var nothingSaved: Bool {
         get {
@@ -45,9 +50,53 @@ struct PreferenceButton: View {
         }
     }
     
+    var completeNames : [String] {
+        get {
+            var completeNamesArray = names
+            
+            let realName = newUserName.trimmingCharacters(in: .whitespaces)
+            if !realName.isEmpty {
+                if !names.contains(realName) {
+                    completeNamesArray.append(newUserName.trimmingCharacters(in: .whitespaces))
+                }
+            }
+            return completeNamesArray
+        }
+    }
+    
+    func checkAndAddName() -> Bool {
+        let realName = newUserName.trimmingCharacters(in: .whitespaces)
+        if !realName.isEmpty {
+            if !names.contains(realName) {
+                withAnimation() {
+                    names.append(newUserName)
+                }
+                newUserName = ""
+                return true
+            } else {
+                showAlert2 = true
+            }
+        } else {
+            showAlert1 = true
+        }
+        return false
+    }
+    
+    func isFinalUsersCorrect() -> Bool {
+        var ok = true
+        if !newUserName.isEmpty {
+            ok = checkAndAddName()
+        }
+        if ok {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     var body: some View {
         VStack {
-            if (!nothingSaved || !nothingWritten) && (names != savedNames || currencyType != savedCurrency.symbol) {
+            if (!nothingSaved || !nothingWritten) && (completeNames != savedNames || currencyType != savedCurrency.symbol) {
                 HStack {
                 HStack {
                     if !nothingSaved {
@@ -60,6 +109,7 @@ struct PreferenceButton: View {
                                     withAnimation() {
                                         names = preferences.names
                                         currencyType = preferences.currency.symbol
+                                        newUserName = ""
                                     }
                                 }
                             }
@@ -83,18 +133,20 @@ struct PreferenceButton: View {
                     }
                     
                     Button {
-                        var preferences = Preferences()
-                        preferences.names = names
-                        preferences.currency = Currency(symbol: currencyType)
-                        
-                        PreferencesStore.save(preferences: preferences) { result in
-                            switch result {
-                            case .failure(let error):
-                                fatalError(error.localizedDescription)
-                            case .success(_):
-                                withAnimation() {
-                                    savedNames = names
-                                    savedCurrency = Currency(symbol: currencyType)
+                        if isFinalUsersCorrect() {
+                            var preferences = Preferences()
+                            preferences.names = completeNames
+                            preferences.currency = Currency(symbol: currencyType)
+                            
+                            PreferencesStore.save(preferences: preferences) { result in
+                                switch result {
+                                case .failure(let error):
+                                    fatalError(error.localizedDescription)
+                                case .success(_):
+                                    withAnimation() {
+                                        savedNames = completeNames
+                                        savedCurrency = Currency(symbol: currencyType)
+                                    }
                                 }
                             }
                         }
@@ -133,13 +185,15 @@ struct PreferenceButton: View {
                 }
                 .padding(.horizontal, 10)
                 .padding(.vertical, 5)
-                .frame(maxHeight: 55)
+                .frame(maxHeight: buttonHeight)
             }
             .background(Color(uiColor: UIColor.systemBackground).brightness(0.06))
             .cornerRadius(10)
             .shadow(color: .black.opacity(0.2), radius: 15.0)
             } else {
                 EmptyView()
+//                VStack{}
+//                    .frame(maxHeight: buttonHeight)
             }
         }
         .transition(.move(edge: .top))
@@ -160,7 +214,7 @@ struct PreferenceButton: View {
 
 struct PreferenceButton_Previews: PreviewProvider {
     static var previews: some View {
-        PreferenceButton(names: .constant(["Hugo", "Thomas"]), currencyType: .constant(Currency.SymbolType.euro))
+        PreferenceButton(names: .constant(["Hugo", "Thomas"]), newUserName: .constant("Lucas"), currencyType: .constant(Currency.SymbolType.euro), showAlert1: .constant(false), showAlert2: .constant(false))
             .onAppear {
                 var preferences = Preferences()
                 preferences.names = ["Hugo"]

@@ -24,7 +24,7 @@ struct StartView: View {
             NavigationView {
                 VStack{
                     
-                    PreferenceButton(names: $names, currencyType: $currencyType)
+                    PreferenceButton(names: $names, newUserName: $newUserName, currencyType: $currencyType, showAlert1: $showAlert1, showAlert2: $showAlert2)
                         .padding(10)
                         .padding(.top,10)
                     
@@ -42,8 +42,6 @@ struct StartView: View {
                             }
                             .listRowBackground(Color.secondary.opacity(0.1))
                             
-                        } header: {
-                            //Text("Parameters")
                         }
                         
                         Section {
@@ -58,7 +56,7 @@ struct StartView: View {
                             .listRowBackground(Color.secondary.opacity(0.1))
                             
                             HStack {
-                                TextField("New user", text: $newUserName)
+                                TextField("New user", text: $newUserName.animation())
                                 Button(action: {
                                     let _ = checkAndAddName()
                                 }) {
