@@ -33,7 +33,7 @@ struct StartView: View {
                             HStack {
                                 Text("Currency")
                                 Spacer()
-                                Picker("Currency", selection: $currencyType) {
+                                Picker("Currency", selection: $currencyType.animation()) {
                                     ForEach(Currency.SymbolType.allCases, id: \.self, content: { currencyType in
                                         Text(Currency(symbol: currencyType).value)
                                     })

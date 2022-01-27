@@ -50,7 +50,7 @@ struct PreferenceButton: View {
     
     var body: some View {
         VStack {
-            if (!nothingSaved || !nothingWritten) && names != savedNames {//!(nothingSaved && names.isEmpty) {
+            if (!nothingSaved || !nothingWritten) && (names != savedNames || currencyType != savedCurrency.symbol) {
                 HStack {
                 HStack {
                     if !nothingSaved {
@@ -63,10 +63,7 @@ struct PreferenceButton: View {
                                     case .success(let preferences):
                                         withAnimation() {
                                             names = preferences.names
-                                        }
-                                        currencyType = preferences.currency.symbol
-                                        
-                                        withAnimation {
+                                            currencyType = preferences.currency.symbol
                                             loadWasClicked = true
                                         }
                                         let secondsToDelay = 1.0
@@ -121,10 +118,7 @@ struct PreferenceButton: View {
                                 case .success(_):
                                     withAnimation() {
                                         savedNames = names
-                                    }
-                                    savedCurrency = Currency(symbol: currencyType)
-                                    
-                                    withAnimation {
+                                        savedCurrency = Currency(symbol: currencyType)
                                         saveWasClicked = true
                                     }
                                     let secondsToDelay = 1.0
