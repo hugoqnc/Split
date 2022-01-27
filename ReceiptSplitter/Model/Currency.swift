@@ -18,7 +18,7 @@ struct Currency: Codable {
         case dollar
         case pound
         case yen
-        case other
+        //case other
     }
     
     var value: String {
@@ -31,8 +31,8 @@ struct Currency: Codable {
             return "£"
         case .yen:
             return "¥"
-        case .other:
-            return "💎"
+//        case .other:
+//            return "💎"
         }
     }
 }

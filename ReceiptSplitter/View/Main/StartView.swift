@@ -20,7 +20,6 @@ struct StartView: View {
     var body: some View {
         
         if model.startTheProcess {
-            //HomeView()
             ShowScannerView()
         } else {
             NavigationView {
@@ -42,17 +41,6 @@ struct StartView: View {
                             }
                             .listRowBackground(Color.secondary.opacity(0.1))
                             
-//                            HStack {
-//                                Text("Number of people")
-//                                Spacer()
-//                                Picker("Number of people", selection: $numberOfUsers) {
-//                                    ForEach(2 ... names.count, id:\.self) { number in
-//                                        Text("\(number)")
-//                                    }
-//                                }
-//                                .pickerStyle(.menu)
-//                            }
-//                            .listRowBackground(Color.secondary.opacity(0.1))
                         } header: {
                             Text("Parameters")
                         }
@@ -69,7 +57,7 @@ struct StartView: View {
                             HStack {
                                 TextField("New user", text: $newUserName)
                                 Button(action: {
-                                    checkAndAddName()
+                                    let _ = checkAndAddName()
                                 }) {
                                     Image(systemName: "plus.circle.fill")
                                 }
@@ -77,51 +65,49 @@ struct StartView: View {
                             }
                             .listRowBackground(Color.secondary.opacity(0.1))
                         } header: {
-                            Text("Names")
-                        }
-//                        Section {
-//                            ForEach(1 ... numberOfUsers, id:\.self) { number in
-//                                TextField("Name of user \(number)", text: $names[number-1])
-//                                    .listRowBackground(Color.secondary.opacity(0.1))
-//                            }
-//                        } header: {
-//                            Text("Names")
-//                        }
-                    }
-                    
-                    
-                    Button {
-                        var ok = true
-                        finalUsers = names
-                        if !newUserName.isEmpty {
-                            ok = checkAndAddName()
-                        }
-                        if ok {
-                            for name in finalUsers{
-                                model.users.append(User(name: name))
-                                print(model.users)
-                            }
-                            withAnimation() {
-                                model.startTheProcess = true
+                            HStack {
+                                Text("Names")
+                                    .alert(isPresented: $showAlert1) {
+                                        Alert(title: Text("Missing information"), message: Text("Please fill in all usernames"), dismissButton: .default(Text("OK")))
+                                    }
+                                Text("")
+                                    .alert(isPresented: $showAlert2) {
+                                        Alert(title: Text("Incorrect names"), message: Text("Users must have distinct names"), dismissButton: .default(Text("OK")))
+                                    }
                             }
                         }
-                    } label: {
-                        Label("Next", systemImage: "arrow.right")
                     }
+                }
+                .toolbar {
+                    ToolbarItem(placement: .bottomBar) {
+                        Button {
+                            var ok = true
+                            if !newUserName.isEmpty {
+                                ok = checkAndAddName()
+                            }
+                            finalUsers = names
+                            if ok {
+                                for name in finalUsers{
+                                    model.users.append(User(name: name))
+                                }
+                                withAnimation() {
+                                    model.startTheProcess = true
+                                }
+                            }
+                        } label: {
+                            HStack {
+                                Image(systemName: "arrow.right")
+                                Text("Next")
+                            }
+                            //.frame(minWidth: 0, maxWidth: .infinity)
+                        }
+                        .disabled(names.isEmpty)
+                        .padding()
+                        .padding(.horizontal)
                         .buttonStyle(.borderedProminent)
-                        .padding(7)
-                        .alert(isPresented: $showAlert1) {
-                            Alert(title: Text("Missing information"), message: Text("Please fill in all usernames"), dismissButton: .default(Text("OK")))
-                        }
-                    
-                    Spacer()
-                        .alert(isPresented: $showAlert2) {
-                            Alert(title: Text("Incorrect names"), message: Text("Users must have distinct names"), dismissButton: .default(Text("OK")))
-                        }
-                    
+                    }
                 }
                 .navigationTitle("ReceiptSplitter")
-                //.background(Color.accentColor.opacity(0.15), ignoresSafeAreaEdges: .bottom)
             }
             .navigationViewStyle(StackNavigationViewStyle())
         }
@@ -131,7 +117,7 @@ struct StartView: View {
         let realName = newUserName.trimmingCharacters(in: .whitespaces)
         if !realName.isEmpty {
             if !names.contains(realName) {
-                withAnimation() {
+                withAnimation(.easeInOut(duration: 0.1)) {
                     names.append(newUserName)
                 }
                 newUserName = ""
@@ -150,5 +136,8 @@ struct StartView_Previews: PreviewProvider {
     static var previews: some View {
         StartView()
             .environmentObject(ModelData())
+            .onAppear {
+                UITableView.appearance().backgroundColor = .clear
+            }
     }
 }
