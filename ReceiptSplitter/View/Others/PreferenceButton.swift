@@ -14,9 +14,6 @@ struct PreferenceButton: View {
     @State private var savedNames: [String] = []
     @State private var savedCurrency = Currency.default
     
-    @State private var saveWasClicked = false
-    @State private var loadWasClicked = false
-    
     var nothingSaved: Bool {
         get {
             return savedNames.isEmpty
@@ -55,114 +52,77 @@ struct PreferenceButton: View {
                 HStack {
                     if !nothingSaved {
                         Button {
-                            if !loadWasClicked {
-                                PreferencesStore.load { result in
-                                    switch result {
-                                    case .failure(let error):
-                                        fatalError(error.localizedDescription)
-                                    case .success(let preferences):
-                                        withAnimation() {
-                                            names = preferences.names
-                                            currencyType = preferences.currency.symbol
-                                            loadWasClicked = true
-                                        }
-                                        let secondsToDelay = 1.0
-                                        DispatchQueue.main.asyncAfter(deadline: .now() + secondsToDelay) {
-                                            withAnimation() {
-                                                loadWasClicked = false
-                                            }
-                                        }
+                            PreferencesStore.load { result in
+                                switch result {
+                                case .failure(let error):
+                                    fatalError(error.localizedDescription)
+                                case .success(let preferences):
+                                    withAnimation() {
+                                        names = preferences.names
+                                        currencyType = preferences.currency.symbol
                                     }
                                 }
                             }
                         } label: {
                             Group {
-                                if loadWasClicked {
-                                    HStack {
-                                        Image(systemName: "checkmark.circle.fill")
-                                            .padding(.trailing, 1)
-                                        VStack(alignment: .leading) {
-                                            Text("Favorite preferences loaded!")
-                                        }
-                                    }
-                                } else {
-                                    HStack {
-                                        Image(systemName: "star.fill")
-                                            .padding(.trailing, 5)
-                                        VStack(alignment: .leading) {
-                                            Text("Load favorite preferences ")
-                                            Text(descriptiveString)
-                                                .font(.caption)
-                                        }
+                                HStack {
+                                    Image(systemName: "star.fill")
+                                        .padding(.trailing, 5)
+                                    VStack(alignment: .leading) {
+                                        Text("Load favorite preferences ")
+                                        Text(descriptiveString)
+                                            .font(.caption)
                                     }
                                 }
                             }
                             .transition(.asymmetric(insertion: .offset(x: 0, y: -60), removal: .offset(x: 0, y: 60)))
                         }
-                        //.tint(.yellow)
                         
                         Divider()
                             .padding(.horizontal,3)
                     }
                     
                     Button {
-                        if !saveWasClicked {
-                            var preferences = Preferences()
-                            preferences.names = names
-                            preferences.currency = Currency(symbol: currencyType)
-                            
-                            PreferencesStore.save(preferences: preferences) { result in
-                                switch result {
-                                case .failure(let error):
-                                    fatalError(error.localizedDescription)
-                                case .success(_):
-                                    withAnimation() {
-                                        savedNames = names
-                                        savedCurrency = Currency(symbol: currencyType)
-                                        saveWasClicked = true
-                                    }
-                                    let secondsToDelay = 1.0
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + secondsToDelay) {
-                                        withAnimation() {
-                                            saveWasClicked = false
-                                        }
-                                    }
+                        var preferences = Preferences()
+                        preferences.names = names
+                        preferences.currency = Currency(symbol: currencyType)
+                        
+                        PreferencesStore.save(preferences: preferences) { result in
+                            switch result {
+                            case .failure(let error):
+                                fatalError(error.localizedDescription)
+                            case .success(_):
+                                withAnimation() {
+                                    savedNames = names
+                                    savedCurrency = Currency(symbol: currencyType)
                                 }
                             }
                         }
                     } label: {
                         Group {
-                            if saveWasClicked {
+                            if nothingSaved {
+                                Image(systemName: "square.and.arrow.down")
+                                    .padding(.trailing, 5)
+                                VStack(alignment: .leading) {
+                                    Text("Save current preferences")
+                                    Text("Save names and currency for next time")
+                                        .font(.caption)
+                                }
+                                .padding(.trailing, 5)
+                            } else if nothingWritten {
                                 VStack {
-                                    Image(systemName: "checkmark.circle.fill")
-                                    Text("Saved!")
+                                    Image(systemName: "xmark")
+                                        .padding(.bottom,-3)
+                                        .padding(.top,1)
+                                    Text("Delete")
                                         .font(.caption)
                                 }
                             } else {
-                                if nothingSaved {
-                                    Image(systemName: "square.and.arrow.down")
-                                        .padding(.trailing, 5)
-                                    VStack(alignment: .leading) {
-                                        Text("Save current preferences")
-                                        Text("Save names and currency for next time")
-                                            .font(.caption)
-                                    }
-                                    .padding(.trailing, 5)
-                                } else if nothingWritten {
-                                    VStack {
-                                        Image(systemName: "xmark")
-                                            .padding(.bottom,-3)
-                                            .padding(.top,1)
-                                        Text("Delete")
-                                            .font(.caption)
-                                    }
-                                } else {
-                                    VStack {
-                                        Image(systemName: "arrow.triangle.2.circlepath")
-                                            .padding(.bottom,-3)
-                                        Text("Replace")
-                                            .font(.caption)
-                                    }
+                                VStack {
+                                    Image(systemName: "arrow.triangle.2.circlepath")
+                                        .padding(.bottom,-3)
+                                    Text("Replace")
+                                        .font(.caption)
                                 }
                             }
                         }
@@ -173,7 +133,6 @@ struct PreferenceButton: View {
                 }
                 .padding(.horizontal, 10)
                 .padding(.vertical, 5)
-                //.scaledToFit()
                 .frame(maxHeight: 55)
             }
             .background(Color(uiColor: UIColor.systemBackground).brightness(0.06))
