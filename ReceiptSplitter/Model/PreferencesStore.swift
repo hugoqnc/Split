@@ -9,12 +9,12 @@ import Foundation
 import SwiftUI
 
 struct Preferences: Codable {
-    var scrums: [User] = []
+    var names: [String] = []
     var currency: Currency = Currency.default
 }
 
 class PreferencesStore: ObservableObject {
-    @Published var preferences: Preferences = Preferences()
+    //@Published var preferences: Preferences = Preferences()
     
     private static func fileURL() throws -> URL {
         try FileManager.default.url(for: .documentDirectory,

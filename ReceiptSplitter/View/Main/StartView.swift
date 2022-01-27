@@ -14,7 +14,6 @@ struct StartView: View {
     @State private var showAlert1 = false
     @State private var showAlert2 = false
     
-    @State private var finalUsers: [String] = []
     @State private var newUserName: String = ""
         
     var body: some View {
@@ -24,10 +23,12 @@ struct StartView: View {
         } else {
             NavigationView {
                 VStack{
+                    
+                    PreferenceButton(names: $names, currencyType: $currencyType)
+                        .padding(10)
+                        .padding(.top,10)
+                    
                     Form {
-                        Section {} header: {} //necessary to fix bug https://www.hackingwithswift.com/forums/swiftui/issues-with-list-section-headers-in-ios-15/9891
-                        
-
                         Section {
                             HStack {
                                 Text("Currency")
@@ -42,7 +43,7 @@ struct StartView: View {
                             .listRowBackground(Color.secondary.opacity(0.1))
                             
                         } header: {
-                            Text("Parameters")
+                            //Text("Parameters")
                         }
                         
                         Section {
@@ -50,7 +51,9 @@ struct StartView: View {
                                 Text(name)
                             }
                             .onDelete { indices in
-                                names.remove(atOffsets: indices)
+                                withAnimation() {
+                                    names.remove(atOffsets: indices)
+                                }
                             }
                             .listRowBackground(Color.secondary.opacity(0.1))
                             
@@ -81,15 +84,12 @@ struct StartView: View {
                 .toolbar {
                     ToolbarItem(placement: .bottomBar) {
                         Button {
-                            var ok = true
-                            if !newUserName.isEmpty {
-                                ok = checkAndAddName()
-                            }
-                            finalUsers = names
+                            let ok = isFinalUsersCorrect()
                             if ok {
-                                for name in finalUsers{
+                                for name in names{
                                     model.users.append(User(name: name))
                                 }
+                                model.currency = Currency(symbol: currencyType)
                                 withAnimation() {
                                     model.startTheProcess = true
                                 }
@@ -103,7 +103,6 @@ struct StartView: View {
                         }
                         .disabled(names.isEmpty)
                         .padding()
-                        .padding(.horizontal)
                         .buttonStyle(.borderedProminent)
                     }
                 }
@@ -117,7 +116,7 @@ struct StartView: View {
         let realName = newUserName.trimmingCharacters(in: .whitespaces)
         if !realName.isEmpty {
             if !names.contains(realName) {
-                withAnimation(.easeInOut(duration: 0.1)) {
+                withAnimation() {
                     names.append(newUserName)
                 }
                 newUserName = ""
@@ -129,6 +128,18 @@ struct StartView: View {
             showAlert1 = true
         }
         return false
+    }
+    
+    func isFinalUsersCorrect() -> Bool {
+        var ok = true
+        if !newUserName.isEmpty {
+            ok = checkAndAddName()
+        }
+        if ok {
+            return true
+        } else {
+            return false
+        }
     }
 }
 
