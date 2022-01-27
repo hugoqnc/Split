@@ -57,7 +57,7 @@ struct PreferenceButton: View {
             let realName = newUserName.trimmingCharacters(in: .whitespaces)
             if !realName.isEmpty {
                 if !names.contains(realName) {
-                    completeNamesArray.append(newUserName.trimmingCharacters(in: .whitespaces))
+                    completeNamesArray.append(realName)
                 }
             }
             return completeNamesArray
@@ -69,7 +69,7 @@ struct PreferenceButton: View {
         if !realName.isEmpty {
             if !names.contains(realName) {
                 withAnimation() {
-                    names.append(newUserName)
+                    names.append(realName)
                 }
                 newUserName = ""
                 return true

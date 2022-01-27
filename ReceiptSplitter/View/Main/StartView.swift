@@ -115,7 +115,7 @@ struct StartView: View {
         if !realName.isEmpty {
             if !names.contains(realName) {
                 withAnimation() {
-                    names.append(newUserName)
+                    names.append(realName)
                 }
                 newUserName = ""
                 return true
