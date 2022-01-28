@@ -58,11 +58,11 @@ struct InputItemDetails: View {
                         .padding()
 
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("Item details")
+                        Text(title)
                             .font(.headline)
                             .foregroundColor(.primary)
 
-                        Text("Write the new name and price of this item below")
+                        Text(message)
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                             .fixedSize(horizontal: false, vertical: true)

@@ -51,8 +51,8 @@ struct AttributionView: View {
                             .offset(x: 0, y: 5)
                             .foregroundColor(pair.price==0 ? .red : nil)
                             .sheet(isPresented: $isEditorMode) {
-                                InputItemDetails(title: "Modify item",
-                                                 message:"You can change the name and the price of this item",
+                                InputItemDetails(title: "Item details",
+                                                 message: pair.isNewItem ? "Write the name and the price of this new item below" : "Write the new name and price of \"\(pair.name)\" below",
                                                  placeholder1: "Name",
                                                  placeholder2: "Price",
                                                  initialText: pair.name,

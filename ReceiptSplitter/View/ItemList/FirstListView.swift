@@ -41,54 +41,6 @@ struct FirstListView: View {
                     //Text(String(editMode.isEditing))
                     
                     ZStack {
-                        EmptyView()
-                            .alert(isPresented: $newItemAlert,
-                                TextAlert(title: "New item",
-                                   message:"Please enter the name and the price of the new item",
-                                   placeholder1: "Name",
-                                   placeholder2: "Price",
-                                   initialText: nil,
-                                   initialDouble: nil,
-                                   action: {
-                                        var newPair = PairProductPrice()
-                                        if $0 != nil && $1 != nil {
-                                            if $0! != "" {
-                                                newPair.name = $0!
-                                                newPair.price = $1!
-                                                //newPair.isNewItem = true
-                                                withAnimation() {
-                                                    model.listOfProductsAndPrices.insert(newPair, at: 0)
-                                                }
-                                            }
-                                        }
-                                    }
-                                )
-                            )
-                        
-                        EmptyView()
-                            .alert(isPresented: $editItemAlert,
-                                TextAlert(title: "Modify item",
-                                   message:"You can change the name and the price of this item",
-                                   placeholder1: "Name",
-                                   placeholder2: "Price",
-                                   initialText: editItemAlertPair.name,
-                                   initialDouble: editItemAlertPair.price,
-                                   action: {
-                                        if $0 != nil && $1 != nil {
-                                            if $0! != "" {
-                                                let index = model.listOfProductsAndPrices.firstIndex(of: editItemAlertPair)!
-                                                let name = $0!
-                                                let price = $1!
-                                                withAnimation() {                                                    model.listOfProductsAndPrices[index].name = name
-                                                    model.listOfProductsAndPrices[index].price = price
-                                                    return
-                                                }
-                                            }
-                                        }
-                                    }
-                                )
-                            )
-                        
                         NavigationView {
                                                 
                             VStack{
@@ -156,6 +108,27 @@ struct FirstListView: View {
                                                             editItemAlert = true
                                                             editItemAlertPair = pair
                                                         }
+                                                    }
+                                                    .sheet(isPresented: $editItemAlert) {
+                                                        InputItemDetails(title: "Modify item",
+                                                                         message:"You can change the name and the price of this item",
+                                                                         placeholder1: "Name",
+                                                                         placeholder2: "Price",
+                                                                         initialText: editItemAlertPair.name,
+                                                                         initialDouble: editItemAlertPair.price,
+                                                                         action: {
+                                                                              if $0 != nil && $1 != nil {
+                                                                                  if $0! != "" {
+                                                                                      let index = model.listOfProductsAndPrices.firstIndex(of: editItemAlertPair)!
+                                                                                      let name = $0!
+                                                                                      let price = $1!
+                                                                                      withAnimation() {                                                    model.listOfProductsAndPrices[index].name = name
+                                                                                          model.listOfProductsAndPrices[index].price = price
+                                                                                          return
+                                                                                      }
+                                                                                  }
+                                                                              }
+                                                                          })
                                                     }
                                                 }
                                                 .onDelete { indexSet in
@@ -237,6 +210,27 @@ struct FirstListView: View {
                                         newItemAlert = true
                                     } label: {
                                         Image(systemName: "plus")
+                                    }
+                                    .sheet(isPresented: $newItemAlert) {
+                                        InputItemDetails(title: "New item",
+                                                         message:"Please enter the name and the price of the new item",
+                                                         placeholder1: "Name",
+                                                         placeholder2: "Price",
+                                                         initialText: AttributionView.textOfNewItem,
+                                                         initialDouble: nil,
+                                                         action: {
+                                                              var newPair = PairProductPrice()
+                                                              if $0 != nil && $1 != nil {
+                                                                  if $0! != "" {
+                                                                      newPair.name = $0!
+                                                                      newPair.price = $1!
+                                                                      //newPair.isNewItem = true
+                                                                      withAnimation() {
+                                                                          model.listOfProductsAndPrices.insert(newPair, at: 0)
+                                                                      }
+                                                                  }
+                                                              }
+                                                          })
                                     }
                                 }
                                 ToolbarItem(id: UUID().uuidString, placement: .bottomBar, showsByDefault: true) {
