@@ -41,15 +41,8 @@ struct AttributionView: View {
                 HStack {
                     VStack(alignment: .leading) {
                     
-                        if pair.isNewItem {
-                            Text(pair.name)
-                                .font(.title2)
-                                .italic()
-                                .foregroundColor(.gray)
-                        } else {
-                            Text(pair.name)
-                                .font(.title2)
-                        }
+                        Text(pair.name)
+                            .font(.title2)
 
                         Text(String(pair.price)+model.currency.value)
                             .font(.title)
@@ -78,33 +71,7 @@ struct AttributionView: View {
                                                       }
                                                   })
                             }
-                                
                     }
-                    
-//                    EmptyView()
-//                        .alert(isPresented: $isEditorMode,
-//                            TextAlert(title: "Modify item",
-//                               message:"You can change the name and the price of this item",
-//                               placeholder1: "Name",
-//                               placeholder2: "Price",
-//                               initialText: pair.name,
-//                               initialDouble: pair.price,
-//                               action: {
-//                                    if $0 != nil && $1 != nil {
-//                                        if $0! != "" {
-//                                            let index = model.listOfProductsAndPrices.firstIndex(of: pair)!
-//                                            let name = $0!
-//                                            let price = $1!
-//                                            withAnimation() {                                                    model.listOfProductsAndPrices[index].name = name
-//                                                model.listOfProductsAndPrices[index].price = price
-//                                                return
-//                                            }
-//                                        }
-//                                    }
-//                                }
-//                            )
-//                        )
-//                        .frame(width: 0, height: 0)
                     
                     Spacer()
                     
@@ -152,12 +119,6 @@ struct AttributionView: View {
                             isEditorMode = true
                         } label: {
                                 Label("Edit this item", systemImage: "pencil")
-//                                Image(systemName: "pencil.circle.fill")
-//                                    .resizable(resizingMode: .tile)
-//                                    .frame(width: 30.0, height: 30.0)
-//                                    .foregroundColor(.blue)
-//                                    .padding(.top)
-//                                    .padding(.trailing,5)
                         }
 
                         if !pair.isNewItem {
@@ -167,12 +128,6 @@ struct AttributionView: View {
                                 }
                             } label: {
                                 Label("Add a new item", systemImage: "plus")
-    //                            Image(systemName: "plus.circle.fill")
-    //                                .resizable(resizingMode: .tile)
-    //                                .frame(width: 30.0, height: 30.0)
-    //                                .foregroundColor(isEditorMode || pair.isNewItem ? colorDisabledButton : .yellow)
-    //                                .padding(.top)
-    //                                .padding(.trailing,5)
                             }
                         }
                         
@@ -182,11 +137,6 @@ struct AttributionView: View {
                             }
                         } label: {
                             Label("Delete this item", systemImage: "trash")
-//                            Image(systemName: "trash.circle.fill")
-//                                .resizable(resizingMode: .tile)
-//                                .frame(width: 30.0, height: 30.0)
-//                                .foregroundColor(isEditorMode ? colorDisabledButton : .red)
-//                                .padding(.top)
                         }
                         
                     } label: {
@@ -205,16 +155,6 @@ struct AttributionView: View {
                             showAlert1 = true
                         } else {
                             for id in selections{
-//                                    for user in model.users {
-//                                        if user.id==id {
-//                                            let index = model.users.firstIndex{$0.id == id}!
-//                                            //print(model.users[index].name)
-//                                            //print(model.users[index].balance)
-//                                            model.users[index].balance+=pair.price/Double(divider)
-//
-//                                            //print(model.users[index].balance)
-//                                        }
-//                                    }
                                 if let row = model.users.firstIndex(where: {$0.id == id}) {
                                     model.users[row].balance+=pair.price/Double(divider)
                                 }

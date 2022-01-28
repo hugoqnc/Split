@@ -50,6 +50,28 @@ struct InputItemDetails: View {
     var body: some View {
         NavigationView {
             VStack {
+                HStack(alignment: .center) {
+                    Image(systemName: "square.and.pencil")
+                        .frame(width: 30, height: 30)
+                        .font(.largeTitle)
+                        .foregroundColor(Color.accentColor)
+                        .padding()
+
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Item details")
+                            .font(.headline)
+                            .foregroundColor(.primary)
+
+                        Text("Write the new name and price of this item below")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    
+                }
+                .padding(.top)
+                .padding(.horizontal, 40)
+                
                 Form {
                     Section {
                         TextField(placeholder1, text: $textState)
@@ -62,14 +84,7 @@ struct InputItemDetails: View {
                         Text("Item details")
                     }
                 }
-//                .onAppear {
-//                    if initialText != nil {
-//                        textState = initialText!
-//                    }
-//                    if initialDouble != nil {
-//                        doubleState = initialDouble!
-//                    }
-//                }
+
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -93,18 +108,24 @@ struct InputItemDetails: View {
             .navigationBarTitle(Text(""), displayMode: .inline)
         }
         .navigationViewStyle(StackNavigationViewStyle())
+        .interactiveDismissDisabled()
     }
 }
 
 struct InputItemDetails_Previews: PreviewProvider {
+    static let model = ModelData()
     static var previews: some View {
-        InputItemDetails(title: "Modify item",
-                         message:"You can change the name and the price of this item",
-                         placeholder1: "Name",
-                         placeholder2: "Price",
-                         initialText: "Potato Wedges",
-                         initialDouble: 3.85,
-                         action: {_,_ in 
-                          })
+        Text("")
+            .sheet(isPresented: .constant(true)) {
+                InputItemDetails(title: "Modify item",
+                                 message:"You can change the name and the price of this item",
+                                 placeholder1: "Name",
+                                 placeholder2: "Price",
+                                 initialText: "Potato Wedges",
+                                 initialDouble: 3.85,
+                                 action: {_,_ in
+                                  })
+                    .environmentObject(model)
+            }
     }
 }
