@@ -92,7 +92,6 @@ struct AttributionView: View {
                                 .resizable(resizingMode: .tile)
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 30.0, height: 25.0)
-                                .foregroundColor(Color.accentColor)
                         }
                         .padding(.trailing, 5)
                         
@@ -140,7 +139,7 @@ struct AttributionView: View {
                         }
                         
                     } label: {
-                        Image(systemName: "ellipsis.circle.fill")
+                        Image(systemName: "ellipsis.circle")
                             .resizable(resizingMode: .tile)
                             .frame(width: 25.0, height: 25.0)
                             .padding(.top)
@@ -166,7 +165,7 @@ struct AttributionView: View {
                     } label: {
                         Image(systemName: "checkmark.circle.fill")
                             .resizable(resizingMode: .tile)
-                            .frame(width: 35.0, height: 35.0)
+                            .frame(width: 40.0, height: 40.0)
                             .foregroundColor(.green)
                             .padding(.top,5)
                     }

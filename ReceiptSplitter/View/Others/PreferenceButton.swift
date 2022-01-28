@@ -173,14 +173,14 @@ struct PreferenceButton: View {
                                 VStack {
                                     Image(systemName: "arrow.triangle.2.circlepath")
                                         .padding(.bottom,-3)
-                                    Text("Replace")
+                                    Text("Update")
                                         .font(.caption)
                                 }
                             }
                         }
                         .transition(.asymmetric(insertion: .offset(x: 0, y: -60), removal: .offset(x: 0, y: 60)))
                     }
-                    .tint(nothingWritten ? .red : .blue)
+                    .tint(nothingWritten ? .red : .gray)
                     
                 }
                 .padding(.horizontal, 10)

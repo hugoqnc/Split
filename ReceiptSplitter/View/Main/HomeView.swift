@@ -39,6 +39,7 @@ struct HomeView: View {
                                                     isValidated = false
                                                 }
                                             }
+                                            //.tint(.blue)
 
                                     }
                                 }
