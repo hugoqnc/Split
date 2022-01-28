@@ -50,7 +50,6 @@ struct InputItemDetails: View {
     var body: some View {
         NavigationView {
             VStack {
-                Text("\(doubleState)")
                 HStack(alignment: .center) {
                     Image(systemName: "square.and.pencil")
                         .frame(width: 30, height: 30)

@@ -64,7 +64,7 @@ struct TextRecognition {
             if (heights.count != 0) {
                 medianHeight = heights.sorted(by: <)[heights.count / 2]
             }
-            print("median height: \(medianHeight)")
+            //print("median height: \(medianHeight)")
             
             var observationsCopy = observations
             var listOfMatchs: [[VNRecognizedTextObservation]] = []

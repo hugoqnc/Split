@@ -72,9 +72,57 @@ struct FirstListView: View {
                                 .padding(.leading, 30)
 
                                 
-                                if horizontalSizeClass == .compact {
-                                    Group{
-                                        if showView=="Scan" {
+                                Group {
+                                    if horizontalSizeClass == .compact {
+                                        Group{
+                                            if showView=="Scan" {
+                                                ScrollView {
+                                                    ForEach(model.images){ idImage in
+                                                        if let image = idImage.image {
+                                                            Image(uiImage: visualization(image, observations: idImage.boxes(listOfProductsAndPrices: model.listOfProductsAndPrices)))
+                                                                .resizable()
+                                                                .scaledToFit()
+                                                                .padding(5)
+                                                        }
+                                                    }
+                                                }
+                                            } else {
+                                                List() {
+                                                    ForEach(model.listOfProductsAndPrices) { pair in
+                                                        VStack(alignment: .leading) {
+                                                            HStack {
+                                                                Text(pair.name)
+                                                                Spacer()
+                                                                Text(model.showPrice(price: pair.price))
+                                                                    .padding(.trailing, 10)
+                                                            }
+                                                            if editMode == .active {
+                                                                Text("Double-tap to edit")
+                                                                    .font(.caption)
+                                                                    .foregroundColor(Color.accentColor)
+                                                                    .padding(0)
+                                                            }
+                                                        }
+                                                        .listRowBackground(Color.secondary.opacity(0.1))
+                                                        .onTapGesture(count: 2) {
+                                                            if editMode == .active {
+                                                                editItemAlert = true
+                                                                editItemAlertPair = pair
+                                                            }
+                                                        }
+                                                    }
+                                                    .onDelete { indexSet in
+                                                        withAnimation() {
+                                                            model.listOfProductsAndPrices.remove(atOffsets: indexSet)
+                                                        }
+                                                        nothingFound = true //so that if a user deletes all items, he is redirected to the nothing found screen
+                                                    }
+                                                }
+                                                .environment(\.editMode, $editMode)
+                                            }
+                                        }
+                                    } else { //iPad (large screen) version
+                                        HStack{
                                             ScrollView {
                                                 ForEach(model.images){ idImage in
                                                     if let image = idImage.image {
@@ -85,7 +133,9 @@ struct FirstListView: View {
                                                     }
                                                 }
                                             }
-                                        } else {
+                                            
+                                            Divider()
+                                            
                                             List() {
                                                 ForEach(model.listOfProductsAndPrices) { pair in
                                                     VStack(alignment: .leading) {
@@ -117,81 +167,30 @@ struct FirstListView: View {
                                                 }
                                             }
                                             .environment(\.editMode, $editMode)
-                                            .sheet(isPresented: $editItemAlert) {
-                                                InputItemDetails(title: "Modify item",
-                                                                 message:"You can change the name and the price of \"\(editItemAlertPair.name)\"",
-                                                                 placeholder1: "Name",
-                                                                 placeholder2: "Price",
-                                                                 initialText: editItemAlertPair.name,
-                                                                 initialDouble: editItemAlertPair.price,
-                                                                 action: {
-                                                                      if $0 != nil && $1 != nil {
-                                                                          if $0! != "" {
-                                                                              let index = model.listOfProductsAndPrices.firstIndex(of: editItemAlertPair)!
-                                                                              let name = $0!
-                                                                              let price = $1!
-                                                                              withAnimation() {
-                                                                                  model.listOfProductsAndPrices[index].name = name
-                                                                                  model.listOfProductsAndPrices[index].price = price
-                                                                                  return
-                                                                              }
-                                                                          }
-                                                                      }
-                                                                  })
-                                            }
-                                            
                                         }
                                     }
-                                    .onAppear(perform: {
-                                        UITableView.appearance().backgroundColor = .clear
-                                    })
-                                } else { //iPad (large screen) version
-                                    HStack{
-                                        ScrollView {
-                                            ForEach(model.images){ idImage in
-                                                if let image = idImage.image {
-                                                    Image(uiImage: visualization(image, observations: idImage.boxes(listOfProductsAndPrices: model.listOfProductsAndPrices)))
-                                                        .resizable()
-                                                        .scaledToFit()
-                                                        .padding(5)
-                                                }
-                                            }
-                                        }
-                                        
-                                        Divider()
-                                        
-                                        List() {
-                                            ForEach(model.listOfProductsAndPrices) { pair in
-                                                VStack(alignment: .leading) {
-                                                    HStack {
-                                                        Text(pair.name)
-                                                        Spacer()
-                                                        Text(model.showPrice(price: pair.price))
-                                                            .padding(.trailing, 10)
-                                                    }
-                                                    if editMode == .active {
-                                                        Text("Double-tap to edit")
-                                                            .font(.caption)
-                                                            .foregroundColor(Color.accentColor)
-                                                            .padding(0)
-                                                    }
-                                                }
-                                                .listRowBackground(Color.secondary.opacity(0.1))
-                                                .onTapGesture(count: 2) {
-                                                    if editMode == .active {
-                                                        editItemAlert = true
-                                                        editItemAlertPair = pair
-                                                    }
-                                                }
-                                            }
-                                            .onDelete { indexSet in
-                                                withAnimation() {
-                                                    model.listOfProductsAndPrices.remove(atOffsets: indexSet)
-                                                }
-                                            }
-                                        }
-                                        .environment(\.editMode, $editMode)
-                                    }
+                                }
+                                .sheet(isPresented: $editItemAlert) {
+                                    InputItemDetails(title: "Modify item",
+                                                     message:"You can change the name and the price of \"\(editItemAlertPair.name)\"",
+                                                     placeholder1: "Name",
+                                                     placeholder2: "Price",
+                                                     initialText: editItemAlertPair.name,
+                                                     initialDouble: editItemAlertPair.price,
+                                                     action: {
+                                                          if $0 != nil && $1 != nil {
+                                                              if $0! != "" {
+                                                                  let index = model.listOfProductsAndPrices.firstIndex(of: editItemAlertPair)!
+                                                                  let name = $0!
+                                                                  let price = $1!
+                                                                  withAnimation() {
+                                                                      model.listOfProductsAndPrices[index].name = name
+                                                                      model.listOfProductsAndPrices[index].price = price
+                                                                      return
+                                                                  }
+                                                              }
+                                                          }
+                                                      })
                                 }
 
                             }
