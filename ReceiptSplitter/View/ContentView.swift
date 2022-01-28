@@ -12,8 +12,8 @@ struct ContentView: View {
         UITableView.appearance().backgroundColor = .clear
     }
     var body: some View {
-        StartView()
-        //PreferenceButton_Previews.previews
+        //StartView()
+        HomeView_Previews.previews
     }
 }
 

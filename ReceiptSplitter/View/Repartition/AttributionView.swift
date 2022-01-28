@@ -12,7 +12,7 @@ struct AttributionView: View {
         self._pair = pair
         self._isValidated = isValidated
         self.itemCounter = itemCounter
-        self.isEditorMode = pair.isNewItem.wrappedValue //edit mode activated for new products
+        //self.isEditorMode = pair.isNewItem.wrappedValue //edit mode activated for new products
     }
     
     @Binding var pair: PairProductPrice
@@ -22,7 +22,7 @@ struct AttributionView: View {
     @EnvironmentObject var model: ModelData
     @State var selections: [UUID] = []
     @State private var showAlert1 = false
-    @State private var isEditorMode: Bool
+    @State private var isEditorMode = false
     @State private var showSafariView = false
     
     @State private var createsNewItemCall = false
@@ -33,7 +33,6 @@ struct AttributionView: View {
     @State private var opacity = 1.0
     
     static let textOfNewItem = "Additional Product"
-    private let colorDisabledButton = Color(red: 140 / 255, green: 140 / 255, blue: 140 / 255).opacity(0.2)
         
     var body: some View {
         VStack {
@@ -51,25 +50,61 @@ struct AttributionView: View {
                             Text(pair.name)
                                 .font(.title2)
                         }
-                        if isEditorMode {
-                            TextField(String(pair.price)+model.currency.value, value: $pair.price, format: .number)
-                                .keyboardType(.decimalPad)
-                                .textFieldStyle(.roundedBorder)
-                                .frame(width: 120)
-                                .font(.title)
-                                .offset(x: 0, y: -13)
-                                .foregroundColor(.blue)
+
+                        Text(String(pair.price)+model.currency.value)
+                            .font(.title)
+                            .fontWeight(.bold)
+                            .padding(.bottom,25)
+                            .offset(x: 0, y: 5)
+                            .foregroundColor(pair.price==0 ? .red : nil)
+                            .sheet(isPresented: $isEditorMode) {
+                                InputItemDetails(title: "Modify item",
+                                                 message:"You can change the name and the price of this item",
+                                                 placeholder1: "Name",
+                                                 placeholder2: "Price",
+                                                 initialText: pair.name,
+                                                 initialDouble: pair.price,
+                                                 action: {
+                                                      if $0 != nil && $1 != nil {
+                                                          if $0! != "" {
+                                                              let index = model.listOfProductsAndPrices.firstIndex(of: pair)!
+                                                              let name = $0!
+                                                              let price = $1!
+                                                              withAnimation() {                                                    model.listOfProductsAndPrices[index].name = name
+                                                                  model.listOfProductsAndPrices[index].price = price
+                                                                  return
+                                                              }
+                                                          }
+                                                      }
+                                                  })
+                            }
                                 
-                        } else {
-                            Text(String(pair.price)+model.currency.value)
-                                .font(.title)
-                                .fontWeight(.bold)
-                                .padding(.bottom,25)
-                                .offset(x: 0, y: 5)
-                                .foregroundColor(pair.price==0 ? .red : nil)
-                                
-                        }
                     }
+                    
+//                    EmptyView()
+//                        .alert(isPresented: $isEditorMode,
+//                            TextAlert(title: "Modify item",
+//                               message:"You can change the name and the price of this item",
+//                               placeholder1: "Name",
+//                               placeholder2: "Price",
+//                               initialText: pair.name,
+//                               initialDouble: pair.price,
+//                               action: {
+//                                    if $0 != nil && $1 != nil {
+//                                        if $0! != "" {
+//                                            let index = model.listOfProductsAndPrices.firstIndex(of: pair)!
+//                                            let name = $0!
+//                                            let price = $1!
+//                                            withAnimation() {                                                    model.listOfProductsAndPrices[index].name = name
+//                                                model.listOfProductsAndPrices[index].price = price
+//                                                return
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                            )
+//                        )
+//                        .frame(width: 0, height: 0)
                     
                     Spacer()
                     
@@ -79,20 +114,18 @@ struct AttributionView: View {
                             .font(.caption)
                             .fontWeight(.bold)
                             .padding(.trailing, 5)
-                            .padding(.bottom, 10)
+                            .padding(.bottom, 5)
                             .padding(.top, -20)
                             .foregroundColor(.secondary)
                                                 
                         Button(action: {
-                            if !(pair.isNewItem){
-                                showSafariView = true
-                            }
+                            showSafariView = true
                         }) {
-                                Image(systemName: "photo.on.rectangle")
-                                    .resizable(resizingMode: .tile)
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 30.0, height: 25.0)
-                                    .foregroundColor(pair.isNewItem ? colorDisabledButton : Color.accentColor)
+                            Image(systemName: "magnifyingglass")
+                                .resizable(resizingMode: .tile)
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 30.0, height: 25.0)
+                                .foregroundColor(Color.accentColor)
                         }
                         .padding(.trailing, 5)
                         
@@ -113,67 +146,65 @@ struct AttributionView: View {
                 
                 HStack {
                     
-                    Button {
-                        isEditorMode.toggle()
-                    } label: {
-                        if isEditorMode {
-                            Image(systemName: "checkmark.circle.fill")
-                                .resizable(resizingMode: .tile)
-                                .frame(width: 30.0, height: 30.0)
-                                .foregroundColor(.blue)
-                                .padding(.top)
-                                .padding(.trailing,5)
-                        } else {
-                            Image(systemName: "pencil.circle.fill")
-                                .resizable(resizingMode: .tile)
-                                .frame(width: 30.0, height: 30.0)
-                                .foregroundColor(.blue)
-                                .padding(.top)
-                                .padding(.trailing,5)
+                    Menu {
+                        
+                        Button {
+                            isEditorMode = true
+                        } label: {
+                                Label("Edit this item", systemImage: "pencil")
+//                                Image(systemName: "pencil.circle.fill")
+//                                    .resizable(resizingMode: .tile)
+//                                    .frame(width: 30.0, height: 30.0)
+//                                    .foregroundColor(.blue)
+//                                    .padding(.top)
+//                                    .padding(.trailing,5)
                         }
-                    }
-                    
-                    Button {
-                        if !isEditorMode && !pair.isNewItem {
-                            withAnimation(.easeInOut(duration: 4)) {
-                                createsNewItemCall = true
+
+                        if !pair.isNewItem {
+                            Button {
+                                withAnimation(.easeInOut(duration: 4)) {
+                                    createsNewItemCall = true
+                                }
+                            } label: {
+                                Label("Add a new item", systemImage: "plus")
+    //                            Image(systemName: "plus.circle.fill")
+    //                                .resizable(resizingMode: .tile)
+    //                                .frame(width: 30.0, height: 30.0)
+    //                                .foregroundColor(isEditorMode || pair.isNewItem ? colorDisabledButton : .yellow)
+    //                                .padding(.top)
+    //                                .padding(.trailing,5)
                             }
                         }
-                    } label: {
-                        Image(systemName: "plus.circle.fill")
-                            .resizable(resizingMode: .tile)
-                            .frame(width: 30.0, height: 30.0)
-                            .foregroundColor(isEditorMode || pair.isNewItem ? colorDisabledButton : .yellow)
-                            .padding(.top)
-                            .padding(.trailing,5)
-                    }
-                    
-                    Button {
-                        if !isEditorMode {
+                        
+                        Button {
                             withAnimation(.easeInOut(duration: 4)) {
                                 deletesItemCall = true
                             }
-        
+                        } label: {
+                            Label("Delete this item", systemImage: "trash")
+//                            Image(systemName: "trash.circle.fill")
+//                                .resizable(resizingMode: .tile)
+//                                .frame(width: 30.0, height: 30.0)
+//                                .foregroundColor(isEditorMode ? colorDisabledButton : .red)
+//                                .padding(.top)
                         }
                         
                     } label: {
-                        Image(systemName: "trash.circle.fill")
+                        Image(systemName: "ellipsis.circle.fill")
                             .resizable(resizingMode: .tile)
-                            .frame(width: 30.0, height: 30.0)
-                            .foregroundColor(isEditorMode ? colorDisabledButton : .red)
+                            .frame(width: 20.0, height: 20.0)
                             .padding(.top)
+                            .padding(.trailing,5)
                     }
-                    
+                
                     Spacer()
                     
                     Button {
-                        if !isEditorMode {
-                            
-                            let divider = selections.count
-                            if divider==0 {
-                                showAlert1 = true
-                            } else {
-                                for id in selections{
+                        let divider = selections.count
+                        if divider==0 {
+                            showAlert1 = true
+                        } else {
+                            for id in selections{
 //                                    for user in model.users {
 //                                        if user.id==id {
 //                                            let index = model.users.firstIndex{$0.id == id}!
@@ -184,27 +215,35 @@ struct AttributionView: View {
 //                                            //print(model.users[index].balance)
 //                                        }
 //                                    }
-                                    if let row = model.users.firstIndex(where: {$0.id == id}) {
-                                        model.users[row].balance+=pair.price/Double(divider)
-                                    }
-                                    
+                                if let row = model.users.firstIndex(where: {$0.id == id}) {
+                                    model.users[row].balance+=pair.price/Double(divider)
                                 }
-                                selections = []
-                                isValidated = true
+                                
                             }
+                            selections = []
+                            isValidated = true
                         }
                     } label: {
                         Image(systemName: "checkmark.circle.fill")
                             .resizable(resizingMode: .tile)
-                            .frame(width: 40.0, height: 40.0)
-                            .foregroundColor(isEditorMode ? colorDisabledButton : .green)
+                            .frame(width: 30.0, height: 30.0)
+                            .foregroundColor(.green)
                             .padding(.top,5)
                     }
                     
                 }
+                .ignoresSafeArea(.keyboard)
             }
             .padding(20)
         }
+        .onAppear(perform: {
+            if pair.isNewItem {
+            let secondsToDelay = 0.5
+            DispatchQueue.main.asyncAfter(deadline: .now() + secondsToDelay) {
+                isEditorMode = true
+            }
+            }
+        })
         .background(Color(uiColor: UIColor.systemBackground).brightness(0.06))
         .cornerRadius(10)
         .shadow(color: .black.opacity(0.2), radius: 15.0)

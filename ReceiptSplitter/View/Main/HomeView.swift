@@ -61,7 +61,7 @@ struct HomeView: View {
                     .padding(15)
                     
                 }
-                .navigationTitle("ReceiptSplitter")
+                .navigationBarTitle(Text("ReceiptSplitter"), displayMode: .inline)
                 .navigationBarHidden(isKeyboardShown)
                 .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)) { _ in
                     withAnimation(.easeInOut(duration: 4)) {

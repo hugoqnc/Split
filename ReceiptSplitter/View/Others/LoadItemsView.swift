@@ -108,7 +108,7 @@ struct LoadItemsView: View {
             ZStack {
                 ProgressView()
                     .progressViewStyle(CircularProgressViewStyle())
-                    .scaleEffect(2)
+                    //.scaleEffect(2)
             }
         }
     }
@@ -117,6 +117,6 @@ struct LoadItemsView: View {
 
 struct LoadItemsView_Previews: PreviewProvider {
     static var previews: some View {
-        LoadItemsView(showScanningResults: .constant(true), nothingFound: .constant(true))
+        LoadItemsView(showScanningResults: .constant(true), nothingFound: .constant(false))
     }
 }
