@@ -50,6 +50,7 @@ struct InputItemDetails: View {
     var body: some View {
         NavigationView {
             VStack {
+                Text("\(doubleState)")
                 HStack(alignment: .center) {
                     Image(systemName: "square.and.pencil")
                         .frame(width: 30, height: 30)
@@ -76,7 +77,7 @@ struct InputItemDetails: View {
                     Section {
                         TextField(placeholder1, text: $textState)
                             .listRowBackground(Color.secondary.opacity(0.1))
-                        TextField(model.showPrice(price: doubleState), value: $doubleState, format: .number)
+                        TextField(placeholder2, value: $doubleState, format: .number)
                             .listRowBackground(Color.secondary.opacity(0.1))
                             .keyboardType(.decimalPad)
 
@@ -103,6 +104,7 @@ struct InputItemDetails: View {
                     } label: {
                         Text("Done")
                     }
+                    .disabled(textState.isEmpty || (textState==initialText && doubleState==initialDouble))
                 }
             }
             .navigationBarTitle(Text(""), displayMode: .inline)

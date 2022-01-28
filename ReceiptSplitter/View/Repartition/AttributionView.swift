@@ -51,8 +51,8 @@ struct AttributionView: View {
                             .offset(x: 0, y: 5)
                             .foregroundColor(pair.price==0 ? .red : nil)
                             .sheet(isPresented: $isEditorMode) {
-                                InputItemDetails(title: "Item details",
-                                                 message: pair.isNewItem ? "Write the name and the price of this new item below" : "Write the new name and price of \"\(pair.name)\" below",
+                                InputItemDetails(title: pair.isNewItem ? "New item" : "Modify item",
+                                                 message: pair.isNewItem ? "Please enter the name and the price of the new item" : "You can change the name and the price of \"\(pair.name)\"",
                                                  placeholder1: "Name",
                                                  placeholder2: "Price",
                                                  initialText: pair.name,
@@ -142,7 +142,7 @@ struct AttributionView: View {
                     } label: {
                         Image(systemName: "ellipsis.circle.fill")
                             .resizable(resizingMode: .tile)
-                            .frame(width: 20.0, height: 20.0)
+                            .frame(width: 25.0, height: 25.0)
                             .padding(.top)
                             .padding(.trailing,5)
                     }
@@ -166,7 +166,7 @@ struct AttributionView: View {
                     } label: {
                         Image(systemName: "checkmark.circle.fill")
                             .resizable(resizingMode: .tile)
-                            .frame(width: 30.0, height: 30.0)
+                            .frame(width: 35.0, height: 35.0)
                             .foregroundColor(.green)
                             .padding(.top,5)
                     }

@@ -109,27 +109,6 @@ struct FirstListView: View {
                                                             editItemAlertPair = pair
                                                         }
                                                     }
-                                                    .sheet(isPresented: $editItemAlert) {
-                                                        InputItemDetails(title: "Modify item",
-                                                                         message:"You can change the name and the price of this item",
-                                                                         placeholder1: "Name",
-                                                                         placeholder2: "Price",
-                                                                         initialText: editItemAlertPair.name,
-                                                                         initialDouble: editItemAlertPair.price,
-                                                                         action: {
-                                                                              if $0 != nil && $1 != nil {
-                                                                                  if $0! != "" {
-                                                                                      let index = model.listOfProductsAndPrices.firstIndex(of: editItemAlertPair)!
-                                                                                      let name = $0!
-                                                                                      let price = $1!
-                                                                                      withAnimation() {                                                    model.listOfProductsAndPrices[index].name = name
-                                                                                          model.listOfProductsAndPrices[index].price = price
-                                                                                          return
-                                                                                      }
-                                                                                  }
-                                                                              }
-                                                                          })
-                                                    }
                                                 }
                                                 .onDelete { indexSet in
                                                     withAnimation() {
@@ -138,6 +117,28 @@ struct FirstListView: View {
                                                 }
                                             }
                                             .environment(\.editMode, $editMode)
+                                            .sheet(isPresented: $editItemAlert) {
+                                                InputItemDetails(title: "Modify item",
+                                                                 message:"You can change the name and the price of \"\(editItemAlertPair.name)\"",
+                                                                 placeholder1: "Name",
+                                                                 placeholder2: "Price",
+                                                                 initialText: editItemAlertPair.name,
+                                                                 initialDouble: editItemAlertPair.price,
+                                                                 action: {
+                                                                      if $0 != nil && $1 != nil {
+                                                                          if $0! != "" {
+                                                                              let index = model.listOfProductsAndPrices.firstIndex(of: editItemAlertPair)!
+                                                                              let name = $0!
+                                                                              let price = $1!
+                                                                              withAnimation() {
+                                                                                  model.listOfProductsAndPrices[index].name = name
+                                                                                  model.listOfProductsAndPrices[index].price = price
+                                                                                  return
+                                                                              }
+                                                                          }
+                                                                      }
+                                                                  })
+                                            }
                                             
                                         }
                                     }
