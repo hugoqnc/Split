@@ -13,7 +13,7 @@ struct ContentView: View {
     }
     var body: some View {
         StartView()
-        //HomeView_Previews.previews
+        //FirstListView_Previews.previews
     }
 }
 

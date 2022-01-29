@@ -20,7 +20,7 @@ struct FirstListView: View {
     
     @State private var newItemAlert = false
     @State private var editItemAlert = false
-    @State private var editItemAlertPair = PairProductPrice()
+    @State private var editItemAlertPair = PairProductPrice(id: "abc", name: "Test", price: 3.45)
     
     var views = ["Scan","List"]
     @State private var showView = "Scan"
@@ -71,6 +71,8 @@ struct FirstListView: View {
                                 .padding(.bottom, 10)
                                 .padding(.leading, 30)
 
+                                Text("\(editItemAlertPair.name)") //due to https://developer.apple.com/forums/thread/652080
+                                    .hidden()
                                 
                                 Group {
                                     if horizontalSizeClass == .compact {
@@ -106,8 +108,8 @@ struct FirstListView: View {
                                                         .listRowBackground(Color.secondary.opacity(0.1))
                                                         .onTapGesture(count: 2) {
                                                             if editMode == .active {
-                                                                editItemAlert = true
                                                                 editItemAlertPair = pair
+                                                                editItemAlert = true
                                                             }
                                                         }
                                                     }
@@ -155,8 +157,8 @@ struct FirstListView: View {
                                                     .listRowBackground(Color.secondary.opacity(0.1))
                                                     .onTapGesture(count: 2) {
                                                         if editMode == .active {
-                                                            editItemAlert = true
                                                             editItemAlertPair = pair
+                                                            editItemAlert = true
                                                         }
                                                     }
                                                 }
@@ -171,12 +173,15 @@ struct FirstListView: View {
                                     }
                                 }
                                 .sheet(isPresented: $editItemAlert) {
+                                    let name = editItemAlertPair.name
+                                    let price = editItemAlertPair.price
+                                    
                                     InputItemDetails(title: "Modify item",
-                                                     message:"You can change the name and the price of \"\(editItemAlertPair.name)\"",
+                                                     message:"You can change the name and the price of \"\(name)\"",
                                                      placeholder1: "Name",
                                                      placeholder2: "Price",
-                                                     initialText: editItemAlertPair.name,
-                                                     initialDouble: editItemAlertPair.price,
+                                                     initialText: name,
+                                                     initialDouble: price,
                                                      action: {
                                                           if $0 != nil && $1 != nil {
                                                               if $0! != "" {
