@@ -20,7 +20,7 @@ struct FirstListView: View {
     
     @State private var newItemAlert = false
     @State private var editItemAlert = false
-    @State private var editItemAlertPair = PairProductPrice(id: "abc", name: "Test", price: 3.45)
+    @State private var editItemAlertPair = PairProductPrice()
     
     var views = ["Scan","List"]
     @State private var showView = "Scan"
@@ -117,7 +117,9 @@ struct FirstListView: View {
                                                         withAnimation() {
                                                             model.listOfProductsAndPrices.remove(atOffsets: indexSet)
                                                         }
-                                                        nothingFound = true //so that if a user deletes all items, he is redirected to the nothing found screen
+                                                        if model.listOfProductsAndPrices.count == 0 {
+                                                            nothingFound = true //so that if a user deletes all items, he is redirected to the nothing found screen
+                                                        }
                                                     }
                                                 }
                                                 .environment(\.editMode, $editMode)
