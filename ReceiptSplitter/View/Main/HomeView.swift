@@ -12,7 +12,6 @@ struct HomeView: View {
     @State private var showAllList = false
     @State private var isValidated = false
     @State private var itemCounter = 0
-    @State private var isKeyboardShown = false
     @State private var showResult = false
     
     var body: some View {
@@ -63,19 +62,9 @@ struct HomeView: View {
                     
                 }
                 .navigationBarTitle(Text("ReceiptSplitter"), displayMode: .inline)
-                .navigationBarHidden(isKeyboardShown)
-                .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)) { _ in
-                    withAnimation(.easeInOut(duration: 4)) {
-                        isKeyboardShown = true
-                    }
-                }
-                .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)) { _ in
-                    withAnimation(.easeInOut) {
-                        isKeyboardShown = false
-                    }
-                }
 
         }
+        .ignoresSafeArea(.keyboard)
         .transition(.opacity)
         .navigationViewStyle(StackNavigationViewStyle())
         .sheet(isPresented: $showAllList, content: {
