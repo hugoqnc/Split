@@ -18,25 +18,50 @@ struct UserChoicesDetailView: View {
         VStack {
             NavigationView {
                 VStack{
+                    
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text("\(user.name),")
+                                .font(.title)
+                                .fontWeight(.semibold)
+                            Text("Here are the details of your purchases")
+                                .font(.title)
+                                .fontWeight(.regular)
+                        }
+                        .padding(.horizontal)
+                        .padding(.top,25)
+                        Spacer()
+                    }
 
                     List() {
                         Section(header: Text("\(chosenItems.count) items — \(model.showPrice(price: model.balance(ofUser: user)))")){
                         //Section {
                             ForEach(chosenItems) { item in
+                                VStack {
                                     HStack {
-                                        Text(item.name)
+                                        VStack(alignment: .leading, spacing: 2) {
+                                            Text(item.name)
+                                                .padding(.vertical, 4)
+                                            MiniRepartitionRow(userIDs: item.chosenBy)
+                                                .padding(.horizontal, 4)
+                                                .padding(.bottom, 3)
+                                        }
                                         Spacer()
+                                        
 
                                         VStack {
                                             HStack {
                                                 Text(model.showPrice(price: item.price) + " × 1/"+String(item.chosenBy.count))
-                                                    .font(.caption)
+                                                    .font(.subheadline)
+                                                    .fontWeight(.light)
                                             }
                                             Text(model.showPrice(price: item.price/Double(item.chosenBy.count)))
+                                                .fontWeight(.semibold)
                                         }
 
                                     }
                                     .listRowBackground(Color.secondary.opacity(0.1))
+                                }
                             }
                         }
                     }
