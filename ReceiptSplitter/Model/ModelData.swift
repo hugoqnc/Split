@@ -20,7 +20,7 @@ final class ModelData: ObservableObject {
         get {
             var total: Double = 0
             for user in users{
-                total += user.balance
+                total += balance(ofUser: user)
             }
             return total
         }
@@ -34,6 +34,24 @@ final class ModelData: ObservableObject {
             }
             return total
         }
+    }
+    
+    func chosenItems(ofUser user: User) -> [PairProductPrice] {
+        var chosen: [PairProductPrice] = []
+        for item in listOfProductsAndPrices {
+            if item.chosenBy.contains(user.id) {
+                chosen.append(item)
+            }
+        }
+        return chosen
+    }
+    
+    func balance(ofUser user: User) -> Double {
+        var total: Double = 0.0
+        for item in chosenItems(ofUser: user){
+            total += item.price/Double(item.chosenBy.count)
+        }
+        return total
     }
     
     func showPrice(price: Double) -> String {
@@ -54,7 +72,7 @@ final class ModelData: ObservableObject {
             """
             
             for user in users {
-                sharedText.append("      \(user.name): \(showPrice(price: user.balance))\n")
+                sharedText.append("      \(user.name): \(showPrice(price: balance(ofUser: user)))\n")
             }
             
             sharedText.append(

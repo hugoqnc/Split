@@ -26,6 +26,7 @@ struct PairProductPrice: Identifiable, Equatable {
     var name: String = ""
     var price: Double = 0
     var isNewItem: Bool = false
+    var chosenBy: [UUID] = []
     
     var imageId: String?
     var box: VNDetectedObjectObservation?

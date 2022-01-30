@@ -13,20 +13,28 @@ struct UserChoicesDetailView: View {
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
+        let chosenItems: [PairProductPrice] = model.chosenItems(ofUser: user)
+        
         VStack {
             NavigationView {
                 VStack{
 
                     List() {
-                        //Section(header: Text("\(user.chosenItems.count) items — \(model.showPrice(price: user.balance))")){
-                        Section {
-                            ForEach(user.chosenItems) { item in
+                        Section(header: Text("\(chosenItems.count) items — \(model.showPrice(price: model.balance(ofUser: user)))")){
+                        //Section {
+                            ForEach(chosenItems) { item in
                                     HStack {
                                         Text(item.name)
                                         Spacer()
-                                        Text(model.showPrice(price: item.price))
-                                        Spacer()
-                                        Text("1/"+String(item.dividedBy))
+
+                                        VStack {
+                                            HStack {
+                                                Text(model.showPrice(price: item.price) + " × 1/"+String(item.chosenBy.count))
+                                                    .font(.caption)
+                                            }
+                                            Text(model.showPrice(price: item.price/Double(item.chosenBy.count)))
+                                        }
+
                                     }
                                     .listRowBackground(Color.secondary.opacity(0.1))
                             }
@@ -42,19 +50,22 @@ struct UserChoicesDetailView: View {
 }
 
 struct UserChoicesDetailView_Previews: PreviewProvider {
-
-//    static var user: User {
-//        get {
-//            var user = User(name: "Hugo")
-//            user.chosenItems = [ChosenItem(name: "Potato Wedges", price: 3.76, dividedBy: 3),
-//                         ChosenItem(name: "Spinat", price: 1.78, dividedBy: 2),
-//                         ChosenItem(name: "Beef 250g", price: 5.10, dividedBy: 1),
-//                         ChosenItem(name: "Ricola Sweets", price: 2.89, dividedBy: 2)]
-//            return user
-//        }
-//    }
+    static let model: ModelData = {
+        var model = ModelData()
+        model.users = [User(name: "Hugo"), User(name: "Lucas"), User(name: "Thomas")]
+        model.listOfProductsAndPrices = [PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 4.99), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBC", name: "Finger Fish", price: 1.27), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBD", name: "Ice Cream Strawberry", price: 3.20)]
+        model.listOfProductsAndPrices[0].chosenBy = [model.users[0].id]
+        model.listOfProductsAndPrices[1].chosenBy = [model.users[0].id, model.users[1].id]
+        model.listOfProductsAndPrices[2].chosenBy = [model.users[0].id, model.users[1].id, model.users[2].id]
+        return model
+    }()
     
     static var previews: some View {
-        UserChoicesDetailView(user: User(name: "Hugo"))
+        Text("Test")
+            .sheet(isPresented: .constant(true)) {
+                UserChoicesDetailView(user: model.users.first ?? User())
+                    .environmentObject(model)
+            }
+
     }
 }

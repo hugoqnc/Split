@@ -47,7 +47,7 @@ struct CurrentExpensesRow: View {
                             VStack{
                                 Text(user.name)
                                     .font(.subheadline)
-                                Text(model.showPrice(price: user.balance))
+                                Text(model.showPrice(price: model.balance(ofUser: user)))
                                     .font(.title3)
                             }
                             .padding(8)

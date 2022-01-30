@@ -71,15 +71,15 @@ struct ResultView: View {
                     
                     ScrollView(.vertical){
                         VStack {
-                            ForEach(model.users.sorted(by: {$0.balance>$1.balance})) { user in
+                            ForEach(model.users.sorted(by: {model.balance(ofUser: $0)>model.balance(ofUser: $1)})) { user in
                                 HStack{
                                     Text(user.name)
                                         .font(.title3)
                                     Spacer()
-                                    Text(model.showPrice(price: user.balance))
+                                    Text(model.showPrice(price: model.balance(ofUser: user)))
                                         //.font(.title2)
                                         .fontWeight(.semibold)
-                                        .font(.system(size: fontSizeProportionalToPrice(total: model.totalBalance, price: user.balance)))
+                                        .font(.system(size: fontSizeProportionalToPrice(total: model.totalBalance, price: model.balance(ofUser: user))))
                                 }
                                 .padding(8)
                             }

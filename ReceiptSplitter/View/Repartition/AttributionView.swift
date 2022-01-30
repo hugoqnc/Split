@@ -147,14 +147,16 @@ struct AttributionView: View {
                         if divider==0 {
                             showAlert1 = true
                         } else {
-                            for id in selections{
-                                if let row = model.users.firstIndex(where: {$0.id == id}) {
-                                    let chosenItem = ChosenItem(name: pair.name, price: pair.price, dividedBy: divider)
-                                    model.users[row].chosenItems.append(chosenItem)
-                                    //print("validated: \(pair.name)")
-                                }
-                                
-                            }
+                            let index = model.listOfProductsAndPrices.firstIndex(of: pair)!
+                            model.listOfProductsAndPrices[index].chosenBy = selections
+//                            for id in selections{
+//                                if let row = model.users.firstIndex(where: {$0.id == id}) {
+//                                    let chosenItem = ChosenItem(name: pair.name, price: pair.price, dividedBy: divider)
+//                                    model.users[row].chosenItems.append(chosenItem)
+//                                    //print("validated: \(pair.name)")
+//                                }
+//
+//                            }
                             selections = []
                             isValidated = true
                         }
