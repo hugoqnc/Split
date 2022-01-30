@@ -39,6 +39,7 @@ struct ResultView: View {
                             .fontWeight(.semibold)
                     }
                     .padding(.top,60)
+                    .padding(.bottom,20)
                     
                     HStack {
                         Spacer()
@@ -54,87 +55,76 @@ struct ResultView: View {
                     }
                 }
                 
-                Divider()
-                    .padding(.leading)
-                    .padding(.trailing)
                 
-                HStack {
-                    VStack{
-                        Image(systemName: "person.2")
-                            .resizable(resizingMode: .tile)
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 45.0, height: 30.0)
-                            .foregroundColor(.blue)
-                    }
-                    .padding(.leading)
-                    .padding(.trailing, 8)
-                    
-                    Divider()
-                    
-                    ScrollView(.vertical){
-                        VStack {
-                            ForEach(model.users.sorted(by: {model.balance(ofUser: $0)>model.balance(ofUser: $1)})) { user in
-                                HStack{
-                                    
-                                    Button {
-                                        selectedUser = user
-                                        showUserDetails = true
-                                    } label: {
-                                        Text(user.name)
-                                            .font(.title3)
-                                        Image(systemName: "info.circle")
-                                    }
-                                    
-                                    Spacer()
-                                    Text(model.showPrice(price: model.balance(ofUser: user)))
-                                        //.font(.title2)
-                                        .fontWeight(.semibold)
-                                        .font(.system(size: fontSizeProportionalToPrice(total: model.totalBalance, price: model.balance(ofUser: user))))
+                ScrollView {
+                ForEach(model.users.sorted(by: {model.balance(ofUser: $0)>model.balance(ofUser: $1)})) { user in
+                    HStack {
+                        HStack {
+                            Button {
+                                selectedUser = user
+                                showUserDetails = true
+                            } label: {
+                                Image(systemName: "person")
+                                    .font(.title2)
+                                
+                                VStack(alignment: .leading) {
+                                    Text(user.name)
+                                        .font(.title3)
+                                    Text("\(model.chosenItems(ofUser: user).count) items")
+                                        .font(.caption)
                                 }
-                                .padding(8)
+                                .foregroundColor(.primary)
                             }
+                            
+                            Spacer()
+                            
+                            Text(model.showPrice(price: model.balance(ofUser: user)))
+                                .fontWeight(.semibold)
+                                .font(.system(size: fontSizeProportionalToPrice(total: model.totalBalance, price: model.balance(ofUser: user))))
+                            
+                            Button {
+                                //showSharingOptions = true
+                            } label: {
+                                Label("See all", systemImage: "square.and.arrow.up")
+                                    .labelStyle(.iconOnly)
+                            }
+                            .padding(.leading,5)
+                            
+                            
                         }
+                        .padding()
                     }
-                    .padding(6)
+                    .background(Color.gray.opacity(0.1))
+                    .cornerRadius(15)
+                    .padding(.horizontal)
                 }
-                .padding(.leading)
-                .padding(.trailing)
-                //.frame(height: 195)
                 
-                Divider()
-                    .padding(.leading)
-                    .padding(.trailing)
-                
-                HStack {
-                    VStack{
-                        Image(systemName: "cart")
-                            .resizable(resizingMode: .tile)
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 45.0, height: 35.0)
-                            .foregroundColor(.orange)
-                        Button {
-                            showAllList = true
-                        } label: {
-                            Label("See all", systemImage: "list.bullet")
-                                .labelStyle(.iconOnly)
-                        }
-                        .buttonStyle(.bordered)
-                        .foregroundColor(.orange)
-                        .padding(.top)
+                VStack {
+                    HStack {
+                        Spacer()
                         
+                        StatisticRectangle(iconString: "number", description: "Number of\npurchases", value: String(model.listOfProductsAndPrices.count), color: Color.blue)
+                        
+                        StatisticRectangle(iconString: "cart", description: "Average price\nof an item", value: String(round((model.totalPrice/Double(model.listOfProductsAndPrices.count))*100) / 100.0)+model.currency.value, color: Color.orange)
+                        
+                        Spacer()
                     }
-                    .padding(.leading)
-                    .padding(.trailing, 8)
-                    
-                    Divider()
-                    
-                    ScrollView(.vertical){
-                        StatView()
+                    HStack {
+                        Spacer()
+                        
+                        StatisticRectangle(iconString: "arrow.up.right.circle", description: "Maximum price\nof an item", value: String(round((model.listOfProductsAndPrices.map({ pair in
+                            pair.price
+                        }).max() ?? 0.0)*100) / 100.0)+model.currency.value, color: Color.green)
+                        
+                        StatisticRectangle(iconString: "arrow.down.right.circle", description: "Minimum price\nof an item", value: String(round((model.listOfProductsAndPrices.map({ pair in
+                            pair.price
+                        }).min() ?? 0.0)*100) / 100.0)+model.currency.value, color: Color.red)
+                        
+                        Spacer()
                     }
-                    .padding(10)
                 }
-                .padding(.leading)
-                .padding(.trailing)
+                .padding(10)
+                }
                 
                 Button {
                     dismiss()
