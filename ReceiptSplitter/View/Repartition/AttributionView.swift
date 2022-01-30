@@ -141,7 +141,7 @@ struct AttributionView: View {
                     } label: {
                         Image(systemName: "ellipsis.circle")
                             .resizable(resizingMode: .tile)
-                            .frame(width: 25.0, height: 25.0)
+                            .frame(width: 20.0, height: 20.0)
                             .padding(.top)
                             .padding(.trailing,5)
                     }
@@ -165,9 +165,15 @@ struct AttributionView: View {
                     } label: {
                         Image(systemName: "checkmark.circle.fill")
                             .resizable(resizingMode: .tile)
-                            .frame(width: 40.0, height: 40.0)
-                            .foregroundColor(.green)
-                            .padding(.top,5)
+                            .frame(width: 35.0, height: 35.0)
+                            .padding(.top,8)
+                    }
+                    .tint(.green)
+                    .disabled(selections.isEmpty)
+                    .onTapGesture {
+                        if selections.isEmpty {
+                            showAlert1 = true
+                        }
                     }
                     
                 }
@@ -188,8 +194,8 @@ struct AttributionView: View {
         .shadow(color: .black.opacity(0.2), radius: 15.0)
         
         .padding()
-        .alert("Select the users who participate in this expense", isPresented: $showAlert1) {
-            Button("OK") { }
+        .alert(isPresented: $showAlert1) {
+            Alert(title: Text("Missing selection"), message: Text("Please select the users who participate in this expense"), dismissButton: .default(Text("OK")))
         }
         .offset(x: xOffset, y: yOffset)
         .opacity(opacity)

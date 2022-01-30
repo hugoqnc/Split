@@ -124,6 +124,7 @@ struct PreferenceButton: View {
                                             .font(.caption)
                                     }
                                 }
+                                .tint(.orange)
                             }
                             .transition(.asymmetric(insertion: .offset(x: 0, y: -60), removal: .offset(x: 0, y: 60)))
                         }
@@ -180,7 +181,7 @@ struct PreferenceButton: View {
                         }
                         .transition(.asymmetric(insertion: .offset(x: 0, y: -60), removal: .offset(x: 0, y: 60)))
                     }
-                    .tint(nothingWritten ? .red : .gray)
+                    .tint(nothingWritten ? .red : .accentColor)
                     
                 }
                 .padding(.horizontal, 10)
@@ -190,10 +191,6 @@ struct PreferenceButton: View {
             .background(Color(uiColor: UIColor.systemBackground).brightness(0.06))
             .cornerRadius(10)
             .shadow(color: .black.opacity(0.2), radius: 15.0)
-            } else {
-                EmptyView()
-//                VStack{}
-//                    .frame(maxHeight: buttonHeight)
             }
         }
         .transition(.move(edge: .top))

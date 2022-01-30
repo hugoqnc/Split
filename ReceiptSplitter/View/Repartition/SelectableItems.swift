@@ -64,23 +64,26 @@ struct MultipleSelectionRow: View {
 
     var body: some View {
         
-        if isSelected {
-            Button(action: self.action) {
-                VStack {
-                    Image(systemName: "checkmark.circle.fill")
-                    Text(self.title)
+        Group {
+            if isSelected {
+                Button(action: self.action) {
+                    VStack {
+                        Image(systemName: "checkmark.circle.fill")
+                        Text(self.title)
+                    }
                 }
-            }
-            .buttonStyle(.borderedProminent)
-        } else {
-            Button(action: self.action) {
-                VStack {
-                    Image(systemName: "circle")
-                    Text(self.title)
+                .buttonStyle(.borderedProminent)
+            } else {
+                Button(action: self.action) {
+                    VStack {
+                        Image(systemName: "circle")
+                        Text(self.title)
+                    }
                 }
+                .buttonStyle(.bordered)
+                //.tint(.accentColor)
+                .foregroundColor(.gray)
             }
-            .buttonStyle(.bordered)
-            .foregroundColor(.gray)
         }
         
     }

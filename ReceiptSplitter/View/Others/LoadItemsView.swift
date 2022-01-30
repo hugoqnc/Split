@@ -91,7 +91,6 @@ struct LoadItemsView: View {
                     .buttonStyle(.borderedProminent)
                     .padding(.bottom,10)
                     .padding(.top,5)
-                    .tint(.orange)
 
                 }
                 .padding(10)
@@ -117,6 +116,6 @@ struct LoadItemsView: View {
 
 struct LoadItemsView_Previews: PreviewProvider {
     static var previews: some View {
-        LoadItemsView(showScanningResults: .constant(true), nothingFound: .constant(false))
+        LoadItemsView(showScanningResults: .constant(true), nothingFound: .constant(true))
     }
 }
