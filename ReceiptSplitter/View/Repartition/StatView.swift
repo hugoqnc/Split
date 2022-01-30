@@ -58,7 +58,7 @@ struct StatView_Previews: PreviewProvider {
         StatView()
             .environmentObject(model)
             .onAppear {
-                model.users = [User(name: "Hugo", balance: 13.8), User(name: "Lucas", balance: 17.21), User(name: "Thomas", balance: 8.22)]
+                model.users = [User(name: "Hugo"), User(name: "Lucas"), User(name: "Thomas")]
                 model.listOfProductsAndPrices = [PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 4.99), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBC", name: "Finger Fish", price: 1.27), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBD", name: "Ice Cream Strawberry", price: 3.20)]
             }
     }

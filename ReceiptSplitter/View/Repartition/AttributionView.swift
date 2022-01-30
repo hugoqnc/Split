@@ -8,12 +8,6 @@
 import SwiftUI
 
 struct AttributionView: View {
-    internal init(pair: Binding<PairProductPrice>, isValidated: Binding<Bool>, itemCounter: Int) {
-        self._pair = pair
-        self._isValidated = isValidated
-        self.itemCounter = itemCounter
-        //self.isEditorMode = pair.isNewItem.wrappedValue //edit mode activated for new products
-    }
     
     @Binding var pair: PairProductPrice
     @Binding var isValidated: Bool
@@ -141,7 +135,7 @@ struct AttributionView: View {
                     } label: {
                         Image(systemName: "ellipsis.circle")
                             .resizable(resizingMode: .tile)
-                            .frame(width: 20.0, height: 20.0)
+                            .frame(width: 25.0, height: 25.0)
                             .padding(.top)
                             .padding(.trailing,5)
                     }
@@ -155,7 +149,9 @@ struct AttributionView: View {
                         } else {
                             for id in selections{
                                 if let row = model.users.firstIndex(where: {$0.id == id}) {
-                                    model.users[row].balance+=pair.price/Double(divider)
+                                    let chosenItem = ChosenItem(name: pair.name, price: pair.price, dividedBy: divider)
+                                    model.users[row].chosenItems.append(chosenItem)
+                                    //print("validated: \(pair.name)")
                                 }
                                 
                             }
@@ -165,8 +161,8 @@ struct AttributionView: View {
                     } label: {
                         Image(systemName: "checkmark.circle.fill")
                             .resizable(resizingMode: .tile)
-                            .frame(width: 35.0, height: 35.0)
-                            .padding(.top,8)
+                            .frame(width: 40.0, height: 40.0)
+                            .padding(.top,5)
                     }
                     .tint(.green)
                     .disabled(selections.isEmpty)
@@ -178,15 +174,16 @@ struct AttributionView: View {
                     
                 }
                 .ignoresSafeArea(.keyboard)
+                .padding(.top, 2)
             }
             .padding(20)
         }
         .onAppear(perform: {
             if pair.isNewItem {
-            let secondsToDelay = 0.5
-            DispatchQueue.main.asyncAfter(deadline: .now() + secondsToDelay) {
-                isEditorMode = true
-            }
+                let secondsToDelay = 0.5
+                DispatchQueue.main.asyncAfter(deadline: .now() + secondsToDelay) {
+                    isEditorMode = true
+                }
             }
         })
         .background(Color(uiColor: UIColor.systemBackground).brightness(0.06))

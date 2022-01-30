@@ -13,45 +13,49 @@ struct HomeView: View {
     @State private var isValidated = false
     @State private var itemCounter = 0
     @State private var showResult = false
+    @State private var firstCardAppear = false
     
     var body: some View {
             NavigationView {
                 VStack{
                     
-                    CurrentExpensesRow()
+                    CurrentExpensesRow(isValidated: $isValidated)
                         .padding()
                         .frame(height: 150)
                     
                     Spacer()
                     
                     ZStack{
-                        if itemCounter<model.listOfProductsAndPrices.count {
-                            
-                            ZStack {
-                                ForEach(model.listOfProductsAndPrices) { pair in
-                                    let number = model.listOfProductsAndPrices.firstIndex(of: pair)!
-                                    if itemCounter==number {
-                                        AttributionView(pair: $model.listOfProductsAndPrices[number], isValidated: $isValidated, itemCounter: itemCounter)
-                                            .onChange(of: isValidated) { newValue in
-                                                if newValue {
-                                                    itemCounter += 1
-                                                    isValidated = false
-                                                }
-                                            }
-                                            //.tint(.blue)
+                        if firstCardAppear {
+                            Group {
+                                if itemCounter<model.listOfProductsAndPrices.count {
+                                    ZStack {
+                                        ForEach(model.listOfProductsAndPrices) { pair in
+                                            let number = model.listOfProductsAndPrices.firstIndex(of: pair)!
+                                            if itemCounter==number {
+                                                AttributionView(pair: $model.listOfProductsAndPrices[number], isValidated: $isValidated, itemCounter: itemCounter)
+                                                    .onChange(of: isValidated) { newValue in
+                                                        if newValue {
+                                                            itemCounter += 1
+                                                            isValidated = false
+                                                        }
+                                                    }
+                                                    //.tint(.blue)
 
+                                            }
+                                        }
                                     }
+                                    .transition(itemCounter==0 ? .asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)) : .asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .leading)))
+                                    
+                                } else {
+                                    LastItemView(showResult: $showResult)
                                 }
                             }
-                            //.animation(.easeInOut, value: model.listOfProductsAndPrices[itemCounter].id)
-                            
-                        } else {
-                            LastItemView(showResult: $showResult)
-                                //.animation(.easeInOut)
                         }
                     }
                     .animation(.easeInOut, value: model.listOfProductsAndPrices)
                     .animation(.easeInOut, value: itemCounter)
+                    .animation(.easeInOut, value: firstCardAppear)
                     
                     Button {
                         showAllList = true
@@ -67,6 +71,12 @@ struct HomeView: View {
         .ignoresSafeArea(.keyboard)
         .transition(.opacity)
         .navigationViewStyle(StackNavigationViewStyle())
+        .onAppear(perform: {
+            let secondsToDelay = 0.35
+            DispatchQueue.main.asyncAfter(deadline: .now() + secondsToDelay) {
+                firstCardAppear = true
+            }
+        })
         .sheet(isPresented: $showAllList, content: {
             if model.listOfProductsAndPrices.isEmpty {
                 VStack {

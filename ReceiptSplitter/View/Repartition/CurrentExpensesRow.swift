@@ -11,6 +11,8 @@ struct CurrentExpensesRow: View {
     @EnvironmentObject var model: ModelData
     @Environment(\.colorScheme) var colorScheme
     
+    @Binding var isValidated: Bool
+    
     var body: some View {
         VStack {
             HStack{
@@ -54,13 +56,17 @@ struct CurrentExpensesRow: View {
                 }
             }
         }
+        .onChange(of: isValidated) { newValue in
+            //print("changed")
+            //allows to force refresh show prices at each new validated item (weirdly, sometimes, the view would not refresh despite the model being updated)
+        }
     }
 }
 
 struct CurrentExpensesRow_Previews: PreviewProvider {
     static let model = ModelData()
     static var previews: some View {
-        CurrentExpensesRow()
+        CurrentExpensesRow(isValidated: .constant(true))
             .environmentObject(model)
             .onAppear {
                 model.users = [User(name: "Hugo"), User(name: "Lucas"), User(name: "Thomas")]
