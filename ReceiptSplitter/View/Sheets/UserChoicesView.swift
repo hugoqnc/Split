@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct UserChoicesDetailView: View {
+struct UserChoicesView: View {
     @EnvironmentObject var model: ModelData
     var user: User
     @Environment(\.dismiss) var dismiss
@@ -28,8 +28,8 @@ struct UserChoicesDetailView: View {
                                 .font(.title)
                                 .fontWeight(.regular)
                         }
-                        .padding(.horizontal)
-                        .padding(.top,25)
+                        .padding(.horizontal, 40)
+                        .padding(.top,35)
                         Spacer()
                     }
 
@@ -60,8 +60,8 @@ struct UserChoicesDetailView: View {
                                         }
 
                                     }
-                                    .listRowBackground(Color.secondary.opacity(0.1))
                                 }
+                                .listRowBackground(Color.secondary.opacity(0.1))
                             }
                         }
                     }
@@ -88,7 +88,7 @@ struct UserChoicesDetailView_Previews: PreviewProvider {
     static var previews: some View {
         Text("Test")
             .sheet(isPresented: .constant(true)) {
-                UserChoicesDetailView(user: model.users.first ?? User())
+                UserChoicesView(user: model.users.first ?? User())
                     .environmentObject(model)
             }
 

@@ -11,6 +11,8 @@ import UIKit
 struct ResultView: View {
     @EnvironmentObject var model: ModelData
     @State private var showAllList = false
+    @State private var showUserDetails = false
+    @State private var selectedUser = User()
     @State private var showSharingOptions = false
     @Environment(\.dismiss) var dismiss
     
@@ -73,8 +75,16 @@ struct ResultView: View {
                         VStack {
                             ForEach(model.users.sorted(by: {model.balance(ofUser: $0)>model.balance(ofUser: $1)})) { user in
                                 HStack{
-                                    Text(user.name)
-                                        .font(.title3)
+                                    
+                                    Button {
+                                        selectedUser = user
+                                        showUserDetails = true
+                                    } label: {
+                                        Text(user.name)
+                                            .font(.title3)
+                                        Image(systemName: "info.circle")
+                                    }
+                                    
                                     Spacer()
                                     Text(model.showPrice(price: model.balance(ofUser: user)))
                                         //.font(.title2)
@@ -143,6 +153,9 @@ struct ResultView: View {
         .sheet(isPresented: $showSharingOptions, content: {
             ActivityViewController(activityItems: [model.sharedText])
                 .edgesIgnoringSafeArea(.bottom)
+        })
+        .sheet(isPresented: $showUserDetails, content: {
+            UserChoicesView(user: selectedUser)
         })
         
     }
