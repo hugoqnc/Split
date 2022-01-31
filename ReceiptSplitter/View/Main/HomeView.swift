@@ -16,6 +16,10 @@ struct HomeView: View {
     @State private var firstCardAppear = false
     
     var body: some View {
+        if showResult {
+            ResultView()
+                //.transition(.slide)
+        } else {
             NavigationView {
                 VStack{
                     
@@ -67,35 +71,36 @@ struct HomeView: View {
                 }
                 .navigationBarTitle(Text("ReceiptSplitter"), displayMode: .inline)
 
-        }
-        .ignoresSafeArea(.keyboard)
-        .transition(.opacity)
-        .navigationViewStyle(StackNavigationViewStyle())
-        .onAppear(perform: {
-            let secondsToDelay = 0.35
-            DispatchQueue.main.asyncAfter(deadline: .now() + secondsToDelay) {
-                firstCardAppear = true
             }
-        })
-        .sheet(isPresented: $showAllList, content: {
-            if model.listOfProductsAndPrices.isEmpty {
-                VStack {
-                    //Text("nothingFound: \(String(nothingFound))")
-                    //LoadItemsView(nothingFound: $nothingFound)
+            .ignoresSafeArea(.keyboard)
+            .transition(.opacity)
+            .navigationViewStyle(StackNavigationViewStyle())
+            .onAppear(perform: {
+                let secondsToDelay = 0.35
+                DispatchQueue.main.asyncAfter(deadline: .now() + secondsToDelay) {
+                    firstCardAppear = true
                 }
-            } else {
-                if itemCounter<model.listOfProductsAndPrices.count {
-                    ListSheetView(itemCounter: itemCounter)
+            })
+            .sheet(isPresented: $showAllList, content: {
+                if model.listOfProductsAndPrices.isEmpty {
+                    VStack {
+                        //Text("nothingFound: \(String(nothingFound))")
+                        //LoadItemsView(nothingFound: $nothingFound)
+                    }
                 } else {
-                    ListSheetView(itemCounter: -1)
+                    if itemCounter<model.listOfProductsAndPrices.count {
+                        ListSheetView(itemCounter: itemCounter)
+                    } else {
+                        ListSheetView(itemCounter: -1)
+                    }
+                    
                 }
-                
-            }
-        })
-        .sheet(isPresented: $showResult, content: {
-            ResultView()
-                .interactiveDismissDisabled(true)
-        })
+            })
+//        .sheet(isPresented: $showResult, content: {
+//            ResultView()
+//                .interactiveDismissDisabled(true)
+//        })
+        }
     }
 }
 

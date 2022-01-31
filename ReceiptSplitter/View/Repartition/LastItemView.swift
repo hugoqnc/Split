@@ -84,7 +84,9 @@ struct LastItemView: View {
                         
                         HStack {
                             Button {
-                                showResult = true
+                                withAnimation() {
+                                    showResult = true
+                                }
                             } label: {
                                 HStack {
                                     Image(systemName: "checkmark.circle.fill")
