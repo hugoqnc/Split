@@ -15,9 +15,7 @@ struct ResultView: View {
     @State private var selectedUser = User()
     @State private var showSharingOptions = false
     @State private var showIndividualSharingOptions = false
-    
-    @State private var chosenSharingOption = "Overview"
-    var sharingOptions = ["Overview", "Detailed", "Scan"]
+    @State private var chosenSharingOption = ""
     
     func fontSizeProportionalToPrice(total: Double, price: Double) -> Double {
         let minSize = 12.0
@@ -28,7 +26,6 @@ struct ResultView: View {
         }
         return size
     }
-    
     
     
     var body: some View {
@@ -48,14 +45,54 @@ struct ResultView: View {
                     HStack {
                         Spacer()
                         
-                        Button {
-                            showSharingOptions = true
+                        Menu {
+                            Button {
+                                chosenSharingOption = "overview"
+                                showSharingOptions = true
+                            } label: {
+                                Label("Share overview", systemImage: "doc.text")
+                            }
+                            
+                            Button {
+                                chosenSharingOption = "details"
+                                showSharingOptions = true
+                            } label: {
+                                Label("Share detailed results", systemImage: "doc.text.fill")
+                            }
+                            
+                            Button {
+                                chosenSharingOption = "scan"
+                                showSharingOptions = true
+                            } label: {
+                                Label("Share scanned receipt", systemImage: "doc.text.viewfinder")
+                            }
                         } label: {
                             Label("See all", systemImage: "square.and.arrow.up")
                                 .labelStyle(.iconOnly)
                         }
                         .padding(.trailing, 30)
                         .padding(.bottom,60)
+                        .background(SharingViewController(isPresenting: $showSharingOptions) {
+                            var toShare: [Any] = []
+                            
+                            if chosenSharingOption=="overview" {
+                                toShare = [model.sharedText]
+                            } else if chosenSharingOption=="details" {
+                                toShare = [model.sharedTextDetailed]
+                            } else if chosenSharingOption=="scan" {
+                                let images = model.images.map { i in
+                                    return i.image ?? UIImage()
+                                }
+                                toShare = images
+                            }
+                            
+                            let av = UIActivityViewController(activityItems: toShare, applicationActivities: nil)
+                            av.completionWithItemsHandler = { _, _, _, _ in
+                                showSharingOptions = false
+                            }
+                            return av
+                        })
+                        
                     }
                 }
                 
@@ -96,6 +133,13 @@ struct ResultView: View {
                                 }
                                 .padding(.leading,7)
                                 .padding(.bottom,4)
+                                .background(SharingViewController(isPresenting: $showIndividualSharingOptions) {
+                                     let av = UIActivityViewController(activityItems: [model.individualSharedText(ofUser: selectedUser)], applicationActivities: nil)
+                                     av.completionWithItemsHandler = { _, _, _, _ in
+                                         showIndividualSharingOptions = false
+                                    }
+                                    return av
+                                })
                                 
                             }
                             .padding()
@@ -131,7 +175,7 @@ struct ResultView: View {
                     }
                     .padding(10)
                     
-                    Text("\(selectedUser.name)") //due to https://developer.apple.com/forums/thread/652080
+                    Text("\(selectedUser.name) \(chosenSharingOption)") //due to https://developer.apple.com/forums/thread/652080
                          .hidden()
                 }
                 
@@ -157,42 +201,39 @@ struct ResultView: View {
             .sheet(isPresented: $showAllList, content: {
                 ListSheetView(itemCounter: -1)
             })
-            .sheet(isPresented: $showSharingOptions, content: {
-                VStack(alignment: .leading) {
-                    Text("Choose how you want to share these results")
-                        .font(.caption)
-                        .foregroundColor(Color.secondary)
-                        .padding(.leading, 3)
-                    
-                    Picker("Currency", selection: $chosenSharingOption.animation()) {
-                        ForEach(sharingOptions, id: \.self, content: { sharingOption in
-                            Text(sharingOption)
-                        })
-                    }
-                    .pickerStyle(.segmented)
-                }
-                .padding()
-                
-                Group {
-                    if chosenSharingOption=="Overview" {
-                        ActivityViewController(activityItems: [model.sharedText])
-                            .edgesIgnoringSafeArea(.bottom)
-                    } else if chosenSharingOption=="Detailed" {
-                        ActivityViewController(activityItems: [model.sharedTextDetailed])
-                            .edgesIgnoringSafeArea(.bottom)
-                    } else if chosenSharingOption=="Scan" {
-                        let images = model.images.map { i in
-                            return i.image ?? UIImage()
-                        }
-                        ActivityViewController(activityItems: images)
-                            .edgesIgnoringSafeArea(.bottom)
-                    }
-                }
-            })
-            .sheet(isPresented: $showIndividualSharingOptions, content: {
-                ActivityViewController(activityItems: [model.individualSharedText(ofUser: selectedUser)])
-                    .edgesIgnoringSafeArea(.bottom)
-            })
+//            .sheet(isPresented: $showSharingOptions, content: {
+//                VStack(alignment: .leading) {
+//                    Text("Choose how you want to share these results")
+//                        .font(.caption)
+//                        .foregroundColor(Color.secondary)
+//                        .padding(.leading, 3)
+//
+//                    Picker("Currency", selection: $chosenSharingOption.animation()) {
+//                        ForEach(sharingOptions, id: \.self, content: { sharingOption in
+//                            Text(sharingOption)
+//                        })
+//                    }
+//                    .pickerStyle(.segmented)
+//                }
+//                .padding()
+//
+//                Group {
+//                    if chosenSharingOption=="Overview" {
+//                        ActivityViewController(activityItems: [model.sharedText])
+//                            .edgesIgnoringSafeArea(.bottom)
+//                    } else if chosenSharingOption=="Detailed" {
+//                        ActivityViewController(activityItems: [model.sharedTextDetailed])
+//                            .edgesIgnoringSafeArea(.bottom)
+//                    } else if chosenSharingOption=="Scan" {
+//                        let images = model.images.map { i in
+//                            return i.image ?? UIImage()
+//                        }
+//                        ActivityViewController(activityItems: images)
+//                            .edgesIgnoringSafeArea(.bottom)
+//                    }
+//                }
+//            })
+
             .sheet(isPresented: $showUserDetails, content: {
                 UserChoicesView(user: selectedUser)
             })
@@ -202,18 +243,19 @@ struct ResultView: View {
     }
 }
 
-struct ActivityViewController: UIViewControllerRepresentable {
+struct SharingViewController: UIViewControllerRepresentable {
+    @Binding var isPresenting: Bool
+    var content: () -> UIViewController
 
-    var activityItems: [Any]
-    var applicationActivities: [UIActivity]? = nil
-
-    func makeUIViewController(context: UIViewControllerRepresentableContext<ActivityViewController>) -> UIActivityViewController {
-        let controller = UIActivityViewController(activityItems: activityItems, applicationActivities: applicationActivities)
-        return controller
+    func makeUIViewController(context: Context) -> UIViewController {
+        UIViewController()
     }
 
-    func updateUIViewController(_ uiViewController: UIActivityViewController, context: UIViewControllerRepresentableContext<ActivityViewController>) {}
-
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
+        if isPresenting {
+            uiViewController.present(content(), animated: true, completion: nil)
+        }
+    }
 }
 
 struct ResultView_Previews: PreviewProvider {
