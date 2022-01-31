@@ -11,7 +11,6 @@ struct ListSheetView: View {
     @EnvironmentObject var model: ModelData
     var itemCounter: Int
     @Environment(\.dismiss) var dismiss
-    @State private var showCurrentItem = false
 
     var body: some View {
         VStack {
@@ -21,51 +20,36 @@ struct ListSheetView: View {
                     List() {
                         Section(header: Text("\(model.listOfProductsAndPrices.count) items — \(model.showPrice(price: model.totalPrice))")){
                             ForEach(model.listOfProductsAndPrices) { pair in
-                                if showCurrentItem {
-                                    HStack {
-                                        if  pair.id==model.listOfProductsAndPrices[itemCounter].id {
-                                            VStack(alignment: .leading) {
-                                                Text("Current item".uppercased())
-                                                    .font(.caption)
-                                                    .padding(.top,3)
+                                HStack {
+                                    if itemCounter>=0 ? pair.id==model.listOfProductsAndPrices[itemCounter].id : false {
+                                        VStack(alignment: .leading) {
+                                            Text("Current item".uppercased())
+                                                .font(.caption)
+                                                .padding(.top,3)
+                                            Text(pair.name)
+                                                .font(.headline)
+                                        }
+                                    } else {
+                                        if !pair.chosenBy.isEmpty {
+                                            VStack(alignment: .leading, spacing: 2) {
                                                 Text(pair.name)
-                                                    .font(.headline)
+                                                    .padding(.vertical, 3)
+                                                MiniRepartitionRow(userIDs: pair.chosenBy)
+                                                    .padding(.horizontal, 4)
+                                                    .padding(.bottom, 3)
                                             }
                                         } else {
-                                            if !pair.chosenBy.isEmpty {
-                                                VStack(alignment: .leading, spacing: 2) {
-                                                    Text(pair.name)
-                                                        .padding(.vertical, 3)
-                                                    MiniRepartitionRow(userIDs: pair.chosenBy)
-                                                        .padding(.horizontal, 4)
-                                                        .padding(.bottom, 3)
-                                                }
-                                            } else {
-                                                Text(pair.name)
-                                            }
+                                            Text(pair.name)
                                         }
+                                    }
 
-                                        Spacer()
-                                        
-                                        Text(model.showPrice(price: pair.price))
-                                            .fontWeight(.semibold)
-                                    }
-                                    .listRowBackground(Color.secondary.opacity(0.1))
-                                    .foregroundColor(pair.id==model.listOfProductsAndPrices[itemCounter].id ? .blue : nil)
+                                    Spacer()
                                     
-                                } else {
-                                    HStack {
-                                        Text(pair.name)
-                                        Spacer()
-                                        Text(String(pair.price)+model.currency.value)
-                                    }
-                                    .listRowBackground(Color.secondary.opacity(0.1))
+                                    Text(model.showPrice(price: pair.price))
+                                        .fontWeight(.semibold)
                                 }
-                            }
-                            .onAppear {
-                                if itemCounter>=0 {
-                                    showCurrentItem = true
-                                }
+                                .listRowBackground(Color.secondary.opacity(0.1))
+                                .foregroundColor(itemCounter>=0 ? pair.id==model.listOfProductsAndPrices[itemCounter].id ? .blue : nil : nil)
                             }
                         }
                     }
