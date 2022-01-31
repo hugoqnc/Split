@@ -58,76 +58,78 @@ struct ResultView: View {
                 
                 
                 ScrollView {
-                ForEach(model.users.sorted(by: {model.balance(ofUser: $0)>model.balance(ofUser: $1)})) { user in
-                    HStack {
+                    ForEach(model.users.sorted(by: {model.balance(ofUser: $0)>model.balance(ofUser: $1)})) { user in
                         HStack {
-                            Button {
-                                selectedUser = user
-                                showUserDetails = true
-                            } label: {
-                                Image(systemName: "person")
-                                    .font(.title2)
-                                
-                                VStack(alignment: .leading) {
-                                    Text(user.name)
-                                        .font(.title3)
-                                    Text("\(model.chosenItems(ofUser: user).count) items")
-                                        .font(.caption)
-                                }
-                                .foregroundColor(.primary)
-                                
-                                Spacer()
-                                
-                                Text(model.showPrice(price: model.balance(ofUser: user)))
-                                    .fontWeight(.semibold)
-                                    .font(.system(size: fontSizeProportionalToPrice(total: model.totalBalance, price: model.balance(ofUser: user))))
+                            HStack {
+                                Button {
+                                    selectedUser = user
+                                    showUserDetails = true
+                                } label: {
+                                    Image(systemName: "person")
+                                        .font(.title2)
+                                    
+                                    VStack(alignment: .leading) {
+                                        Text(user.name)
+                                            .font(.title3)
+                                        Text("\(model.chosenItems(ofUser: user).count) items")
+                                            .font(.caption)
+                                    }
                                     .foregroundColor(.primary)
+                                    
+                                    Spacer()
+                                    
+                                    Text(model.showPrice(price: model.balance(ofUser: user)))
+                                        .fontWeight(.semibold)
+                                        .font(.system(size: fontSizeProportionalToPrice(total: model.totalBalance, price: model.balance(ofUser: user))))
+                                        .foregroundColor(.primary)
+                                }
+                                
+                                Button {
+                                    selectedUser = user
+                                    showIndividualSharingOptions = true
+                                } label: {
+                                    Label("See all", systemImage: "square.and.arrow.up")
+                                        .labelStyle(.iconOnly)
+                                }
+                                .padding(.leading,7)
+                                .padding(.bottom,4)
+                                
                             }
-                            
-                            Button {
-                                selectedUser = user
-                                showIndividualSharingOptions = true
-                            } label: {
-                                Label("See all", systemImage: "square.and.arrow.up")
-                                    .labelStyle(.iconOnly)
-                            }
-                            .padding(.leading,7)
-                            .padding(.bottom,4)
-                            
-                            
+                            .padding()
                         }
-                        .padding()
+                        .background(Color.gray.opacity(0.1))
+                        .cornerRadius(15)
+                        .padding(.horizontal)
                     }
-                    .background(Color.gray.opacity(0.1))
-                    .cornerRadius(15)
-                    .padding(.horizontal)
-                }
-                
-                VStack {
-                    HStack {
-                        Spacer()
-                        
-                        StatisticRectangle(iconString: "number", description: "Number of\npurchases", value: String(model.listOfProductsAndPrices.count), color: Color.blue)
-                        
-                        StatisticRectangle(iconString: "cart", description: "Average price\nof an item", value: String(round((model.totalPrice/Double(model.listOfProductsAndPrices.count))*100) / 100.0)+model.currency.value, color: Color.orange)
-                        
-                        Spacer()
+                    
+                    VStack {
+                        HStack {
+                            Spacer()
+                            
+                            StatisticRectangle(iconString: "number", description: "Number of\npurchases", value: String(model.listOfProductsAndPrices.count), color: Color.blue)
+                            
+                            StatisticRectangle(iconString: "cart", description: "Average price\nof an item", value: String(round((model.totalPrice/Double(model.listOfProductsAndPrices.count))*100) / 100.0)+model.currency.value, color: Color.orange)
+                            
+                            Spacer()
+                        }
+                        HStack {
+                            Spacer()
+                            
+                            StatisticRectangle(iconString: "arrow.up.right.circle", description: "Maximum price\nof an item", value: String(round((model.listOfProductsAndPrices.map({ pair in
+                                pair.price
+                            }).max() ?? 0.0)*100) / 100.0)+model.currency.value, color: Color.green)
+                            
+                            StatisticRectangle(iconString: "arrow.down.right.circle", description: "Minimum price\nof an item", value: String(round((model.listOfProductsAndPrices.map({ pair in
+                                pair.price
+                            }).min() ?? 0.0)*100) / 100.0)+model.currency.value, color: Color.red)
+                            
+                            Spacer()
+                        }
                     }
-                    HStack {
-                        Spacer()
-                        
-                        StatisticRectangle(iconString: "arrow.up.right.circle", description: "Maximum price\nof an item", value: String(round((model.listOfProductsAndPrices.map({ pair in
-                            pair.price
-                        }).max() ?? 0.0)*100) / 100.0)+model.currency.value, color: Color.green)
-                        
-                        StatisticRectangle(iconString: "arrow.down.right.circle", description: "Minimum price\nof an item", value: String(round((model.listOfProductsAndPrices.map({ pair in
-                            pair.price
-                        }).min() ?? 0.0)*100) / 100.0)+model.currency.value, color: Color.red)
-                        
-                        Spacer()
-                    }
-                }
-                .padding(10)
+                    .padding(10)
+                    
+                    Text("\(selectedUser.name)") //due to https://developer.apple.com/forums/thread/652080
+                         .hidden()
                 }
                 
             }
