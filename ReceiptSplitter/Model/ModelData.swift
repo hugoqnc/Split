@@ -15,6 +15,7 @@ final class ModelData: ObservableObject {
     @Published var currency: Currency = Currency.default
     @Published var images: [IdentifiedImage] = []
     @Published var visionParameters = VisionParameters()
+    var date = Date()
     
     var totalBalance: Double {
         get {
@@ -57,10 +58,39 @@ final class ModelData: ObservableObject {
     func showPrice(price: Double) -> String {
         return String(round(price * 100) / 100.0)+currency.value
     }
+    
+    func individualSharedText(ofUser user: User) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .none
+        
+        var sharedText =
+        """
+        🛒 Shopping details — \(user.name)
+        🗓 Date: \(dateFormatter.string(from: date))\n
+        """
+        
+        let items = chosenItems(ofUser: user)
+        
+        for item in items {
+            var text = "\n  \(item.name)\n"
+            text.append("  \(showPrice(price: item.price/Double(item.chosenBy.count))) [\(showPrice(price: item.price) + " ÷ "+String(item.chosenBy.count))]\n")
+            sharedText.append(text)
+        }
+        
+        sharedText.append(
+        """
+        ________________
+        💸 Total: \(showPrice(price: balance(ofUser: user)))
+        
+        Sent with ReceiptSplitter
+        """
+        )
+        return sharedText
+    }
 
     var sharedText: String {
         get {
-            let date = Date()
             let dateFormatter = DateFormatter()
             dateFormatter.dateStyle = .medium
             dateFormatter.timeStyle = .none

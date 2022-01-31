@@ -14,6 +14,7 @@ struct ResultView: View {
     @State private var showUserDetails = false
     @State private var selectedUser = User()
     @State private var showSharingOptions = false
+    @State private var showIndividualSharingOptions = false
     
     func fontSizeProportionalToPrice(total: Double, price: Double) -> Double {
         let minSize = 12.0
@@ -84,12 +85,14 @@ struct ResultView: View {
                             }
                             
                             Button {
-                                //showSharingOptions = true
+                                selectedUser = user
+                                showIndividualSharingOptions = true
                             } label: {
                                 Label("See all", systemImage: "square.and.arrow.up")
                                     .labelStyle(.iconOnly)
                             }
-                            .padding(.leading,5)
+                            .padding(.leading,7)
+                            .padding(.bottom,4)
                             
                             
                         }
@@ -153,6 +156,10 @@ struct ResultView: View {
                 ActivityViewController(activityItems: [model.sharedText])
                     .edgesIgnoringSafeArea(.bottom)
             })
+            .sheet(isPresented: $showIndividualSharingOptions, content: {
+                ActivityViewController(activityItems: [model.individualSharedText(ofUser: selectedUser)])
+                    .edgesIgnoringSafeArea(.bottom)
+            })
             .sheet(isPresented: $showUserDetails, content: {
                 UserChoicesView(user: selectedUser)
             })
@@ -177,13 +184,18 @@ struct ActivityViewController: UIViewControllerRepresentable {
 }
 
 struct ResultView_Previews: PreviewProvider {
-    static let model = ModelData()
+    static let model: ModelData = {
+        var model = ModelData()
+        model.users = [User(name: "Hugo"), User(name: "Lucas"), User(name: "Thomas")]
+        model.listOfProductsAndPrices = [PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 4.99), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBC", name: "Finger Fish", price: 1.27), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBD", name: "Ice Cream Strawberry", price: 3.20)]
+        model.listOfProductsAndPrices[0].chosenBy = [model.users[0].id]
+        model.listOfProductsAndPrices[1].chosenBy = [model.users[0].id, model.users[1].id]
+        model.listOfProductsAndPrices[2].chosenBy = [model.users[0].id, model.users[1].id, model.users[2].id]
+        return model
+    }()
+    
     static var previews: some View {
         ResultView()
             .environmentObject(model)
-            .onAppear {
-                model.users = [User(name: "Hugo"), User(name: "Lucas"), User(name: "Thomas")]
-                model.listOfProductsAndPrices = [PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 4.99), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBC", name: "Finger Fish", price: 1.27), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBD", name: "Ice Cream Strawberry", price: 3.20)]
-            }
     }
 }

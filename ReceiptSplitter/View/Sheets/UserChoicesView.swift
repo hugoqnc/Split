@@ -51,7 +51,7 @@ struct UserChoicesView: View {
 
                                         VStack {
                                             HStack {
-                                                Text(model.showPrice(price: item.price) + " × 1/"+String(item.chosenBy.count))
+                                                Text(model.showPrice(price: item.price) + " ÷ "+String(item.chosenBy.count))
                                                     .font(.subheadline)
                                                     .fontWeight(.light)
                                             }
