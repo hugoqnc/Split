@@ -73,11 +73,11 @@ struct LastItemView: View {
                                         .font(.title3)
                                 }
                                 .padding(3)
+                                
+                                Spacer()
                             }
                             //.tint(.yellow)
                             .padding(4)
-                            
-                            Spacer()
                         }
                         
                         Divider()
@@ -96,13 +96,14 @@ struct LastItemView: View {
                                         .font(.title3)
                                 }
                                 .padding(3)
+                                
+                                Spacer()
                             }
                             .tint(.green)
                             .padding(.top, 4)
                             .padding(.leading, 4)
                             .padding(.trailing, 4)
                             
-                            Spacer()
                         }
                         
                     }
