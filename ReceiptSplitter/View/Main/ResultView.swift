@@ -32,15 +32,28 @@ struct ResultView: View {
         NavigationView {
             VStack {
                 ZStack {
-                    VStack{
-                        Text("Total".uppercased())
-                            .font(.title2)
-                        Text(model.showPrice(price: model.totalBalance))
-                            .font(.largeTitle)
-                            .fontWeight(.semibold)
+                    HStack {
+                        VStack{
+                            Button{
+                                showAllList = true
+                            } label: {
+                                VStack {
+                                    HStack(spacing:4) {
+                                        Image(systemName: "info.circle")
+                                        Text("Total".uppercased())
+                                            .font(.title2)
+                                            .foregroundColor(.primary)
+                                    }
+                                    Text(model.showPrice(price: model.totalBalance))
+                                        .font(.largeTitle)
+                                        .fontWeight(.semibold)
+                                        .foregroundColor(.primary)
+                                }
+                            }
+                        }
+                        .padding(.top,25)
+                        .padding(.bottom,15)
                     }
-                    .padding(.top,25)
-                    .padding(.bottom,15)
                     
                     HStack {
                         Spacer()
@@ -201,39 +214,6 @@ struct ResultView: View {
             .sheet(isPresented: $showAllList, content: {
                 ListSheetView(itemCounter: -1)
             })
-//            .sheet(isPresented: $showSharingOptions, content: {
-//                VStack(alignment: .leading) {
-//                    Text("Choose how you want to share these results")
-//                        .font(.caption)
-//                        .foregroundColor(Color.secondary)
-//                        .padding(.leading, 3)
-//
-//                    Picker("Currency", selection: $chosenSharingOption.animation()) {
-//                        ForEach(sharingOptions, id: \.self, content: { sharingOption in
-//                            Text(sharingOption)
-//                        })
-//                    }
-//                    .pickerStyle(.segmented)
-//                }
-//                .padding()
-//
-//                Group {
-//                    if chosenSharingOption=="Overview" {
-//                        ActivityViewController(activityItems: [model.sharedText])
-//                            .edgesIgnoringSafeArea(.bottom)
-//                    } else if chosenSharingOption=="Detailed" {
-//                        ActivityViewController(activityItems: [model.sharedTextDetailed])
-//                            .edgesIgnoringSafeArea(.bottom)
-//                    } else if chosenSharingOption=="Scan" {
-//                        let images = model.images.map { i in
-//                            return i.image ?? UIImage()
-//                        }
-//                        ActivityViewController(activityItems: images)
-//                            .edgesIgnoringSafeArea(.bottom)
-//                    }
-//                }
-//            })
-
             .sheet(isPresented: $showUserDetails, content: {
                 UserChoicesView(user: selectedUser)
             })
