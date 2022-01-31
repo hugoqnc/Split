@@ -41,7 +41,7 @@ struct UserChoicesView: View {
                                     HStack {
                                         VStack(alignment: .leading, spacing: 2) {
                                             Text(item.name)
-                                                .padding(.vertical, 4)
+                                                .padding(.vertical, 3)
                                             MiniRepartitionRow(userIDs: item.chosenBy)
                                                 .padding(.horizontal, 4)
                                                 .padding(.bottom, 3)

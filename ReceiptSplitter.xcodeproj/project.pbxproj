@@ -270,8 +270,8 @@
 		4FF675D8279A1E4E00B7F385 /* Sheets */ = {
 			isa = PBXGroup;
 			children = (
-				4F37A89927883C2A00947426 /* ListSheetView.swift */,
 				4F63DF0627A421B000E2CA3A /* InputItemDetails.swift */,
+				4F37A89927883C2A00947426 /* ListSheetView.swift */,
 				4F90A7AB27A713F9003A1D97 /* UserChoicesView.swift */,
 			);
 			path = Sheets;
