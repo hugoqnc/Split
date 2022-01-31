@@ -16,6 +16,9 @@ struct ResultView: View {
     @State private var showSharingOptions = false
     @State private var showIndividualSharingOptions = false
     
+    @State private var chosenSharingOption = "Overview"
+    var sharingOptions = ["Overview", "Detailed", "Scan"]
+    
     func fontSizeProportionalToPrice(total: Double, price: Double) -> Double {
         let minSize = 12.0
         let maxSize = 35.0
@@ -155,8 +158,36 @@ struct ResultView: View {
                 ListSheetView(itemCounter: -1)
             })
             .sheet(isPresented: $showSharingOptions, content: {
-                ActivityViewController(activityItems: [model.sharedText])
-                    .edgesIgnoringSafeArea(.bottom)
+                VStack(alignment: .leading) {
+                    Text("Choose how you want to share these results")
+                        .font(.caption)
+                        .foregroundColor(Color.secondary)
+                        .padding(.leading, 3)
+                    
+                    Picker("Currency", selection: $chosenSharingOption.animation()) {
+                        ForEach(sharingOptions, id: \.self, content: { sharingOption in
+                            Text(sharingOption)
+                        })
+                    }
+                    .pickerStyle(.segmented)
+                }
+                .padding()
+                
+                Group {
+                    if chosenSharingOption=="Overview" {
+                        ActivityViewController(activityItems: [model.sharedText])
+                            .edgesIgnoringSafeArea(.bottom)
+                    } else if chosenSharingOption=="Detailed" {
+                        ActivityViewController(activityItems: [model.sharedTextDetailed])
+                            .edgesIgnoringSafeArea(.bottom)
+                    } else if chosenSharingOption=="Scan" {
+                        let images = model.images.map { i in
+                            return i.image ?? UIImage()
+                        }
+                        ActivityViewController(activityItems: images)
+                            .edgesIgnoringSafeArea(.bottom)
+                    }
+                }
             })
             .sheet(isPresented: $showIndividualSharingOptions, content: {
                 ActivityViewController(activityItems: [model.individualSharedText(ofUser: selectedUser)])
@@ -188,6 +219,7 @@ struct ActivityViewController: UIViewControllerRepresentable {
 struct ResultView_Previews: PreviewProvider {
     static let model: ModelData = {
         var model = ModelData()
+        model.images = [IdentifiedImage(id: "1111", image: UIImage(named: "scan1")), IdentifiedImage(id: "2222", image: UIImage(named: "scan2"))]
         model.users = [User(name: "Hugo"), User(name: "Lucas"), User(name: "Thomas")]
         model.listOfProductsAndPrices = [PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 4.99), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBC", name: "Finger Fish", price: 1.27), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBD", name: "Ice Cream Strawberry", price: 3.20)]
         model.listOfProductsAndPrices[0].chosenBy = [model.users[0].id]

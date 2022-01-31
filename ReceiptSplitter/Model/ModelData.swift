@@ -117,6 +117,45 @@ final class ModelData: ObservableObject {
         }
     }
     
+    var sharedTextDetailed: String {
+        get {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = .medium
+            dateFormatter.timeStyle = .none
+            
+            var sharedText =
+            """
+            🛒 Shopping Repartition
+            🗓 Date: \(dateFormatter.string(from: date))\n
+            """
+                        
+            for item in listOfProductsAndPrices {
+                var text = "\n  \(item.name)\n"
+                var namesText = ""
+                for i in 0..<item.chosenBy.count {
+                    let u = users.first { user in
+                        user.id == item.chosenBy[i]
+                    }!
+                    namesText.append(u.name)
+                    if i<item.chosenBy.count-1 {
+                        namesText.append(", ")
+                    }
+                }
+                text.append("  \(showPrice(price: item.price/Double(item.chosenBy.count))) [\(namesText)]\n")
+                sharedText.append(text)
+            }
+            
+            sharedText.append(
+            """
+            ________________
+            💸 Total: \(showPrice(price: totalBalance))
+            
+            Sent with ReceiptSplitter
+            """
+            )
+            return sharedText        }
+    }
+    
     func eraseModelData() {
         self.startTheProcess = false
         self.users = []
