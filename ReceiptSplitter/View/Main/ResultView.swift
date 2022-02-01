@@ -80,21 +80,21 @@ struct ResultView: View {
                                 chosenSharingOption = "overview"
                                 showSharingOptions = true
                             } label: {
-                                Label("Share overview", systemImage: "doc.text")
+                                Text("Share overview")
                             }
                             
                             Button {
                                 chosenSharingOption = "details"
                                 showSharingOptions = true
                             } label: {
-                                Label("Share detailed results", systemImage: "doc.text.fill")
+                                Text("Share detailed results")
                             }
                             
                             Button {
                                 chosenSharingOption = "scan"
                                 showSharingOptions = true
                             } label: {
-                                Label("Share scanned receipt", systemImage: "doc.text.viewfinder")
+                                Text("Share scanned receipt")
                             }
                         } label: {
                             Image(systemName: "square.and.arrow.up")
