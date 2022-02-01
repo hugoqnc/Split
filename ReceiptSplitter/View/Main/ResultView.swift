@@ -27,6 +27,23 @@ struct ResultView: View {
         return size
     }
     
+    var contentToShare: [Any] {
+        get {
+            var toShare: [Any] = []
+
+            if chosenSharingOption=="overview" {
+                toShare = [model.sharedText]
+            } else if chosenSharingOption=="details" {
+                toShare = [model.sharedTextDetailed]
+            } else if chosenSharingOption=="scan" {
+                let images = model.images.map { i in
+                    return i.image ?? UIImage()
+                }
+                toShare = images
+            }
+            return toShare
+        }
+    }
     
     var body: some View {
         NavigationView {
@@ -80,32 +97,10 @@ struct ResultView: View {
                                 Label("Share scanned receipt", systemImage: "doc.text.viewfinder")
                             }
                         } label: {
-                            Label("See all", systemImage: "square.and.arrow.up")
-                                .labelStyle(.iconOnly)
+                            Image(systemName: "square.and.arrow.up")
                         }
                         .padding(.trailing, 30)
                         .padding(.bottom,60)
-                        .background(SharingViewController(isPresenting: $showSharingOptions) {
-                            var toShare: [Any] = []
-                            
-                            if chosenSharingOption=="overview" {
-                                toShare = [model.sharedText]
-                            } else if chosenSharingOption=="details" {
-                                toShare = [model.sharedTextDetailed]
-                            } else if chosenSharingOption=="scan" {
-                                let images = model.images.map { i in
-                                    return i.image ?? UIImage()
-                                }
-                                toShare = images
-                            }
-                            
-                            let av = UIActivityViewController(activityItems: toShare, applicationActivities: nil)
-                            av.completionWithItemsHandler = { _, _, _, _ in
-                                showSharingOptions = false
-                            }
-                            return av
-                        })
-                        
                     }
                 }
                 
@@ -146,13 +141,6 @@ struct ResultView: View {
                                 }
                                 .padding(.leading,7)
                                 .padding(.bottom,4)
-                                .background(SharingViewController(isPresenting: $showIndividualSharingOptions) {
-                                     let av = UIActivityViewController(activityItems: [model.individualSharedText(ofUser: selectedUser)], applicationActivities: nil)
-                                     av.completionWithItemsHandler = { _, _, _, _ in
-                                         showIndividualSharingOptions = false
-                                    }
-                                    return av
-                                })
                                 
                             }
                             .padding()
@@ -217,25 +205,30 @@ struct ResultView: View {
             .sheet(isPresented: $showUserDetails, content: {
                 UserChoicesView(user: selectedUser)
             })
+            .sheet(isPresented: $showSharingOptions, content: {
+                ActivityViewController(activityItems: contentToShare)
+            })
+            .sheet(isPresented: $showIndividualSharingOptions, content: {
+                ActivityViewController(activityItems: [model.individualSharedText(ofUser: selectedUser)])
+            })
         }
         .transition(.move(edge: .bottom))
         .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 
-struct SharingViewController: UIViewControllerRepresentable {
-    @Binding var isPresenting: Bool
-    var content: () -> UIViewController
+struct ActivityViewController: UIViewControllerRepresentable {
 
-    func makeUIViewController(context: Context) -> UIViewController {
-        UIViewController()
+    var activityItems: [Any]
+    var applicationActivities: [UIActivity]? = nil
+
+    func makeUIViewController(context: UIViewControllerRepresentableContext<ActivityViewController>) -> UIActivityViewController {
+        let controller = UIActivityViewController(activityItems: activityItems, applicationActivities: applicationActivities)
+        return controller
     }
 
-    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
-        if isPresenting {
-            uiViewController.present(content(), animated: true, completion: nil)
-        }
-    }
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: UIViewControllerRepresentableContext<ActivityViewController>) {}
+
 }
 
 struct ResultView_Previews: PreviewProvider {
