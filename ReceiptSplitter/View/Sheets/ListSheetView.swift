@@ -38,6 +38,13 @@ struct ListSheetView: View {
                                                     .padding(.horizontal, 4)
                                                     .padding(.bottom, 3)
                                             }
+                                            .contextMenu{
+                                                Button{
+                                                    print("A")
+                                                } label: {
+                                                    Text("Test")
+                                                }
+                                            }
                                         } else {
                                             Text(pair.name)
                                         }

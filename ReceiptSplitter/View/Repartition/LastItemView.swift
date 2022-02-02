@@ -84,7 +84,7 @@ struct LastItemView: View {
                         
                         HStack {
                             Button {
-                                withAnimation() {
+                                withAnimation(.easeInOut) {
                                     showResult = true
                                 }
                             } label: {

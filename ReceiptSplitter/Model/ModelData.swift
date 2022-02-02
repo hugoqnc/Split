@@ -20,8 +20,10 @@ final class ModelData: ObservableObject {
     var totalBalance: Double {
         get {
             var total: Double = 0
-            for user in users{
-                total += balance(ofUser: user)
+            for item in listOfProductsAndPrices{
+                if !item.chosenBy.isEmpty {
+                    total += item.price
+                }
             }
             return total
         }

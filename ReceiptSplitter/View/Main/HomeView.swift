@@ -96,10 +96,6 @@ struct HomeView: View {
                     
                 }
             })
-//        .sheet(isPresented: $showResult, content: {
-//            ResultView()
-//                .interactiveDismissDisabled(true)
-//        })
         }
     }
 }

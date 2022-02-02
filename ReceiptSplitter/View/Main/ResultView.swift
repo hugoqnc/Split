@@ -68,8 +68,8 @@ struct ResultView: View {
                                 }
                             }
                         }
-                        .padding(.top,25)
-                        .padding(.bottom,15)
+                        .padding(.top,35)
+                        .padding(.bottom,5)
                     }
                     
                     HStack {
