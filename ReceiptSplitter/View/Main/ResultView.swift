@@ -80,7 +80,8 @@ struct ResultView: View {
                                 chosenSharingOption = "overview"
                                 showSharingOptions = true
                             } label: {
-                                Text("Share overview")
+                                Text("Share totals")
+                                Text("hello")
                             }
                             
                             Button {
@@ -150,31 +151,8 @@ struct ResultView: View {
                         .padding(.horizontal)
                     }
                     
-                    VStack {
-                        HStack {
-                            Spacer()
-                            
-                            StatisticRectangle(iconString: "number", description: "Number of\npurchases", value: String(model.listOfProductsAndPrices.count), color: Color.blue)
-                            
-                            StatisticRectangle(iconString: "cart", description: "Average price\nof an item", value: String(round((model.totalPrice/Double(model.listOfProductsAndPrices.count))*100) / 100.0)+model.currency.value, color: Color.orange)
-                            
-                            Spacer()
-                        }
-                        HStack {
-                            Spacer()
-                            
-                            StatisticRectangle(iconString: "arrow.up.right.circle", description: "Maximum price\nof an item", value: String(round((model.listOfProductsAndPrices.map({ pair in
-                                pair.price
-                            }).max() ?? 0.0)*100) / 100.0)+model.currency.value, color: Color.green)
-                            
-                            StatisticRectangle(iconString: "arrow.down.right.circle", description: "Minimum price\nof an item", value: String(round((model.listOfProductsAndPrices.map({ pair in
-                                pair.price
-                            }).min() ?? 0.0)*100) / 100.0)+model.currency.value, color: Color.red)
-                            
-                            Spacer()
-                        }
-                    }
-                    .padding(10)
+                    StatView()
+                        .padding(10)
                     
                     Text("\(selectedUser.name) \(chosenSharingOption)") //due to https://developer.apple.com/forums/thread/652080
                          .hidden()
