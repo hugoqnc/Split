@@ -19,7 +19,7 @@ struct ListSheetView: View {
 
                     List() {
                         Section(header: Text("\(model.listOfProductsAndPrices.count) items — \(model.showPrice(price: model.totalPrice))")){
-                            ForEach(model.listOfProductsAndPrices) { pair in
+                            ForEach($model.listOfProductsAndPrices) { $pair in
                                 HStack {
                                     if itemCounter>=0 ? pair.id==model.listOfProductsAndPrices[itemCounter].id : false {
                                         VStack(alignment: .leading) {
@@ -38,13 +38,13 @@ struct ListSheetView: View {
                                                     .padding(.horizontal, 4)
                                                     .padding(.bottom, 3)
                                             }
-                                            .contextMenu{
-                                                Button{
-                                                    print("A")
-                                                } label: {
-                                                    Text("Test")
-                                                }
-                                            }
+//                                            .contextMenu{
+//                                                Button{
+//                                                    print("A")
+//                                                } label: {
+//                                                    Text("Test")
+//                                                }
+//                                            }
                                         } else {
                                             Text(pair.name)
                                         }

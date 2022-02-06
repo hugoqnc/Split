@@ -100,16 +100,18 @@ final class ModelData: ObservableObject {
             var sharedText =
             """
             🛒 Shopping Repartition
-            🗓 Date: \(dateFormatter.string(from: date))\n\n
+            🗓 Date: \(dateFormatter.string(from: date))
+            ________________\n\n
             """
             
             for user in users {
-                sharedText.append("      \(user.name): \(showPrice(price: balance(ofUser: user)))\n")
+                sharedText.append("🔹 \(user.name): \(showPrice(price: balance(ofUser: user)))\n")
             }
             
             sharedText.append(
             """
             ________________
+            
             💸 Total: \(showPrice(price: totalBalance))
             
             Sent with ReceiptSplitter
@@ -128,11 +130,12 @@ final class ModelData: ObservableObject {
             var sharedText =
             """
             🛒 Shopping Repartition
-            🗓 Date: \(dateFormatter.string(from: date))\n
+            🗓 Date: \(dateFormatter.string(from: date))
+            ________________\n
             """
                         
             for item in listOfProductsAndPrices {
-                var text = "\n  \(item.name)\n"
+                var text = "\n\(item.name)\n"
                 var namesText = ""
                 for i in 0..<item.chosenBy.count {
                     let u = users.first { user in
@@ -143,13 +146,24 @@ final class ModelData: ObservableObject {
                         namesText.append(", ")
                     }
                 }
-                text.append("  \(showPrice(price: item.price/Double(item.chosenBy.count))) [\(namesText)]\n")
+                if item.chosenBy.count == 1 {
+                    text.append("\(showPrice(price: item.price)) [\(namesText)]\n")
+                }
+                else {
+                    text.append("\(showPrice(price: item.price) + " ÷ "+String(item.chosenBy.count)) = \(showPrice(price: item.price/Double(item.chosenBy.count))) [\(namesText)]\n")
+                }
                 sharedText.append(text)
+            }
+            
+            sharedText.append("________________\n\n")
+            for user in users {
+                sharedText.append("🔹 \(user.name): \(showPrice(price: balance(ofUser: user)))\n")
             }
             
             sharedText.append(
             """
             ________________
+            
             💸 Total: \(showPrice(price: totalBalance))
             
             Sent with ReceiptSplitter
