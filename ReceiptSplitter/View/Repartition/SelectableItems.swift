@@ -10,6 +10,7 @@ import SwiftUI
 struct SelectableItems: View {
     var users: [User]
     @Binding var selections: [UUID]
+    var showSelectAllButton = true
     private var boolAllSelected: Bool {
         get {
             return users.count == selections.count
@@ -18,23 +19,25 @@ struct SelectableItems: View {
 
     var body: some View {
         VStack {
-            HStack {
-                Button() {
-                    if boolAllSelected {
-                        self.selections.removeAll()
-                    }
-                    else {
-                        self.selections.removeAll()
-                        for user in users {
-                            self.selections.append(user.id)
+            if showSelectAllButton {
+                HStack {
+                    Button() {
+                        if boolAllSelected {
+                            self.selections.removeAll()
                         }
+                        else {
+                            self.selections.removeAll()
+                            for user in users {
+                                self.selections.append(user.id)
+                            }
+                        }
+                    } label: {
+                        Text(boolAllSelected ? "Deselect all" : "Select all")
                     }
-                } label: {
-                    Text(boolAllSelected ? "Deselect all" : "Select all")
+                    .padding(.leading, 3)
+                    
+                    Spacer()
                 }
-                .padding(.leading, 3)
-                
-                Spacer()
             }
             
             ScrollView(.horizontal) {

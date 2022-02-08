@@ -11,6 +11,8 @@ struct ListSheetView: View {
     @EnvironmentObject var model: ModelData
     var itemCounter: Int
     @Environment(\.dismiss) var dismiss
+    @State private var editSelection = false
+    @State private var editSelectionPair = PairProductPrice()
 
     var body: some View {
         VStack {
@@ -37,14 +39,30 @@ struct ListSheetView: View {
                                                 MiniRepartitionRow(userIDs: pair.chosenBy)
                                                     .padding(.horizontal, 4)
                                                     .padding(.bottom, 3)
+                                                Group {
+                                                    if editSelection && pair.id == editSelectionPair.id {
+                                                        SelectableItems(users: model.users, selections: $pair.chosenBy)
+                                                    }
+                                                }
                                             }
-//                                            .contextMenu{
-//                                                Button{
-//                                                    print("A")
-//                                                } label: {
-//                                                    Text("Test")
-//                                                }
-//                                            }
+                                            .contextMenu{
+                                                Button{
+                                                    editSelection.toggle() //make appear toggles below for multi selection + close button
+                                                    editSelectionPair = pair
+                                                } label: {
+                                                    Label("Edit repartition", systemImage: "checkmark.circle")
+                                                }
+                                                Button{
+                                                    print("A")
+                                                } label: {
+                                                    Label("Edit name and price", systemImage: "pencil")
+                                                }
+                                                Button(role: .destructive){
+                                                    print("A")
+                                                } label: {
+                                                    Label("Delete item", systemImage: "trash")
+                                                }
+                                            }
                                         } else {
                                             Text(pair.name)
                                         }
