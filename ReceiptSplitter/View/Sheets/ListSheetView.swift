@@ -52,7 +52,9 @@ struct ListSheetView: View {
                                                     Label("Edit item", systemImage: "pencil")
                                                 }
                                                 Button(role: .destructive){
-                                                    print("A")
+                                                    if let index = model.listOfProductsAndPrices.firstIndex(where: {$0.id == pair.id}) {
+                                                        model.listOfProductsAndPrices.remove(at: index)
+                                                    }
                                                 } label: {
                                                     Label("Delete item", systemImage: "trash")
                                                 }
@@ -82,15 +84,16 @@ struct ListSheetView: View {
                                                  initialDouble: price,
                                                  initialSelections: editPair.chosenBy,
                                                  action: {
-                                                      let _ = $2
                                                       if $0 != nil && $1 != nil {
                                                           if $0! != "" {
                                                               let index = model.listOfProductsAndPrices.firstIndex(of: editPair)!
                                                               let name = $0!
                                                               let price = $1!
+                                                              let chosenBy = $2!
                                                               withAnimation() {
                                                                   model.listOfProductsAndPrices[index].name = name
                                                                   model.listOfProductsAndPrices[index].price = price
+                                                                  model.listOfProductsAndPrices[index].chosenBy = chosenBy
                                                                   return
                                                               }
                                                           }

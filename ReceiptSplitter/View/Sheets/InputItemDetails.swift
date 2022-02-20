@@ -115,7 +115,7 @@ struct InputItemDetails: View {
                     } label: {
                         Text("Done")
                     }
-                    .disabled(textState.isEmpty || (textState==initialText && doubleState==initialDouble) || (initialSelections != nil) ? selectionsState.isEmpty : false)
+                    .disabled(textState.isEmpty || (initialSelections != nil) ? ((textState==initialText && doubleState==initialDouble && selectionsState==initialSelections) || selectionsState.isEmpty) : (textState==initialText && doubleState==initialDouble))
                 }
             }
             .navigationBarTitle(Text(""), displayMode: .inline)
