@@ -52,6 +52,7 @@ struct AttributionView: View {
                                                  initialText: pair.name,
                                                  initialDouble: pair.price,
                                                  action: {
+                                                      let _ = $2
                                                       if $0 != nil && $1 != nil {
                                                           if $0! != "" {
                                                               let index = model.listOfProductsAndPrices.firstIndex(of: pair)!

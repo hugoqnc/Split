@@ -11,13 +11,17 @@ struct ListSheetView: View {
     @EnvironmentObject var model: ModelData
     var itemCounter: Int
     @Environment(\.dismiss) var dismiss
-    @State private var editSelection = false
-    @State private var editSelectionPair = PairProductPrice()
+    @State private var editItemAlert = false
+    @State private var editPair = PairProductPrice()
 
     var body: some View {
         VStack {
             NavigationView {
                 VStack{
+                    
+                    Text("\(editPair.name)") //due to https://developer.apple.com/forums/thread/652080
+                        .hidden()
+                        .frame(height:0)
 
                     List() {
                         Section(header: Text("\(model.listOfProductsAndPrices.count) items — \(model.showPrice(price: model.totalPrice))")){
@@ -39,23 +43,13 @@ struct ListSheetView: View {
                                                 MiniRepartitionRow(userIDs: pair.chosenBy)
                                                     .padding(.horizontal, 4)
                                                     .padding(.bottom, 3)
-                                                Group {
-                                                    if editSelection && pair.id == editSelectionPair.id {
-                                                        SelectableItems(users: model.users, selections: $pair.chosenBy)
-                                                    }
-                                                }
                                             }
                                             .contextMenu{
                                                 Button{
-                                                    editSelection.toggle() //make appear toggles below for multi selection + close button
-                                                    editSelectionPair = pair
+                                                    editItemAlert = true
+                                                    editPair = pair
                                                 } label: {
-                                                    Label("Edit repartition", systemImage: "checkmark.circle")
-                                                }
-                                                Button{
-                                                    print("A")
-                                                } label: {
-                                                    Label("Edit name and price", systemImage: "pencil")
+                                                    Label("Edit item", systemImage: "pencil")
                                                 }
                                                 Button(role: .destructive){
                                                     print("A")
@@ -75,6 +69,33 @@ struct ListSheetView: View {
                                 }
                                 .listRowBackground(Color.secondary.opacity(0.1))
                                 .foregroundColor(itemCounter>=0 ? pair.id==model.listOfProductsAndPrices[itemCounter].id ? .blue : nil : nil)
+                            }
+                            .sheet(isPresented: $editItemAlert) {
+                                let name = editPair.name
+                                let price = editPair.price
+                                
+                                InputItemDetails(title: "Modify item",
+                                                 message:"You can change the name, price and repartition of \"\(name)\" between users",
+                                                 placeholder1: "Name",
+                                                 placeholder2: "Price",
+                                                 initialText: name,
+                                                 initialDouble: price,
+                                                 initialSelections: editPair.chosenBy,
+                                                 action: {
+                                                      let _ = $2
+                                                      if $0 != nil && $1 != nil {
+                                                          if $0! != "" {
+                                                              let index = model.listOfProductsAndPrices.firstIndex(of: editPair)!
+                                                              let name = $0!
+                                                              let price = $1!
+                                                              withAnimation() {
+                                                                  model.listOfProductsAndPrices[index].name = name
+                                                                  model.listOfProductsAndPrices[index].price = price
+                                                                  return
+                                                              }
+                                                          }
+                                                      }
+                                                  })
                             }
                         }
                     }

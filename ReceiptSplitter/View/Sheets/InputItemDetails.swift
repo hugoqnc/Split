@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct InputItemDetails: View {
-    internal init(title: String, message: String, placeholder1: String = "", placeholder2: String = "", initialText: String? = nil, initialDouble: Double? = nil, accept: String = "OK", cancel: String = "Cancel", action: @escaping (String?, Double?) -> ()) {
+    internal init(title: String, message: String, placeholder1: String = "", placeholder2: String = "", initialText: String? = nil, initialDouble: Double? = nil, initialSelections: [UUID]? = nil, accept: String = "OK", cancel: String = "Cancel", action: @escaping (String?, Double?, [UUID]?) -> ()) {
         self.title = title
         self.message = message
         self.placeholder1 = placeholder1
         self.placeholder2 = placeholder2
         self.initialText = initialText
         self.initialDouble = initialDouble
+        self.initialSelections = initialSelections
         self.accept = accept
         self.cancel = cancel
         self.action = action
@@ -29,6 +30,11 @@ struct InputItemDetails: View {
         } else {
             _doubleState = State(initialValue: 0.0)
         }
+        if initialSelections != nil {
+            _selectionsState = State(initialValue: initialSelections!)
+        } else {
+            _selectionsState = State(initialValue: [])
+        }
     }
     
     @EnvironmentObject var model: ModelData
@@ -40,12 +46,14 @@ struct InputItemDetails: View {
     var placeholder2: String = ""
     var initialText: String?
     var initialDouble: Double?
+    var initialSelections: [UUID]?
     var accept: String = "OK"
     var cancel: String = "Cancel"
-    var action: (String?, Double?) -> ()
+    var action: (String?, Double?, [UUID]?) -> ()
     
     @State private var textState: String
     @State private var doubleState: Double
+    @State private var selectionsState: [UUID]
     
     var body: some View {
         NavigationView {
@@ -83,13 +91,17 @@ struct InputItemDetails: View {
                     } header: {
                         Text("Item details")
                     }
+                    
+                    if initialSelections != nil{
+                        SelectableItems(users: model.users, selections: $selectionsState)
+                    }
                 }
 
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
-                        action(nil,nil)
+                        action(nil,nil,nil)
                         dismiss()
                     } label: {
                         Text("Cancel")
@@ -98,12 +110,12 @@ struct InputItemDetails: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        action(textState, doubleState)
+                        action(textState, doubleState, selectionsState)
                         dismiss()
                     } label: {
                         Text("Done")
                     }
-                    .disabled(textState.isEmpty || (textState==initialText && doubleState==initialDouble))
+                    .disabled(textState.isEmpty || (textState==initialText && doubleState==initialDouble) || (initialSelections != nil) ? selectionsState.isEmpty : false)
                 }
             }
             .navigationBarTitle(Text(""), displayMode: .inline)
@@ -114,19 +126,29 @@ struct InputItemDetails: View {
 }
 
 struct InputItemDetails_Previews: PreviewProvider {
-    static let model = ModelData()
+    static let model: ModelData = {
+        var model = ModelData()
+        model.users = [User(name: "Hugo"), User(name: "Lucas"), User(name: "Thomas")]
+        model.listOfProductsAndPrices = [PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 4.99), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBC", name: "Finger Fish", price: 1.27), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBD", name: "Ice Cream Strawberry", price: 3.20)]
+        model.listOfProductsAndPrices[0].chosenBy = [model.users[0].id]
+        //model.listOfProductsAndPrices[1].chosenBy = [model.users[0].id, model.users[1].id]
+        //model.listOfProductsAndPrices[2].chosenBy = [model.users[0].id, model.users[1].id, model.users[2].id]
+        return model
+    }()
+    
     static var previews: some View {
-        Text("")
-            .sheet(isPresented: .constant(true)) {
+        //Text("")
+            //.sheet(isPresented: .constant(true)) {
                 InputItemDetails(title: "Modify item",
                                  message:"You can change the name and the price of this item",
                                  placeholder1: "Name",
                                  placeholder2: "Price",
                                  initialText: "Potato Wedges",
                                  initialDouble: 3.85,
-                                 action: {_,_ in
+                                 initialSelections: [UUID()],
+                                 action: {_,_,_ in
                                   })
                     .environmentObject(model)
-            }
+            //}
     }
 }

@@ -156,6 +156,7 @@ struct ResultView: View {
                     
                     Text("\(selectedUser.name) \(chosenSharingOption)") //due to https://developer.apple.com/forums/thread/652080
                          .hidden()
+                         .frame(height:0)
                 }
                 
             }

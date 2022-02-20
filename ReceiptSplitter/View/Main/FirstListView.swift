@@ -73,6 +73,7 @@ struct FirstListView: View {
 
                                 Text("\(editItemAlertPair.name)") //due to https://developer.apple.com/forums/thread/652080
                                     .hidden()
+                                    .frame(height:0)
                                 
                                 Group {
                                     if horizontalSizeClass == .compact {
@@ -185,6 +186,7 @@ struct FirstListView: View {
                                                      initialText: name,
                                                      initialDouble: price,
                                                      action: {
+                                                          let _ = $2
                                                           if $0 != nil && $1 != nil {
                                                               if $0! != "" {
                                                                   let index = model.listOfProductsAndPrices.firstIndex(of: editItemAlertPair)!
@@ -226,6 +228,7 @@ struct FirstListView: View {
                                                          initialText: AttributionView.textOfNewItem,
                                                          initialDouble: nil,
                                                          action: {
+                                                              _ = $2
                                                               var newPair = PairProductPrice()
                                                               if $0 != nil && $1 != nil {
                                                                   if $0! != "" {
