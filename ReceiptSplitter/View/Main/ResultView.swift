@@ -179,7 +179,7 @@ struct ResultView: View {
                 }
             }
             .sheet(isPresented: $showAllList, content: {
-                ListSheetView(itemCounter: -1)
+                ListSheetView(itemCounter: .constant(-1))
             })
             .sheet(isPresented: $showUserDetails, content: {
                 UserChoicesView(user: selectedUser)

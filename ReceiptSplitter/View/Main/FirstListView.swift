@@ -169,6 +169,9 @@ struct FirstListView: View {
                                                     withAnimation() {
                                                         model.listOfProductsAndPrices.remove(atOffsets: indexSet)
                                                     }
+                                                    if model.listOfProductsAndPrices.count == 0 {
+                                                        nothingFound = true //so that if a user deletes all items, he is redirected to the nothing found screen
+                                                    }
                                                 }
                                             }
                                             .environment(\.editMode, $editMode)

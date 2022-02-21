@@ -89,9 +89,9 @@ struct HomeView: View {
                     }
                 } else {
                     if itemCounter<model.listOfProductsAndPrices.count {
-                        ListSheetView(itemCounter: itemCounter)
+                        ListSheetView(itemCounter: $itemCounter)
                     } else {
-                        ListSheetView(itemCounter: -1)
+                        ListSheetView(itemCounter: .constant(-1))
                     }
                     
                 }

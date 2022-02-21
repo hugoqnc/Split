@@ -125,7 +125,7 @@ struct AttributionView: View {
                             }
                         }
                         
-                        Button {
+                        Button(role: .destructive){
                             withAnimation(.easeInOut(duration: 4)) {
                                 deletesItemCall = true
                             }
