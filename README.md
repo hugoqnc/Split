@@ -5,7 +5,7 @@
 ReceiptSplitter is an app for iOS and iPadOS, that allows a group of people to easily share expenses from a common receipt.
 For example, roommates can do their shopping and pay for everything together.
 Afterwards, one of them can scan the receipt, and attribute each expense to one person, several people or the whole group.
-The app will calculate everyone's totals, which can be easily shared.
+The app will calculate everyone's total, much faster than if you had to do it by hand.
 
 <p>
     <img src="Resources/vision.PNG" height=400px>
@@ -33,7 +33,7 @@ https://user-images.githubusercontent.com/67365803/155002033-fa772923-dcf6-47d2-
 - [x] Handles reductions (with negative amounts)
 - [x] Export the scanned receipt 
 - [x] Export the detailed computation of the results (for everyone or for a single person)
-- [x] Display and use the currency of your choice (€, $, £, ¥)
+- [x] Display and use the currency symbol of your choice (€, $, £, ¥)
 - [x] Save your most frequently used list of people
 - [x] iPad optimized version that takes advantage of the large screen
 - [x] Scan several receipts from the beginning to group all transactions 
