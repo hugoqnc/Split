@@ -34,9 +34,9 @@ struct UserChoicesView: View {
                     }
 
                     List() {
-                        Section(header: Text("\(chosenItems.count) items — \(model.showPrice(price: model.balance(ofUser: user)))")){
+                        Section(header: Text("\(chosenItems.count) items — \(model.showPrice(price: model.balance(ofUser: user)))"), footer: Label("Items sorted by decreasing price", systemImage: "arrow.up.arrow.down")){
                         //Section {
-                            ForEach(chosenItems) { item in
+                            ForEach(chosenItems.sorted(by: {$0.price>$1.price})) { item in
                                 VStack {
                                     HStack {
                                         VStack(alignment: .leading, spacing: 2) {

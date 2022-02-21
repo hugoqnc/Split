@@ -24,7 +24,7 @@ struct ListSheetView: View {
                         .frame(height:0)
 
                     List() {
-                        Section(header: Text("\(model.listOfProductsAndPrices.count) items — \(model.showPrice(price: model.totalPrice))")){
+                        Section(header: Text("\(model.listOfProductsAndPrices.count) items — \(model.showPrice(price: model.totalPrice))"), footer: Label("Long press on an assigned item to modify it", systemImage: "lightbulb")){
                             ForEach($model.listOfProductsAndPrices) { $pair in
                                 HStack {
                                     if itemCounter>=0 ? pair.id==model.listOfProductsAndPrices[itemCounter].id : false {
@@ -105,22 +105,6 @@ struct ListSheetView: View {
                             }
                         }
                     }
-                    
-//                    HStack(alignment: .center) {
-//                        Image(systemName: "lightbulb")
-//                            .frame(width: 10, height: 10)
-//                            .font(.headline)
-//                            .foregroundColor(.yellow)
-//                            .padding(.top,2)
-//                            .padding(.trailing,3)
-//
-//                        Text("Long-press on an item to edit it")
-//                            .font(.subheadline)
-//                            .foregroundColor(.secondary)
-//                        
-//                    }
-//                    //.padding(.top)
-//                    .padding(.horizontal, 40)
                 }
                 .navigationBarTitle("")
                 .navigationBarHidden(true)
