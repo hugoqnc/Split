@@ -1,7 +1,7 @@
 <h1> ReceiptSplitter
-  <img align="right" src="ReceiptSplitter/Assets.xcassets/AppIcon.appiconset/256.png" width=74px>
+  <img align="right" src="Resources/ReceiptSplitter-icon-radius.png" width=74px>
 </h1>
-
+<br/>
 ReceiptSplitter is an app for iOS and iPadOS, that allows a group of people to easily share expenses from a common receipt.
 For example, roommates can do their shopping and pay for everything together.
 Afterwards, one of them can scan the receipt, and attribute each expense to one person, several people or the whole group.
@@ -13,7 +13,7 @@ The app will calculate everyone's total, much faster than if you had to do it by
 
 ## Quick demo
 
-https://user-images.githubusercontent.com/67365803/155002033-fa772923-dcf6-47d2-8722-7229cf7b9f25.mp4
+https://user-images.githubusercontent.com/67365803/155156726-2c296a5e-43b8-47fe-a26c-3ba9feaa2919.mov
 
 
 ## Features
