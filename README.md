@@ -1,5 +1,5 @@
 <h1> ReceiptSplitter
-  <img align="right" src="Resources/ReceiptSplitter-icon-radius.png" width=74px>
+  <img align="right" src="Resources/icon-radius.png" width=74px>
 </h1>
 <br/>
 ReceiptSplitter is an app for iOS and iPadOS, that allows a group of people to easily share expenses from a common receipt.

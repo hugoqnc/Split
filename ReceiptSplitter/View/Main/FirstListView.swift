@@ -320,7 +320,7 @@ struct FirstListView_Previews: PreviewProvider {
                                 PairProductPrice(id: "D6F5F6D2-FB7A-4562-8310-F5F6322EC351", name: "7 LABELLO ORIGINAL", price: 3.28, isNewItem: false, imageId: Optional("1111"), box: VNDetectedObjectObservation(boundingBox: CGRect(x: 0.111475, y: 0.505631, width: 0.764571, height: 0.0153066))),
                                 PairProductPrice(id: "D041D2CF-7FC6-4D49-AF7E-7F6EF68E6217", name: "7 PAIC XLS ACTIF FRD", price: 2.05, isNewItem: false, imageId: Optional("1111"), box: VNDetectedObjectObservation(boundingBox: CGRect(x: 0.113443, y: 0.473182, width: 0.762698, height: 0.0149828))),
                                 PairProductPrice(id: "F6C0BB99-A549-48D9-830A-778B9602FB8D", name: "ORAL B BROSSETTES", price: 10.9, isNewItem: false, imageId: Optional("1111"), box: VNDetectedObjectObservation(boundingBox: CGRect(x: 0.167544, y: 0.490189, width: 0.707182, height: 0.0145087)))]
-                            model.images = [IdentifiedImage(id: "1111", image: UIImage(named: "scan3"))]
+                            model.images = [IdentifiedImage(id: "1111", image: UIImage(named: "scan4"))]
             }
     }
 }
