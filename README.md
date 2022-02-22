@@ -7,14 +7,9 @@ For example, roommates can do their shopping and pay for everything together.
 Afterwards, one of them can scan the receipt, and attribute each expense to one person, several people or the whole group.
 The app will calculate everyone's total, much faster than if you had to do it by hand.
 
-<p>
-    <img src="Resources/vision.PNG" height=400px>
-    <img src="Resources/selection.PNG" height=400px>
-    <img src="Resources/result.PNG" height=400px>
-    <img src="Resources/dark.PNG" height=400px>
-</p>
+![](Resources/presentation.png)
 
-*Images from left to right:* The interface showing the results of the image recognition of items on the receipt | The interface to specify who should pay the current item | The result interface, telling how much each person owes | The app is also available in dark mode!
+*Images from left to right:* The interface to specify who should pay the current item | The interface showing the results of the image recognition of items on the receipt, shown on iPad with the two-column interface taking advantage of the large screen | The result interface, telling how much each person owes | The app is also available in dark mode!
 
 ## Quick demo
 
