@@ -11,6 +11,7 @@ import SwiftUI
 struct Parameters: Codable {
     var showScanTutorial = true
     var showEditTutorial = true
+    var selectAllUsers = false
     var visionParameters = VisionParameters()
 }
 

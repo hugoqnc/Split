@@ -279,8 +279,8 @@
 		4FA4ECB827C7CCAF00B0F012 /* Stores */ = {
 			isa = PBXGroup;
 			children = (
-				4F4A55B227A1B906001F84E3 /* PreferencesStore.swift */,
 				4F80BED627C7B7A400CA73B3 /* ParametersStore.swift */,
+				4F4A55B227A1B906001F84E3 /* PreferencesStore.swift */,
 			);
 			path = Stores;
 			sourceTree = "<group>";

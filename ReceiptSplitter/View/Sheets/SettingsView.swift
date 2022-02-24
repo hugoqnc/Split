@@ -12,9 +12,7 @@ struct SettingsView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.openURL) var openURL
 
-    @State var visionParameters = Parameters().visionParameters
-    @State var showScanTutorial = Parameters().showScanTutorial
-    @State var showEditTutorial = Parameters().showEditTutorial
+    @State var parameters = Parameters()
     @FocusState var isKeyboardShown: Bool
     
     var body: some View {
@@ -22,10 +20,19 @@ struct SettingsView: View {
             VStack {
                 Form {
                     Section {
-                        Toggle("Always show \"Scan\" tutorial", isOn: $showScanTutorial)
-                        Toggle("Always show \"Edition\" tutorial", isOn: $showEditTutorial)
+                        Toggle("Always show \"Scan\" tutorial", isOn: $parameters.showScanTutorial)
+                        Toggle("Always show \"Edition\" tutorial", isOn: $parameters.showEditTutorial)
                     } header: {
                         Text("Tutorials")
+                    }
+                    .listRowBackground(Color.secondary.opacity(0.1))
+                    
+                    Section {
+                        Toggle("Select everyone per default", isOn: $parameters.selectAllUsers)
+                    } header: {
+                        Text("Attribution")
+                    } footer: {
+                        parameters.selectAllUsers ? Text("Currently, when assigning items to users, they will **all** be selected by default.") : Text("Currently, when assigning items to users, **no one** will be selected by default.")
                     }
                     .listRowBackground(Color.secondary.opacity(0.1))
                     
@@ -60,7 +67,7 @@ struct SettingsView: View {
                                     .foregroundColor(.secondary)
                             }
                             Spacer()
-                            TextField("", value: $visionParameters.epsilonHeight, format: .number)
+                            TextField("", value: $parameters.visionParameters.epsilonHeight, format: .number)
                                 .textFieldStyle(.roundedBorder)
                                 .keyboardType(.decimalPad)
                                 .frame(width: 55)
@@ -76,7 +83,7 @@ struct SettingsView: View {
                                     .foregroundColor(.secondary)
                             }
                             Spacer()
-                            TextField("", value: $visionParameters.minAreaCoverage, format: .number)
+                            TextField("", value: $parameters.visionParameters.minAreaCoverage, format: .number)
                                 .textFieldStyle(.roundedBorder)
                                 .keyboardType(.decimalPad)
                                 .frame(width: 55)
@@ -92,7 +99,7 @@ struct SettingsView: View {
                                     .foregroundColor(.secondary)
                             }
                             Spacer()
-                            TextField("", value: $visionParameters.maxMargin, format: .number)
+                            TextField("", value: $parameters.visionParameters.maxMargin, format: .number)
                                 .textFieldStyle(.roundedBorder)
                                 .keyboardType(.decimalPad)
                                 .frame(width: 55)
@@ -102,7 +109,7 @@ struct SettingsView: View {
                         
                         Button {
                             withAnimation() {
-                                visionParameters = Parameters().visionParameters
+                                parameters.visionParameters = Parameters().visionParameters
                             }
                         } label: {
                             Label("Reset Advanced Parameters", systemImage: "gobackward")
@@ -110,14 +117,14 @@ struct SettingsView: View {
                         .buttonStyle(.borderless)
 
                     } header: {
-                        Text("Advanced (image recognition)")
+                        Text("Advanced — Image Recognition")
                     } footer: {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("Do not modify these parameters if you don't know what you do!")
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("Do not modify these parameters if you don't understand what you do!")
                             VStack(alignment: .leading, spacing: 4) {
-                                Label("Multiplicative Height Epsilon: \"accepted\" lines of the receipt have a median height more or less this value in percentage", systemImage: "plus.forwardslash.minus")
-                                Label("Minimum Area Coverage: minimum overlap percentage between the \"text rectangle\" extended on the right and the \"price rectangle\"", systemImage: "rectangle.on.rectangle")
-                                Label("Maximum Margin: \"accepted\" lines of the receipt protrude to the left and right outside the margins defined by this percentage", systemImage: "arrow.left.and.right")
+                                Label("**Multiplicative Height Epsilon**: *accepted* lines of the receipt have a median height more or less this value in percentage.", systemImage: "plus.forwardslash.minus")
+                                Label("**Minimum Area Coverage**: minimum overlap percentage between the *text rectangle* extended on the right and the *price rectangle*.", systemImage: "rectangle.on.rectangle")
+                                Label("**Maximum Margin**: *accepted* lines of the receipt protrude to the left and right outside the margins defined by this percentage.", systemImage: "arrow.left.and.right")
                             }
                         }
                         
@@ -129,7 +136,7 @@ struct SettingsView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        ParametersStore.save(parameters: Parameters(showScanTutorial: showScanTutorial, showEditTutorial: showEditTutorial, visionParameters: visionParameters)) { result in
+                        ParametersStore.save(parameters: self.parameters) { result in
                             switch result {
                             case .failure(let error):
                                 fatalError(error.localizedDescription)
@@ -156,23 +163,24 @@ struct SettingsView: View {
         .onAppear {
             ParametersStore.load { result in
                 switch result {
-                case .failure(let error):
-                    fatalError(error.localizedDescription)
+                case .failure(_):
+                    //fatalError(error.localizedDescription)
+                    print("No previous preferences found")
                 case .success(let parameters):
-                    visionParameters = parameters.visionParameters
-                    showScanTutorial = parameters.showScanTutorial
-                    showEditTutorial = parameters.showEditTutorial
+                    self.parameters = parameters
                 }
             }
         }
     }
 }
 
-//struct SettingsView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SettingsView()
-//            .onAppear {
-//                UITableView.appearance().backgroundColor = .clear
-//            }
-//    }
-//}
+struct SettingsView_Previews: PreviewProvider {
+    static var previews: some View {
+        ZStack {
+            SettingsView()
+                .onAppear {
+                    UITableView.appearance().backgroundColor = .clear
+            }
+        }
+    }
+}

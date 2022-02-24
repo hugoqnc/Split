@@ -58,7 +58,7 @@ struct AttributionView: View {
                                                               let index = model.listOfProductsAndPrices.firstIndex(of: pair)!
                                                               let name = $0!
                                                               let price = $1!
-                                                              withAnimation() {                                                    model.listOfProductsAndPrices[index].name = name
+                                                              withAnimation() {                                              model.listOfProductsAndPrices[index].name = name
                                                                   model.listOfProductsAndPrices[index].price = price
                                                                   return
                                                               }
@@ -181,6 +181,13 @@ struct AttributionView: View {
             }
             .padding(20)
         }
+        .onAppear(perform: {
+            if model.parameters.selectAllUsers {
+                for user in model.users {
+                    selections.append(user.id)
+                }
+            }
+        })
         .onAppear(perform: {
             if pair.isNewItem {
                 let secondsToDelay = 0.5

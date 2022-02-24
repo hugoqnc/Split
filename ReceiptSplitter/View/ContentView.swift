@@ -1,8 +1,8 @@
 //
 //  ContentView.swift
-//  Scan-Ocr
+//  ReceiptSplitter
 //
-//  Created by Haaris Iqubal on 5/21/21.
+//  Created by Hugo Queinnec on 04/01/2022.
 //
 
 import SwiftUI
