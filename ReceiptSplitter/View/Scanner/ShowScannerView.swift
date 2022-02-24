@@ -24,23 +24,30 @@ struct ShowScannerView: View {
                     ScannerView { result in
                         switch result {
                             case .success(let scannedImages):
-                                
-                                TextRecognition(scannedImages: scannedImages,
-                                                recognizedContent: recognizedContent,
-                                                visionParameters: model.visionParameters) { isLastImage in 
-                                    for item in recognizedContent.items{
-                                        if !model.listOfProductsAndPrices.contains(item.list.first ?? PairProductPrice()){
-                                            let content: [PairProductPrice] = item.list
-                                            model.listOfProductsAndPrices.append(contentsOf: content)
+                            
+                                ParametersStore.load { result in
+                                    switch result {
+                                    case .failure(let error):
+                                        fatalError(error.localizedDescription)
+                                    case .success(let parameters):
+                                        TextRecognition(scannedImages: scannedImages,
+                                                        recognizedContent: recognizedContent,
+                                                        visionParameters: parameters.visionParameters) { isLastImage in
+                                            for item in recognizedContent.items{
+                                                if !model.listOfProductsAndPrices.contains(item.list.first ?? PairProductPrice()){
+                                                    let content: [PairProductPrice] = item.list
+                                                    model.listOfProductsAndPrices.append(contentsOf: content)
+                                                }
+                                                model.images.append(item.image)
+                                            }
+                                            if model.listOfProductsAndPrices.isEmpty && isLastImage {
+                                                nothingFound = true
+                                            }
+                                            recognizedContent.items = []
                                         }
-                                        model.images.append(item.image)
+                                        .recognizeText()
                                     }
-                                    if model.listOfProductsAndPrices.isEmpty && isLastImage {
-                                        nothingFound = true
-                                    }
-                                    recognizedContent.items = []
                                 }
-                                .recognizeText()
                                 
                             case .failure(let error):
                                 print(error.localizedDescription)

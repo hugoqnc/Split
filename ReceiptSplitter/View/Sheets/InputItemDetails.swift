@@ -62,7 +62,7 @@ struct InputItemDetails: View {
                     Image(systemName: "square.and.pencil")
                         .frame(width: 30, height: 30)
                         .font(.largeTitle)
-                        .foregroundColor(Color.accentColor)
+                        .foregroundColor(.primary)
                         .padding()
 
                     VStack(alignment: .leading, spacing: 2) {
@@ -94,6 +94,8 @@ struct InputItemDetails: View {
                     
                     if initialSelections != nil{
                         SelectableItems(users: model.users, selections: $selectionsState)
+                            .padding(.vertical, 10)
+                            .listRowBackground(Color.secondary.opacity(0.1))
                     }
                 }
 
@@ -149,6 +151,9 @@ struct InputItemDetails_Previews: PreviewProvider {
                                  action: {_,_,_ in
                                   })
                     .environmentObject(model)
+                    .onAppear {
+                        UITableView.appearance().backgroundColor = .clear
+                    }
             //}
     }
 }

@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct CurrentExpensesRow: View {
-    @EnvironmentObject var model: ModelData
-    @Environment(\.colorScheme) var colorScheme
-    
+    @EnvironmentObject var model: ModelData    
     @Binding var isValidated: Bool
     
     var body: some View {
@@ -34,7 +32,7 @@ struct CurrentExpensesRow: View {
                         .resizable(resizingMode: .tile)
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 40.0, height: 30.0)
-                        .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
+                        .foregroundColor(.primary)
                 }
                 .padding(.leading)
                 .padding(.trailing, 8)

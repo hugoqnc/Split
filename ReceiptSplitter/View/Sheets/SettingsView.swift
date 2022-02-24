@@ -8,13 +8,20 @@
 import SwiftUI
 
 struct SettingsView: View {
+    
+    @Environment(\.dismiss) var dismiss
+    @State var visionParameters = Parameters().visionParameters
+    @State var showScanTutorial = Parameters().showScanTutorial
+    @State var showEditTutorial = Parameters().showEditTutorial
+    @FocusState var isKeyboardShown: Bool
+    
     var body: some View {
         NavigationView {
             VStack {
                 Form { //TODO: change colors because of transparency
                     Section {
-                        Toggle("Always show \"Scan\" tutorial", isOn: .constant(true))
-                        Toggle("Always show \"Edition\" tutorial", isOn: .constant(true))
+                        Toggle("Always show \"Scan\" tutorial", isOn: $showScanTutorial)
+                        Toggle("Always show \"Edition\" tutorial", isOn: $showEditTutorial)
                     } header: {
                         Text("Tutorials")
                     }
@@ -26,6 +33,7 @@ struct SettingsView: View {
                         } label: {
                             Label("Send me an email!", systemImage: "envelope")
                         }
+                        .buttonStyle(.borderless)
                     } header: {
                         Text("Contact")
                     } footer: {
@@ -37,36 +45,44 @@ struct SettingsView: View {
                         HStack {
                             Text("Multiplicative Height Epsilon")
                             Spacer()
-                            TextField("", value: .constant(0.5), format: .number)
+                            TextField("", value: $visionParameters.epsilonHeight, format: .number)
                                 .textFieldStyle(.roundedBorder)
                                 .keyboardType(.decimalPad)
                                 .frame(width: 55)
                                 .foregroundColor(.accentColor)
+                                .focused($isKeyboardShown)
                         }
                         HStack {
                             Text("Minimum Area Coverage")
                             Spacer()
-                            TextField("", value: .constant(0.53), format: .number)
+                            TextField("", value: $visionParameters.minAreaCoverage, format: .number)
                                 .textFieldStyle(.roundedBorder)
                                 .keyboardType(.decimalPad)
                                 .frame(width: 55)
                                 .foregroundColor(.accentColor)
+                                .focused($isKeyboardShown)
                         }
                         HStack {
                             Text("Maximum Margin")
                             Spacer()
-                            TextField("", value: .constant(1.3), format: .number)
+                            TextField("", value: $visionParameters.maxMargin, format: .number)
                                 .textFieldStyle(.roundedBorder)
                                 .keyboardType(.decimalPad)
                                 .frame(width: 55)
                                 .foregroundColor(.accentColor)
+                                .focused($isKeyboardShown)
                         }
                         
                         Button {
-                            //reset default
+                            withAnimation() {
+                                visionParameters = Parameters().visionParameters
+                                showScanTutorial = Parameters().showScanTutorial
+                                showEditTutorial = Parameters().showEditTutorial
+                            }
                         } label: {
                             Label("Reset Advanced Parameters", systemImage: "gobackward")
                         }
+                        .buttonStyle(.borderless)
 
                     } header: {
                         Text("Advanced")
@@ -86,6 +102,44 @@ struct SettingsView: View {
                 }
             }
             .navigationTitle("Settings")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        ParametersStore.save(parameters: Parameters(showScanTutorial: showScanTutorial, showEditTutorial: showEditTutorial, visionParameters: visionParameters)) { result in
+                            switch result {
+                            case .failure(let error):
+                                fatalError(error.localizedDescription)
+                            case .success(_):
+                                print("Settings Saved")
+                            }
+                        }
+                        
+                        dismiss()
+                    } label: {
+                        Text("Done")
+                    }
+                }
+                ToolbarItem(placement: .keyboard) {
+                    Button {
+                        isKeyboardShown = false
+                    } label: {
+                        Text("OK")
+                    }
+                }
+            }
+        }
+        .interactiveDismissDisabled()
+        .onAppear {
+            ParametersStore.load { result in
+                switch result {
+                case .failure(let error):
+                    fatalError(error.localizedDescription)
+                case .success(let parameters):
+                    visionParameters = parameters.visionParameters
+                    showScanTutorial = parameters.showScanTutorial
+                    showEditTutorial = parameters.showEditTutorial
+                }
+            }
         }
     }
 }
@@ -93,5 +147,8 @@ struct SettingsView: View {
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsView()
+            .onAppear {
+                UITableView.appearance().backgroundColor = .clear
+            }
     }
 }

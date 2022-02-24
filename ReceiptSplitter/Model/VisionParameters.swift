@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct VisionParameters {
+struct VisionParameters: Codable { //default values
     var epsilonHeight = 0.5 //multiplicative
     var minAreaCoverage = 0.4
     var maxMargin = 0.2
