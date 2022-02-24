@@ -10,15 +10,17 @@ import SwiftUI
 struct SettingsView: View {
     
     @Environment(\.dismiss) var dismiss
+    @Environment(\.openURL) var openURL
+
     @State var visionParameters = Parameters().visionParameters
     @State var showScanTutorial = Parameters().showScanTutorial
     @State var showEditTutorial = Parameters().showEditTutorial
-    //@FocusState var isKeyboardShown: Bool
+    @FocusState var isKeyboardShown: Bool
     
     var body: some View {
         NavigationView {
             VStack {
-                Form { //TODO: change colors because of transparency
+                Form {
                     Section {
                         Toggle("Always show \"Scan\" tutorial", isOn: $showScanTutorial)
                         Toggle("Always show \"Edition\" tutorial", isOn: $showEditTutorial)
@@ -29,15 +31,22 @@ struct SettingsView: View {
                     
                     Section {
                         Button {
-                            //reset default
+                            openURL(URL(string: "mailto:hugo.queinnec@gmail.com?subject=%5BReceiptSplitter%5D%20New%20Request&body=Please%20write%20here%20about%20an%20issue%2C%20or%20suggest%20me%20a%20new%20feature%20I%20should%20add%20to%20ReceiptSplitter.%0D%0AIf%20it%20is%20about%20an%20issue%2C%20first%20make%20sure%20you%20are%20using%20the%20latest%20version%20of%20ReceiptSplitter.%20Then%2C%20specify%20the%20device%20you%20are%20using%2C%20and%20what%20exact%20steps%20led%20to%20the%20bug.")!)
                         } label: {
                             Label("Send me an email!", systemImage: "envelope")
+                        }
+                        .buttonStyle(.borderless)
+                        
+                        Button {
+                            openURL(URL(string: "https://github.com/hugoqnc/ReceiptSplitter")!)
+                        } label: {
+                            Label("Project's Github", systemImage: "chevron.left.forwardslash.chevron.right")
                         }
                         .buttonStyle(.borderless)
                     } header: {
                         Text("Contact")
                     } footer: {
-                        Text("Tell me about an issue with the app, or suggest me an idea for a new feature!")
+                        Text("Tell me about an issue with the app, or suggest me an idea for a new feature! You can also contribute on Github, by submitting an issue or a pull request.")
                     }
                     .listRowBackground(Color.secondary.opacity(0.1))
 
@@ -56,7 +65,7 @@ struct SettingsView: View {
                                 .keyboardType(.decimalPad)
                                 .frame(width: 55)
                                 .foregroundColor(.accentColor)
-                                //.focused($isKeyboardShown)
+                                .focused($isKeyboardShown)
                         }
                         HStack {
                             VStack(alignment: .leading, spacing: 3) {
@@ -72,7 +81,7 @@ struct SettingsView: View {
                                 .keyboardType(.decimalPad)
                                 .frame(width: 55)
                                 .foregroundColor(.accentColor)
-                                //.focused($isKeyboardShown)
+                                .focused($isKeyboardShown)
                         }
                         HStack {
                             VStack(alignment: .leading, spacing: 3) {
@@ -88,7 +97,7 @@ struct SettingsView: View {
                                 .keyboardType(.decimalPad)
                                 .frame(width: 55)
                                 .foregroundColor(.accentColor)
-                                //.focused($isKeyboardShown)
+                                .focused($isKeyboardShown)
                         }
                         
                         Button {
@@ -110,7 +119,7 @@ struct SettingsView: View {
                                 Label("Minimum Area Coverage: minimum overlap percentage between the \"text rectangle\" extended on the right and the \"price rectangle\"", systemImage: "rectangle.on.rectangle")
                                 Label("Maximum Margin: \"accepted\" lines of the receipt protrude to the left and right outside the margins defined by this percentage", systemImage: "arrow.left.and.right")
                             }
-                        } //TODO: precise what each parameter does
+                        }
                         
                     }
                     .listRowBackground(Color.secondary.opacity(0.1))
@@ -136,7 +145,7 @@ struct SettingsView: View {
                 }
                 ToolbarItem(placement: .keyboard) {
                     Button {
-                        //isKeyboardShown = false
+                        isKeyboardShown = false
                     } label: {
                         Text("OK")
                     }
@@ -159,11 +168,11 @@ struct SettingsView: View {
     }
 }
 
-struct SettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        SettingsView()
-            .onAppear {
-                UITableView.appearance().backgroundColor = .clear
-            }
-    }
-}
+//struct SettingsView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SettingsView()
+//            .onAppear {
+//                UITableView.appearance().backgroundColor = .clear
+//            }
+//    }
+//}
