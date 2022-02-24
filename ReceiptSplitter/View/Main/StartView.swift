@@ -13,6 +13,7 @@ struct StartView: View {
     @State private var currencyType = Currency.default.symbol
     @State private var showAlert1 = false
     @State private var showAlert2 = false
+    @State private var showSettings = false
     
     @State private var newUserName: String = ""
         
@@ -103,6 +104,26 @@ struct StartView: View {
                         .padding()
                         .buttonStyle(.borderedProminent)
                     }
+                    
+                    ToolbarItemGroup(placement: .navigationBarTrailing){
+                        Button {
+                            //show history of scanned receipts with result view
+                        } label: {
+                            Image(systemName: "clock.arrow.circlepath")
+                        }
+                        .disabled(true) // to change
+                        
+                        Button {
+                            showSettings = true
+                        } label: {
+                            Image(systemName: "gear")
+                        }
+                        .padding(.trailing,10)
+                        .sheet(isPresented: $showSettings) {
+                            
+                        }
+                    }
+
                 }
                 .navigationTitle("ReceiptSplitter")
             }

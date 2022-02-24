@@ -34,9 +34,9 @@ struct UserChoicesView: View {
                     }
 
                     List() {
-                        Section(header: Text("\(chosenItems.count) items — \(model.showPrice(price: model.balance(ofUser: user)))"), footer: Label("Items sorted by decreasing price", systemImage: "arrow.up.arrow.down")){
+                        Section(header: Text("\(chosenItems.count) items — \(model.showPrice(price: model.balance(ofUser: user)))"), footer: Label("Items sorted by decreasing price contribution", systemImage: "arrow.up.arrow.down")){
                         //Section {
-                            ForEach(chosenItems.sorted(by: {$0.price>$1.price})) { item in
+                            ForEach(chosenItems.sorted(by: {$0.price/Double($0.chosenBy.count)>$1.price/Double($1.chosenBy.count)})) { item in
                                 VStack {
                                     HStack {
                                         VStack(alignment: .leading, spacing: 2) {
@@ -78,7 +78,7 @@ struct UserChoicesDetailView_Previews: PreviewProvider {
     static let model: ModelData = {
         var model = ModelData()
         model.users = [User(name: "Hugo"), User(name: "Lucas"), User(name: "Thomas")]
-        model.listOfProductsAndPrices = [PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 4.99), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBC", name: "Finger Fish", price: 1.27), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBD", name: "Ice Cream Strawberry", price: 3.20)]
+        model.listOfProductsAndPrices = [PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 1.99), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBC", name: "Finger Fish", price: 1.27), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBD", name: "Ice Cream Strawberry", price: 3.20)]
         model.listOfProductsAndPrices[0].chosenBy = [model.users[0].id]
         model.listOfProductsAndPrices[1].chosenBy = [model.users[0].id, model.users[1].id]
         model.listOfProductsAndPrices[2].chosenBy = [model.users[0].id, model.users[1].id, model.users[2].id]
