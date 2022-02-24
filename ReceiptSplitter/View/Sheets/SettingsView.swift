@@ -37,7 +37,7 @@ struct SettingsView: View {
                     } header: {
                         Text("Contact")
                     } footer: {
-                        Text("Tell me about an issue with the app, or suggest me an idea for a new feature.")
+                        Text("Tell me about an issue with the app, or suggest me an idea for a new feature!")
                     }
                     .listRowBackground(Color.secondary.opacity(0.1))
 
@@ -94,8 +94,6 @@ struct SettingsView: View {
                         Button {
                             withAnimation() {
                                 visionParameters = Parameters().visionParameters
-                                showScanTutorial = Parameters().showScanTutorial
-                                showEditTutorial = Parameters().showEditTutorial
                             }
                         } label: {
                             Label("Reset Advanced Parameters", systemImage: "gobackward")
@@ -103,7 +101,7 @@ struct SettingsView: View {
                         .buttonStyle(.borderless)
 
                     } header: {
-                        Text("Advanced")
+                        Text("Advanced (image recognition)")
                     } footer: {
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Do not modify these parameters if you don't know what you do!")
