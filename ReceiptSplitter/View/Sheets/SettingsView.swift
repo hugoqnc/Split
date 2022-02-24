@@ -105,14 +105,13 @@ struct SettingsView: View {
                     } header: {
                         Text("Advanced")
                     } footer: {
-                        VStack(alignment: .leading, spacing: 3) {
+                        VStack(alignment: .leading, spacing: 4) {
                             Text("Do not modify these parameters if you don't know what you do!")
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text("Multiplicative Height Epsilon: ")
-                                Text("Minimum Area Coverage: ")
-                                Text("Maximum Margin: ")
+                            VStack(alignment: .leading, spacing: 4) {
+                                Label("Multiplicative Height Epsilon: \"accepted\" lines of the receipt have a median height more or less this value in percentage", systemImage: "plus.forwardslash.minus")
+                                Label("Minimum Area Coverage: minimum overlap percentage between the \"text rectangle\" extended on the right and the \"price rectangle\"", systemImage: "rectangle.on.rectangle")
+                                Label("Maximum Margin: \"accepted\" lines of the receipt protrude to the left and right outside the margins defined by this percentage", systemImage: "arrow.left.and.right")
                             }
-                            .padding(.leading, 10)
                         } //TODO: precise what each parameter does
                         
                     }
