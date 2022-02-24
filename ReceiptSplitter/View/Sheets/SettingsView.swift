@@ -13,7 +13,7 @@ struct SettingsView: View {
     @State var visionParameters = Parameters().visionParameters
     @State var showScanTutorial = Parameters().showScanTutorial
     @State var showEditTutorial = Parameters().showEditTutorial
-    @FocusState var isKeyboardShown: Bool
+    //@FocusState var isKeyboardShown: Bool
     
     var body: some View {
         NavigationView {
@@ -43,34 +43,52 @@ struct SettingsView: View {
 
                     Section {
                         HStack {
-                            Text("Multiplicative Height Epsilon")
+                            VStack(alignment: .leading, spacing: 3) {
+                                Text("Multiplicative Height Epsilon")
+                                    .padding(.top,3)
+                                Text("Between 0 and 1")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
                             Spacer()
                             TextField("", value: $visionParameters.epsilonHeight, format: .number)
                                 .textFieldStyle(.roundedBorder)
                                 .keyboardType(.decimalPad)
                                 .frame(width: 55)
                                 .foregroundColor(.accentColor)
-                                .focused($isKeyboardShown)
+                                //.focused($isKeyboardShown)
                         }
                         HStack {
-                            Text("Minimum Area Coverage")
+                            VStack(alignment: .leading, spacing: 3) {
+                                Text("Minimum Area Coverage")
+                                    .padding(.top,3)
+                                Text("Between 0 and 1")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
                             Spacer()
                             TextField("", value: $visionParameters.minAreaCoverage, format: .number)
                                 .textFieldStyle(.roundedBorder)
                                 .keyboardType(.decimalPad)
                                 .frame(width: 55)
                                 .foregroundColor(.accentColor)
-                                .focused($isKeyboardShown)
+                                //.focused($isKeyboardShown)
                         }
                         HStack {
-                            Text("Maximum Margin")
+                            VStack(alignment: .leading, spacing: 3) {
+                                Text("Maximum Margin")
+                                    .padding(.top,3)
+                                Text("Between 0 and 1")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
                             Spacer()
                             TextField("", value: $visionParameters.maxMargin, format: .number)
                                 .textFieldStyle(.roundedBorder)
                                 .keyboardType(.decimalPad)
                                 .frame(width: 55)
                                 .foregroundColor(.accentColor)
-                                .focused($isKeyboardShown)
+                                //.focused($isKeyboardShown)
                         }
                         
                         Button {
@@ -121,7 +139,7 @@ struct SettingsView: View {
                 }
                 ToolbarItem(placement: .keyboard) {
                     Button {
-                        isKeyboardShown = false
+                        //isKeyboardShown = false
                     } label: {
                         Text("OK")
                     }

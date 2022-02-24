@@ -85,6 +85,14 @@ struct StartView: View {
                         Button {
                             let ok = isFinalUsersCorrect()
                             if ok {
+                                ParametersStore.load { result in
+                                    switch result {
+                                    case .failure(let error):
+                                        fatalError(error.localizedDescription)
+                                    case .success(let parameters):
+                                        model.parameters = parameters
+                                    }
+                                }
                                 for name in names{
                                     model.users.append(User(name: name))
                                 }

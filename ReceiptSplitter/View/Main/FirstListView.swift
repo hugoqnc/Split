@@ -280,7 +280,7 @@ struct FirstListView: View {
                         .onAppear(perform: {
                             let secondsToDelay = 0.7
                             DispatchQueue.main.asyncAfter(deadline: .now() + secondsToDelay) {
-                                showTutorialScreen = true
+                                showTutorialScreen = model.parameters.showEditTutorial
                             }
                     })
                     }
