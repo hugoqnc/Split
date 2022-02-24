@@ -120,7 +120,7 @@ struct StartView: View {
                         }
                         .padding(.trailing,10)
                         .sheet(isPresented: $showSettings) {
-                            
+                            SettingsView()
                         }
                     }
 
