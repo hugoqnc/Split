@@ -33,11 +33,10 @@ https://user-images.githubusercontent.com/67365803/155156726-2c296a5e-43b8-47fe-
 - [x] iPad optimized version that takes advantage of the large screen
 - [x] Scan several receipts from the beginning to group all transactions 
 - [x] Sort expenses by price to better manage your budget
-
+- [x] Modify advanced image recognition parameters in settings
 
 ## Upcoming features
 - [ ] Save the results of the allocation of receipts 
-- [ ] Add settings to hide tutorials, and to modify advanced image recognition parameters
 - [ ] Integration to the [Tricount API](https://www.tricount.com/en/api)
 - [ ] And hopefully, publication of ReceiptSplitter on the App Store
 
