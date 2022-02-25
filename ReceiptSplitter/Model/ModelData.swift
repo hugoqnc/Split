@@ -14,7 +14,7 @@ final class ModelData: ObservableObject {
     @Published var listOfProductsAndPrices: [PairProductPrice] = []
     @Published var currency: Currency = Currency.default
     @Published var images: [IdentifiedImage] = []
-    @Published var parameters = Parameters()
+    @Published var parameters = Parameters.default
     var date = Date()
     
     var totalBalance: Double {
