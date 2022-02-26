@@ -64,7 +64,7 @@ struct HomeView: View {
                     Button {
                         showAllList = true
                     } label: {
-                        Label("See all transactions", systemImage: "list.bullet")
+                        Label("All transactions", systemImage: "list.bullet")
                     }
                     .padding(15)
                     

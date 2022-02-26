@@ -62,7 +62,7 @@ struct SettingsView: View {
                             VStack(alignment: .leading, spacing: 3) {
                                 Text("Multiplicative Height Epsilon")
                                     .padding(.top,3)
-                                Text("Between 0 and 1")
+                                Text("Should be between 0 and 1")
                                     .font(.caption)
                                     .foregroundColor(.secondary)
                             }
@@ -78,7 +78,7 @@ struct SettingsView: View {
                             VStack(alignment: .leading, spacing: 3) {
                                 Text("Minimum Area Coverage")
                                     .padding(.top,3)
-                                Text("Between 0 and 1")
+                                Text("Should be between 0 and 1")
                                     .font(.caption)
                                     .foregroundColor(.secondary)
                             }
@@ -94,7 +94,7 @@ struct SettingsView: View {
                             VStack(alignment: .leading, spacing: 3) {
                                 Text("Maximum Margin")
                                     .padding(.top,3)
-                                Text("Between 0 and 1")
+                                Text("Should be between 0 and 1")
                                     .font(.caption)
                                     .foregroundColor(.secondary)
                             }

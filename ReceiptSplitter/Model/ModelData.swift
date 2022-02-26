@@ -74,7 +74,7 @@ final class ModelData: ObservableObject {
         
         let items = chosenItems(ofUser: user)
         
-        for item in items {
+        for item in items.sorted(by: {$0.price/Double($0.chosenBy.count)>$1.price/Double($1.chosenBy.count)}) {
             var text = "\n  \(item.name)\n"
             text.append("  \(showPrice(price: item.price/Double(item.chosenBy.count))) [\(showPrice(price: item.price) + " ÷ "+String(item.chosenBy.count))]\n")
             sharedText.append(text)

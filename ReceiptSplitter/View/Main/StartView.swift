@@ -90,12 +90,7 @@ struct StartView: View {
                                     case .failure(let error):
                                         fatalError(error.localizedDescription) //TODO: what if nothing is loaded yet? write an init
                                     case .success(let parameters):
-                                        print(model.parameters)
-                                        print(parameters)
                                         model.parameters = parameters
-                                        print(model.parameters)
-                                        print(parameters)
-                                        print("___")
                                     }
                                 }
                                 for name in names{
@@ -111,10 +106,8 @@ struct StartView: View {
                                 Image(systemName: "arrow.right")
                                 Text("Next")
                             }
-                            //.frame(minWidth: 0, maxWidth: .infinity)
                         }
                         .disabled(names.isEmpty)
-                        .padding()
                         .buttonStyle(.borderedProminent)
                     }
                     
