@@ -51,6 +51,13 @@ struct PairProductPrice: Identifiable, Equatable {
     }
 }
 
+struct PairProductPriceCodable: Identifiable, Equatable, Codable {
+    var id: String = ""
+    var name: String = ""
+    var price: Double = 0
+    var chosenBy: [UUID] = []
+}
+
 struct IdentifiedImage: Identifiable {
     init(id: String, image: UIImage? = nil) {
         self.id = id

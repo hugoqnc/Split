@@ -23,11 +23,11 @@ struct StartView: View {
         
         if model.startTheProcess {
             ShowScannerView()
-        } else if showHistoryView {
-            HistoryView(showHistoryView: $showHistoryView)
         } else {
             NavigationView {
                 VStack{
+                    NavigationLink(destination: HistoryView(), isActive: $showHistoryView) { EmptyView() }
+                        .isDetailLink(false)
                     
                     PreferenceButton(names: $names, newUserName: $newUserName, currencyType: $currencyType, showAlert1: $showAlert1, showAlert2: $showAlert2)
                         .padding(10)
@@ -92,7 +92,7 @@ struct StartView: View {
                                 ParametersStore.load { result in
                                     switch result {
                                     case .failure(let error):
-                                        fatalError(error.localizedDescription) //TODO: what if nothing is loaded yet? write an init
+                                        fatalError(error.localizedDescription)
                                     case .success(let parameters):
                                         model.parameters = parameters
                                     }
@@ -143,7 +143,6 @@ struct StartView: View {
                             SettingsView()
                         }
                     }
-
                 }
                 .navigationTitle("ReceiptSplitter")
             }

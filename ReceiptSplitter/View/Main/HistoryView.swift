@@ -8,27 +8,37 @@
 import SwiftUI
 
 struct HistoryView: View {
-    
-    @Binding var showHistoryView: Bool
+    @State private var results = Results.default
     
     var body: some View {
-        VStack {
-            Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-            Button {
-                withAnimation() {
-                    showHistoryView = false
+        //NavigationView {
+            VStack {                
+                List {
+                    ForEach(results.results) { result in
+                        NavigationLink("\(result.listOfProductsAndPrices.count) items") {
+                            ResultViewHistoryWrapper(users: result.users, listOfProductsAndPricesCodable: result.listOfProductsAndPrices, currency: result.currency)
+                        }
+                    }
                 }
-            } label: {
-                Text("Back")
             }
-        }
-        .transition(.slide)
-
+            .navigationTitle("History")
+            .navigationBarTitleDisplayMode(.inline)
+            .onAppear {
+                ResultsStore.load { result in
+                    switch result {
+                    case .failure(let error):
+                        fatalError(error.localizedDescription)
+                    case .success(let results):
+                        self.results = results
+                    }
+                }
+            }
+        //}
     }
 }
 
 struct HistoryView_Previews: PreviewProvider {
     static var previews: some View {
-        HistoryView(showHistoryView: .constant(true))
+        HistoryView()
     }
 }

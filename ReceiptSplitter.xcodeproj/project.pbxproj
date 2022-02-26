@@ -30,6 +30,8 @@
 		4F43BDFD2789A9CD005CDD6D /* LoadItemsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F43BDFC2789A9CD005CDD6D /* LoadItemsView.swift */; };
 		4F43BDFF2789B0AD005CDD6D /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F43BDFE2789B0AD005CDD6D /* ResultView.swift */; };
 		4F4902A827CA99AF0047A441 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4902A727CA99AF0047A441 /* HistoryView.swift */; };
+		4F4902AC27CAC12F0047A441 /* ResultsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4902AB27CAC12F0047A441 /* ResultsStore.swift */; };
+		4F4902AE27CAC9D10047A441 /* ResultViewHistoryWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4902AD27CAC9D10047A441 /* ResultViewHistoryWrapper.swift */; };
 		4F4A55B327A1B906001F84E3 /* PreferencesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4A55B227A1B906001F84E3 /* PreferencesStore.swift */; };
 		4F4A55B827A2AA5B001F84E3 /* PreferenceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4A55B727A2AA5B001F84E3 /* PreferenceButton.swift */; };
 		4F63DF0727A421B000E2CA3A /* InputItemDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F63DF0627A421B000E2CA3A /* InputItemDetails.swift */; };
@@ -94,6 +96,8 @@
 		4F43BDFC2789A9CD005CDD6D /* LoadItemsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadItemsView.swift; sourceTree = "<group>"; };
 		4F43BDFE2789B0AD005CDD6D /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
 		4F4902A727CA99AF0047A441 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		4F4902AB27CAC12F0047A441 /* ResultsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsStore.swift; sourceTree = "<group>"; };
+		4F4902AD27CAC9D10047A441 /* ResultViewHistoryWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewHistoryWrapper.swift; sourceTree = "<group>"; };
 		4F4A55B227A1B906001F84E3 /* PreferencesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesStore.swift; sourceTree = "<group>"; };
 		4F4A55B727A2AA5B001F84E3 /* PreferenceButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceButton.swift; sourceTree = "<group>"; };
 		4F63DF0627A421B000E2CA3A /* InputItemDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputItemDetails.swift; sourceTree = "<group>"; };
@@ -266,6 +270,7 @@
 				4F4A55B727A2AA5B001F84E3 /* PreferenceButton.swift */,
 				4F94B8FE27A7326400F7B10F /* MiniRepartitionRow.swift */,
 				4F94B90027A7476F00F7B10F /* StatisticRectangle.swift */,
+				4F4902AD27CAC9D10047A441 /* ResultViewHistoryWrapper.swift */,
 			);
 			path = Others;
 			sourceTree = "<group>";
@@ -283,6 +288,7 @@
 			isa = PBXGroup;
 			children = (
 				4F80BED627C7B7A400CA73B3 /* ParametersStore.swift */,
+				4F4902AB27CAC12F0047A441 /* ResultsStore.swift */,
 				4F4A55B227A1B906001F84E3 /* PreferencesStore.swift */,
 			);
 			path = Stores;
@@ -436,6 +442,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F4902AC27CAC12F0047A441 /* ResultsStore.swift in Sources */,
 				4F37A89A27883C2B00947426 /* ListSheetView.swift in Sources */,
 				4F309E6C2785F80600F55BC6 /* AttributionView.swift in Sources */,
 				4F309E6A2785EB7600F55BC6 /* CurrentExpensesRow.swift in Sources */,
@@ -467,6 +474,7 @@
 				4F309E5A2784F68200F55BC6 /* Text.swift in Sources */,
 				4F43BDFD2789A9CD005CDD6D /* LoadItemsView.swift in Sources */,
 				4F43BDFF2789B0AD005CDD6D /* ResultView.swift in Sources */,
+				4F4902AE27CAC9D10047A441 /* ResultViewHistoryWrapper.swift in Sources */,
 				4F309E672785AB5500F55BC6 /* ModelData.swift in Sources */,
 				4F309E612784F89900F55BC6 /* Users.swift in Sources */,
 				4F309E5B2784F68200F55BC6 /* ScannerView.swift in Sources */,

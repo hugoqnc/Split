@@ -165,8 +165,15 @@ struct ResultView: View {
             .toolbar {
                 ToolbarItem(placement: .bottomBar) {
                     Button {
-                        withAnimation() {
-                            model.eraseModelData()
+                        ResultsStore.append(users: model.users, listOfProductsAndPrices: model.listOfProductsAndPrices, currency: model.currency) { result in
+                            switch result {
+                            case .failure(let error):
+                                fatalError(error.localizedDescription)
+                            case .success(_):
+                                withAnimation() {
+                                    model.eraseModelData()
+                                }
+                            }
                         }
                     } label: {
                         HStack {
