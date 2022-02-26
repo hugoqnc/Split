@@ -37,7 +37,7 @@ struct HomeView: View {
                                         ForEach(model.listOfProductsAndPrices) { pair in
                                             let number = model.listOfProductsAndPrices.firstIndex(of: pair)!
                                             if itemCounter==number {
-                                                AttributionView(pair: $model.listOfProductsAndPrices[number], isValidated: $isValidated, itemCounter: itemCounter)
+                                                AttributionView(pair: $model.listOfProductsAndPrices[number], isValidated: $isValidated, itemCounter: itemCounter, initialSelection: model.parameters.selectAllUsers ? model.users.map({ user in user.id }) : [])
                                                     .onChange(of: isValidated) { newValue in
                                                         if newValue {
                                                             itemCounter += 1
@@ -108,6 +108,7 @@ struct HomeView_Previews: PreviewProvider {
             .onAppear {
                 model.users = [User(name: "Hugo"), User(name: "Lucas"), User(name: "Thomas")]
                 model.listOfProductsAndPrices = [PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 4.99), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBC", name: "Finger Fish", price: 1.27), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBD", name: "Ice Cream Strawberry", price: 3.20)]
+                model.parameters.selectAllUsers = true
             }
     }
 }

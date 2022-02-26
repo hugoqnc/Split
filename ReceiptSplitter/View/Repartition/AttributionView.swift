@@ -8,13 +8,20 @@
 import SwiftUI
 
 struct AttributionView: View {
+    internal init(pair: Binding<PairProductPrice>, isValidated: Binding<Bool>, itemCounter: Int, initialSelection: [UUID]) {
+        self._pair = pair
+        self._isValidated = isValidated
+        self.itemCounter = itemCounter
+        self._selections = State(initialValue: initialSelection)
+    }
+    
     
     @Binding var pair: PairProductPrice
     @Binding var isValidated: Bool
     var itemCounter: Int
     
     @EnvironmentObject var model: ModelData
-    @State var selections: [UUID] = []
+    @State var selections: [UUID]
     @State private var showAlert1 = false
     @State private var isEditorMode = false
     @State private var showSafariView = false
@@ -150,16 +157,8 @@ struct AttributionView: View {
                         } else {
                             let index = model.listOfProductsAndPrices.firstIndex(of: pair)!
                             model.listOfProductsAndPrices[index].chosenBy = selections
-//                            for id in selections{
-//                                if let row = model.users.firstIndex(where: {$0.id == id}) {
-//                                    let chosenItem = ChosenItem(name: pair.name, price: pair.price, dividedBy: divider)
-//                                    model.users[row].chosenItems.append(chosenItem)
-//                                    //print("validated: \(pair.name)")
-//                                }
-//
-//                            }
-                            selections = []
                             isValidated = true
+                            //selections = []
                         }
                     } label: {
                         Image(systemName: "checkmark.circle.fill")
@@ -181,13 +180,13 @@ struct AttributionView: View {
             }
             .padding(20)
         }
-        .onAppear(perform: {
-            if model.parameters.selectAllUsers {
-                for user in model.users {
-                    selections.append(user.id)
-                }
-            }
-        })
+//        .onAppear(perform: {
+//            if model.parameters.selectAllUsers {
+//                for user in model.users {
+//                    selections.append(user.id)
+//                }
+//            }
+//        })
         .onAppear(perform: {
             if pair.isNewItem {
                 let secondsToDelay = 0.5
@@ -252,7 +251,7 @@ struct AttributionView_Previews: PreviewProvider {
     static let model = ModelData()
 
     static var previews: some View {
-        AttributionView(pair: .constant(PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 4.99)), isValidated: .constant(false), itemCounter: 0)
+        AttributionView(pair: .constant(PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 4.99)), isValidated: .constant(false), itemCounter: 0, initialSelection: [])
             .environmentObject(model)
             .onAppear {
                 model.users = [User(name: "Hugo"), User(name: "Lucas"), User(name: "Thomas")]
