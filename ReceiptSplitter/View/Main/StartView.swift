@@ -14,6 +14,7 @@ struct StartView: View {
     @State private var showAlert1 = false
     @State private var showAlert2 = false
     @State private var showSettings = false
+    @State private var disabledBecauseOfTiming = false
     
     @State private var newUserName: String = ""
         
@@ -107,8 +108,17 @@ struct StartView: View {
                                 Text("Next")
                             }
                         }
-                        .disabled(names.isEmpty)
+                        .disabled(names.isEmpty || disabledBecauseOfTiming)
                         .buttonStyle(.borderedProminent)
+                        .onChange(of: model.startTheProcess) { newValue in
+                            if !newValue {
+                                disabledBecauseOfTiming = true //disables the "next" button for a short moment when "startTheProcess" has changed, but the rest of the model may not have been cleaned yet
+                                let secondsToDelay = 0.4
+                                DispatchQueue.main.asyncAfter(deadline: .now() + secondsToDelay) {
+                                    disabledBecauseOfTiming = false
+                                }
+                            }
+                        }
                     }
                     
                     ToolbarItemGroup(placement: .navigationBarTrailing){

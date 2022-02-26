@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import SwiftUI
 
 final class ModelData: ObservableObject {
     @Published var startTheProcess = false
@@ -173,11 +174,17 @@ final class ModelData: ObservableObject {
     }
     
     func eraseModelData() {
-        self.startTheProcess = false
-        self.users = []
-        self.listOfProductsAndPrices = []
-        self.currency = Currency.default
-        self.images = []
+        withAnimation {
+            self.startTheProcess = false
+        }
+        
+        let secondsToDelay = 0.35
+        DispatchQueue.main.asyncAfter(deadline: .now() + secondsToDelay) {
+            self.users = []
+            self.listOfProductsAndPrices = []
+            self.currency = Currency.default
+            self.images = []
+        }
     }
     func eraseScanData() {
         self.listOfProductsAndPrices = []

@@ -14,6 +14,7 @@ struct HomeView: View {
     @State private var itemCounter = 0
     @State private var showResult = false
     @State private var firstCardAppear = false
+    @State private var quitConfirmation = false
     
     var body: some View {
         if showResult {
@@ -70,6 +71,27 @@ struct HomeView: View {
                     
                 }
                 .navigationBarTitle(Text("ReceiptSplitter"), displayMode: .inline)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button {
+                            withAnimation() {
+                                quitConfirmation = true
+                            }
+                        } label: {
+                            Text("Quit")
+                        }
+                        .tint(.red)
+                        .confirmationDialog(
+                            "If you quit now, you will lose your progress and nothing will be saved.",
+                             isPresented: $quitConfirmation,
+                            titleVisibility: .visible
+                        ) {
+                            Button("Quit", role: .destructive) {
+                                model.eraseModelData()
+                            }
+                        }
+                    }
+                }
 
             }
             .ignoresSafeArea(.keyboard)
