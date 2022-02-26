@@ -23,6 +23,7 @@ struct ResultUnit: Codable, Identifiable {
     var users: [User]
     var listOfProductsAndPrices: [PairProductPriceCodable]
     var currency: Currency
+    var date: Date
 }
 
 class ResultsStore: ObservableObject {
@@ -73,7 +74,7 @@ class ResultsStore: ObservableObject {
         }
     }
     
-    static func append(users: [User], listOfProductsAndPrices: [PairProductPrice], currency: Currency, completion: @escaping (Result<Bool, Error>)->Void) {
+    static func append(users: [User], listOfProductsAndPrices: [PairProductPrice], currency: Currency, date: Date, completion: @escaping (Result<Bool, Error>)->Void) {
         var listOfProductsAndPricesCodable: [PairProductPriceCodable] = []
         for pair in listOfProductsAndPrices {
             var pairCod = PairProductPriceCodable()
@@ -84,7 +85,7 @@ class ResultsStore: ObservableObject {
             listOfProductsAndPricesCodable.append(pairCod)
         }
         
-        let resultUnit = ResultUnit(users: users, listOfProductsAndPrices: listOfProductsAndPricesCodable, currency: currency)
+        let resultUnit = ResultUnit(users: users, listOfProductsAndPrices: listOfProductsAndPricesCodable, currency: currency, date: date)
         append(resultUnit: resultUnit, completion: completion)
     }
     

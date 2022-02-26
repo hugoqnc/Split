@@ -10,6 +10,7 @@ import SwiftUI
 struct ListSheetView: View {
     @EnvironmentObject var model: ModelData
     @Binding var itemCounter: Int
+    var isShownInHistory = false
     @Environment(\.dismiss) var dismiss
     @State private var editItemAlert = false
     @State private var editPair = PairProductPrice()
@@ -24,7 +25,7 @@ struct ListSheetView: View {
                         .frame(height:0)
 
                     List() {
-                        Section(header: Text("\(model.listOfProductsAndPrices.count) items — \(model.showPrice(price: model.totalPrice))"), footer: Label("Long press on an assigned item to modify it", systemImage: "lightbulb")){
+                        Section(header: Text("\(model.listOfProductsAndPrices.count) items — \(model.showPrice(price: model.totalPrice))"), footer: isShownInHistory ? Label("Items ordered as they were on the receipt", systemImage: "arrow.up.arrow.down") : Label("Long press on an assigned item to modify it", systemImage: "lightbulb")){
                             ForEach($model.listOfProductsAndPrices) { $pair in
                                 HStack {
                                     if itemCounter>=0 ? pair.id==model.listOfProductsAndPrices[itemCounter].id : false {
@@ -45,21 +46,23 @@ struct ListSheetView: View {
                                                     .padding(.bottom, 3)
                                             }
                                             .contextMenu{
-                                                Button{
-                                                    editItemAlert = true
-                                                    editPair = pair
-                                                } label: {
-                                                    Label("Edit this item", systemImage: "pencil")
-                                                }
-                                                Button(role: .destructive){
-                                                    withAnimation() {
-                                                        itemCounter -= 1
-                                                        if let index = model.listOfProductsAndPrices.firstIndex(where: {$0.id == pair.id}) {
-                                                            model.listOfProductsAndPrices.remove(at: index)
-                                                        }
+                                                if !isShownInHistory {
+                                                    Button{
+                                                        editItemAlert = true
+                                                        editPair = pair
+                                                    } label: {
+                                                        Label("Edit this item", systemImage: "pencil")
                                                     }
-                                                } label: {
-                                                    Label("Delete this item", systemImage: "trash")
+                                                    Button(role: .destructive){
+                                                        withAnimation() {
+                                                            itemCounter -= 1
+                                                            if let index = model.listOfProductsAndPrices.firstIndex(where: {$0.id == pair.id}) {
+                                                                model.listOfProductsAndPrices.remove(at: index)
+                                                            }
+                                                        }
+                                                    } label: {
+                                                        Label("Delete this item", systemImage: "trash")
+                                                    }
                                                 }
                                             }
                                         } else {

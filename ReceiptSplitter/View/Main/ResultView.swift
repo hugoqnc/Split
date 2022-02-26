@@ -9,6 +9,7 @@ import SwiftUI
 import UIKit
 
 struct ResultView: View {
+    var isShownInHistory = false
     @EnvironmentObject var model: ModelData
     @State private var showAllList = false
     @State private var showUserDetails = false
@@ -68,7 +69,7 @@ struct ResultView: View {
                                 }
                             }
                         }
-                        .padding(.top,35)
+                        .padding(.top,isShownInHistory ? 0 : 35)
                         .padding(.bottom,5)
                     }
                     
@@ -91,11 +92,13 @@ struct ResultView: View {
                                 Text("Share detailed results")
                             }
                             
-                            Button {
-                                chosenSharingOption = "scan"
-                                showSharingOptions = true
-                            } label: {
-                                Text("Share scanned receipt")
+                            if !isShownInHistory {
+                                Button {
+                                    chosenSharingOption = "scan"
+                                    showSharingOptions = true
+                                } label: {
+                                    Text("Share scanned receipt")
+                                }
                             }
                         } label: {
                             Image(systemName: "square.and.arrow.up")
@@ -137,7 +140,7 @@ struct ResultView: View {
                                     selectedUser = user
                                     showIndividualSharingOptions = true
                                 } label: {
-                                    Label("See all", systemImage: "square.and.arrow.up")
+                                    Label("", systemImage: "square.and.arrow.up")
                                         .labelStyle(.iconOnly)
                                 }
                                 .padding(.leading,7)
@@ -164,29 +167,31 @@ struct ResultView: View {
             .navigationBarHidden(true)
             .toolbar {
                 ToolbarItem(placement: .bottomBar) {
-                    Button {
-                        ResultsStore.append(users: model.users, listOfProductsAndPrices: model.listOfProductsAndPrices, currency: model.currency) { result in
-                            switch result {
-                            case .failure(let error):
-                                fatalError(error.localizedDescription)
-                            case .success(_):
-                                withAnimation() {
-                                    model.eraseModelData()
+                    if !isShownInHistory {
+                        Button {
+                            ResultsStore.append(users: model.users, listOfProductsAndPrices: model.listOfProductsAndPrices, currency: model.currency, date: model.date) { result in
+                                switch result {
+                                case .failure(let error):
+                                    fatalError(error.localizedDescription)
+                                case .success(_):
+                                    withAnimation() {
+                                        model.eraseModelData()
+                                    }
                                 }
                             }
+                        } label: {
+                            HStack {
+                                Image(systemName: "checkmark")
+                                Text("Done")
+                            }
                         }
-                    } label: {
-                        HStack {
-                            Image(systemName: "checkmark")
-                            Text("Done")
-                        }
+                        .buttonStyle(.borderedProminent)
+                        .padding(7)
                     }
-                    .buttonStyle(.borderedProminent)
-                    .padding(7)
                 }
             }
             .sheet(isPresented: $showAllList, content: {
-                ListSheetView(itemCounter: .constant(-1))
+                ListSheetView(itemCounter: .constant(-1), isShownInHistory: true)
             })
             .sheet(isPresented: $showUserDetails, content: {
                 UserChoicesView(user: selectedUser)
