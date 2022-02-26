@@ -15,6 +15,16 @@ struct SettingsView: View {
     @State var parameters = Parameters()
     @FocusState var isKeyboardShown: Bool
     
+    var year: String {
+        get {
+            let date = Date()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy"
+            let yearString = dateFormatter.string(from: date)
+            return yearString
+        }
+    }
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -130,6 +140,15 @@ struct SettingsView: View {
                         
                     }
                     .listRowBackground(Color.secondary.opacity(0.1))
+                    
+                    HStack{
+                        Spacer()
+                        Text("© \(year) Hugo Queinnec ")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        Spacer()
+                    }
+
                 }
             }
             .navigationTitle("Settings")

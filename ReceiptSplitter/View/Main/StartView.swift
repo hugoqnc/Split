@@ -14,6 +14,7 @@ struct StartView: View {
     @State private var showAlert1 = false
     @State private var showAlert2 = false
     @State private var showSettings = false
+    @State private var showHistoryView = false
     @State private var disabledBecauseOfTiming = false
     
     @State private var newUserName: String = ""
@@ -22,6 +23,8 @@ struct StartView: View {
         
         if model.startTheProcess {
             ShowScannerView()
+        } else if showHistoryView {
+            HistoryView(showHistoryView: $showHistoryView)
         } else {
             NavigationView {
                 VStack{
@@ -123,11 +126,12 @@ struct StartView: View {
                     
                     ToolbarItemGroup(placement: .navigationBarTrailing){
                         Button {
-                            //show history of scanned receipts with result view
+                            withAnimation() {
+                                showHistoryView = true
+                            }
                         } label: {
                             Image(systemName: "clock.arrow.circlepath")
                         }
-                        .disabled(true) // to change
                         
                         Button {
                             showSettings = true
