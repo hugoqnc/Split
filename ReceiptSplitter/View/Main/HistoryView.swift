@@ -12,7 +12,7 @@ struct HistoryView: View {
     
     func date(resultUnit: ResultUnit) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .long
+        dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .none
         let dateString = dateFormatter.string(from: resultUnit.date)
         return dateString
@@ -27,6 +27,26 @@ struct HistoryView: View {
                             .navigationTitle(date(resultUnit: resultUnit))
                     } label: {
                         ResultCard(resultUnit: resultUnit)
+                    }
+                    .contextMenu{
+                        Button(role: .destructive){
+                            //remove from the view
+                            results.results.removeAll { r in
+                                r.id == resultUnit.id
+                            }
+                            
+                            //remove from persistent storage
+                            ResultsStore.remove(resultUnit: resultUnit) { result in
+                                switch result {
+                                case .failure(let error):
+                                    fatalError(error.localizedDescription)
+                                case .success(_):
+                                    print("deleted!")
+                                }
+                            }
+                        } label: {
+                            Label("Delete this receipt", systemImage: "trash")
+                        }
                     }
 
                 }

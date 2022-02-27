@@ -131,4 +131,36 @@ class ResultsStore: ObservableObject {
 
         }
     }
+    
+    static func remove(resultUnit: ResultUnit, completion: @escaping (Result<Bool, Error>)->Void) {
+        DispatchQueue.global(qos: .background).async {
+            
+            load { result in
+                switch result {
+                case .failure(let error):
+                    fatalError(error.localizedDescription)
+                    
+                case .success(let results):
+                    var newResults = results
+                    newResults.results.removeAll { r in
+                        r.id == resultUnit.id
+                    }
+                    
+                    do {
+                        let data = try JSONEncoder().encode(newResults)
+                        let outfile = try fileURL()
+                        try data.write(to: outfile)
+                        DispatchQueue.main.async {
+                            completion(.success(true))
+                        }
+                    } catch {
+                        DispatchQueue.main.async {
+                            completion(.failure(error))
+                        }
+                    }
+                }
+            }
+
+        }
+    }
 }

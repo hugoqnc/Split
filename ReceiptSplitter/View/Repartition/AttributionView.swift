@@ -180,13 +180,6 @@ struct AttributionView: View {
             }
             .padding(20)
         }
-//        .onAppear(perform: {
-//            if model.parameters.selectAllUsers {
-//                for user in model.users {
-//                    selections.append(user.id)
-//                }
-//            }
-//        })
         .onAppear(perform: {
             if pair.isNewItem {
                 let secondsToDelay = 0.5

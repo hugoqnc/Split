@@ -22,6 +22,16 @@ struct ResultCard: View {
         }
     }
     
+    var time: String {
+        get {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = .none
+            dateFormatter.timeStyle = .short
+            let timeString = dateFormatter.string(from: resultUnit.date)
+            return timeString
+        }
+    }
+    
     var namesText: String {
         get {
             var namesText = ""
@@ -56,9 +66,15 @@ struct ResultCard: View {
         HStack {
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(date.uppercased())
-                        .font(.footnote)
-                        .fontWeight(.semibold)
+                    HStack {
+                        Text(date.uppercased())
+                            .font(.footnote)
+                            .fontWeight(.semibold)
+                        Spacer()
+                        Text(time.uppercased())
+                            .font(.footnote)
+                            .fontWeight(.semibold)
+                    }
                     Text(String(round(totalPrice * 100) / 100.0)+resultUnit.currency.value + " — \(resultUnit.listOfProductsAndPrices.count) items")
                         .font(.title)
                         .fontWeight(.semibold)
@@ -68,6 +84,7 @@ struct ResultCard: View {
                         .font(.subheadline)
                         .foregroundColor(colorMatching)
                         .brightness(colorScheme == .dark ? 0 : -0.1)
+                        .lineLimit(1)
                 }
                 Spacer()
                 Image(systemName: "chevron.right")
@@ -105,7 +122,7 @@ extension UIColor {
 
 struct ResultCard_Previews: PreviewProvider {
     static let resultUnit: ResultUnit = {
-        let users = [User(name: "Hugo"), User(name: "Lucas"), User(name: "Thomas")]
+        let users = [User(name: "Hugo"), User(name: "Lucas"), User(name: "Thomas"), User(name: "Corentin"), User(name: "Nicolas"), User(name: "Hortense")]
         var listOfProductsAndPrices = [PairProductPriceCodable(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 4.99), PairProductPriceCodable(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBC", name: "Finger Fish", price: 1.27), PairProductPriceCodable(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBD", name: "Ice Cream Strawberry", price: 3.20)]
         listOfProductsAndPrices[0].chosenBy = [users[0].id]
         listOfProductsAndPrices[1].chosenBy = [users[0].id, users[1].id]
