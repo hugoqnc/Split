@@ -46,7 +46,7 @@ class ResultsStore: ObservableObject {
                     }
                     return
                 }
-                let results = try JSONDecoder().decode(Results.self, from: file.availableData)
+                let results = try PropertyListDecoder().decode(Results.self, from: file.availableData)
                 DispatchQueue.main.async {
                     completion(.success(results))
                 }
@@ -67,7 +67,7 @@ class ResultsStore: ObservableObject {
     static func save(results: Results, completion: @escaping (Result<Bool, Error>)->Void) {
         DispatchQueue.global(qos: .background).async {
             do {
-                let data = try JSONEncoder().encode(results)
+                let data = try PropertyListEncoder().encode(results)
                 let outfile = try fileURL()
                 try data.write(to: outfile)
                 DispatchQueue.main.async {
@@ -110,7 +110,7 @@ class ResultsStore: ObservableObject {
                     //fatalError(error.localizedDescription)
                     
                     do {
-                        let data = try JSONEncoder().encode(Results(results: [resultUnit]))
+                        let data = try PropertyListEncoder().encode(Results(results: [resultUnit]))
                         let outfile = try fileURL()
                         try data.write(to: outfile)
                         DispatchQueue.main.async {
@@ -127,7 +127,7 @@ class ResultsStore: ObservableObject {
                     newResults.results.append(resultUnit)
                     
                     do {
-                        let data = try JSONEncoder().encode(newResults)
+                        let data = try PropertyListEncoder().encode(newResults)
                         let outfile = try fileURL()
                         try data.write(to: outfile)
                         DispatchQueue.main.async {
@@ -159,7 +159,7 @@ class ResultsStore: ObservableObject {
                     }
                     
                     do {
-                        let data = try JSONEncoder().encode(newResults)
+                        let data = try PropertyListEncoder().encode(newResults)
                         let outfile = try fileURL()
                         try data.write(to: outfile)
                         DispatchQueue.main.async {
