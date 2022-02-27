@@ -19,7 +19,7 @@ struct NoHistoryView: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 33.0, height: 30.0)
                     .font(.largeTitle)
-                    .foregroundColor(.red)
+                    .foregroundColor(.green)
                     .padding(.top)
                     .padding(.bottom,5)
                 HStack {

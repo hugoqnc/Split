@@ -44,6 +44,7 @@ struct ResultViewHistoryWrapper: View {
                                 .resizable()
                                 .scaledToFit()
                                 .padding(5)
+                                .frame(maxWidth: 500)
                         }
                     }
                 }
