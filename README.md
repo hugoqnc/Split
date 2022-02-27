@@ -21,6 +21,7 @@ https://user-images.githubusercontent.com/67365803/155156726-2c296a5e-43b8-47fe-
 - [x] Use it from two to an unlimited number of people
 - [x] Quickly display images corresponding to the item name on the receipt, to easily understand what it refers to
 - [x] Share the results using any app you want
+- [x] Keeps a history of all receipts and of their distribution
 - [x] Minimalist and native design for iOS
 - [X] Dark Mode fully supported
 - [x] Add, delete or modify items on the fly
@@ -36,7 +37,6 @@ https://user-images.githubusercontent.com/67365803/155156726-2c296a5e-43b8-47fe-
 - [x] Modify advanced image recognition parameters in settings
 
 ## Upcoming features
-- [ ] Save the results of the allocation of receipts 
 - [ ] Integration to the [Tricount API](https://www.tricount.com/en/api)
 - [ ] And hopefully, publication of ReceiptSplitter on the App Store
 
