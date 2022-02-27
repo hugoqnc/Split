@@ -9,7 +9,7 @@ import SwiftUI
 
 struct StartView: View {
     @EnvironmentObject var model: ModelData
-    @State private var names: [String] = []//(repeating: "", count: 10)
+    @State private var names: [String] = []
     @State private var currencyType = Currency.default.symbol
     @State private var showAlert1 = false
     @State private var showAlert2 = false
@@ -26,7 +26,7 @@ struct StartView: View {
         } else {
             NavigationView {
                 VStack{
-                    NavigationLink(destination: HistoryView(), isActive: $showHistoryView) { EmptyView() }
+                    NavigationLink(destination: HistoryView(showHistoryView: $showHistoryView), isActive: $showHistoryView) { EmptyView() }
                         .isDetailLink(false)
                     
                     PreferenceButton(names: $names, newUserName: $newUserName, currencyType: $currencyType, showAlert1: $showAlert1, showAlert2: $showAlert2)

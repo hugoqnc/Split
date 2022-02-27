@@ -191,7 +191,7 @@ struct ResultView: View {
                 }
             }
             .sheet(isPresented: $showAllList, content: {
-                ListSheetView(itemCounter: .constant(-1), isShownInHistory: true)
+                ListSheetView(itemCounter: .constant(-1), isShownInHistory: isShownInHistory)
             })
             .sheet(isPresented: $showUserDetails, content: {
                 UserChoicesView(user: selectedUser)

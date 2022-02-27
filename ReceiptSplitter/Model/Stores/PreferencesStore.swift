@@ -20,7 +20,7 @@ class PreferencesStore: ObservableObject {
         try FileManager.default.url(for: .documentDirectory,
                                        in: .userDomainMask,
                                        appropriateFor: nil,
-                                       create: false)
+                                       create: true)
             .appendingPathComponent("preferences.data")
     }
     

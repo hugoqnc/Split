@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct HistoryView: View {
+    @Binding var showHistoryView: Bool
     @State private var results = Results.default
+    @State private var loadingDataIsFinished = false
     
     func date(resultUnit: ResultUnit) -> String {
         let dateFormatter = DateFormatter()
@@ -20,38 +22,66 @@ struct HistoryView: View {
     
     var body: some View {
         VStack {
-            ScrollView {
-                ForEach(results.results) { resultUnit in
-                    NavigationLink {
-                        ResultViewHistoryWrapper(resultUnit: resultUnit)
-                            .navigationTitle(date(resultUnit: resultUnit))
-                    } label: {
-                        ResultCard(resultUnit: resultUnit)
-                    }
-                    .contextMenu{
-                        Button(role: .destructive){
-                            //remove from the view
-                            results.results.removeAll { r in
-                                r.id == resultUnit.id
-                            }
-                            
-                            //remove from persistent storage
-                            ResultsStore.remove(resultUnit: resultUnit) { result in
-                                switch result {
-                                case .failure(let error):
-                                    fatalError(error.localizedDescription)
-                                case .success(_):
-                                    print("deleted!")
-                                }
-                            }
-                        } label: {
-                            Label("Delete this receipt", systemImage: "trash")
-                        }
+            if results.results.isEmpty && !loadingDataIsFinished {
+                ZStack {
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle())
+                }
+            } else if results.results.isEmpty && loadingDataIsFinished {
+                NoHistoryView(showHistoryView: $showHistoryView)
+            } else {
+                ScrollView {
+                    HStack {
+                        Text("\(results.results.count) saved reports".uppercased())
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                            .padding(.leading, 25)
+                            .padding(.top, 20)
+                            .padding(.bottom, -4)
+                        Spacer()
                     }
 
+                    ForEach(results.results.sorted(by: {$0.date > $1.date})) { resultUnit in
+                        NavigationLink {
+                            ResultViewHistoryWrapper(resultUnit: resultUnit)
+                                .navigationTitle(date(resultUnit: resultUnit))
+                        } label: {
+                            ResultCard(resultUnit: resultUnit)
+                        }
+                        .contextMenu{
+                            Button(role: .destructive){
+                                //remove from the view
+                                results.results.removeAll { r in
+                                    r.id == resultUnit.id
+                                }
+                                
+                                //remove from persistent storage
+                                ResultsStore.remove(resultUnit: resultUnit) { result in
+                                    switch result {
+                                    case .failure(let error):
+                                        fatalError(error.localizedDescription)
+                                    case .success(_):
+                                        print("deleted!")
+                                    }
+                                }
+                            } label: {
+                                Label("Delete this receipt", systemImage: "trash")
+                            }
+                        }
+
+                    }
+                    .tint(.primary)
+                    .padding(.top, 4)
+                    
+                    HStack {
+                        Label("Receipts ordered chronologically", systemImage: "arrow.up.arrow.down")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                            .padding(.horizontal, 25)
+                            .padding(.vertical, 5)
+                        Spacer()
+                    }
                 }
-                .tint(.primary)
-                .padding(.top, 25)
             }
         }
         .navigationTitle("History")
@@ -60,9 +90,10 @@ struct HistoryView: View {
             ResultsStore.load { result in
                 switch result {
                 case .failure(let error):
-                    fatalError(error.localizedDescription) //TODO: "Fatal error: The data couldn’t be read because it is missing." 
+                    fatalError(error.localizedDescription)
                 case .success(let results):
                     self.results = results
+                    loadingDataIsFinished = true
                 }
             }
         }
@@ -72,7 +103,7 @@ struct HistoryView: View {
 struct HistoryView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            HistoryView()
+            HistoryView(showHistoryView: .constant(true))
         }
     }
 }

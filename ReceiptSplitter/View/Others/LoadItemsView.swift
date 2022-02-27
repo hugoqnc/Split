@@ -88,7 +88,7 @@ struct LoadItemsView: View {
                     } label: {
                         Label("Try again", systemImage: "arrow.clockwise")
                     }
-                    .buttonStyle(.borderedProminent)
+                    .buttonStyle(.bordered)
                     .padding(.bottom,10)
                     .padding(.top,5)
 
