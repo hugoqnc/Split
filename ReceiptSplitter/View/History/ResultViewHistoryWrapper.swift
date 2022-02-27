@@ -32,9 +32,36 @@ struct ResultViewHistoryWrapper: View {
     
     var model: ModelData
     
+    @State private var showReceiptImage = false
+    
     var body: some View {
-        ResultView(isShownInHistory: true)
-            .environmentObject(model)
+        ZStack{
+            if showReceiptImage {
+                ScrollView {
+                    ForEach(model.images){ idImage in
+                        if let image = idImage.image {
+                            Image(uiImage: visualization(image, observations: idImage.boxes(listOfProductsAndPrices: model.listOfProductsAndPrices)))
+                                .resizable()
+                                .scaledToFit()
+                                .padding(5)
+                        }
+                    }
+                }
+            } else {
+                ResultView(isShownInHistory: true)
+                    .environmentObject(model)
+            }
+        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    showReceiptImage.toggle()
+                } label: {
+                    showReceiptImage ? Image(systemName: "doc.plaintext.fill") : Image(systemName: "doc.plaintext")
+                }
+
+            }
+        }
     }
 }
 

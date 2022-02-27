@@ -104,7 +104,7 @@ struct ResultView: View {
                             Image(systemName: "square.and.arrow.up")
                         }
                         .padding(.trailing, 30)
-                        .padding(.bottom,60)
+                        .padding(.bottom, isShownInHistory ? 0 : 60)
                     }
                 }
                 
