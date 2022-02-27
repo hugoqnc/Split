@@ -14,6 +14,10 @@ struct ResultViewHistoryWrapper: View {
         model.currency = resultUnit.currency
         model.date = resultUnit.date
         
+        for d in resultUnit.imagesData {
+            model.images.append(IdentifiedImage(id: UUID().uuidString, image: UIImage(data: d)!))
+        }
+        
         var listOfProductsAndPrices: [PairProductPrice] = []
         for pairCod in resultUnit.listOfProductsAndPrices {
             var pair = PairProductPrice()

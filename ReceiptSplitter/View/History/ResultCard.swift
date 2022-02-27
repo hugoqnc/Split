@@ -127,7 +127,7 @@ struct ResultCard_Previews: PreviewProvider {
         listOfProductsAndPrices[0].chosenBy = [users[0].id]
         listOfProductsAndPrices[1].chosenBy = [users[0].id, users[1].id]
         
-        var resultUnit = ResultUnit(id: UUID(), users: users, listOfProductsAndPrices: listOfProductsAndPrices, currency: Currency.default, date: Date())
+        var resultUnit = ResultUnit(id: UUID(), users: users, listOfProductsAndPrices: listOfProductsAndPrices, currency: Currency.default, date: Date(), imagesData: [])
         
         return resultUnit
     }()

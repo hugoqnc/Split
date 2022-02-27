@@ -24,6 +24,7 @@ struct ResultUnit: Codable, Identifiable {
     var listOfProductsAndPrices: [PairProductPriceCodable]
     var currency: Currency
     var date: Date
+    var imagesData: [Data]
 }
 
 class ResultsStore: ObservableObject {
@@ -49,9 +50,15 @@ class ResultsStore: ObservableObject {
                 DispatchQueue.main.async {
                     completion(.success(results))
                 }
-            } catch {
-                DispatchQueue.main.async {
-                    completion(.failure(error))
+            } catch let error {
+                if case DecodingError.keyNotFound(error: _) = error {
+                    DispatchQueue.main.async {
+                        completion(.success(Results()))
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        completion(.failure(error))
+                    }
                 }
             }
         }
@@ -74,7 +81,7 @@ class ResultsStore: ObservableObject {
         }
     }
     
-    static func append(users: [User], listOfProductsAndPrices: [PairProductPrice], currency: Currency, date: Date, completion: @escaping (Result<Bool, Error>)->Void) {
+    static func append(users: [User], listOfProductsAndPrices: [PairProductPrice], currency: Currency, date: Date, images: [IdentifiedImage], completion: @escaping (Result<Bool, Error>)->Void) {
         var listOfProductsAndPricesCodable: [PairProductPriceCodable] = []
         for pair in listOfProductsAndPrices {
             var pairCod = PairProductPriceCodable()
@@ -85,7 +92,12 @@ class ResultsStore: ObservableObject {
             listOfProductsAndPricesCodable.append(pairCod)
         }
         
-        let resultUnit = ResultUnit(users: users, listOfProductsAndPrices: listOfProductsAndPricesCodable, currency: currency, date: date)
+        var imagesData: [Data] = []
+        for image in images {
+            imagesData.append(image.image!.pngData()!)
+        }
+        
+        let resultUnit = ResultUnit(users: users, listOfProductsAndPrices: listOfProductsAndPricesCodable, currency: currency, date: date, imagesData: imagesData)
         append(resultUnit: resultUnit, completion: completion)
     }
     

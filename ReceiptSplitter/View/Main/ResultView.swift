@@ -92,14 +92,14 @@ struct ResultView: View {
                                 Text("Share detailed results")
                             }
                             
-                            if !isShownInHistory {
+                            //if !isShownInHistory {
                                 Button {
                                     chosenSharingOption = "scan"
                                     showSharingOptions = true
                                 } label: {
                                     Text("Share scanned receipt")
                                 }
-                            }
+                            //}
                         } label: {
                             Image(systemName: "square.and.arrow.up")
                         }
@@ -169,7 +169,7 @@ struct ResultView: View {
                 ToolbarItem(placement: .bottomBar) {
                     if !isShownInHistory {
                         Button {
-                            ResultsStore.append(users: model.users, listOfProductsAndPrices: model.listOfProductsAndPrices, currency: model.currency, date: model.date) { result in
+                            ResultsStore.append(users: model.users, listOfProductsAndPrices: model.listOfProductsAndPrices, currency: model.currency, date: model.date, images: model.images) { result in
                                 switch result {
                                 case .failure(let error):
                                     fatalError(error.localizedDescription)
