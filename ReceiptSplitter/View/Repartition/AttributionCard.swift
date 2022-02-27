@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AttributionView: View {
+struct AttributionCard: View {
     internal init(pair: Binding<PairProductPrice>, isValidated: Binding<Bool>, itemCounter: Int, initialSelection: [UUID]) {
         self._pair = pair
         self._isValidated = isValidated
@@ -210,7 +210,7 @@ struct AttributionView: View {
                 }
 
             } else {
-                var newPair = PairProductPrice(id: UUID().uuidString, name: AttributionView.textOfNewItem, price: 0.0)
+                var newPair = PairProductPrice(id: UUID().uuidString, name: AttributionCard.textOfNewItem, price: 0.0)
                 newPair.isNewItem = true
                 model.listOfProductsAndPrices.insert(newPair, at: itemCounter)
             }
@@ -244,7 +244,7 @@ struct AttributionView_Previews: PreviewProvider {
     static let model = ModelData()
 
     static var previews: some View {
-        AttributionView(pair: .constant(PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 4.99)), isValidated: .constant(false), itemCounter: 0, initialSelection: [])
+        AttributionCard(pair: .constant(PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 4.99)), isValidated: .constant(false), itemCounter: 0, initialSelection: [])
             .environmentObject(model)
             .onAppear {
                 model.users = [User(name: "Hugo"), User(name: "Lucas"), User(name: "Thomas")]

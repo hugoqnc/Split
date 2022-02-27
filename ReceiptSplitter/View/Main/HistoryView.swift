@@ -105,5 +105,6 @@ struct HistoryView_Previews: PreviewProvider {
         NavigationView {
             HistoryView(showHistoryView: .constant(true))
         }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 }

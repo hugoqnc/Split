@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct HomeView: View {
+struct AttributionView: View {
     @EnvironmentObject var model: ModelData
     @State private var showAllList = false
     @State private var isValidated = false
@@ -38,7 +38,7 @@ struct HomeView: View {
                                         ForEach(model.listOfProductsAndPrices) { pair in
                                             let number = model.listOfProductsAndPrices.firstIndex(of: pair)!
                                             if itemCounter==number {
-                                                AttributionView(pair: $model.listOfProductsAndPrices[number], isValidated: $isValidated, itemCounter: itemCounter, initialSelection: model.parameters.selectAllUsers ? model.users.map({ user in user.id }) : [])
+                                                AttributionCard(pair: $model.listOfProductsAndPrices[number], isValidated: $isValidated, itemCounter: itemCounter, initialSelection: model.parameters.selectAllUsers ? model.users.map({ user in user.id }) : [])
                                                     .onChange(of: isValidated) { newValue in
                                                         if newValue {
                                                             itemCounter += 1
@@ -125,7 +125,7 @@ struct HomeView: View {
 struct HomeView_Previews: PreviewProvider {
     static let model = ModelData()
     static var previews: some View {
-        HomeView()
+        AttributionView()
             .environmentObject(model)
             .onAppear {
                 model.users = [User(name: "Hugo"), User(name: "Lucas"), User(name: "Thomas")]

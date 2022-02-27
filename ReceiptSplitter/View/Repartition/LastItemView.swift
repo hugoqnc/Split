@@ -133,7 +133,7 @@ struct LastItemView: View {
 
             } else {
                 //debug = "onChange 2, isNewItem: \(String(isNewItem))"
-                var newPair = PairProductPrice(id: UUID().uuidString, name: AttributionView.textOfNewItem, price: 0.0)
+                var newPair = PairProductPrice(id: UUID().uuidString, name: AttributionCard.textOfNewItem, price: 0.0)
                 newPair.isNewItem = true
                 model.listOfProductsAndPrices.append(newPair)
             }

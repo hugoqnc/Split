@@ -29,7 +29,7 @@ struct FirstListView: View {
 
     var body: some View {
         if startAttribution {
-            HomeView()
+            AttributionView()
         } else {
             Group {
                 if model.listOfProductsAndPrices.isEmpty {
@@ -228,7 +228,7 @@ struct FirstListView: View {
                                                          message:"Please enter the name and the price of the new item",
                                                          placeholder1: "Name",
                                                          placeholder2: "Price",
-                                                         initialText: AttributionView.textOfNewItem,
+                                                         initialText: AttributionCard.textOfNewItem,
                                                          initialDouble: nil,
                                                          action: {
                                                               _ = $2

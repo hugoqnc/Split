@@ -91,7 +91,7 @@ struct ResultCard: View {
             }
             .padding()
         }
-        .background(colorMatching.opacity(0.12))
+        .background(colorMatching.opacity(0.1))
         .brightness(colorScheme == .dark ? 0.4 : 0)
         .cornerRadius(15)
         .padding(.horizontal)
@@ -131,9 +131,8 @@ struct ResultCard_Previews: PreviewProvider {
         
         return resultUnit
     }()
+    
     static var previews: some View {
         ResultCard(resultUnit: resultUnit)
-            
-            
     }
 }
