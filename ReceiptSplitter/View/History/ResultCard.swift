@@ -75,11 +75,17 @@ struct ResultCard: View {
                             .font(.footnote)
                             .fontWeight(.semibold)
                     }
-                    Text(String(round(totalPrice * 100) / 100.0)+resultUnit.currency.value + " — \(resultUnit.listOfProductsAndPrices.count) items")
-                        .font(.title)
-                        .fontWeight(.semibold)
-                        .foregroundColor(colorMatching)
-                        .brightness(colorScheme == .dark ? 0.2 : -0.3)
+                    
+                    HStack(spacing:0) {
+                        Text("\(String(round(totalPrice * 100) / 100.0))\(resultUnit.currency.value)")
+                            .font(.title)
+                            .fontWeight(.semibold)
+                        Text(" — \(resultUnit.listOfProductsAndPrices.count) items")
+                            .font(.title)
+                    }
+                    .foregroundColor(colorMatching)
+                    .brightness(colorScheme == .dark ? 0.2 : -0.3)
+                    
                     Label(namesText, systemImage: "person.2")
                         .font(.subheadline)
                         .foregroundColor(colorMatching)

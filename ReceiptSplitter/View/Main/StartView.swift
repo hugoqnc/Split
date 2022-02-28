@@ -132,12 +132,14 @@ struct StartView: View {
                             }
                         } label: {
                             Image(systemName: "clock.arrow.circlepath")
+                                .frame(height: 96, alignment: .trailing) // because of https://stackoverflow.com/questions/58512344/swiftui-navigation-bar-button-not-clickable-after-sheet-has-been-presented
                         }
                         
                         Button {
                             showSettings = true
                         } label: {
                             Image(systemName: "gear")
+                                .frame(height: 96, alignment: .trailing)
                         }
                         .padding(.trailing,10)
                         .sheet(isPresented: $showSettings) {

@@ -69,7 +69,7 @@ struct ResultView: View {
                                 }
                             }
                         }
-                        .padding(.top,isShownInHistory ? 0 : 35)
+                        .padding(.top,isShownInHistory ? 8 : 35)
                         .padding(.bottom,5)
                     }
                     

@@ -35,8 +35,20 @@ struct ResultViewHistoryWrapper: View {
     @State private var showReceiptImage = false
     
     var body: some View {
-        ZStack{
-            if showReceiptImage {
+        ResultView(isShownInHistory: true)
+            .environmentObject(model)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        showReceiptImage.toggle()
+                    } label: {
+                        Image(systemName: "doc.plaintext")
+                    }
+                    .padding(.trailing, 10)
+
+                }
+            }
+            .sheet(isPresented: $showReceiptImage) {
                 ScrollView {
                     ForEach(model.images){ idImage in
                         if let image = idImage.image {
@@ -48,26 +60,14 @@ struct ResultViewHistoryWrapper: View {
                         }
                     }
                 }
-            } else {
-                ResultView(isShownInHistory: true)
-                    .environmentObject(model)
             }
-        }
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    showReceiptImage.toggle()
-                } label: {
-                    showReceiptImage ? Image(systemName: "doc.plaintext.fill") : Image(systemName: "doc.plaintext")
-                }
-
-            }
-        }
     }
 }
 
-//struct ResultViewHistoryWrapper_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ResultViewHistoryWrapper()
-//    }
-//}
+struct ResultViewHistoryWrapper_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationView {
+            ResultViewHistoryWrapper(resultUnit: ResultUnit(users: [], listOfProductsAndPrices: [], currency: Currency.default, date: Date(), imagesData: []))
+        }
+    }
+}
