@@ -25,11 +25,11 @@ struct HistoryStatView: View {
                 case timeOptions[0]:
                     return true
                 case timeOptions[1]:
-                    return now.timeIntervalSince(d) < 60*60*24*365
+                    return Calendar.current.date(byAdding: .year, value: -1, to: now)! < d
                 case timeOptions[2]:
-                    return now.timeIntervalSince(d) < 60*60*24*31
+                    return Calendar.current.date(byAdding: .month, value: -1, to: now)! < d
                 case timeOptions[3]:
-                    return now.timeIntervalSince(d) < 60*60*24*7
+                    return Calendar.current.date(byAdding: .day, value: -1, to: now)! < d
                 default:
                     return false
                 }
@@ -37,26 +37,33 @@ struct HistoryStatView: View {
         }
     }
     
-//    var startingDate: String {
-//        get {
-//            let d: Date
-//            switch selectedTimeOption {
-//            case timeOptions[0]:
-//                d = filteredResultList.map { res in
-//                    return res.date
-//                }.min()!
-//            case timeOptions[1]:
-//                d = Date()
-//                return now.timeIntervalSince(d) < 60*60*24*365
-//            case timeOptions[2]:
-//                return now.timeIntervalSince(d) < 60*60*24*31
-//            case timeOptions[3]:
-//                return now.timeIntervalSince(d) < 60*60*24*7
-//            default:
-//                return false
-//            }
-//        }
-//    }
+    var startingDate: String {
+        get {
+            var d1: Date
+            let now = Date()
+            
+            switch selectedTimeOption {
+            case timeOptions[0]:
+                d1 = filteredResultList.map { res in
+                    return res.date
+                }.min() ?? Date()
+            case timeOptions[1]:
+                d1 = Calendar.current.date(byAdding: .year, value: -1, to: now)!
+            case timeOptions[2]:
+                d1 = Calendar.current.date(byAdding: .month, value: -1, to: now)!
+            case timeOptions[3]:
+                d1 = Calendar.current.date(byAdding: .day, value: -1, to: now)!
+            default:
+                d1 = Date() //error
+            }
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = .long
+            dateFormatter.timeStyle = .short
+            let dateString = dateFormatter.string(from: d1)
+            return dateString
+        }
+    }
     
     func showPrice(price: Double) -> String {
         return String(round(price * 100) / 100.0)+"-"
@@ -143,95 +150,115 @@ struct HistoryStatView: View {
             Group {
                 if !filteredResultList.isEmpty {
                     ScrollView {
-                        Group {
-                            if horizontalSizeClass == .compact {
-                            VStack {
-                                HStack {
-                                    Spacer()
-                                    
-                                    StatisticRectangle(iconString: "doc.plaintext", description: "Number of receipts\n", value: String(numberOfReceipts), color: Color.yellow)
-                                    
-                                    StatisticRectangle(iconString: "number", description: "Total number of\npurchases", value: String(totalItems), color: Color.blue)
-                                    
-                                    Spacer()
-                                }
-                                HStack {
-                                    Spacer()
-                                    
-                                    StatisticRectangle(iconString: "creditcard", description: "Total paid price\n", value: showPrice(price: totalPrice), color: Color.purple)
-                                    
-                                    StatisticRectangle(iconString: "cart", description: "Average price\nof an item", value: showPrice(price: averageItemPrice), color: Color.orange)
-                                    
-                                    Spacer()
-                                }
-                                HStack {
-                                    Spacer()
-                                    
-                                    StatisticRectangle(iconString: "arrow.up.right.circle", description: "Maximum price\nof an item", value: showPrice(price: maximumItemPrice), color: Color.green)
-                                    
-                                    StatisticRectangle(iconString: "arrow.down.right.circle", description: "Minimum price\nof an item", value: showPrice(price: minimumItemPrice), color: Color.red)
-                                    
-                                    Spacer()
-                                }
-                                HStack {
-                                    Spacer()
-                                    
-                                    StatisticRectangle(iconString: "calendar", description: selectedTimeOption == timeOptions[0] ? "Days passed since\nfirst receipt" : "Days passed since\nlast receipt", value: String(daysSince), color: Color(red: 255 / 255, green: 101 / 255, blue: 227 / 255))
-                                    
-                                    StatisticRectangle(iconString: "person.2", description: "Number of\ndifferent users", value: String(numberDifferentUsers), color: Color.teal)
-                                    
-                                    Spacer()
-                                }
-
-                                Spacer()
-                            }
-                                
-                            } else {
-                                
+                        VStack {
+                            Group {
+                                if horizontalSizeClass == .compact {
                                 VStack {
                                     HStack {
                                         Spacer()
-
+                                        
                                         StatisticRectangle(iconString: "doc.plaintext", description: "Number of receipts\n", value: String(numberOfReceipts), color: Color.yellow)
                                         
                                         StatisticRectangle(iconString: "number", description: "Total number of\npurchases", value: String(totalItems), color: Color.blue)
-
+                                        
+                                        Spacer()
+                                    }
+                                    HStack {
+                                        Spacer()
+                                        
                                         StatisticRectangle(iconString: "creditcard", description: "Total paid price\n", value: showPrice(price: totalPrice), color: Color.purple)
                                         
                                         StatisticRectangle(iconString: "cart", description: "Average price\nof an item", value: showPrice(price: averageItemPrice), color: Color.orange)
-
+                                        
                                         Spacer()
                                     }
-                                    
                                     HStack {
                                         Spacer()
-
+                                        
                                         StatisticRectangle(iconString: "arrow.up.right.circle", description: "Maximum price\nof an item", value: showPrice(price: maximumItemPrice), color: Color.green)
                                         
                                         StatisticRectangle(iconString: "arrow.down.right.circle", description: "Minimum price\nof an item", value: showPrice(price: minimumItemPrice), color: Color.red)
-
+                                        
+                                        Spacer()
+                                    }
+                                    HStack {
+                                        Spacer()
+                                        
                                         StatisticRectangle(iconString: "calendar", description: selectedTimeOption == timeOptions[0] ? "Days passed since\nfirst receipt" : "Days passed since\nlast receipt", value: String(daysSince), color: Color(red: 255 / 255, green: 101 / 255, blue: 227 / 255))
                                         
                                         StatisticRectangle(iconString: "person.2", description: "Number of\ndifferent users", value: String(numberDifferentUsers), color: Color.teal)
                                         
                                         Spacer()
                                     }
-                                    
+
                                     Spacer()
                                 }
+                                    
+                                } else {
+                                    
+                                    VStack {
+                                        HStack {
+                                            Spacer()
+
+                                            StatisticRectangle(iconString: "doc.plaintext", description: "Number of receipts\n", value: String(numberOfReceipts), color: Color.yellow)
+                                            
+                                            StatisticRectangle(iconString: "number", description: "Total number of\npurchases", value: String(totalItems), color: Color.blue)
+
+                                            StatisticRectangle(iconString: "creditcard", description: "Total paid price\n", value: showPrice(price: totalPrice), color: Color.purple)
+                                            
+                                            StatisticRectangle(iconString: "cart", description: "Average price\nof an item", value: showPrice(price: averageItemPrice), color: Color.orange)
+
+                                            Spacer()
+                                        }
+                                        
+                                        HStack {
+                                            Spacer()
+
+                                            StatisticRectangle(iconString: "arrow.up.right.circle", description: "Maximum price\nof an item", value: showPrice(price: maximumItemPrice), color: Color.green)
+                                            
+                                            StatisticRectangle(iconString: "arrow.down.right.circle", description: "Minimum price\nof an item", value: showPrice(price: minimumItemPrice), color: Color.red)
+
+                                            StatisticRectangle(iconString: "calendar", description: selectedTimeOption == timeOptions[0] ? "Days passed since\nfirst receipt" : "Days passed since\nlast receipt", value: String(daysSince), color: Color(red: 255 / 255, green: 101 / 255, blue: 227 / 255))
+                                            
+                                            StatisticRectangle(iconString: "person.2", description: "Number of\ndifferent users", value: String(numberDifferentUsers), color: Color.teal)
+                                            
+                                            Spacer()
+                                        }
+                                        
+                                        Spacer()
+                                    }
+                                }
                             }
+                            .padding(.vertical)
+                            .padding(.horizontal,5)
+                            
+                            Text("Statistics since "+startingDate)
+                                .font(.caption)
+                                .foregroundColor(.secondary)
                         }
-                        .padding(.vertical)
-                        .padding(.horizontal,5)
                         
                     }
                 } else {
-                    Text("empty")
+                    VStack {
+                        Image(systemName: "square.stack.3d.up.slash")
+                            .foregroundColor(.red)
+                            .font(.largeTitle)
+                            
+                        VStack(alignment: .leading, spacing: 5) {
+                            Text("Unfortunately, there are no receipts saved since \(startingDate).")
+                                .font(.headline)
+                            Text("To see other statistics, change the time scale.")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                        }
+                        .padding()
+                        .padding(.horizontal)
+                    }
                 }
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Picker("Please choose a color", selection: $selectedTimeOption) {
+                    Picker("Choose a time scale", selection: $selectedTimeOption) {
                         ForEach(timeOptions, id: \.self) {
                             Text($0)
                         }
