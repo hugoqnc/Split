@@ -50,6 +50,8 @@ struct TextRecognition {
         let minAreaCoverage = visionParameters.minAreaCoverage
         let maxMargin = visionParameters.maxMargin
         
+        let epsilonFloat = 0.051 //TODO: change
+        
         let request = VNRecognizeTextRequest { (request, error) in
             guard let observations = request.results as? [VNRecognizedTextObservation] else {
                 print("Error: \(error! as NSError)")
@@ -126,6 +128,7 @@ struct TextRecognition {
             var listOfPairProductPrice: [PairProductPrice] = []
             for l in listOfMatchs {
                 var pairProductPrice = PairProductPrice()
+                var removeThisPairFlag = false
                 
                 var listOfPrices: [PairStringDouble] = []
                 var matchsCopy = l
@@ -145,6 +148,7 @@ struct TextRecognition {
                 
                 if listOfPrices.isEmpty {
                     pairProductPrice.price = 0.0
+                    removeThisPairFlag = true
                 } else if listOfPrices.count==1 {
                     pairProductPrice.price=listOfPrices[0].price
                     priceIndex = 0
@@ -155,6 +159,7 @@ struct TextRecognition {
                     pairProductPrice.price=listOfPrices[priceIndex1].price
                     priceIndex=priceIndex1
                 } else {
+                    removeThisPairFlag = true
                     pairProductPrice.price=listOfPrices.last!.price
                     priceIndex=listOfPrices.count-1
                 }
@@ -212,9 +217,23 @@ struct TextRecognition {
                 pairProductPrice.imageId=textItem.id
                 pairProductPrice.box=v
                 
-                listOfPairProductPrice.append(pairProductPrice)
+                if !removeThisPairFlag { listOfPairProductPrice.append(pairProductPrice) }
                 
             }
+            
+             for (index, p) in listOfPairProductPrice.reversed().enumerated() {
+                 var s = 0.0
+                 for (index0, p) in listOfPairProductPrice.enumerated() {
+                     if index0 < listOfPairProductPrice.count-1-index {
+                         s += p.price
+                     }
+                 }
+                 if abs(p.price - s) < epsilonFloat {
+                     for _ in 0...index {
+                         listOfPairProductPrice.remove(at: listOfPairProductPrice.count-1)
+                     }
+                 }
+             }
             
             // 4. Result
             textItem.list = listOfPairProductPrice
