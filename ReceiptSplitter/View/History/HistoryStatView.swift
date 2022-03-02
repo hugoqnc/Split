@@ -37,6 +37,19 @@ struct HistoryStatView: View {
         }
     }
     
+    var currencyString: String {
+        get {
+            let listOfCurrencies = filteredResultList.map { res in
+                return res.currency.value
+            }
+            if Set(listOfCurrencies).count == 1 {
+                return listOfCurrencies[0]
+            } else {
+                return Currency.default.value
+            }
+        }
+    }
+    
     var startingDate: String {
         get {
             var d1: Date
@@ -66,7 +79,7 @@ struct HistoryStatView: View {
     }
     
     func showPrice(price: Double) -> String {
-        return String(round(price * 100) / 100.0)+"-"
+        return String(round(price * 100) / 100.0)+currencyString
     }
     
     var totalPrice: Double {
@@ -114,10 +127,9 @@ struct HistoryStatView: View {
     var numberDifferentUsers: Int {
         get {
             let listOfUsers = filteredResultList.flatMap { res in
-                return res.users
+                return res.users.map {u in return u.name}
             }
-            let set = Set(listOfUsers)
-            return set.count
+            return Set(listOfUsers).count
         }
     }
     

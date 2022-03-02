@@ -46,7 +46,7 @@ struct HistoryView: View {
                         NavigationLink {
                             ResultViewHistoryWrapper(resultUnit: resultUnit)
                                 .navigationTitle(date(resultUnit: resultUnit))
-                                //.transition(.slide)
+                                //.transition(.opacity)
                         } label: {
                             ResultCard(resultUnit: resultUnit)
                         }
