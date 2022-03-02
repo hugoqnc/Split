@@ -46,14 +46,17 @@ struct HistoryView: View {
                         NavigationLink {
                             ResultViewHistoryWrapper(resultUnit: resultUnit)
                                 .navigationTitle(date(resultUnit: resultUnit))
+                                //.transition(.slide)
                         } label: {
                             ResultCard(resultUnit: resultUnit)
                         }
                         .contextMenu{
                             Button(role: .destructive){
                                 //remove from the view
-                                results.results.removeAll { r in
-                                    r.id == resultUnit.id
+                                withAnimation(){
+                                    results.results.removeAll { r in
+                                        r.id == resultUnit.id
+                                    }
                                 }
                                 
                                 //remove from persistent storage
