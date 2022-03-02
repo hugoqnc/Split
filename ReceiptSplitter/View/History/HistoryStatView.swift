@@ -29,7 +29,7 @@ struct HistoryStatView: View {
                 case timeOptions[2]:
                     return Calendar.current.date(byAdding: .month, value: -1, to: now)! < d
                 case timeOptions[3]:
-                    return Calendar.current.date(byAdding: .day, value: -1, to: now)! < d
+                    return Calendar.current.date(byAdding: .weekOfYear, value: -1, to: now)! < d
                 default:
                     return false
                 }
@@ -52,7 +52,7 @@ struct HistoryStatView: View {
             case timeOptions[2]:
                 d1 = Calendar.current.date(byAdding: .month, value: -1, to: now)!
             case timeOptions[3]:
-                d1 = Calendar.current.date(byAdding: .day, value: -1, to: now)!
+                d1 = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: now)!
             default:
                 d1 = Date() //error
             }
