@@ -11,18 +11,20 @@ struct Currency: Codable {
     
     var symbol: SymbolType
     
-    static let `default` = Currency(symbol: .euro)
+    static let `default` = Currency(symbol: .other)
     
     enum SymbolType: CaseIterable, Codable {
         case euro
         case dollar
         case pound
         case yen
-        //case other
+        case other
     }
     
     var value: String {
         switch self.symbol{
+        case .other:
+            return "-"
         case .euro:
             return "€"
         case .dollar:
@@ -31,8 +33,6 @@ struct Currency: Codable {
             return "£"
         case .yen:
             return "¥"
-//        case .other:
-//            return "💎"
         }
     }
 }

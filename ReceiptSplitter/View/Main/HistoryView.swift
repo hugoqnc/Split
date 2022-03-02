@@ -11,6 +11,7 @@ struct HistoryView: View {
     @Binding var showHistoryView: Bool
     @State private var results = Results.default
     @State private var loadingDataIsFinished = false
+    @State private var showStats = false
     
     func date(resultUnit: ResultUnit) -> String {
         let dateFormatter = DateFormatter()
@@ -80,6 +81,19 @@ struct HistoryView: View {
                             .padding(.horizontal, 25)
                             .padding(.vertical, 5)
                         Spacer()
+                    }
+                }
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            showStats = true
+                        } label: {
+                            Image(systemName: "chart.pie")
+                        }
+                        //.padding(.trailing, 10)
+                        .sheet(isPresented: $showStats) {
+                            HistoryStatView(results: results)
+                        }
                     }
                 }
             }

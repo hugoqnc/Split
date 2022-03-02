@@ -27,6 +27,7 @@
 		4F309E732786DA4700F55BC6 /* SelectableItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F309E722786DA4700F55BC6 /* SelectableItems.swift */; };
 		4F37A8982787AF4900947426 /* SafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F37A8972787AF4800947426 /* SafariView.swift */; };
 		4F37A89A27883C2B00947426 /* ListSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F37A89927883C2A00947426 /* ListSheetView.swift */; };
+		4F38B06D27CF949E004CD810 /* HistoryStatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F38B06C27CF949E004CD810 /* HistoryStatView.swift */; };
 		4F43BDFD2789A9CD005CDD6D /* LoadItemsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F43BDFC2789A9CD005CDD6D /* LoadItemsView.swift */; };
 		4F43BDFF2789B0AD005CDD6D /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F43BDFE2789B0AD005CDD6D /* ResultView.swift */; };
 		4F4902A827CA99AF0047A441 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4902A727CA99AF0047A441 /* HistoryView.swift */; };
@@ -95,6 +96,7 @@
 		4F309E722786DA4700F55BC6 /* SelectableItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableItems.swift; sourceTree = "<group>"; };
 		4F37A8972787AF4800947426 /* SafariView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariView.swift; sourceTree = "<group>"; };
 		4F37A89927883C2A00947426 /* ListSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSheetView.swift; sourceTree = "<group>"; };
+		4F38B06C27CF949E004CD810 /* HistoryStatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryStatView.swift; sourceTree = "<group>"; };
 		4F43BDFC2789A9CD005CDD6D /* LoadItemsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadItemsView.swift; sourceTree = "<group>"; };
 		4F43BDFE2789B0AD005CDD6D /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
 		4F4902A727CA99AF0047A441 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
@@ -285,6 +287,7 @@
 				4F4902B027CADA6E0047A441 /* ResultCard.swift */,
 				4F4902AD27CAC9D10047A441 /* ResultViewHistoryWrapper.swift */,
 				4F4902B227CB8E100047A441 /* NoHistoryView.swift */,
+				4F38B06C27CF949E004CD810 /* HistoryStatView.swift */,
 			);
 			path = History;
 			sourceTree = "<group>";
@@ -465,6 +468,7 @@
 				4F898D0C279CC1F40067336F /* VisionParameters.swift in Sources */,
 				4F309E652784F9E700F55BC6 /* StartView.swift in Sources */,
 				4F309E732786DA4700F55BC6 /* SelectableItems.swift in Sources */,
+				4F38B06D27CF949E004CD810 /* HistoryStatView.swift in Sources */,
 				4F4902A827CA99AF0047A441 /* HistoryView.swift in Sources */,
 				4F94B8FF27A7326400F7B10F /* MiniRepartitionRow.swift in Sources */,
 				4F309E592784F68200F55BC6 /* AttributionView.swift in Sources */,

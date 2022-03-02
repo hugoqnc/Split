@@ -17,7 +17,7 @@ struct Results: Codable {
 
 struct ResultUnit: Codable, Identifiable {
     
-    static let `default` = Results()
+    //static let `default` = Results()
     
     var id = UUID()
     var users: [User]
