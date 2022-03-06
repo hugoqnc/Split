@@ -42,9 +42,15 @@ class ParametersStore: ObservableObject {
                 DispatchQueue.main.async {
                     completion(.success(preferences))
                 }
-            } catch {
-                DispatchQueue.main.async {
-                    completion(.failure(error))
+            } catch let error {
+                if case DecodingError.keyNotFound(error: _) = error {
+                    DispatchQueue.main.async {
+                        completion(.success(Parameters.default))
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        completion(.failure(error))
+                    }
                 }
             }
         }

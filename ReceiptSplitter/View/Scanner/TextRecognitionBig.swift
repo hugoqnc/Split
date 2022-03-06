@@ -35,10 +35,9 @@ struct TextRecognitionBig {
     
     func request(_ image: UIImage) {
         
-        //TODO: replace with visionParameters
-        let epsilonFloat = 0.00000001
-        let contrastFactorList = [0.0, 2.0]
-        let minimumTextHeightList = [0.001, 0.005, 0.009]
+        let epsilonFloat = visionParameters.epsilonFloat
+        let contrastFactorList = [0.0, visionParameters.contrastFactor]
+        let minimumTextHeightList = [visionParameters.minimumTextHeight, visionParameters.minimumTextHeight*5.0, visionParameters.minimumTextHeight*9.0]
         
         var counter = 0
         
@@ -99,12 +98,11 @@ struct TextRecognitionBig {
     
     func getTextRecognitionRequest(with textItem: TextModel, currentMinimumTextHeight: Float) -> VNRecognizeTextRequest {
         
-        //TODO: replace with visionParameters
-        let priceMarginRight = 0.3
-        let epsilonFloat = 0.00000001
-        let proportionWithTotal = 0.4
-        let epsilonHeight = visionParameters.epsilonHeight
-        let minAreaCoverage = 0.2
+        let priceMarginRight = visionParameters.priceMarginRight
+        let epsilonFloat = visionParameters.epsilonFloat
+        let proportionWithTotal = visionParameters.proportionWithTotal
+        let epsilonHeight = visionParameters.epsilonHeightAR
+        let minAreaCoverage = visionParameters.minAreaCoverageAR
         
         let recognizeTextRequest = VNRecognizeTextRequest { (request, error) in
             guard let observations = request.results as? [VNRecognizedTextObservation] else {
@@ -365,26 +363,17 @@ struct TextRecognitionBig {
                 // 5. Result
                 textItem.list = listOfPairProductPrice
                 
-                //______________________(TODO: delete below)
-                print("\(listOfPairProductPrice.count) products found:\n")
-                for p in listOfPairProductPrice{
-                    print("\(p.name) - \(p.price)")
-                }
-
-                var s1 = 0.0
-                for p in listOfPairProductPrice {
-                    s1 += p.price
-                }
-                print("\nTotal computed = \(round(s1 * 100) / 100.0)\n______________________\n")
-
-
-
-            } else {
-                //normal procedure ? need a new scan with default values? ask the user ?
-                //print("No match found :(")
+//                print("\(listOfPairProductPrice.count) products found:\n")
+//                for p in listOfPairProductPrice{
+//                    print("\(p.name) - \(p.price)")
+//                }
+//
+//                var s1 = 0.0
+//                for p in listOfPairProductPrice {
+//                    s1 += p.price
+//                }
+//                print("\nTotal computed = \(round(s1 * 100) / 100.0)\n______________________\n")
             }
-            
-
         }
         
         recognizeTextRequest.recognitionLevel = .accurate
