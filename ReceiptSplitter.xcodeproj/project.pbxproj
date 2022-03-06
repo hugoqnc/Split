@@ -317,11 +317,11 @@
 		4FF675D8279A1E4E00B7F385 /* Sheets */ = {
 			isa = PBXGroup;
 			children = (
+				4F80BED427C794C900CA73B3 /* SettingsView.swift */,
 				4F63DF0627A421B000E2CA3A /* InputItemDetails.swift */,
 				4F37A89927883C2A00947426 /* ListSheetView.swift */,
 				4F90A7AB27A713F9003A1D97 /* UserChoicesView.swift */,
 				4FEF46A927B2BFCB00226129 /* ListItem.swift */,
-				4F80BED427C794C900CA73B3 /* SettingsView.swift */,
 			);
 			path = Sheets;
 			sourceTree = "<group>";

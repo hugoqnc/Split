@@ -29,6 +29,16 @@ struct SettingsView: View {
         NavigationView {
             VStack {
                 Form {
+                    
+                    Section {
+                        Toggle("Use advanced recognition", isOn: $parameters.bigRecognition)
+                    } header: {
+                        Text("Image Recognition")
+                    } footer: {
+                        Text("Allows you to scan the entire receipt, with no need to crop it manually. It can be slower and more energy consuming, depending on your device") //TODO: better toggle
+                    }
+                    .listRowBackground(Color.secondary.opacity(0.1))
+                    
                     Section {
                         Toggle("Always show \"Scan\" tutorial", isOn: $parameters.showScanTutorial)
                         Toggle("Always show \"Edition\" tutorial", isOn: $parameters.showEditTutorial)

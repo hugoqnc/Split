@@ -14,6 +14,7 @@ struct ShowScannerView: View {
     @State private var showTutorialScreen = false
     @State private var showScanningResults = false
     @State private var nothingFound = false
+    @State private var showTextRecognitionSheet = false
     
     var body: some View {
         if showScanningResults {
@@ -24,6 +25,7 @@ struct ShowScannerView: View {
                     ScannerView { result in
                         switch result {
                             case .success(let scannedImages):
+                            if model.parameters.bigRecognition {
                                 TextRecognitionBig(scannedImages: scannedImages,
                                                 recognizedContent: recognizedContent,
                                                 visionParameters: model.parameters.visionParameters) { isLastImage in
@@ -40,6 +42,24 @@ struct ShowScannerView: View {
                                     recognizedContent.items = []
                                 }
                                 .recognizeText()
+                            } else {
+                                TextRecognition(scannedImages: scannedImages,
+                                                recognizedContent: recognizedContent,
+                                                visionParameters: model.parameters.visionParameters) { isLastImage in
+                                    for item in recognizedContent.items{
+                                        if !model.listOfProductsAndPrices.contains(item.list.first ?? PairProductPrice()){
+                                            let content: [PairProductPrice] = item.list
+                                            model.listOfProductsAndPrices.append(contentsOf: content)
+                                        }
+                                        model.images.append(item.image)
+                                    }
+                                    if model.listOfProductsAndPrices.isEmpty && isLastImage {
+                                        nothingFound = true
+                                    }
+                                    recognizedContent.items = []
+                                }
+                                .recognizeText()
+                            }
                             case .failure(let error):
                                 print(error.localizedDescription)
                         }
@@ -74,6 +94,9 @@ struct ShowScannerView: View {
             .transition(.move(edge: .bottom))
             .slideOverCard(isPresented: $showTutorialScreen, content: {
                 ScanTutorialView()
+            })
+            .sheet(isPresented: $showTextRecognitionSheet, content: {
+                Text("No good result")
             })
             .ignoresSafeArea(.all)
         }

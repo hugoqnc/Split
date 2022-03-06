@@ -15,11 +15,13 @@ struct TextRecognitionBig {
     @ObservedObject var recognizedContent: TextData
     var visionParameters: VisionParameters
     var didFinishRecognition: (Bool) -> Void
+    @State private var allHasMatched = true
     
     func recognizeText() {
         let queue = DispatchQueue(label: "textRecognitionQueue", qos: .userInitiated)
         queue.async {
-            for image in scannedImages {
+            for (index, image) in scannedImages.enumerated() {
+                print("Image \(index):")
                 request(image)
                 
                 DispatchQueue.main.async {
@@ -51,7 +53,7 @@ struct TextRecognitionBig {
         textItem.image = IdentifiedImage(id: textItem.id, image: image)
         
         while !hasSuccessed && counter<parametersList.count{
-            print("loop hasSuccessed: \(hasSuccessed)")
+            //print("loop hasSuccessed: \(hasSuccessed)")
             let imageMono: UIImage
             
             let currentContrast = parametersList[counter][0]
@@ -211,7 +213,7 @@ struct TextRecognitionBig {
             
             if matched {
                 hasSuccessed = true //stops the while loop
-                print("set hasSuccessed: \(hasSuccessed)")
+                //print("set hasSuccessed: \(hasSuccessed)")
                 var listOfPricesWithObservations: [LineWithPrice] = []
                 for pair in listOfPricesObs {
                     listOfPricesWithObservations.append(LineWithPrice(pairStringDouble: pair))
@@ -379,7 +381,7 @@ struct TextRecognitionBig {
 
             } else {
                 //normal procedure ? need a new scan with default values? ask the user ?
-                print("No match found :(")
+                //print("No match found :(")
             }
             
 
