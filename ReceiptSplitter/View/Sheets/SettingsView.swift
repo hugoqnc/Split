@@ -31,7 +31,7 @@ struct SettingsView: View {
                 Form {
                     
                     Section {
-                        Toggle("Use advanced recognition", isOn: $parameters.bigRecognition)
+                        Toggle("Use Advanced Recognition", isOn: $parameters.bigRecognition)
                     } header: {
                         Text("Image Recognition")
                     } footer: {
