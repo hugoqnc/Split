@@ -24,7 +24,7 @@ struct ShowScannerView: View {
                     ScannerView { result in
                         switch result {
                             case .success(let scannedImages):
-                                TextRecognition(scannedImages: scannedImages,
+                                TextRecognitionBig(scannedImages: scannedImages,
                                                 recognizedContent: recognizedContent,
                                                 visionParameters: model.parameters.visionParameters) { isLastImage in
                                     for item in recognizedContent.items{
