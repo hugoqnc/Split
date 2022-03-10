@@ -47,7 +47,6 @@ struct LoadItemsView: View {
                         
                         Button {
                             let scannedImages = model.images.map({ idImage in return idImage.image! })
-                            let bigRecognitionTemp = model.parameters.bigRecognition
                             
                             model.eraseScanData()
                             nothingFound = false
@@ -68,7 +67,6 @@ struct LoadItemsView: View {
                                     nothingFound = true
                                 }
                                 recognizedContent.items = []
-                                model.parameters.bigRecognition = bigRecognitionTemp
                             }
                             .recognizeText()
                         

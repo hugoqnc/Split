@@ -288,7 +288,7 @@ struct FirstListView: View {
             }
             .transition(.opacity)
             .slideOverCard(isPresented: $showTutorialScreen, content: {
-                ListTutorialView()
+                ListTutorialView(advancedRecognition: $model.parameters.bigRecognition)
             })
         }
     }
