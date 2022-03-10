@@ -92,14 +92,12 @@ struct ResultView: View {
                                 Text("Share detailed results")
                             }
                             
-                            //if !isShownInHistory {
-                                Button {
-                                    chosenSharingOption = "scan"
-                                    showSharingOptions = true
-                                } label: {
-                                    Text("Share scanned receipt")
-                                }
-                            //}
+                            Button {
+                                chosenSharingOption = "scan"
+                                showSharingOptions = true
+                            } label: {
+                                Text("Share scanned receipt")
+                            }
                         } label: {
                             Image(systemName: "square.and.arrow.up")
                         }
