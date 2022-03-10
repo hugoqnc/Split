@@ -12,6 +12,7 @@ struct LoadItemsView: View {
     @Binding var nothingFound: Bool
     @EnvironmentObject var model: ModelData
     @Environment(\.dismiss) var dismiss
+    @ObservedObject var recognizedContent = TextData()
     
     var body: some View {
         if nothingFound {
@@ -28,10 +29,11 @@ struct LoadItemsView: View {
                             
                         } label: {
                             HStack {
-                                Image(systemName: "arrow.clockwise")
-                                VStack(alignment: .leading) {
-                                    Text("Try again")
-                                    Text("with **Advanced Recognition**")
+                                Spacer()
+                                VStack(spacing: 3) {
+                                    Label("Try again", systemImage: "arrow.clockwise")
+                                        .font(.headline)
+                                    Text("with Advanced Recognition")
                                         .font(.caption)
                                         .multilineTextAlignment(.leading)
                                 }
@@ -39,36 +41,53 @@ struct LoadItemsView: View {
                             }
                         }
                         .buttonStyle(.borderedProminent)
-                        .padding(.horizontal, 40)
+                        .padding(.horizontal, 25)
                         .padding(.bottom,5)
                         .padding(.top,5)
                         
                         Button {
-                            model.eraseScanData()
-                            model.parameters.bigRecognition = false
-                            model.parameters.showScanTutorial = true
-                            nothingFound = false
-                            withAnimation() {
-                                showScanningResults = false
-                            }
+                            let scannedImages = model.images.map({ idImage in return idImage.image! })
+                            let bigRecognitionTemp = model.parameters.bigRecognition
                             
+                            model.eraseScanData()
+                            nothingFound = false
+                            model.parameters.bigRecognition = false
+                            
+                            
+                            TextRecognition(scannedImages: scannedImages,
+                                            recognizedContent: recognizedContent,
+                                            visionParameters: model.parameters.visionParameters) { isLastImage in
+                                for item in recognizedContent.items{
+                                    if !model.listOfProductsAndPrices.contains(item.list.first ?? PairProductPrice()){
+                                        let content: [PairProductPrice] = item.list
+                                        model.listOfProductsAndPrices.append(contentsOf: content)
+                                    }
+                                    model.images.append(item.image)
+                                }
+                                if model.listOfProductsAndPrices.isEmpty && isLastImage {
+                                    nothingFound = true
+                                }
+                                recognizedContent.items = []
+                                model.parameters.bigRecognition = bigRecognitionTemp
+                            }
+                            .recognizeText()
+                        
                         } label: {
                             HStack {
-                                Image(systemName: "arrow.clockwise")
-                                VStack(alignment: .leading) {
-                                    Text("Try again")
-                                    Text("and disable **Advanced Recognition** for this scan")
+                                Spacer()
+                                VStack(spacing: 3) {
+                                    Label("Continue", systemImage: "arrow.right")
+                                        .font(.headline)
+                                    Text("without Advanced Recognition for once")
                                         .font(.caption)
                                         .multilineTextAlignment(.leading)
                                 }
                                 Spacer()
                             }
-                            //Label("Try and disable Advanced Recognition once", systemImage: "arrow.clockwise")
                         }
                         .buttonStyle(.bordered)
-                        .padding(.horizontal, 40)
+                        .padding(.horizontal, 25)
                         .padding(.bottom,10)
-                        //.foregroundColor(.secondary)
                         
                     } else {
                         NoItemFound()
@@ -93,8 +112,6 @@ struct LoadItemsView: View {
             }
             .background(Color(uiColor: UIColor.systemBackground).brightness(0.06))
             .cornerRadius(10)
-//            .overlay(RoundedRectangle(cornerRadius: 10)
-//                        .stroke(.orange, lineWidth: 5))
             .shadow(color: .black.opacity(0.2), radius: 15.0)
             .padding()
             
