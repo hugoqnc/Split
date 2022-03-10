@@ -49,9 +49,7 @@ struct TextRecognition {
         let epsilonHeight = visionParameters.epsilonHeight
         let minAreaCoverage = visionParameters.minAreaCoverage
         let maxMargin = visionParameters.maxMargin
-        
-        let epsilonFloat = 0.051 //TODO: change
-        
+                
         let request = VNRecognizeTextRequest { (request, error) in
             guard let observations = request.results as? [VNRecognizedTextObservation] else {
                 print("Error: \(error! as NSError)")
@@ -220,20 +218,6 @@ struct TextRecognition {
                 if !removeThisPairFlag { listOfPairProductPrice.append(pairProductPrice) }
                 
             }
-            
-             for (index, p) in listOfPairProductPrice.reversed().enumerated() {
-                 var s = 0.0
-                 for (index0, p) in listOfPairProductPrice.enumerated() {
-                     if index0 < listOfPairProductPrice.count-1-index {
-                         s += p.price
-                     }
-                 }
-                 if abs(p.price - s) < epsilonFloat {
-                     for _ in 0...index {
-                         listOfPairProductPrice.remove(at: listOfPairProductPrice.count-1)
-                     }
-                 }
-             }
             
             // 4. Result
             textItem.list = listOfPairProductPrice
