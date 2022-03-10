@@ -8,40 +8,20 @@
 import SwiftUI
 
 struct ScanTutorialView: View {
-    @EnvironmentObject var model: ModelData
+    @Binding var advancedRecognition: Bool
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         
         VStack {
             
-            if !model.parameters.bigRecognition {
+            if !advancedRecognition {
                 VStack {
                     Image("receipt_tutorial")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .padding()
                         .frame(maxHeight: 300)
-                    
-                    Button {
-                        withAnimation() {
-                            model.parameters.bigRecognition = true
-                        }
-                    } label: {
-                        HStack {
-                            Image(systemName: "wand.and.stars")
-                                .font(.title2)
-                                .padding(2)
-                            VStack(alignment: .leading) {
-                                Text("**Advanced Recognition** is **off**")
-                                Text("Tap to enable once.\nChange the default in settings.")
-                                    .font(.caption2)
-                            }
-                            .multilineTextAlignment(.leading)
-                        }
-                    }
-                    .buttonStyle(.bordered)
-                    .tint(.teal)
-                    .padding(.bottom, 7)
                     
                     VStack(alignment: .leading) {
                         HStack(alignment: .center) {
@@ -56,7 +36,7 @@ struct ScanTutorialView: View {
                                     .font(.headline)
                                     .foregroundColor(.primary)
 
-                                Text("Scan the items and their prices, not what is above or below on the receipt")
+                                Text("Scan the items and their prices, not what is above or below")
                                     .font(.subheadline)
                                     .foregroundColor(.secondary)
                                     .fixedSize(horizontal: false, vertical: true)
@@ -95,7 +75,7 @@ struct ScanTutorialView: View {
                                     .font(.headline)
                                     .foregroundColor(.primary)
 
-                                Text("If you have a long receipt, you can add multiple scans, but make sure not to scan the same item twice")
+                                Text("Scan a long receipt in multiple times, but make sure not to scan the same item twice")
                                     .font(.subheadline)
                                     .foregroundColor(.secondary)
                                     .fixedSize(horizontal: false, vertical: true)
@@ -103,7 +83,7 @@ struct ScanTutorialView: View {
                         }
                     }
                 }
-                .transition(.move(edge: .bottom))
+                .transition(.move(edge: .top))
 
             } else {
                 VStack {
@@ -112,27 +92,7 @@ struct ScanTutorialView: View {
                         .aspectRatio(contentMode: .fit)
                         .padding()
                         .frame(maxHeight: 300)
-                    
-                    Button {
-                        withAnimation() {
-                            model.parameters.bigRecognition = false
-                        }
-                    } label: {
-                        HStack {
-                            Image(systemName: "wand.and.stars")
-                                .font(.title2)
-                                .padding(2)
-                            VStack(alignment: .leading) {
-                                Text("**Advanced Recognition** is **on**!")
-                                Text("Tap to disable once.\nChange the default in settings.")
-                                    .font(.caption2)
-                            }
-                            .multilineTextAlignment(.leading)
-                        }
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .tint(.teal)
-                    .padding(.bottom, 7)
+
                     
                     VStack(alignment: .leading) {
                         HStack(alignment: .center) {
@@ -147,7 +107,7 @@ struct ScanTutorialView: View {
                                     .font(.headline)
                                     .foregroundColor(.primary)
 
-                                Text("Advanced Recognition automatically identifies your items, and compares them to the total price")
+                                Text("Advanced Recognition identifies your items, and compares them to the total price")
                                     .font(.subheadline)
                                     .foregroundColor(.secondary)
                                     .fixedSize(horizontal: false, vertical: true)
@@ -177,8 +137,38 @@ struct ScanTutorialView: View {
                         }
                     }
                 }
-                .transition(.move(edge: .bottom))
+                
             }
+            
+            ZStack {
+                VStack(alignment: .leading, spacing: 3) {
+                    Toggle(isOn: $advancedRecognition) {
+                        Text("Advanced Recognition")
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                            .brightness(colorScheme == .dark ? advancedRecognition ? 0.2 : -0.2 : advancedRecognition ? -0.2 : 0.2)
+                    }
+                    .padding(.horizontal,2)
+                    
+                    HStack {
+                        Image(systemName: "wand.and.stars")
+                            .font(.title2)
+                            .padding(2)
+                        Text("Scan your receipt with one tap.\nNo manual editing, no mistakes.\nChange the default in settings.")
+                            .font(.caption2)
+                    }
+                    .multilineTextAlignment(.leading)
+                    .padding(.horizontal,3)
+                    .brightness(colorScheme == .dark ? advancedRecognition ? 0.2 : -0.2 : advancedRecognition ? -0.2 : 0.2)
+                    
+                }
+                .padding(10)
+                .foregroundColor(advancedRecognition ? .teal : .secondary)
+            }
+            .background((advancedRecognition ? Color.teal : Color.secondary).opacity(0.1))
+            .tint(.teal)
+            .cornerRadius(10)
+            .padding(.vertical,5)
 
         }
         .frame(maxWidth: 300)
@@ -190,14 +180,17 @@ struct ScanTutorialView: View {
 struct TutorialView_Previews: PreviewProvider {
     static var previews: some View {
         PreviewWrapper()
+            
+            
     }
     struct PreviewWrapper: View {
         @State private var show = true
+        @State private var toggle = true
 
         var body: some View {
             Text("test")
                 .slideOverCard(isPresented: $show, content: {
-                    ScanTutorialView()
+                    ScanTutorialView(advancedRecognition: $toggle)
                 })
                 .onTapGesture {
                     show=true

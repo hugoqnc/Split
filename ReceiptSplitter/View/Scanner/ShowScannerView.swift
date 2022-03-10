@@ -93,7 +93,7 @@ struct ShowScannerView: View {
             })
             .transition(.move(edge: .bottom))
             .slideOverCard(isPresented: $showTutorialScreen, content: {
-                ScanTutorialView()
+                ScanTutorialView(advancedRecognition: $model.parameters.bigRecognition)
             })
             .sheet(isPresented: $showTextRecognitionSheet, content: {
                 Text("No good result")
