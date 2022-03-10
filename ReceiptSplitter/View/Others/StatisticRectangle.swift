@@ -38,6 +38,8 @@ struct StatisticRectangle: View {
                                 Text(value)
                                     .font(.largeTitle)
                                     .fontWeight(.semibold)
+                                    .minimumScaleFactor(0.3)
+                                    .lineLimit(1)
                                 Text(description)
                                     .font(.footnote)
                                     .multilineTextAlignment(.trailing)
