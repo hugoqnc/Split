@@ -54,6 +54,7 @@
 		4FB7813C2794821D00F5E2D8 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB7813B2794821D00F5E2D8 /* Currency.swift */; };
 		4FEF46AA27B2BFCB00226129 /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEF46A927B2BFCB00226129 /* ListItem.swift */; };
 		4FF04F50278B0DF700650EBC /* LastItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF04F4F278B0DF700650EBC /* LastItemView.swift */; };
+		4FF60AFB27DA961A00AD58DB /* AdvancedParametersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF60AFA27DA961A00AD58DB /* AdvancedParametersView.swift */; };
 		4FF675D72799E60800B7F385 /* ShowScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF675D62799E60800B7F385 /* ShowScannerView.swift */; };
 		4FF675DC279A1E9400B7F385 /* FirstListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF675DB279A1E9400B7F385 /* FirstListView.swift */; };
 /* End PBXBuildFile section */
@@ -125,6 +126,7 @@
 		4FB7813B2794821D00F5E2D8 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		4FEF46A927B2BFCB00226129 /* ListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListItem.swift; sourceTree = "<group>"; };
 		4FF04F4F278B0DF700650EBC /* LastItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastItemView.swift; sourceTree = "<group>"; };
+		4FF60AFA27DA961A00AD58DB /* AdvancedParametersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedParametersView.swift; sourceTree = "<group>"; };
 		4FF675D62799E60800B7F385 /* ShowScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowScannerView.swift; sourceTree = "<group>"; };
 		4FF675DB279A1E9400B7F385 /* FirstListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -332,6 +334,7 @@
 			isa = PBXGroup;
 			children = (
 				4F80BED427C794C900CA73B3 /* SettingsView.swift */,
+				4FF60AFA27DA961A00AD58DB /* AdvancedParametersView.swift */,
 				4F63DF0627A421B000E2CA3A /* InputItemDetails.swift */,
 				4F37A89927883C2A00947426 /* ListSheetView.swift */,
 				4F90A7AB27A713F9003A1D97 /* UserChoicesView.swift */,
@@ -508,6 +511,7 @@
 				4FF04F50278B0DF700650EBC /* LastItemView.swift in Sources */,
 				4F7C128C279B530A00A5E50B /* ListTutorialView.swift in Sources */,
 				4FF675D72799E60800B7F385 /* ShowScannerView.swift in Sources */,
+				4FF60AFB27DA961A00AD58DB /* AdvancedParametersView.swift in Sources */,
 				4F309E532784B55900F55BC6 /* ContentView.swift in Sources */,
 				4F309E232784B49900F55BC6 /* ReceiptSplitterApp.swift in Sources */,
 				4F309E5A2784F68200F55BC6 /* Text.swift in Sources */,

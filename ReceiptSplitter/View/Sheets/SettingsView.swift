@@ -11,9 +11,11 @@ struct SettingsView: View {
     
     @Environment(\.dismiss) var dismiss
     @Environment(\.openURL) var openURL
+    @Environment(\.colorScheme) var colorScheme
 
     @State var parameters = Parameters()
-    @FocusState var isKeyboardShown: Bool
+    
+    @State var showAdvancedParameters = false
     
     var year: String {
         get {
@@ -31,13 +33,50 @@ struct SettingsView: View {
                 Form {
                     
                     Section {
-                        Toggle("Use Advanced Recognition", isOn: $parameters.bigRecognition)
+                        VStack(alignment: .leading, spacing: 3) {
+                            Toggle(isOn: $parameters.bigRecognition) {
+                                Text("Advanced Recognition")
+                                    .font(.title3)
+                                    .fontWeight(.semibold)
+                                    .brightness(colorScheme == .dark ? parameters.bigRecognition ? 0.1 : -0.2 : parameters.bigRecognition ? -0.1 : 0.2)
+                            }
+                            .padding(.horizontal,2)
+                            .tint(.teal)
+                            
+                            Group {
+                                HStack {
+                                    Image(systemName: "wand.and.stars")
+                                        .font(.title2)
+                                        .padding(2)
+                                    Text("Scan your receipt in one tap.\nNo manual editing, no mistakes.")
+                                        .font(.caption)
+                                }
+                                .padding(.bottom,8)
+                                
+                                Text("Depending on your device, Advanced Recognition can be slower and more energy consuming than standard image recognition. It also may not work with all receipts.")
+                                    .font(.caption2)
+                            }
+                            .multilineTextAlignment(.leading)
+                            .padding(.horizontal,3)
+                            .brightness(colorScheme == .dark ? parameters.bigRecognition ? 0.1 : -0.2 : parameters.bigRecognition ? -0.1 : 0.2)
+                        }
+                        .padding(.vertical, 5)
+                        .foregroundColor(parameters.bigRecognition ? .teal : .secondary)
+                        //.background((parameters.bigRecognition ? Color.teal : Color.secondary).opacity(0.1))
+                        
+                            
+                        Button {
+                            showAdvancedParameters = true
+                        } label: {
+                            Label("Advanced Parameters", systemImage: "gear")
+                        }
+                        .buttonStyle(.borderless)
+                        .listRowBackground(Color.secondary.opacity(0.1))
                     } header: {
                         Text("Image Recognition")
-                    } footer: {
-                        Text("Allows you to scan the entire receipt, with no need to crop it manually. It can be slower and more energy consuming, depending on your device") //TODO: better toggle
                     }
                     .listRowBackground(Color.secondary.opacity(0.1))
+                    
                     
                     Section {
                         Toggle("Always show \"Scan\" tutorial", isOn: $parameters.showScanTutorial)
@@ -77,181 +116,7 @@ struct SettingsView: View {
                     }
                     .listRowBackground(Color.secondary.opacity(0.1))
 
-                    Section {
-                        HStack {
-                            VStack(alignment: .leading, spacing: 3) {
-                                Text("Multiplicative Height Epsilon")
-                                    .padding(.top,3)
-                                Text("From 0 to 1")
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-                            }
-                            Spacer()
-                            TextField("", value: $parameters.visionParameters.epsilonHeight, format: .number)
-                                .textFieldStyle(.roundedBorder)
-                                .keyboardType(.decimalPad)
-                                .frame(width: 55)
-                                .foregroundColor(.accentColor)
-                                .focused($isKeyboardShown)
-                        }
-                        HStack {
-                            VStack(alignment: .leading, spacing: 3) {
-                                Text("Minimum Area Coverage")
-                                    .padding(.top,3)
-                                Text("From 0 to 1")
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-                            }
-                            Spacer()
-                            TextField("", value: $parameters.visionParameters.minAreaCoverage, format: .number)
-                                .textFieldStyle(.roundedBorder)
-                                .keyboardType(.decimalPad)
-                                .frame(width: 55)
-                                .foregroundColor(.accentColor)
-                                .focused($isKeyboardShown)
-                        }
-                        HStack {
-                            VStack(alignment: .leading, spacing: 3) {
-                                Text("Maximum Margin")
-                                    .padding(.top,3)
-                                Text("From 0 to 1")
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-                            }
-                            Spacer()
-                            TextField("", value: $parameters.visionParameters.maxMargin, format: .number)
-                                .textFieldStyle(.roundedBorder)
-                                .keyboardType(.decimalPad)
-                                .frame(width: 55)
-                                .foregroundColor(.accentColor)
-                                .focused($isKeyboardShown)
-                        }
-                        
-                        HStack {
-                            VStack(alignment: .leading, spacing: 3) {
-                                Text("Multiplicative Height Epsilon")
-                                    .padding(.top,3)
-                                Text("**Advanced Recognition** — From 0 to 1")
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-                            }
-                            Spacer()
-                            TextField("", value: $parameters.visionParameters.epsilonHeightAR, format: .number)
-                                .textFieldStyle(.roundedBorder)
-                                .keyboardType(.decimalPad)
-                                .frame(width: 55)
-                                .foregroundColor(.accentColor)
-                                .focused($isKeyboardShown)
-                        }
-                        HStack {
-                            VStack(alignment: .leading, spacing: 3) {
-                                Text("Minimum Area Coverage")
-                                    .padding(.top,3)
-                                Text("**Advanced Recognition** — From 0 to 1")
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-                            }
-                            Spacer()
-                            TextField("", value: $parameters.visionParameters.minAreaCoverageAR, format: .number)
-                                .textFieldStyle(.roundedBorder)
-                                .keyboardType(.decimalPad)
-                                .frame(width: 55)
-                                .foregroundColor(.accentColor)
-                                .focused($isKeyboardShown)
-                        }
-                        HStack {
-                            VStack(alignment: .leading, spacing: 3) {
-                                Text("Price Right Margin")
-                                    .padding(.top,3)
-                                Text("**Advanced Recognition** — From 0 to 1")
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-                            }
-                            Spacer()
-                            TextField("", value: $parameters.visionParameters.priceMarginRight, format: .number)
-                                .textFieldStyle(.roundedBorder)
-                                .keyboardType(.decimalPad)
-                                .frame(width: 55)
-                                .foregroundColor(.accentColor)
-                                .focused($isKeyboardShown)
-                        }
-                        HStack {
-                            VStack(alignment: .leading, spacing: 3) {
-                                Text("Total Bottom Proportion")
-                                    .padding(.top,3)
-                                Text("**Advanced Recognition** — From 0 to 1")
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-                            }
-                            Spacer()
-                            TextField("", value: $parameters.visionParameters.proportionWithTotal, format: .number)
-                                .textFieldStyle(.roundedBorder)
-                                .keyboardType(.decimalPad)
-                                .frame(width: 55)
-                                .foregroundColor(.accentColor)
-                                .focused($isKeyboardShown)
-                        }
-                        HStack {
-                            VStack(alignment: .leading, spacing: 3) {
-                                Text("Contrast Factor")
-                                    .padding(.top,3)
-                                Text("**Advanced Recognition** — From 1 to ∞")
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-                            }
-                            Spacer()
-                            TextField("", value: $parameters.visionParameters.contrastFactor, format: .number)
-                                .textFieldStyle(.roundedBorder)
-                                .keyboardType(.decimalPad)
-                                .frame(width: 55)
-                                .foregroundColor(.accentColor)
-                                .focused($isKeyboardShown)
-                        }
-                        HStack {
-                            VStack(alignment: .leading, spacing: 3) {
-                                Text("Minimum Text Height")
-                                    .padding(.top,3)
-                                Text("**Advanced Recognition** — From 0 to 1")
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-                            }
-                            Spacer()
-                            TextField("", value: $parameters.visionParameters.minimumTextHeight, format: .number)
-                                .textFieldStyle(.roundedBorder)
-                                .keyboardType(.decimalPad)
-                                .frame(width: 65)
-                                .foregroundColor(.accentColor)
-                                .focused($isKeyboardShown)
-                        }
-                        
-                        Button {
-                            withAnimation() {
-                                parameters.visionParameters = Parameters().visionParameters
-                            }
-                        } label: {
-                            Label("Reset Advanced Parameters", systemImage: "gobackward")
-                        }
-                        .buttonStyle(.borderless)
 
-                    } header: {
-                        Text("Advanced — Image Recognition")
-                    } footer: {
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text("Do not modify these parameters if you don't understand what you do!")
-                            VStack(alignment: .leading, spacing: 4) {
-                                Label("**Multiplicative Height Epsilon**: *accepted* lines of the receipt have a median height more or less this value in percentage.", systemImage: "plus.forwardslash.minus")
-                                Label("**Minimum Area Coverage**: minimum overlap percentage between the *text rectangle* extended on the right and the *price rectangle*.", systemImage: "rectangle.on.rectangle")
-                                Label("**Maximum Margin**: *accepted* lines of the receipt protrude to the left and right outside the margins defined by this percentage.", systemImage: "arrow.left.and.right")
-                                Label("**Price Right Margin**: proportion right of the receipt containing the price column.", systemImage: "dollarsign.circle")
-                                Label("**Total Bottom Proportion**: bottom proportion which contains the total price of the receipt.", systemImage: "sum")
-                                Label("**Contrast Factor**: increases the contrast of the black and white scan.", systemImage: "circle.lefthalf.filled")
-                                Label("**Minimum Text Height**: percentage of font size over the height of the receipt.", systemImage: "textformat.size")
-                                
-                            }
-                        }
-                        
-                    }
-                    .listRowBackground(Color.secondary.opacity(0.1))
                     
                     HStack{
                         Spacer()
@@ -263,6 +128,9 @@ struct SettingsView: View {
 
                 }
             }
+            .sheet(isPresented: $showAdvancedParameters, content: {
+                AdvancedParametersView(parameters: $parameters)
+            })
             .navigationTitle("Settings")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -279,13 +147,6 @@ struct SettingsView: View {
                         dismiss()
                     } label: {
                         Text("Done")
-                    }
-                }
-                ToolbarItem(placement: .keyboard) {
-                    Button {
-                        isKeyboardShown = false
-                    } label: {
-                        Text("OK")
                     }
                 }
             }
@@ -313,5 +174,6 @@ struct SettingsView_Previews: PreviewProvider {
                     UITableView.appearance().backgroundColor = .clear
             }
         }
+        //.preferredColorScheme(.dark)
     }
 }

@@ -154,7 +154,7 @@ struct ScanTutorialView: View {
                         Image(systemName: "wand.and.stars")
                             .font(.title2)
                             .padding(2)
-                        Text("Scan your receipt with one tap.\nNo manual editing, no mistakes.\nChange the default in settings.")
+                        Text("Scan your receipt in one tap.\nNo manual editing, no mistakes.\nChange the default in settings.")
                             .font(.caption2)
                     }
                     .multilineTextAlignment(.leading)
