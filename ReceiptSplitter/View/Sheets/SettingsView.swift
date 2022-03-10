@@ -125,6 +125,7 @@ struct SettingsView: View {
                             .foregroundColor(.secondary)
                         Spacer()
                     }
+                    .listRowBackground(Color.secondary.opacity(0.0))
 
                 }
             }

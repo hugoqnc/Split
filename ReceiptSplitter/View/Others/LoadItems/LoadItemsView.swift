@@ -14,11 +14,13 @@ struct LoadItemsView: View {
     @Environment(\.dismiss) var dismiss
     @ObservedObject var recognizedContent = TextData()
     
+    @State private var nothingFoundWithSecondTry = false
+    
     var body: some View {
         if nothingFound {
             VStack {
                 VStack {
-                    if model.parameters.bigRecognition {
+                    if model.parameters.bigRecognition && !nothingFoundWithSecondTry {
                         NoMatchFound()
                         Button {
                             model.eraseScanData()
@@ -50,7 +52,6 @@ struct LoadItemsView: View {
                             
                             model.eraseScanData()
                             nothingFound = false
-                            model.parameters.bigRecognition = false
                             
                             
                             TextRecognition(scannedImages: scannedImages,
@@ -64,6 +65,7 @@ struct LoadItemsView: View {
                                     model.images.append(item.image)
                                 }
                                 if model.listOfProductsAndPrices.isEmpty && isLastImage {
+                                    nothingFoundWithSecondTry = true
                                     nothingFound = true
                                 }
                                 recognizedContent.items = []
@@ -93,6 +95,7 @@ struct LoadItemsView: View {
                         Button {
                             model.eraseScanData()
                             nothingFound = false
+                            nothingFoundWithSecondTry = false
                             withAnimation() {
                                 showScanningResults = false
                             }
