@@ -115,6 +115,24 @@ struct HistoryStatView: View {
         }
     }
     
+    var maximumItemName: String {
+        get {
+            let listOfMax = filteredResultList.compactMap { res in
+                return res.listOfProductsAndPrices.sorted(by: {$0.price>$1.price}).first
+            }
+            return listOfMax.sorted(by: {$0.price>$1.price}).first?.name ?? "none"
+        }
+    }
+    
+    var minimumItemName: String {
+        get {
+            let listOfMin = filteredResultList.compactMap { res in
+                return res.listOfProductsAndPrices.sorted(by: {$0.price<$1.price}).first
+            }
+            return listOfMin.sorted(by: {$0.price<$1.price}).first?.name ?? "none"
+        }
+    }
+    
     var minimumItemPrice: Double {
         get {
             let listOfMin = filteredResultList.map { res in
@@ -187,9 +205,9 @@ struct HistoryStatView: View {
                                     HStack {
                                         Spacer()
                                         
-                                        StatisticRectangle(iconString: "arrow.up.right.circle", description: "Maximum price\nof an item", value: showPrice(price: maximumItemPrice), color: Color.green)
+                                        StatisticRectangle(iconString: "arrow.up.right.circle", description: "Maximum price\n(\(maximumItemName))", value: showPrice(price: maximumItemPrice), color: Color.green)
                                         
-                                        StatisticRectangle(iconString: "arrow.down.right.circle", description: "Minimum price\nof an item", value: showPrice(price: minimumItemPrice), color: Color.red)
+                                        StatisticRectangle(iconString: "arrow.down.right.circle", description: "Minimum price\n(\(minimumItemName))", value: showPrice(price: minimumItemPrice), color: Color.red)
                                         
                                         Spacer()
                                     }
@@ -226,9 +244,9 @@ struct HistoryStatView: View {
                                         HStack {
                                             Spacer()
 
-                                            StatisticRectangle(iconString: "arrow.up.right.circle", description: "Maximum price\nof an item", value: showPrice(price: maximumItemPrice), color: Color.green)
+                                            StatisticRectangle(iconString: "arrow.up.right.circle", description: "Maximum price\n(\(maximumItemName))", value: showPrice(price: maximumItemPrice), color: Color.green)
                                             
-                                            StatisticRectangle(iconString: "arrow.down.right.circle", description: "Minimum price\nof an item", value: showPrice(price: minimumItemPrice), color: Color.red)
+                                            StatisticRectangle(iconString: "arrow.down.right.circle", description: "Minimum price\n(\(minimumItemName))", value: showPrice(price: minimumItemPrice), color: Color.red)
 
                                             StatisticRectangle(iconString: "calendar", description: selectedTimeOption == timeOptions[0] ? "Days passed since\nfirst receipt" : "Days passed since\nlast receipt", value: String(daysSince), color: Color(red: 255 / 255, green: 101 / 255, blue: 227 / 255))
                                             

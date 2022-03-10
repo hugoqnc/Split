@@ -44,33 +44,12 @@ struct StatisticRectangle: View {
                                     .font(.footnote)
                                     .multilineTextAlignment(.trailing)
                                     .foregroundColor(.secondary)
+                                    .minimumScaleFactor(0.8)
+                                    .lineLimit(2)
                             }
                         }
                     }
                 }
-                
-//                VStack {
-//                    HStack {
-//                        Image(systemName: iconString)
-//                            .resizable(resizingMode: .tile)
-//                            .aspectRatio(contentMode: .fit)
-//                            .frame(width: 65.0, height: 65.0)
-//                            .foregroundColor(color)
-//                        Spacer()
-//                    }
-//                    HStack {
-//                        Spacer()
-//                        VStack(alignment: .trailing) {
-//                            Text(value)
-//                                .font(.largeTitle)
-//                                .fontWeight(.semibold)
-//                            Text(description)
-//                                .font(.footnote)
-//                                .multilineTextAlignment(.trailing)
-//                                .foregroundColor(.secondary)
-//                        }
-//                    }
-//                }
             }
             .frame(idealWidth: 140, maxWidth: 200, idealHeight: 140, maxHeight: 200)
             .padding()
