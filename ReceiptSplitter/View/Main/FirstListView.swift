@@ -37,9 +37,6 @@ struct FirstListView: View {
                         LoadItemsView(showScanningResults: $showScanningResults, nothingFound: $nothingFound)
                     }
                 } else {
-
-                    //Text(String(editMode.isEditing))
-                    
                     ZStack {
                         NavigationView {
                                                 
@@ -56,24 +53,29 @@ struct FirstListView: View {
                                     
                                     Spacer()
                                     
-                                    if horizontalSizeClass == .compact { //don't show on iPad's large screen
-                                        Picker("view", selection: $showView) {
-                                            ForEach(views, id: \.self) {
-                                                Text($0)
+                                    Text("\(editItemAlertPair.name)") //due to https://developer.apple.com/forums/thread/652080
+                                        .hidden()
+                                        .frame(width: 0, height:0)
+                                    
+                                    VStack {
+                                        AutomatedRecognitionLabel(isEnabled: model.parameters.bigRecognition)
+                                                .padding(.horizontal, 30)
+                                                .padding(.top, -4)
+                                        
+                                        if horizontalSizeClass == .compact { //don't show on iPad's large screen
+                                            Picker("view", selection: $showView) {
+                                                ForEach(views, id: \.self) {
+                                                    Text($0)
+                                                }
                                             }
+                                            .pickerStyle(.segmented)
+                                            .padding(.horizontal, 30)
                                         }
-                                        .pickerStyle(.segmented)
-                                        .padding(.horizontal, 30)
                                     }
-
                                 }
                                 .padding(.top, 10)
                                 .padding(.bottom, 10)
                                 .padding(.leading, 30)
-
-                                Text("\(editItemAlertPair.name)") //due to https://developer.apple.com/forums/thread/652080
-                                    .hidden()
-                                    .frame(height:0)
                                 
                                 Group {
                                     if horizontalSizeClass == .compact {
@@ -204,7 +206,6 @@ struct FirstListView: View {
                                                           }
                                                       })
                                 }
-
                             }
                             .toolbar {
                                 ToolbarItem(placement: .navigationBarLeading) {
