@@ -12,9 +12,11 @@ struct SettingsView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.openURL) var openURL
     @Environment(\.colorScheme) var colorScheme
+    
+    var githubLink = "https://github.com/hugoqnc/ReceiptSplitter"
 
     @State var parameters = Parameters()
-    
+    @State private var showSharingOptions = false
     @State var showAdvancedParameters = false
     
     var year: String {
@@ -64,14 +66,9 @@ struct SettingsView: View {
                         .foregroundColor(parameters.bigRecognition ? .teal : .secondary)
                         //.background((parameters.bigRecognition ? Color.teal : Color.secondary).opacity(0.1))
                         
-                            
-                        Button {
-                            showAdvancedParameters = true
-                        } label: {
-                            Label("Advanced Parameters", systemImage: "gear")
-                        }
-                        .buttonStyle(.borderless)
-                        .listRowBackground(Color.secondary.opacity(0.1))
+                        NavigationLink(destination: AdvancedParametersView(parameters: $parameters), isActive: $showAdvancedParameters) { Text("Advanced Parameters") }
+                            .navigationViewStyle(.stack)
+                        
                     } header: {
                         Text("Image Recognition")
                     }
@@ -97,6 +94,16 @@ struct SettingsView: View {
                     
                     Section {
                         Button {
+                            showSharingOptions = true
+                        } label: {
+                            Label("Share this app", systemImage: "square.and.arrow.up")
+                        }
+                        .buttonStyle(.borderless)
+                        .sheet(isPresented: $showSharingOptions, content: {
+                            ActivityViewController(activityItems: ["Hey, I use ReceiptSplitter to easily share my receipts, you should check it out: "+githubLink])
+                        })
+                        
+                        Button {
                             openURL(URL(string: "mailto:hugo.queinnec@gmail.com?subject=%5BReceiptSplitter%5D%20New%20Request&body=Please%20write%20here%20about%20an%20issue%2C%20or%20suggest%20me%20a%20new%20feature%20I%20should%20add%20to%20ReceiptSplitter.%0D%0AIf%20it%20is%20about%20an%20issue%2C%20first%20make%20sure%20you%20are%20using%20the%20latest%20version%20of%20ReceiptSplitter.%20Then%2C%20specify%20the%20device%20you%20are%20using%2C%20and%20what%20exact%20steps%20led%20to%20the%20bug.")!)
                         } label: {
                             Label("Send me an email!", systemImage: "envelope")
@@ -104,7 +111,7 @@ struct SettingsView: View {
                         .buttonStyle(.borderless)
                         
                         Button {
-                            openURL(URL(string: "https://github.com/hugoqnc/ReceiptSplitter")!)
+                            openURL(URL(string: githubLink)!)
                         } label: {
                             Label("Project's Github", systemImage: "chevron.left.forwardslash.chevron.right")
                         }
@@ -129,9 +136,9 @@ struct SettingsView: View {
 
                 }
             }
-            .sheet(isPresented: $showAdvancedParameters, content: {
-                AdvancedParametersView(parameters: $parameters)
-            })
+//            .sheet(isPresented: $showAdvancedParameters, content: {
+//                AdvancedParametersView(parameters: $parameters)
+//            })
             .navigationTitle("Settings")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {

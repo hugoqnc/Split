@@ -28,7 +28,7 @@ struct StartView: View {
                 VStack{
                     NavigationLink(destination: HistoryView(showHistoryView: $showHistoryView), isActive: $showHistoryView) { EmptyView() }
                         .isDetailLink(false)
-                        .navigationViewStyle(DoubleColumnNavigationViewStyle())
+                        .navigationViewStyle(.stack)
                     
                     PreferenceButton(names: $names, newUserName: $newUserName, currencyType: $currencyType, showAlert1: $showAlert1, showAlert2: $showAlert2)
                         .padding(10)
