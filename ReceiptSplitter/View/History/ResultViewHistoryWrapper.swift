@@ -13,6 +13,7 @@ struct ResultViewHistoryWrapper: View {
         model.users = resultUnit.users
         model.currency = resultUnit.currency
         model.date = resultUnit.date
+        model.receiptName = resultUnit.receiptName
         
         for d in resultUnit.imagesData {
             model.images.append(IdentifiedImage(id: UUID().uuidString, image: UIImage(data: d)!))

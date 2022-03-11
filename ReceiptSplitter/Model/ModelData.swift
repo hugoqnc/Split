@@ -79,8 +79,10 @@ final class ModelData: ObservableObject {
         
         var sharedText =
         """
-        🛒 Shopping details — \(user.name)
-        🗓 Date: \(dateFormatter.string(from: date))\n
+        👤 \(user.name)
+        🛒 Shopping at \(receiptName)
+        🗓 Date: \(dateFormatter.string(from: date))
+        ________________\n
         """
         
         let items = chosenItems(ofUser: user)
@@ -94,6 +96,7 @@ final class ModelData: ObservableObject {
         sharedText.append(
         """
         ________________
+        
         💸 Total: \(showPrice(price: balance(ofUser: user)))
         
         Sent with ReceiptSplitter
@@ -110,7 +113,7 @@ final class ModelData: ObservableObject {
             
             var sharedText =
             """
-            🛒 Shopping Repartition
+            🛒 Shopping at \(receiptName)
             🗓 Date: \(dateFormatter.string(from: date))
             ________________\n\n
             """
@@ -140,7 +143,7 @@ final class ModelData: ObservableObject {
             
             var sharedText =
             """
-            🛒 Shopping Repartition
+            🛒 Shopping at \(receiptName)
             🗓 Date: \(dateFormatter.string(from: date))
             ________________\n
             """

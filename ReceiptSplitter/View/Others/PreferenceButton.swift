@@ -119,7 +119,7 @@ struct PreferenceButton: View {
                                     Image(systemName: "star.fill")
                                         .padding(.trailing, 5)
                                     VStack(alignment: .leading) {
-                                        Text("Load favorite preferences ")
+                                        Text("Use favorite preferences ")
                                         Text(descriptiveString)
                                             .font(.caption)
                                     }
