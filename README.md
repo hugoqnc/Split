@@ -18,6 +18,8 @@ https://user-images.githubusercontent.com/67365803/155156726-2c296a5e-43b8-47fe-
 
 ## Features
 - [x] Scan any receipt, regardless of the brand
+- [x] Take your scan in a single tap, with no need to manually crop it
+- [x] Reliability: the image recognition results are automatically verified by matching the price of all items to the total price
 - [x] Use it from two to an unlimited number of people
 - [x] Quickly display images corresponding to the item name on the receipt, to easily understand what it refers to
 - [x] Share the results using any app you want
