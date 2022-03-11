@@ -158,6 +158,20 @@ struct FirstListView: View {
                                             Divider()
                                             
                                             List() {
+                                                Section(header: Text("Receipt Name")) {
+                                                    VStack {
+                                                        TextField("New user", text: $model.receiptName.animation())
+                                                            .disabled(editMode != .active)
+                                                        if editMode == .active {
+                                                            Text("Tap to edit")
+                                                                .font(.caption)
+                                                                .foregroundColor(Color.accentColor)
+                                                                .padding(0)
+                                                        }
+                                                    }
+                                                }
+                                                .listRowBackground(Color.secondary.opacity(0.1))
+                                                
                                                 ForEach(model.listOfProductsAndPrices) { pair in
                                                     VStack(alignment: .leading) {
                                                         HStack {

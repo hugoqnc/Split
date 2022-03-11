@@ -50,8 +50,11 @@ struct SettingsView: View {
                                     Image(systemName: "wand.and.stars")
                                         .font(.title2)
                                         .padding(2)
-                                    Text("Scan your receipt in one tap.\nNo manual editing, no mistakes.")
-                                        .font(.caption)
+                                    VStack(alignment: .leading) {
+                                        Text("Scan your receipt in one tap.")
+                                        Text("No manual editing, no mistakes.")
+                                    }
+                                    .font(.caption)
                                 }
                                 .padding(.bottom,8)
                                 
