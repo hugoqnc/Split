@@ -56,6 +56,8 @@ struct TextRecognition {
                 return
             }
             
+            textItem.name = observations.first?.topCandidates(1).first?.string ?? ""
+            
             //0. Get median heigth of bounding box
             let heights: [CGFloat] = observations.map { obs in
              obs.boundingBox.size.height

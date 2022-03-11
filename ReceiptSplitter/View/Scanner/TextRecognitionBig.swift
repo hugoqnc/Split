@@ -110,6 +110,8 @@ struct TextRecognitionBig {
                 return
             }
             
+            textItem.name = observations.first?.topCandidates(1).first?.string ?? ""
+            
             var listOfPricesObs: [PairStringDouble] = []
             var matched = false
 

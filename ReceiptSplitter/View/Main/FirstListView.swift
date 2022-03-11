@@ -39,8 +39,8 @@ struct FirstListView: View {
                 } else {
                     ZStack {
                         NavigationView {
-                                                
                             VStack{
+                                //Text("Name: "+model.receiptName)
                                 HStack {
                                     VStack(alignment: .leading) {
                                         Text("\(model.listOfProductsAndPrices.count) items")
@@ -58,10 +58,6 @@ struct FirstListView: View {
                                         .frame(width: 0, height:0)
                                     
                                     VStack {
-                                        AutomatedRecognitionLabel(isEnabled: model.parameters.bigRecognition)
-                                                .padding(.horizontal, 30)
-                                                .padding(.top, -4)
-                                        
                                         if horizontalSizeClass == .compact { //don't show on iPad's large screen
                                             Picker("view", selection: $showView) {
                                                 ForEach(views, id: \.self) {
@@ -82,6 +78,8 @@ struct FirstListView: View {
                                         Group{
                                             if showView=="Scan" {
                                                 ScrollView {
+                                                    AutomatedRecognitionLabel(isEnabled: model.parameters.bigRecognition)
+                                                        .padding(10)
                                                     ForEach(model.images){ idImage in
                                                         if let image = idImage.image {
                                                             Image(uiImage: visualization(image, observations: idImage.boxes(listOfProductsAndPrices: model.listOfProductsAndPrices)))
@@ -131,6 +129,8 @@ struct FirstListView: View {
                                     } else { //iPad (large screen) version
                                         HStack{
                                             ScrollView {
+                                                AutomatedRecognitionLabel(isEnabled: model.parameters.bigRecognition)
+                                                    .padding(10)
                                                 ForEach(model.images){ idImage in
                                                     if let image = idImage.image {
                                                         Image(uiImage: visualization(image, observations: idImage.boxes(listOfProductsAndPrices: model.listOfProductsAndPrices)))
@@ -274,7 +274,7 @@ struct FirstListView: View {
                                     .padding()
                                 }
                             }
-                            .navigationBarTitle(Text("ReceiptSplitter"), displayMode: .inline)
+                            .navigationBarTitle(Text(model.receiptName), displayMode: .inline)
 
                         }
                         .navigationViewStyle(StackNavigationViewStyle())
@@ -322,6 +322,7 @@ struct FirstListView_Previews: PreviewProvider {
                                 PairProductPrice(id: "D041D2CF-7FC6-4D49-AF7E-7F6EF68E6217", name: "7 PAIC XLS ACTIF FRD", price: 2.05, isNewItem: false, imageId: Optional("1111"), box: VNDetectedObjectObservation(boundingBox: CGRect(x: 0.113443, y: 0.473182, width: 0.762698, height: 0.0149828))),
                                 PairProductPrice(id: "F6C0BB99-A549-48D9-830A-778B9602FB8D", name: "ORAL B BROSSETTES", price: 10.9, isNewItem: false, imageId: Optional("1111"), box: VNDetectedObjectObservation(boundingBox: CGRect(x: 0.167544, y: 0.490189, width: 0.707182, height: 0.0145087)))]
                             model.images = [IdentifiedImage(id: "1111", image: UIImage(named: "scan4"))]
+                            model.receiptName = "ALDI SUISSE"
             }
     }
 }

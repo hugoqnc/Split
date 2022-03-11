@@ -61,6 +61,7 @@ struct LoadItemsView: View {
                                     if !model.listOfProductsAndPrices.contains(item.list.first ?? PairProductPrice()){
                                         let content: [PairProductPrice] = item.list
                                         model.listOfProductsAndPrices.append(contentsOf: content)
+                                        model.addNameToReceipt(name: item.name)
                                     }
                                     model.images.append(item.image)
                                 }

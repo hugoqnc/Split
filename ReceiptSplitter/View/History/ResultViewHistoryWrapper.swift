@@ -67,7 +67,7 @@ struct ResultViewHistoryWrapper: View {
 struct ResultViewHistoryWrapper_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            ResultViewHistoryWrapper(resultUnit: ResultUnit(users: [], listOfProductsAndPrices: [], currency: Currency.default, date: Date(), imagesData: []))
+            ResultViewHistoryWrapper(resultUnit: ResultUnit(users: [], listOfProductsAndPrices: [], currency: Currency.default, date: Date(), imagesData: [], receiptName: "ALDI"))
         }
     }
 }

@@ -302,7 +302,7 @@ struct HistoryStatView: View {
 
 struct HistoryStatView_Previews: PreviewProvider {
     static var previews: some View {
-        HistoryStatView(results: Results(results: [ResultUnit(users: [], listOfProductsAndPrices: [], currency: Currency.default, date: Date(timeIntervalSince1970: 1645000000), imagesData: []), ResultUnit(users: [], listOfProductsAndPrices: [], currency: Currency.default, date: Date(timeIntervalSince1970: 1640000000), imagesData: [])]))
+        HistoryStatView(results: Results(results: [ResultUnit(users: [], listOfProductsAndPrices: [], currency: Currency.default, date: Date(timeIntervalSince1970: 1645000000), imagesData: [], receiptName: "ALDI"), ResultUnit(users: [], listOfProductsAndPrices: [], currency: Currency.default, date: Date(timeIntervalSince1970: 1640000000), imagesData: [], receiptName: "Migros")]))
         //HistoryStatView(results: Results(results: []))
     
 

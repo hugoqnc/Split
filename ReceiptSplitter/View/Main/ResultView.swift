@@ -168,7 +168,7 @@ struct ResultView: View {
                     if !isShownInHistory {
                         Button {
                             model.date = Date()
-                            ResultsStore.append(users: model.users, listOfProductsAndPrices: model.listOfProductsAndPrices, currency: model.currency, date: model.date, images: model.images) { result in
+                            ResultsStore.append(receiptName: model.receiptName, users: model.users, listOfProductsAndPrices: model.listOfProductsAndPrices, currency: model.currency, date: model.date, images: model.images) { result in
                                 switch result {
                                 case .failure(let error):
                                     fatalError(error.localizedDescription)

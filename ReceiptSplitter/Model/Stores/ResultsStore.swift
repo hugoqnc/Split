@@ -25,6 +25,7 @@ struct ResultUnit: Codable, Identifiable {
     var currency: Currency
     var date: Date
     var imagesData: [Data]
+    var receiptName: String
 }
 
 class ResultsStore: ObservableObject {
@@ -81,7 +82,7 @@ class ResultsStore: ObservableObject {
         }
     }
     
-    static func append(users: [User], listOfProductsAndPrices: [PairProductPrice], currency: Currency, date: Date, images: [IdentifiedImage], completion: @escaping (Result<Bool, Error>)->Void) {
+    static func append(receiptName: String, users: [User], listOfProductsAndPrices: [PairProductPrice], currency: Currency, date: Date, images: [IdentifiedImage], completion: @escaping (Result<Bool, Error>)->Void) {
         var listOfProductsAndPricesCodable: [PairProductPriceCodable] = []
         for pair in listOfProductsAndPrices {
             var pairCod = PairProductPriceCodable()
@@ -97,7 +98,7 @@ class ResultsStore: ObservableObject {
             imagesData.append(image.image!.pngData()!)
         }
         
-        let resultUnit = ResultUnit(users: users, listOfProductsAndPrices: listOfProductsAndPricesCodable, currency: currency, date: date, imagesData: imagesData)
+        let resultUnit = ResultUnit(users: users, listOfProductsAndPrices: listOfProductsAndPricesCodable, currency: currency, date: date, imagesData: imagesData, receiptName: receiptName)
         append(resultUnit: resultUnit, completion: completion)
     }
     

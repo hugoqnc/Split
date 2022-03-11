@@ -13,10 +13,12 @@ class TextModel: Identifiable {
     var id: String
     var list: [PairProductPrice] = []
     var image: IdentifiedImage
+    var name: String
     
     init() {
         id = UUID().uuidString
         image = IdentifiedImage(id: self.id)
+        name = ""
     }
 }
 

@@ -16,7 +16,17 @@ final class ModelData: ObservableObject {
     @Published var currency: Currency = Currency.default
     @Published var images: [IdentifiedImage] = []
     @Published var parameters = Parameters.default
+    @Published var receiptName = ""
     var date = Date()
+    
+    func addNameToReceipt(name: String) -> Void {
+        if receiptName.isEmpty {
+            self.receiptName = name
+        } else if !name.isEmpty {
+            self.receiptName += ", "+name
+        }
+        
+    }
     
     var totalBalance: Double {
         get {
@@ -184,10 +194,12 @@ final class ModelData: ObservableObject {
             self.listOfProductsAndPrices = []
             self.currency = Currency.default
             self.images = []
+            self.receiptName = ""
         }
     }
     func eraseScanData() {
         self.listOfProductsAndPrices = []
         self.images = []
+        self.receiptName = ""
     }
 }
