@@ -66,6 +66,10 @@ struct ResultView: View {
                                         .font(.largeTitle)
                                         .fontWeight(.semibold)
                                         .foregroundColor(.primary)
+                                    Text(model.receiptName)
+                                        .font(.caption)
+                                        .fontWeight(.semibold)
+                                        .foregroundColor(.secondary)
                                 }
                             }
                         }
@@ -230,6 +234,7 @@ struct ResultView_Previews: PreviewProvider {
         model.listOfProductsAndPrices[0].chosenBy = [model.users[0].id]
         model.listOfProductsAndPrices[1].chosenBy = [model.users[0].id, model.users[1].id]
         model.listOfProductsAndPrices[2].chosenBy = [model.users[0].id, model.users[1].id, model.users[2].id]
+        model.receiptName = "ALDI SUISSE"
         return model
     }()
     

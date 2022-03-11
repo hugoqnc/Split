@@ -77,14 +77,19 @@ struct ResultCard: View {
                     }
                     
                     HStack(spacing:0) {
-                        Text("\(String(round(totalPrice * 100) / 100.0))\(resultUnit.currency.value)")
+                        Text(resultUnit.receiptName)
                             .font(.title)
                             .fontWeight(.semibold)
-                        Text(" — \(resultUnit.listOfProductsAndPrices.count) items")
-                            .font(.title)
+                            .lineLimit(1)
                     }
                     .foregroundColor(colorMatching)
                     .brightness(colorScheme == .dark ? 0.2 : -0.3)
+                    
+                    Label("\(String(round(totalPrice * 100) / 100.0))\(resultUnit.currency.value) • \(resultUnit.listOfProductsAndPrices.count) items", systemImage: "cart")
+                        .font(.subheadline)
+                        .foregroundColor(colorMatching)
+                        .brightness(colorScheme == .dark ? 0 : -0.1)
+                        .lineLimit(1)
                     
                     Label(namesText, systemImage: "person.2")
                         .font(.subheadline)
@@ -133,7 +138,7 @@ struct ResultCard_Previews: PreviewProvider {
         listOfProductsAndPrices[0].chosenBy = [users[0].id]
         listOfProductsAndPrices[1].chosenBy = [users[0].id, users[1].id]
         
-        var resultUnit = ResultUnit(id: UUID(), users: users, listOfProductsAndPrices: listOfProductsAndPrices, currency: Currency.default, date: Date(), imagesData: [], receiptName: "ALDI")
+        var resultUnit = ResultUnit(id: UUID(), users: users, listOfProductsAndPrices: listOfProductsAndPrices, currency: Currency.default, date: Date(), imagesData: [], receiptName: "ALDI Suisse, Monoprix, Migros")
         
         return resultUnit
     }()

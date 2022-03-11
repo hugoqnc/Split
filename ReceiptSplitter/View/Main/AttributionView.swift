@@ -70,7 +70,7 @@ struct AttributionView: View {
                     .padding(15)
                     
                 }
-                .navigationBarTitle(Text("ReceiptSplitter"), displayMode: .inline)
+                .navigationBarTitle(Text(model.receiptName), displayMode: .inline)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button {
