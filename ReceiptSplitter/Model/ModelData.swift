@@ -17,6 +17,7 @@ final class ModelData: ObservableObject {
     @Published var images: [IdentifiedImage] = []
     @Published var parameters = Parameters.default
     @Published var receiptName = ""
+    @Published var continueWithStandardRecognition = false
     var date = Date()
     
     func addNameToReceipt(name: String) -> Void {
@@ -198,11 +199,13 @@ final class ModelData: ObservableObject {
             self.currency = Currency.default
             self.images = []
             self.receiptName = ""
+            self.continueWithStandardRecognition = false
         }
     }
     func eraseScanData() {
         self.listOfProductsAndPrices = []
         self.images = []
         self.receiptName = ""
+        self.continueWithStandardRecognition = false
     }
 }

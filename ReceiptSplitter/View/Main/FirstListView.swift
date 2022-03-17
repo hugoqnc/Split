@@ -40,7 +40,6 @@ struct FirstListView: View {
                     ZStack {
                         NavigationView {
                             VStack{
-                                //Text("Name: "+model.receiptName)
                                 HStack {
                                     VStack(alignment: .leading) {
                                         Text("\(model.listOfProductsAndPrices.count) items")
@@ -78,7 +77,7 @@ struct FirstListView: View {
                                         Group{
                                             if showView=="Scan" {
                                                 ScrollView {
-                                                    AutomatedRecognitionLabel(isEnabled: model.parameters.bigRecognition)
+                                                    AutomatedRecognitionLabel(isEnabled: model.parameters.bigRecognition && !model.continueWithStandardRecognition)
                                                         .padding(10)
                                                     ForEach(model.images){ idImage in
                                                         if let image = idImage.image {
@@ -143,7 +142,7 @@ struct FirstListView: View {
                                     } else { //iPad (large screen) version
                                         HStack{
                                             ScrollView {
-                                                AutomatedRecognitionLabel(isEnabled: model.parameters.bigRecognition)
+                                                AutomatedRecognitionLabel(isEnabled: model.parameters.bigRecognition && !model.continueWithStandardRecognition)
                                                     .padding(10)
                                                 ForEach(model.images){ idImage in
                                                     if let image = idImage.image {

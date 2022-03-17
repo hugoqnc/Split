@@ -60,6 +60,9 @@ struct LoadItemsView: View {
                                 for item in recognizedContent.items{
                                     if !model.listOfProductsAndPrices.contains(item.list.first ?? PairProductPrice()){
                                         let content: [PairProductPrice] = item.list
+                                        if !content.isEmpty {
+                                            model.continueWithStandardRecognition = true
+                                        }
                                         model.listOfProductsAndPrices.append(contentsOf: content)
                                         model.addNameToReceipt(name: item.name)
                                     }
