@@ -103,6 +103,7 @@ struct ResultCard: View {
             .padding()
         }
         .background(colorMatching.opacity(0.1))
+        .background(colorScheme == .dark ? .black : .white)
         .brightness(colorScheme == .dark ? 0.4 : 0)
         .cornerRadius(15)
         .padding(.horizontal)

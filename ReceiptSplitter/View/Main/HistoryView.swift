@@ -46,10 +46,10 @@ struct HistoryView: View {
                         NavigationLink {
                             ResultViewHistoryWrapper(resultUnit: resultUnit)
                                 .navigationTitle(date(resultUnit: resultUnit))
-                                //.transition(.opacity)
                         } label: {
                             ResultCard(resultUnit: resultUnit)
                         }
+                        .buttonStyle(PlainButtonStyle())
                         .contextMenu{
                             Button(role: .destructive){
                                 //remove from the view
