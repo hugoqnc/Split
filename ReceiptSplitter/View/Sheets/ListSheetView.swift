@@ -14,6 +14,7 @@ struct ListSheetView: View {
     @Environment(\.dismiss) var dismiss
     @State private var editItemAlert = false
     @State private var editPair = PairProductPrice()
+    @State private var showSafariView = false
 
     var body: some View {
         VStack {
@@ -45,7 +46,18 @@ struct ListSheetView: View {
                                                     .padding(.horizontal, 4)
                                                     .padding(.bottom, 3)
                                             }
+                                            .fullScreenCover(isPresented: $showSafariView) {
+                                                let urlString = ("http://www.google.com/images?q="+editPair.name).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+                                                SafariView(url: URL(string: urlString!)!).edgesIgnoringSafeArea(.all)
+                                            }
                                             .contextMenu{
+                                                Button{
+                                                    editPair = pair
+                                                    showSafariView = true
+                                                } label: {
+                                                    Label("Search for images", systemImage: "magnifyingglass")
+                                                }
+
                                                 if !isShownInHistory {
                                                     Button{
                                                         editItemAlert = true

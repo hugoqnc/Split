@@ -24,7 +24,7 @@ struct NoMatchFound: View {
                         .foregroundColor(.primary)
                         .fixedSize(horizontal: false, vertical: true)
 
-                    Text("**Advanced Recognition** is enabled and attempts to get the exact content of your receipt, but it has failed.\nYou can try again, or turn off **Advanced Recognition**.")
+                    Text("Advanced Recognition is enabled and attempts to get the exact content of your receipt, but it has failed.\nYou can try again, or turn off Advanced Recognition.")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                         .fixedSize(horizontal: false, vertical: true)

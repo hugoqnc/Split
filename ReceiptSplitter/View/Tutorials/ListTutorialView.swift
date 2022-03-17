@@ -27,7 +27,7 @@ struct ListTutorialView: View {
                                 .font(.headline)
                                 .foregroundColor(.primary)
 
-                            Text("With **Advanced Recognition**, if the total of the receipt is correct, then all prices are correct")
+                            Text("With Advanced Recognition, if the total of the receipt is correct, then all prices are correct")
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
                                 .fixedSize(horizontal: false, vertical: true)
