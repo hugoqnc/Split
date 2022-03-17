@@ -129,6 +129,22 @@ struct AdvancedParametersView: View {
                     }
                     HStack {
                         VStack(alignment: .leading, spacing: 3) {
+                            Text("Name Left Margin")
+                                .padding(.top,3)
+                            Text("From 0 to 1")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                        Spacer()
+                        TextField("", value: $parameters.visionParameters.nameMarginLeft, format: .number)
+                            .textFieldStyle(.roundedBorder)
+                            .keyboardType(.decimalPad)
+                            .frame(width: 55)
+                            .foregroundColor(.accentColor)
+                            .focused($isKeyboardShown)
+                    }
+                    HStack {
+                        VStack(alignment: .leading, spacing: 3) {
                             Text("Total Bottom Proportion")
                                 .padding(.top,3)
                             Text("From 0 to 1")
@@ -217,6 +233,7 @@ struct AdvancedParametersView: View {
                             Label("**Minimum Area Coverage**: minimum overlap percentage between the *text rectangle* extended on the right and the *price rectangle*.", systemImage: "rectangle.on.rectangle")
                             Label("**Maximum Margin**: *accepted* lines of the receipt protrude to the left and right outside the margins defined by this percentage.", systemImage: "arrow.left.and.right")
                             Label("**Price Right Margin**: proportion right of the receipt containing the price column.", systemImage: "dollarsign.circle")
+                            Label("**Name Left Margin**: proportion left of the receipt containing item names (at least the minimum coverage).", systemImage: "textformat.abc")
                             Label("**Total Bottom Proportion**: bottom proportion which contains the total price of the receipt.", systemImage: "sum")
                             Label("**Contrast Factor**: increases the contrast of the black and white scan.", systemImage: "circle.lefthalf.filled")
                             Label("**Minimum Text Height**: percentage of font size over the height of the receipt.", systemImage: "textformat.size")

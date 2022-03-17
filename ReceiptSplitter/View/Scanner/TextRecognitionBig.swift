@@ -99,6 +99,7 @@ struct TextRecognitionBig {
     func getTextRecognitionRequest(with textItem: TextModel, currentMinimumTextHeight: Float) -> VNRecognizeTextRequest {
         
         let priceMarginRight = visionParameters.priceMarginRight
+        let nameMarginLeft = visionParameters.nameMarginLeft
         let epsilonFloat = visionParameters.epsilonFloat
         let proportionWithTotal = visionParameters.proportionWithTotal
         let epsilonHeight = visionParameters.epsilonHeightAR
@@ -248,7 +249,7 @@ struct TextRecognitionBig {
                         let py1 = oFirst.boundingBox.origin.y
                         let h1 = oFirst.boundingBox.size.height
                         //let w1 = oFirst.boundingBox.size.width
-                        let longRect1: CGRect = CGRect(x: 0, y: py1, width: px1, height: h1)
+                        let longRect1: CGRect = CGRect(x: 0, y: py1, width: min(px1, nameMarginLeft), height: h1)
                         
                         let areaCoverage1 = getsCoveredByArea(of: longRect1, rect: obs.boundingBox)
                         if areaCoverage1>minAreaCoverage {
