@@ -28,6 +28,14 @@ struct AttributionView: View {
                         .padding()
                         .frame(height: 150)
                     
+                    if !model.listOfProductsAndPrices.isEmpty {
+                        ProgressView(value: Double(itemCounter)/Double(model.listOfProductsAndPrices.count))
+                            .animation(.easeInOut, value: itemCounter)
+                            .animation(.easeInOut, value: model.listOfProductsAndPrices.count)
+                            .padding(.horizontal)
+                            .padding(.top, 10)
+                    }
+                    
                     Spacer()
                     
                     ZStack{
@@ -130,7 +138,7 @@ struct HomeView_Previews: PreviewProvider {
             .onAppear {
                 model.users = [User(name: "Hugo"), User(name: "Lucas"), User(name: "Thomas")]
                 model.listOfProductsAndPrices = [PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 4.99), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBC", name: "Finger Fish", price: 1.27), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBD", name: "Ice Cream Strawberry", price: 3.20)]
-                model.parameters.selectAllUsers = true
+                model.parameters.selectAllUsers = false
             }
     }
 }
