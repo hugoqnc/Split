@@ -12,6 +12,8 @@ struct AdvancedParametersView: View {
     @FocusState var isKeyboardShown: Bool
     @Environment(\.openURL) var openURL
     
+    @State private var eraseConfirmation = false
+    
     var body: some View {
         VStack {
             Form {
@@ -189,12 +191,24 @@ struct AdvancedParametersView: View {
                 Section {
                     Button {
                         withAnimation() {
-                            parameters.visionParameters = Parameters().visionParameters
+                            eraseConfirmation = true
                         }
                     } label: {
                         Label("Reset Advanced Parameters", systemImage: "gobackward")
                     }
+                    .buttonStyle(.borderless)
                     .foregroundColor(.red)
+                    .confirmationDialog(
+                        "If you confirm, the current settings will be replaced by the default settings.",
+                         isPresented: $eraseConfirmation,
+                        titleVisibility: .visible
+                    ) {
+                        Button("Reset Advanced Parameters", role: .destructive) {
+                            withAnimation() {
+                                parameters.visionParameters = Parameters().visionParameters
+                            }
+                        }
+                    }
                 } footer: {
                     VStack(alignment: .leading, spacing: 8) {
                         Text("Do not modify these parameters if you don't understand what you do!")
