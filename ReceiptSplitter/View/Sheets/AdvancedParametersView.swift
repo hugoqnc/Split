@@ -10,6 +10,7 @@ import SwiftUI
 struct AdvancedParametersView: View {
     @Binding var parameters: Parameters
     @FocusState var isKeyboardShown: Bool
+    @Environment(\.openURL) var openURL
     
     var body: some View {
         VStack {
@@ -64,11 +65,23 @@ struct AdvancedParametersView: View {
                             .focused($isKeyboardShown)
                     }
                     
+                    Button {
+                        openURL(URL(string: "https://github.com/hugoqnc/ReceiptSplitter/blob/main/ReceiptSplitter/View/Scanner/TextRecognition.swift")!)
+                    } label: {
+                        Label("See Standard Recognition Code", systemImage: "chevron.left.forwardslash.chevron.right")
+                    }
+                    .buttonStyle(.borderless)
+                } header: {
+                    Text("Standard Recognition")
+                }
+                .listRowBackground(Color.secondary.opacity(0.1))
+                
+                Section {
                     HStack {
                         VStack(alignment: .leading, spacing: 3) {
                             Text("Multiplicative Height Epsilon")
                                 .padding(.top,3)
-                            Text("**Advanced Recognition** — From 0 to 1")
+                            Text("From 0 to 1")
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }
@@ -84,7 +97,7 @@ struct AdvancedParametersView: View {
                         VStack(alignment: .leading, spacing: 3) {
                             Text("Minimum Area Coverage")
                                 .padding(.top,3)
-                            Text("**Advanced Recognition** — From 0 to 1")
+                            Text("From 0 to 1")
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }
@@ -100,7 +113,7 @@ struct AdvancedParametersView: View {
                         VStack(alignment: .leading, spacing: 3) {
                             Text("Price Right Margin")
                                 .padding(.top,3)
-                            Text("**Advanced Recognition** — From 0 to 1")
+                            Text("From 0 to 1")
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }
@@ -116,7 +129,7 @@ struct AdvancedParametersView: View {
                         VStack(alignment: .leading, spacing: 3) {
                             Text("Total Bottom Proportion")
                                 .padding(.top,3)
-                            Text("**Advanced Recognition** — From 0 to 1")
+                            Text("From 0 to 1")
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }
@@ -132,7 +145,7 @@ struct AdvancedParametersView: View {
                         VStack(alignment: .leading, spacing: 3) {
                             Text("Contrast Factor")
                                 .padding(.top,3)
-                            Text("**Advanced Recognition** — From 1 to ∞")
+                            Text("From 1 to ∞")
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }
@@ -148,7 +161,7 @@ struct AdvancedParametersView: View {
                         VStack(alignment: .leading, spacing: 3) {
                             Text("Minimum Text Height")
                                 .padding(.top,3)
-                            Text("**Advanced Recognition** — From 0 to 1")
+                            Text("From 0 to 1")
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }
@@ -162,16 +175,26 @@ struct AdvancedParametersView: View {
                     }
                     
                     Button {
+                        openURL(URL(string: "https://github.com/hugoqnc/ReceiptSplitter/blob/main/ReceiptSplitter/View/Scanner/TextRecognitionBig.swift")!)
+                    } label: {
+                        Label("See Advanced Recognition Code", systemImage: "chevron.left.forwardslash.chevron.right")
+                    }
+                    .buttonStyle(.borderless)
+
+                } header: {
+                    Text("Advanced Recognition")
+                }
+                .listRowBackground(Color.secondary.opacity(0.1))
+                
+                Section {
+                    Button {
                         withAnimation() {
                             parameters.visionParameters = Parameters().visionParameters
                         }
                     } label: {
                         Label("Reset Advanced Parameters", systemImage: "gobackward")
                     }
-                    .buttonStyle(.borderless)
-
-                } header: {
-                    Text("Image Recognition")
+                    .foregroundColor(.red)
                 } footer: {
                     VStack(alignment: .leading, spacing: 8) {
                         Text("Do not modify these parameters if you don't understand what you do!")
