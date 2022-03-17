@@ -72,6 +72,7 @@ struct HistoryView: View {
                                 Label("Delete this receipt", systemImage: "trash")
                             }
                         }
+                        .padding(.horizontal)
 
                     }
                     .tint(.primary)

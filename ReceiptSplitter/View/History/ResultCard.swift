@@ -106,7 +106,6 @@ struct ResultCard: View {
         .brightness(colorScheme == .dark ? 0.4 : 0)
         .background(colorScheme == .dark ? .black : .white)
         .cornerRadius(15)
-        .padding(.horizontal)
     }
 }
 
