@@ -16,6 +16,10 @@ struct ShowScannerView: View {
     @State private var nothingFound = false
     @State private var showTextRecognitionSheet = false
     
+    @State var successCount = 0 //for Advanced Recognition
+    @State var listOfProductsAndPricesTemp: [PairProductPrice] = []
+
+    
     var body: some View {
         if showScanningResults {
             FirstListView(showScanningResults: $showScanningResults, nothingFound: $nothingFound)
@@ -26,19 +30,31 @@ struct ShowScannerView: View {
                         switch result {
                             case .success(let scannedImages):
                             if model.parameters.bigRecognition {
+                                successCount = 0
+                                listOfProductsAndPricesTemp = []
+                                
                                 TextRecognitionBig(scannedImages: scannedImages,
                                                 recognizedContent: recognizedContent,
                                                 visionParameters: model.parameters.visionParameters) { isLastImage in
                                     for item in recognizedContent.items{
+                                        //print("BOOL: \(!model.listOfProductsAndPrices.contains(item.list.first ?? PairProductPrice()))")
                                         if !model.listOfProductsAndPrices.contains(item.list.first ?? PairProductPrice()){
                                             let content: [PairProductPrice] = item.list
-                                            model.listOfProductsAndPrices.append(contentsOf: content)
+                                            listOfProductsAndPricesTemp.append(contentsOf: content)
                                             model.addNameToReceipt(name: item.name)
+                                            if !content.isEmpty {
+                                                successCount += 1
+                                            }
                                         }
                                         model.images.append(item.image)
                                     }
-                                    if model.listOfProductsAndPrices.isEmpty && isLastImage {
-                                        nothingFound = true
+                                    if isLastImage {
+                                        //print("Success: \(successCount) | Images: \(model.images.count)")
+                                        if successCount != model.images.count {
+                                            nothingFound = true
+                                        } else {
+                                            model.listOfProductsAndPrices = listOfProductsAndPricesTemp
+                                        }
                                     }
                                     recognizedContent.items = []
                                 }
