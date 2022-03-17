@@ -228,14 +228,14 @@ struct TextRecognitionBig {
                         let px1 = o1.boundingBox.origin.x
                         let py1 = o1.boundingBox.origin.y
                         let h1 = o1.boundingBox.size.height
-                        let w1 = o1.boundingBox.size.width
-                        let longRect1: CGRect = CGRect(x: 0, y: py1, width: 1-px1+w1, height: h1)
+                        //let w1 = o1.boundingBox.size.width
+                        let longRect1: CGRect = CGRect(x: 0, y: py1, width: px1, height: h1)
             
                         let px2 = o2.boundingBox.origin.x
                         let py2 = o2.boundingBox.origin.y
                         let h2 = o2.boundingBox.size.height
-                        let w2 = o2.boundingBox.size.width
-                        let longRect2: CGRect = CGRect(x: 0, y: py2, width: 1-px2+w2, height: h2)
+                        //let w2 = o2.boundingBox.size.width
+                        let longRect2: CGRect = CGRect(x: 0, y: py2, width: px2, height: h2)
                         
                         let areaCoverage1 = getsCoveredByArea(of: longRect1, rect: obs.boundingBox)
                         let areaCoverage2 = getsCoveredByArea(of: longRect2, rect: obs.boundingBox)
@@ -247,8 +247,8 @@ struct TextRecognitionBig {
                         let px1 = oFirst.boundingBox.origin.x
                         let py1 = oFirst.boundingBox.origin.y
                         let h1 = oFirst.boundingBox.size.height
-                        let w1 = oFirst.boundingBox.size.width
-                        let longRect1: CGRect = CGRect(x: 0, y: py1, width: 1-px1+w1, height: h1)
+                        //let w1 = oFirst.boundingBox.size.width
+                        let longRect1: CGRect = CGRect(x: 0, y: py1, width: px1, height: h1)
                         
                         let areaCoverage1 = getsCoveredByArea(of: longRect1, rect: obs.boundingBox)
                         if areaCoverage1>minAreaCoverage {
