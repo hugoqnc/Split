@@ -116,7 +116,7 @@ struct PreferenceButton: View {
                         } label: {
                             Group {
                                 HStack {
-                                    Image(systemName: "star.fill")
+                                    Image(systemName: "star")
                                         .padding(.trailing, 5)
                                     VStack(alignment: .leading) {
                                         Text("Use favorite preferences ")
@@ -129,6 +129,7 @@ struct PreferenceButton: View {
                             .transition(.asymmetric(insertion: .offset(x: 0, y: -60), removal: .offset(x: 0, y: 60)))
                         }
                         
+                        Spacer()
                         Divider()
                             .padding(.horizontal,3)
                     }
@@ -154,14 +155,19 @@ struct PreferenceButton: View {
                     } label: {
                         Group {
                             if nothingSaved {
-                                Image(systemName: "square.and.arrow.down")
+                                HStack {
+                                    Spacer()
+                                    Image(systemName: "square.and.arrow.down")
+                                        .padding(.trailing, 5)
+                                    VStack(alignment: .leading) {
+                                        Text("Save current preferences")
+                                        Text("Save names and currency for next time")
+                                            .font(.caption)
+                                    }
                                     .padding(.trailing, 5)
-                                VStack(alignment: .leading) {
-                                    Text("Save current preferences")
-                                    Text("Save names and currency for next time")
-                                        .font(.caption)
+                                    Spacer()
                                 }
-                                .padding(.trailing, 5)
+
                             } else if nothingWritten {
                                 VStack {
                                     Image(systemName: "xmark")
@@ -184,13 +190,17 @@ struct PreferenceButton: View {
                     .tint(nothingWritten ? .red : .accentColor)
                     
                 }
-                .padding(.horizontal, 10)
-                .padding(.vertical, 5)
-                .frame(maxHeight: buttonHeight)
+//                .padding(.horizontal, 10)
+//                .padding(.vertical, 5)
+//                .frame(maxHeight: buttonHeight)
             }
-            .background(Color(uiColor: UIColor.systemBackground).brightness(0.06))
-            .cornerRadius(10)
-            .shadow(color: .black.opacity(0.2), radius: 15.0)
+//            .background(Color(uiColor: UIColor.systemBackground).brightness(0.06))
+//            .cornerRadius(10)
+//            .shadow(color: .black.opacity(0.2), radius: 15.0)
+            }
+            else {
+                EmptyView()
+                    .frame(width: 0, height: 0)
             }
         }
         .transition(.move(edge: .top))

@@ -30,11 +30,18 @@ struct StartView: View {
                         .isDetailLink(false)
                         .navigationViewStyle(.stack)
                     
-                    PreferenceButton(names: $names, newUserName: $newUserName, currencyType: $currencyType, showAlert1: $showAlert1, showAlert2: $showAlert2)
-                        .padding(10)
-                        .padding(.top,10)
+//                    PreferenceButton(names: $names, newUserName: $newUserName, currencyType: $currencyType, showAlert1: $showAlert1, showAlert2: $showAlert2)
+//                        .padding(10)
+//                        .padding(.top,10)
                     
                     Form {
+                        PreferenceButton(names: $names, newUserName: $newUserName, currencyType: $currencyType, showAlert1: $showAlert1, showAlert2: $showAlert2)
+                            .buttonStyle(.borderless)
+                            .padding(.top, 15)
+                            .padding(.bottom, 5)
+                            .padding(.horizontal, 10)
+                            .listRowBackground(Color.secondary.opacity(0.0))
+                        
                         Section {
                             HStack {
                                 Text("Currency")
