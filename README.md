@@ -1,15 +1,16 @@
-<h1> ReceiptSplitter
+<h1> Split!
   <img align="right" src="Resources/icon-radius.png" width=74px>
 </h1>
 <br/>
-ReceiptSplitter is an app for iOS and iPadOS, that allows a group of people to easily share expenses from a common receipt.
+Split! is an app for iOS and iPadOS, that allows a group of people to easily share expenses from a common receipt.
 For example, roommates can do their shopping and pay for everything together.
 Afterwards, one of them can scan the receipt, and attribute each expense to one person, several people or the whole group.
 The app will calculate everyone's total, much faster than if you had to do it by hand.
+<br/>
 
 ![](Resources/presentation.png)
 
-*Images from left to right:* The interface to specify who should pay the current item | The interface showing the results of the image recognition of items on the receipt, shown on iPad with the two-column interface taking advantage of the large screen | The result interface, telling how much each person owes | The app is also available in dark mode!
+Image: some screenshots of Split!, on iPhone and iPad, in light and dark mode. 
 
 ## Quick demo
 
@@ -40,7 +41,7 @@ https://user-images.githubusercontent.com/67365803/155156726-2c296a5e-43b8-47fe-
 
 ## Upcoming features
 - [ ] Integration to the [Tricount API](https://www.tricount.com/en/api)
-- [ ] And hopefully, publication of ReceiptSplitter on the App Store
+- [ ] And hopefully, publication of Split! on the App Store
 
 ## Technical Details
 - This app works on Apple devices running iOS 15 / iPadOS 15 or higher

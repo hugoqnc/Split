@@ -31,7 +31,7 @@ struct CurrentExpensesRow: View {
                     Image(systemName: "person.2")
                         .resizable(resizingMode: .tile)
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 40.0, height: 30.0)
+                        .frame(width: 35.0, height: 30.0)
                         .foregroundColor(.primary)
                 }
                 .padding(.leading)
