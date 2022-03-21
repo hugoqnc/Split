@@ -17,15 +17,26 @@ struct FormDetailsView: View {
     
     var body: some View {
         Section {
-            HStack {
-                Text("Currency")
-                Spacer()
+            
+            Menu {
                 Picker("Currency", selection: $currencyType.animation()) {
                     ForEach(Currency.SymbolType.allCases, id: \.self, content: { currencyType in
                         Text(Currency(symbol: currencyType).value)
                     })
                 }
-                .pickerStyle(.menu)
+            } label: {
+                HStack {
+                    Image(systemName: "creditcard")
+                        .foregroundColor(Color.purple)
+                        .padding(.trailing, 2)
+                    Text("Currency")
+                        .foregroundColor(.primary)
+                    Spacer()
+                    Text("\(Currency(symbol: currencyType).value)")
+                        .fontWeight(.semibold)
+                        .padding(.trailing, 5)
+                }
+                
             }
             
             ForEach(names, id:\.self) { name in

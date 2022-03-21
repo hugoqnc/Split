@@ -39,7 +39,6 @@
 		4F4902B127CADA6E0047A441 /* ResultCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4902B027CADA6E0047A441 /* ResultCard.swift */; };
 		4F4902B327CB8E100047A441 /* NoHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4902B227CB8E100047A441 /* NoHistoryView.swift */; };
 		4F4A55B327A1B906001F84E3 /* PreferencesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4A55B227A1B906001F84E3 /* PreferencesStore.swift */; };
-		4F4A55B827A2AA5B001F84E3 /* PreferenceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4A55B727A2AA5B001F84E3 /* PreferenceButton.swift */; };
 		4F63DF0727A421B000E2CA3A /* InputItemDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F63DF0627A421B000E2CA3A /* InputItemDetails.swift */; };
 		4F7C1289279B46D100A5E50B /* SlideOverCard in Frameworks */ = {isa = PBXBuildFile; productRef = 4F7C1288279B46D100A5E50B /* SlideOverCard */; };
 		4F7C128C279B530A00A5E50B /* ListTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7C128B279B530A00A5E50B /* ListTutorialView.swift */; };
@@ -116,7 +115,6 @@
 		4F4902B027CADA6E0047A441 /* ResultCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultCard.swift; sourceTree = "<group>"; };
 		4F4902B227CB8E100047A441 /* NoHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoHistoryView.swift; sourceTree = "<group>"; };
 		4F4A55B227A1B906001F84E3 /* PreferencesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesStore.swift; sourceTree = "<group>"; };
-		4F4A55B727A2AA5B001F84E3 /* PreferenceButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceButton.swift; sourceTree = "<group>"; };
 		4F63DF0627A421B000E2CA3A /* InputItemDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputItemDetails.swift; sourceTree = "<group>"; };
 		4F7C128B279B530A00A5E50B /* ListTutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTutorialView.swift; sourceTree = "<group>"; };
 		4F7C128D279C047E00A5E50B /* Visualization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Visualization.swift; sourceTree = "<group>"; };
@@ -345,7 +343,6 @@
 				4FD7C2DC27E872BE009C4D9D /* FormDetailsView.swift */,
 				4FD7C2D827E86EE6009C4D9D /* FillFavoriteButton.swift */,
 				4FD7C2DA27E86EF2009C4D9D /* EditFavoriteButton.swift */,
-				4F4A55B727A2AA5B001F84E3 /* PreferenceButton.swift */,
 			);
 			path = Start;
 			sourceTree = "<group>";
@@ -521,7 +518,6 @@
 				4FD7C2D927E86EE6009C4D9D /* FillFavoriteButton.swift in Sources */,
 				4F94B90127A7476F00F7B10F /* StatisticRectangle.swift in Sources */,
 				4FB7813C2794821D00F5E2D8 /* Currency.swift in Sources */,
-				4F4A55B827A2AA5B001F84E3 /* PreferenceButton.swift in Sources */,
 				4FF675DC279A1E9400B7F385 /* FirstListView.swift in Sources */,
 				4F7C128E279C047E00A5E50B /* Visualization.swift in Sources */,
 				4F309E5D2784F68200F55BC6 /* TextRecognition.swift in Sources */,

@@ -24,7 +24,7 @@ struct Currency: Codable {
     var value: String {
         switch self.symbol{
         case .other:
-            return "-"
+            return "–"
         case .euro:
             return "€"
         case .dollar:
