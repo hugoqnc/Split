@@ -56,7 +56,7 @@ struct EditFavoriteButton: View {
                             .foregroundColor(.red)
                             .confirmationDialog(
                                 "If you confirm, your favorites will be deleted.",
-                                 isPresented: $deleteConfirmation,
+                                isPresented: $deleteConfirmation,
                                 titleVisibility: .visible
                             ) {
                                 Button("Delete saved favorites", role: .destructive) {
@@ -70,6 +70,7 @@ struct EditFavoriteButton: View {
                                             case .failure(let error):
                                                 fatalError(error.localizedDescription)
                                             case .success(_):
+                                                deleteConfirmation = false
                                                 showFavoriteView = false
                                             }
                                         }

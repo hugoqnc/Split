@@ -216,7 +216,7 @@ struct AdvancedParametersView: View {
                     .foregroundColor(.red)
                     .confirmationDialog(
                         "If you confirm, the current settings will be replaced by the default settings.",
-                         isPresented: $eraseConfirmation,
+                        isPresented: $eraseConfirmation,
                         titleVisibility: .visible
                     ) {
                         Button("Reset Advanced Parameters", role: .destructive) {
