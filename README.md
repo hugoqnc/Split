@@ -7,6 +7,7 @@ For example, roommates can do their shopping and pay for everything together.
 Afterwards, one of them can scan the receipt, and attribute each expense to one person, several people or the whole group.
 The app will calculate everyone's total, much faster than if you had to do it by hand.
 <br/>
+<br/>
 
 ![](Resources/presentation.png)
 
@@ -14,8 +15,7 @@ Image: some screenshots of Split!, on iPhone and iPad, in light and dark mode.
 
 ## Quick demo
 
-https://user-images.githubusercontent.com/67365803/155156726-2c296a5e-43b8-47fe-a26c-3ba9feaa2919.mov
-
+https://user-images.githubusercontent.com/67365803/159295049-a5201b9e-ec59-4356-a12f-6d40171c7870.mp4
 
 ## Features
 - [x] Scan any receipt, regardless of the brand
