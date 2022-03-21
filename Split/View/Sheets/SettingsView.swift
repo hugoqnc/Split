@@ -36,11 +36,11 @@ struct SettingsView: View {
                     
                     Section {
                         VStack(alignment: .leading, spacing: 3) {
-                            Toggle(isOn: $parameters.bigRecognition) {
+                            Toggle(isOn: $parameters.advancedRecognition) {
                                 Text("Advanced Recognition")
                                     .font(.title3)
                                     .fontWeight(.semibold)
-                                    .brightness(colorScheme == .dark ? parameters.bigRecognition ? 0.1 : -0.2 : parameters.bigRecognition ? -0.1 : 0.2)
+                                    .brightness(colorScheme == .dark ? parameters.advancedRecognition ? 0.1 : -0.2 : parameters.advancedRecognition ? -0.1 : 0.2)
                             }
                             .padding(.horizontal,2)
                             .tint(.teal)
@@ -63,11 +63,11 @@ struct SettingsView: View {
                             }
                             .multilineTextAlignment(.leading)
                             .padding(.horizontal,3)
-                            .brightness(colorScheme == .dark ? parameters.bigRecognition ? 0.1 : -0.2 : parameters.bigRecognition ? -0.1 : 0.2)
+                            .brightness(colorScheme == .dark ? parameters.advancedRecognition ? 0.1 : -0.2 : parameters.advancedRecognition ? -0.1 : 0.2)
                         }
                         .padding(.vertical, 5)
-                        .foregroundColor(parameters.bigRecognition ? .teal : .secondary)
-                        //.background((parameters.bigRecognition ? Color.teal : Color.secondary).opacity(0.1))
+                        .foregroundColor(parameters.advancedRecognition ? .teal : .secondary)
+                        //.background((parameters.advancedRecognition ? Color.teal : Color.secondary).opacity(0.1))
                         
                         NavigationLink(destination: AdvancedParametersView(parameters: $parameters), isActive: $showAdvancedParameters) { Text("Advanced Parameters") }
                             .navigationViewStyle(.stack)

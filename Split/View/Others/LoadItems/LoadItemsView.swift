@@ -20,7 +20,7 @@ struct LoadItemsView: View {
         if nothingFound {
             VStack {
                 VStack {
-                    if model.parameters.bigRecognition && !nothingFoundWithSecondTry {
+                    if model.parameters.advancedRecognition && !nothingFoundWithSecondTry {
                         NoMatchFound()
                         Button {
                             model.eraseScanData()

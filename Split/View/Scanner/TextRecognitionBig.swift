@@ -1,5 +1,5 @@
 //
-//  TextRecognitionBig.swift
+//  TextRecognitionAdvanced.swift
 //  Split
 //
 //  Created by Hugo Queinnec on 06/03/2022.
@@ -10,7 +10,7 @@ import Vision
 
 var hasSuccessed = false
 
-struct TextRecognitionBig {
+struct TextRecognitionAdvanced {
     var scannedImages: [UIImage]
     @ObservedObject var recognizedContent: TextData
     var visionParameters: VisionParameters

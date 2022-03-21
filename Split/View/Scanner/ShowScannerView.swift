@@ -28,11 +28,11 @@ struct ShowScannerView: View {
                     ScannerView { result in
                         switch result {
                             case .success(let scannedImages):
-                            if model.parameters.bigRecognition {
+                            if model.parameters.advancedRecognition {
                                 successCount = 0
                                 listOfProductsAndPricesTemp = []
                                 
-                                TextRecognitionBig(scannedImages: scannedImages,
+                                TextRecognitionAdvanced(scannedImages: scannedImages,
                                                 recognizedContent: recognizedContent,
                                                 visionParameters: model.parameters.visionParameters) { isLastImage in
                                     for item in recognizedContent.items{
@@ -110,7 +110,7 @@ struct ShowScannerView: View {
             })
             .transition(.move(edge: .bottom))
             .slideOverCard(isPresented: $showTutorialScreen, content: {
-                ScanTutorialView(advancedRecognition: $model.parameters.bigRecognition)
+                ScanTutorialView(advancedRecognition: $model.parameters.advancedRecognition)
             })
             .ignoresSafeArea(.all)
         }

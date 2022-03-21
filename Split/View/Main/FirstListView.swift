@@ -77,7 +77,7 @@ struct FirstListView: View {
                                         Group{
                                             if showView=="Scan" {
                                                 ScrollView {
-                                                    AutomatedRecognitionLabel(isEnabled: model.parameters.bigRecognition && !model.continueWithStandardRecognition)
+                                                    AutomatedRecognitionLabel(isEnabled: model.parameters.advancedRecognition && !model.continueWithStandardRecognition)
                                                         .padding(10)
                                                     ForEach(model.images){ idImage in
                                                         if let image = idImage.image {
@@ -142,7 +142,7 @@ struct FirstListView: View {
                                     } else { //iPad (large screen) version
                                         HStack{
                                             ScrollView {
-                                                AutomatedRecognitionLabel(isEnabled: model.parameters.bigRecognition && !model.continueWithStandardRecognition)
+                                                AutomatedRecognitionLabel(isEnabled: model.parameters.advancedRecognition && !model.continueWithStandardRecognition)
                                                     .padding(10)
                                                 ForEach(model.images){ idImage in
                                                     if let image = idImage.image {
@@ -316,7 +316,7 @@ struct FirstListView: View {
             }
             .transition(.opacity)
             .slideOverCard(isPresented: $showTutorialScreen, content: {
-                ListTutorialView(advancedRecognition: $model.parameters.bigRecognition)
+                ListTutorialView(advancedRecognition: $model.parameters.advancedRecognition)
             })
         }
     }

@@ -193,7 +193,7 @@ struct AdvancedParametersView: View {
                     }
                     
                     Button {
-                        openURL(URL(string: "https://github.com/hugoqnc/Split/blob/main/Split/View/Scanner/TextRecognitionBig.swift")!)
+                        openURL(URL(string: "https://github.com/hugoqnc/Split/blob/main/Split/View/Scanner/TextRecognitionAdvanced.swift")!)
                     } label: {
                         Label("See Advanced Recognition Code", systemImage: "chevron.left.forwardslash.chevron.right")
                     }

@@ -12,7 +12,7 @@ struct Parameters: Codable {
     
     static let `default` = Parameters()
     
-    var bigRecognition = true
+    var advancedRecognition = true
     var showScanTutorial = true
     var showEditTutorial = true
     var selectAllUsers = false
