@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "slideovercard",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/joogps/SlideOverCard.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "791197c26a0fea83fcf31b1e9fb9a324db7a4b0b"
+      }
+    }
+  ],
+  "version" : 2
+}
