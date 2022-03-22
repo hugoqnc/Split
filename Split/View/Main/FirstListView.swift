@@ -78,7 +78,25 @@ struct FirstListView: View {
                                             if showView=="Scan" {
                                                 ScrollView {
                                                     AutomatedRecognitionLabel(isEnabled: model.parameters.advancedRecognition && !model.continueWithStandardRecognition)
-                                                        .padding(10)
+                                                        .padding(.top, 10)
+                                                    
+                                                    if model.listOfProductsAndPrices.reduce(false, { previous, pair in
+                                                        return pair.name.isEmpty || previous
+                                                    }) {
+                                                        ZStack {
+                                                            Label("Some items are missing a name", systemImage: "exclamationmark.triangle")
+                                                                .font(.caption2)
+                                                        }
+                                                        .padding(3)
+                                                        .padding(.horizontal, 4)
+                                                        .foregroundColor(.red)
+                                                        .background(Color.red.opacity(0.2))
+                                                        .cornerRadius(15)
+                                                        .onTapGesture {
+                                                            showView = "List"
+                                                        }
+                                                    }
+                                                    
                                                     ForEach(model.images){ idImage in
                                                         if let image = idImage.image {
                                                             Image(uiImage: visualization(image, observations: idImage.boxes(listOfProductsAndPrices: model.listOfProductsAndPrices)))
@@ -87,6 +105,7 @@ struct FirstListView: View {
                                                                 .padding(5)
                                                         }
                                                     }
+                                                    .padding(.top, 10)
                                                 }
                                             } else {
                                                 List() {
@@ -143,7 +162,22 @@ struct FirstListView: View {
                                         HStack{
                                             ScrollView {
                                                 AutomatedRecognitionLabel(isEnabled: model.parameters.advancedRecognition && !model.continueWithStandardRecognition)
-                                                    .padding(10)
+                                                    .padding(.top,10)
+                                                
+                                                if model.listOfProductsAndPrices.reduce(false, { previous, pair in
+                                                    return pair.name.isEmpty || previous
+                                                }) {
+                                                    ZStack {
+                                                        Label("Some items are missing a name", systemImage: "exclamationmark.triangle")
+                                                            .font(.caption2)
+                                                    }
+                                                    .padding(3)
+                                                    .padding(.horizontal, 4)
+                                                    .foregroundColor(.red)
+                                                    .background(Color.red.opacity(0.2))
+                                                    .cornerRadius(15)
+                                                }
+                                                
                                                 ForEach(model.images){ idImage in
                                                     if let image = idImage.image {
                                                         Image(uiImage: visualization(image, observations: idImage.boxes(listOfProductsAndPrices: model.listOfProductsAndPrices)))
@@ -152,6 +186,7 @@ struct FirstListView: View {
                                                             .padding(5)
                                                     }
                                                 }
+                                                .padding(.top,10)
                                             }
                                             
                                             Divider()
