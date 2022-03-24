@@ -18,9 +18,10 @@ Image: some screenshots of Split!, on iPhone and iPad, in light and dark mode.
 https://user-images.githubusercontent.com/67365803/159295049-a5201b9e-ec59-4356-a12f-6d40171c7870.mp4
 
 ## Features
-- [x] Scan any receipt, regardless of the brand
+- [x] Scan any receipt, regardless of the brand, language or currency
 - [x] Take your scan in a single tap, with no need to manually crop it
 - [x] Reliable image recognition results, that are automatically verified by matching the price of all items to the total price
+- [x] Full Privacy: No account, no internet connection is required to run the application (everything happens locally and no data is shared)
 - [x] Use it from two to an unlimited number of people
 - [x] Quickly display images corresponding to the item name on the receipt, to easily understand what it refers to
 - [x] Share the results using any app you want
