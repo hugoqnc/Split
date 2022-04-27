@@ -14,15 +14,63 @@ struct TricountWebView: View {
     @State var success = false
     @State var counter = 0
     @State var loadingText = ""
-    var maxCounter = 29
+    @State var maxCounter = 0
     
     var body: some View {
         ZStack {
             VStack {
                 
-                if counter >= 0 && counter != maxCounter {
-                    Text("Success: \(String(success))")
-                    Text("Error: \(String(errorOccured))")
+                Text("Success: \(String(success))")
+                Text("Error: \(String(errorOccured))")
+                
+                Group {
+                    if errorOccured {
+                        HStack(alignment: .center) {
+                            Image(systemName: "exclamationmark.triangle")
+                                .frame(width: 30, height: 30)
+                                .font(.largeTitle)
+                                .foregroundColor(.red)
+                                .padding()
+
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("An error occured")
+                                    .font(.headline)
+                                    .foregroundColor(.primary)
+
+                                Text("Your transaction was not exported to Tricount. This may be due to an unstable internet connection, or to the fact that the usernames here are not the same as on your Tricount.")
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                                    .fixedSize(horizontal: false, vertical: true)
+                            }
+                            
+                        }
+                    }
+                    
+                    if success {
+                        HStack(alignment: .center) {
+                            Image(systemName: "checkmark.seal")
+                                .frame(width: 30, height: 30)
+                                .font(.largeTitle)
+                                .foregroundColor(.green)
+                                .padding()
+
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("Transaction exported!")
+                                    .font(.headline)
+                                    .foregroundColor(.primary)
+
+                                Text("Your transaction has been successfully exported to Tricount.")
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                                    .fixedSize(horizontal: false, vertical: true)
+                            }
+                            
+                        }
+                    }
+                }
+                .padding(.bottom, 30)
+                
+                if counter > 0 && counter != maxCounter {
                     
                     ProgressView(value: Double(counter)/Double(maxCounter))
                         .animation(.easeInOut(duration: 0.1), value: counter)
@@ -37,22 +85,36 @@ struct TricountWebView: View {
                 Button {
                     counter = 0
                     loadingText = ""
+                    if success {
+                        success = false
+                    }
+                    if errorOccured {
+                        errorOccured = false
+                    }
 
                     queryTricount(tricountLink: URL(string: "https://api.tricount.com/displayTricount.jsp?tricountID=mzJsYvsiSrsEDgivW&acceptGACookies=true")!, shopName: "Migros", payer: "Nicolas", listOfNames: ["Hugo", "Corentin", "Nicolas"], listOfAmounts: [3.1, 7.89, 2.24], seconds1: 2.0, seconds2: 0.1)
                 } label: {
-                    Text("Export to Tricount")
+                    success ? Label("Export **again** to Tricount", systemImage: "square.and.arrow.up") : errorOccured ? Label("**Retry** export to Tricount", systemImage: "square.and.arrow.up") : Label("Export to Tricount", systemImage: "square.and.arrow.up")
                 }
-            .buttonStyle(.borderedProminent)
+                .buttonStyle(.borderedProminent)
+                .tint(errorOccured ? Color.red : Color.accentColor)
+                .opacity(success ? 0.8 : 1.0)
+                .font(success ? .caption : .body)
+                .padding(.top, 5)
             }
             
             WebView(webView: webViewStore.webView)
                 .hidden()
         }
+        .animation(.easeInOut, value: success)
+        .animation(.easeInOut, value: errorOccured)
+        .animation(.easeInOut, value: counter)
         
     }
     
     func queryTricount(tricountLink: URL, shopName: String, payer: String, listOfNames: [String], listOfAmounts: [Double], seconds1: Double, seconds2: Double){
         
+        maxCounter = 12 + 6*Int(2*seconds1) + 2*listOfNames.count
         counter += 2
         
         self.webViewStore.webView.load(URLRequest(url: tricountLink))
@@ -60,15 +122,15 @@ struct TricountWebView: View {
         loadingText = "Loading Tricount API"
 
         DispatchQueue.main.asyncAfter(deadline: .now() + seconds1/6) {
-            counter += Int(seconds1)
+            counter += Int(2*seconds1)
             DispatchQueue.main.asyncAfter(deadline: .now() + seconds1/6) {
-                counter += Int(seconds1)
+                counter += Int(2*seconds1)
                 DispatchQueue.main.asyncAfter(deadline: .now() + seconds1/6) {
-                    counter += Int(seconds1)
+                    counter += Int(2*seconds1)
                     DispatchQueue.main.asyncAfter(deadline: .now() + seconds1/6) {
-                        counter += Int(seconds1)
+                        counter += Int(2*seconds1)
                         DispatchQueue.main.asyncAfter(deadline: .now() + seconds1/6) {
-                            counter += Int(seconds1)
+                            counter += Int(2*seconds1)
                         }
                     }
                 }
@@ -79,13 +141,13 @@ struct TricountWebView: View {
             if !self.webViewStore.webView.isLoading {
                 loadingText = "Exporting Transaction"
                 
-                counter += Int(seconds1)
+                counter += Int(2*seconds1)
                 
                 let fillForm = "[...document.querySelectorAll('div[class=\"identifiezVousFocusPanel\"]')].find(name => name.textContent==\"Hugo\").click()"
                 self.webViewStore.webView.evaluateJavaScript(fillForm, completionHandler: completionFunction)
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + seconds2) {
-                    counter += 2
+                    counter += 1
                     
                     // Add expense
                     self.webViewStore.webView.evaluateJavaScript("document.querySelector('a[class=\"footerPanelText\"]').click()", completionHandler: completionFunction)
@@ -97,7 +159,7 @@ struct TricountWebView: View {
                     self.webViewStore.webView.evaluateJavaScript("document.querySelector('a[class=\"detailsLink\"]').click()", completionHandler: completionFunction)
                     
                     // Fill individual prices
-                    self.webViewStore.webView.evaluateJavaScript("ev = new CustomEvent('change', { isTrusted: false })", completionHandler: nil)
+                    self.webViewStore.webView.evaluateJavaScript("ev = new CustomEvent('change', { isTrusted: false })", completionHandler: completionFunction)
                     self.webViewStore.webView.evaluateJavaScript("users = [...users = document.querySelectorAll('div[style=\"width: 300px;\"]')]", completionHandler: completionFunction)
                     
                     for (index, name) in listOfNames.enumerated() {
@@ -106,8 +168,8 @@ struct TricountWebView: View {
                     }
                     
                     // Save
-                    self.webViewStore.webView.evaluateJavaScript("document.querySelector('a[class=\"footerPanelText\"]')", completionHandler: { (object, error) in //.click()
-                            if error == nil {
+                    self.webViewStore.webView.evaluateJavaScript("document.querySelector('a[class=\"footerPanelText\"]').click()", completionHandler: { (object, error) in //.click()
+                            if error == nil && counter == maxCounter-1 {
                                 counter += 1
                                 success = true
                             } else {
@@ -126,9 +188,16 @@ struct TricountWebView: View {
     func completionFunction(_ object: Any?, _ error: Error?) -> Void {
         if error == nil {
             counter += 1
-            //print(counter)
+            print(object)
+            print(counter)
         } else {
-            errorOccured = true
+            print((error! as NSError).code)
+            if (error! as NSError).code == 5 {
+                counter += 1
+            } else {
+                errorOccured = true
+            }
+            print(error)
         }
     }
     
