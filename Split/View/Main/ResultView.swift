@@ -18,6 +18,8 @@ struct ResultView: View {
     @State private var showIndividualSharingOptions = false
     @State private var chosenSharingOption = ""
     
+    @State private var showExportToTricount = false
+    
     func fontSizeProportionalToPrice(total: Double, price: Double) -> Double {
         let minSize = 12.0
         let maxSize = 35.0
@@ -81,6 +83,14 @@ struct ResultView: View {
                         Spacer()
                         
                         Menu {
+                            if !model.tricountID.isEmpty {
+                                Button {
+                                    showExportToTricount = true
+                                } label: {
+                                    Text("Export to Tricount")
+                                }
+                            }
+                            
                             Button {
                                 chosenSharingOption = "overview"
                                 showSharingOptions = true
@@ -205,6 +215,9 @@ struct ResultView: View {
             .sheet(isPresented: $showIndividualSharingOptions, content: {
                 ActivityViewController(activityItems: [model.individualSharedText(ofUser: selectedUser)])
             })
+            .sheet(isPresented: $showExportToTricount, content: {
+                TricountExportSheet()
+            })
         }
         .transition(.move(edge: .bottom))
         .navigationViewStyle(StackNavigationViewStyle())
@@ -229,7 +242,7 @@ struct ResultView_Previews: PreviewProvider {
     static let model: ModelData = {
         var model = ModelData()
         model.images = [IdentifiedImage(id: "1111", image: UIImage(named: "scan1")), IdentifiedImage(id: "2222", image: UIImage(named: "scan2"))]
-        model.users = [User(name: "Hugo"), User(name: "Lucas"), User(name: "Thomas")]
+        model.users = [User(name: "Hugo"), User(name: "Corentin"), User(name: "Thomas")]
         model.listOfProductsAndPrices = [PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 4.99), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBC", name: "Finger Fish 850g x12 from Aldi 2022", price: 1.27), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBD", name: "Ice Cream Strawberry", price: 3.20)]
         model.listOfProductsAndPrices[0].chosenBy = [model.users[0].id]
         model.listOfProductsAndPrices[1].chosenBy = [model.users[0].id, model.users[1].id]

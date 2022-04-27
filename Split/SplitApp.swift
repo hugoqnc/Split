@@ -11,9 +11,8 @@ import SwiftUI
 struct SplitApp: App {
     var body: some Scene {
         WindowGroup {
-            TricountWebView()
-//            ContentView()
-//                .environmentObject(ModelData())
+            ContentView()
+                .environmentObject(ModelData())
         }
     }
 }

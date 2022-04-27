@@ -9,19 +9,27 @@ import SwiftUI
 import WebView
 
 struct TricountWebView: View {
+    
+    var payerName: String
+    
     @StateObject var webViewStore = WebViewStore()
+    @EnvironmentObject var model: ModelData
+    
     @State var errorOccured = false
     @State var success = false
     @State var counter = 0
     @State var loadingText = ""
     @State var maxCounter = 0
     
+    var seconds1 = 2.0
+    var seconds2 = 0.1
+    
     var body: some View {
         ZStack {
             VStack {
                 
-                Text("Success: \(String(success))")
-                Text("Error: \(String(errorOccured))")
+//                Text("Success: \(String(success))")
+//                Text("Error: \(String(errorOccured))")
                 
                 Group {
                     if errorOccured {
@@ -92,7 +100,7 @@ struct TricountWebView: View {
                         errorOccured = false
                     }
 
-                    queryTricount(tricountLink: URL(string: "https://api.tricount.com/displayTricount.jsp?tricountID=mzJsYvsiSrsEDgivW&acceptGACookies=true")!, shopName: "Migros", payer: "Nicolas", listOfNames: ["Hugo", "Corentin", "Nicolas"], listOfAmounts: [3.1, 7.89, 2.24], seconds1: 2.0, seconds2: 0.1)
+                    queryTricount(tricountLink: URL(string: "https://api.tricount.com/displayTricount.jsp?tricountID=\(model.tricountID)&acceptGACookies=true")!, shopName: model.receiptName, payer: payerName, listOfNames: model.users.map({ user in user.name }), listOfAmounts: model.listOfProductsAndPrices.map({ pair in pair.price }), seconds1: seconds1, seconds2: seconds2)
                 } label: {
                     success ? Label("Export **again** to Tricount", systemImage: "square.and.arrow.up") : errorOccured ? Label("**Retry** export to Tricount", systemImage: "square.and.arrow.up") : Label("Export to Tricount", systemImage: "square.and.arrow.up")
                 }
@@ -114,7 +122,7 @@ struct TricountWebView: View {
     
     func queryTricount(tricountLink: URL, shopName: String, payer: String, listOfNames: [String], listOfAmounts: [Double], seconds1: Double, seconds2: Double){
         
-        maxCounter = 12 + 6*Int(2*seconds1) + 2*listOfNames.count
+        maxCounter = 15 + 6*Int(2*seconds1) + 2*listOfNames.count
         counter += 2
         
         self.webViewStore.webView.load(URLRequest(url: tricountLink))
@@ -167,15 +175,20 @@ struct TricountWebView: View {
                         self.webViewStore.webView.evaluateJavaScript(#"users.find(name => name.innerText.includes("\#(name)")).querySelector('input[class="repartitionAmountField"]').dispatchEvent(ev)"#, completionHandler: completionFunction)
                     }
                     
-                    // Save
-                    self.webViewStore.webView.evaluateJavaScript("document.querySelector('a[class=\"footerPanelText\"]').click()", completionHandler: { (object, error) in //.click()
-                            if error == nil && counter == maxCounter-1 {
-                                counter += 1
-                                success = true
-                            } else {
-                                errorOccured = true
-                            }
-                    })
+                    DispatchQueue.main.asyncAfter(deadline: .now() + seconds1/3) {
+                        counter += 3
+                        // Save
+                        if !errorOccured {
+                            self.webViewStore.webView.evaluateJavaScript("document.querySelector('a[class=\"footerPanelText\"]').click()", completionHandler: { (object, error) in //.click()
+                                    if error == nil && counter == maxCounter-1 {
+                                        counter += 1
+                                        success = true
+                                    } else {
+                                        errorOccured = true
+                                    }
+                            })
+                        }
+                    }
                                                                                  
                 }
             } else {
@@ -188,8 +201,8 @@ struct TricountWebView: View {
     func completionFunction(_ object: Any?, _ error: Error?) -> Void {
         if error == nil {
             counter += 1
-            print(object)
-            print(counter)
+            //print(object)
+            //print(counter)
         } else {
             print((error! as NSError).code)
             if (error! as NSError).code == 5 {
@@ -197,7 +210,7 @@ struct TricountWebView: View {
             } else {
                 errorOccured = true
             }
-            print(error)
+            print(error as Any)
         }
     }
     
@@ -213,6 +226,7 @@ struct TricountWebView: View {
 
 struct TricountWebView_Previews: PreviewProvider {
     static var previews: some View {
-        TricountWebView()
+        TricountWebView(payerName: "Hugo")
+            .environmentObject(ModelData())
     }
 }

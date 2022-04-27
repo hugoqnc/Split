@@ -18,6 +18,9 @@ final class ModelData: ObservableObject {
     @Published var parameters = Parameters.default
     @Published var receiptName = ""
     @Published var continueWithStandardRecognition = false
+    
+    var tricountID = "mzJsYvsiSrsEDgivW"
+    
     var date = Date()
     
     func addNameToReceipt(name: String) -> Void {
