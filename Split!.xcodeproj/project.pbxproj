@@ -36,7 +36,6 @@
 		4F4902B127CADA6E0047A441 /* ResultCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4902B027CADA6E0047A441 /* ResultCard.swift */; };
 		4F4902B327CB8E100047A441 /* NoHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4902B227CB8E100047A441 /* NoHistoryView.swift */; };
 		4F4A55B327A1B906001F84E3 /* PreferencesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4A55B227A1B906001F84E3 /* PreferencesStore.swift */; };
-		4F50A76F27E8BBE000D8A7A3 /* SlideOverCard in Frameworks */ = {isa = PBXBuildFile; productRef = 4F50A76E27E8BBE000D8A7A3 /* SlideOverCard */; };
 		4F63DF0727A421B000E2CA3A /* InputItemDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F63DF0627A421B000E2CA3A /* InputItemDetails.swift */; };
 		4F7C1289279B46D100A5E50B /* SlideOverCard in Frameworks */ = {isa = PBXBuildFile; productRef = 4F7C1288279B46D100A5E50B /* SlideOverCard */; };
 		4F7C128C279B530A00A5E50B /* ListTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7C128B279B530A00A5E50B /* ListTutorialView.swift */; };
@@ -48,6 +47,8 @@
 		4F90A7AC27A713F9003A1D97 /* UserChoicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F90A7AB27A713F9003A1D97 /* UserChoicesView.swift */; };
 		4F94B8FF27A7326400F7B10F /* MiniRepartitionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F94B8FE27A7326400F7B10F /* MiniRepartitionRow.swift */; };
 		4F94B90127A7476F00F7B10F /* StatisticRectangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F94B90027A7476F00F7B10F /* StatisticRectangle.swift */; };
+		4FB4227228193E8A00DB83CC /* WebView in Frameworks */ = {isa = PBXBuildFile; productRef = 4FB4227128193E8A00DB83CC /* WebView */; };
+		4FB4227428193EEE00DB83CC /* TricountWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB4227328193EEE00DB83CC /* TricountWebView.swift */; };
 		4FB7813C2794821D00F5E2D8 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB7813B2794821D00F5E2D8 /* Currency.swift */; };
 		4FD7C2D927E86EE6009C4D9D /* FillFavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD7C2D827E86EE6009C4D9D /* FillFavoriteButton.swift */; };
 		4FD7C2DB27E86EF2009C4D9D /* EditFavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD7C2DA27E86EF2009C4D9D /* EditFavoriteButton.swift */; };
@@ -119,6 +120,7 @@
 		4F90A7AB27A713F9003A1D97 /* UserChoicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserChoicesView.swift; sourceTree = "<group>"; };
 		4F94B8FE27A7326400F7B10F /* MiniRepartitionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniRepartitionRow.swift; sourceTree = "<group>"; };
 		4F94B90027A7476F00F7B10F /* StatisticRectangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticRectangle.swift; sourceTree = "<group>"; };
+		4FB4227328193EEE00DB83CC /* TricountWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TricountWebView.swift; sourceTree = "<group>"; };
 		4FB7813B2794821D00F5E2D8 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		4FD7C2D827E86EE6009C4D9D /* FillFavoriteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillFavoriteButton.swift; sourceTree = "<group>"; };
 		4FD7C2DA27E86EF2009C4D9D /* EditFavoriteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFavoriteButton.swift; sourceTree = "<group>"; };
@@ -135,7 +137,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F50A76F27E8BBE000D8A7A3 /* SlideOverCard in Frameworks */,
+				4FB4227228193E8A00DB83CC /* WebView in Frameworks */,
 				4F7C1289279B46D100A5E50B /* SlideOverCard in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -178,6 +180,7 @@
 		4F309E212784B49900F55BC6 /* Split */ = {
 			isa = PBXGroup;
 			children = (
+				4FB4226F28193E1D00DB83CC /* Tricount */,
 				4F309E222784B49900F55BC6 /* SplitApp.swift */,
 				4F309E262784B49A00F55BC6 /* Assets.xcassets */,
 				4F309E5E2784F7D900F55BC6 /* Model */,
@@ -312,6 +315,14 @@
 			path = Stores;
 			sourceTree = "<group>";
 		};
+		4FB4226F28193E1D00DB83CC /* Tricount */ = {
+			isa = PBXGroup;
+			children = (
+				4FB4227328193EEE00DB83CC /* TricountWebView.swift */,
+			);
+			path = Tricount;
+			sourceTree = "<group>";
+		};
 		4FD7C2D727E86ECE009C4D9D /* Start */ = {
 			isa = PBXGroup;
 			children = (
@@ -352,7 +363,7 @@
 			name = Split;
 			packageProductDependencies = (
 				4F7C1288279B46D100A5E50B /* SlideOverCard */,
-				4F50A76E27E8BBE000D8A7A3 /* SlideOverCard */,
+				4FB4227128193E8A00DB83CC /* WebView */,
 			);
 			productName = ReceiptSplitter;
 			productReference = 4F309E1F2784B49900F55BC6 /* Split!.app */;
@@ -428,7 +439,7 @@
 			mainGroup = 4F309E162784B49900F55BC6;
 			packageReferences = (
 				4F7C1287279B46D100A5E50B /* XCRemoteSwiftPackageReference "SlideOverCard" */,
-				4F50A76D27E8BBE000D8A7A3 /* XCRemoteSwiftPackageReference "SlideOverCard" */,
+				4FB4227028193E8A00DB83CC /* XCRemoteSwiftPackageReference "SwiftUI-WebView" */,
 			);
 			productRefGroup = 4F309E202784B49900F55BC6 /* Products */;
 			projectDirPath = "";
@@ -514,6 +525,7 @@
 				4F43BDFF2789B0AD005CDD6D /* ResultView.swift in Sources */,
 				4F4902AE27CAC9D10047A441 /* ResultViewHistoryWrapper.swift in Sources */,
 				4F309E672785AB5500F55BC6 /* ModelData.swift in Sources */,
+				4FB4227428193EEE00DB83CC /* TricountWebView.swift in Sources */,
 				4F309E612784F89900F55BC6 /* Users.swift in Sources */,
 				4F309E5B2784F68200F55BC6 /* ScannerView.swift in Sources */,
 				4F4902B327CB8E100047A441 /* NoHistoryView.swift in Sources */,
@@ -841,14 +853,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		4F50A76D27E8BBE000D8A7A3 /* XCRemoteSwiftPackageReference "SlideOverCard" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/joogps/SlideOverCard.git";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 		4F7C1287279B46D100A5E50B /* XCRemoteSwiftPackageReference "SlideOverCard" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/joogps/SlideOverCard.git";
@@ -857,18 +861,26 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		4FB4227028193E8A00DB83CC /* XCRemoteSwiftPackageReference "SwiftUI-WebView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kylehickinson/SwiftUI-WebView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.3.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		4F50A76E27E8BBE000D8A7A3 /* SlideOverCard */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4F50A76D27E8BBE000D8A7A3 /* XCRemoteSwiftPackageReference "SlideOverCard" */;
-			productName = SlideOverCard;
-		};
 		4F7C1288279B46D100A5E50B /* SlideOverCard */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4F7C1287279B46D100A5E50B /* XCRemoteSwiftPackageReference "SlideOverCard" */;
 			productName = SlideOverCard;
+		};
+		4FB4227128193E8A00DB83CC /* WebView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4FB4227028193E8A00DB83CC /* XCRemoteSwiftPackageReference "SwiftUI-WebView" */;
+			productName = WebView;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
