@@ -69,6 +69,7 @@ struct FillFavoriteButton: View {
                     switch result {
                     case .failure(let error):
                         fatalError(error.localizedDescription)
+                        //print("e")
                     case .success(let preferences):
                         savedNames = preferences.names
                         savedCurrency = preferences.currency

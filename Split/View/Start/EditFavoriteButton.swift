@@ -18,6 +18,15 @@ struct EditFavoriteButton: View {
     @State private var showFavoriteView = false
     @State private var deleteConfirmation = false
     
+    @State private var tricountLink = ""
+    
+    var tricountID: String {
+        get {
+            let id = (tricountLink.components(separatedBy: "/").last ?? "").trimmingCharacters(in: .whitespaces)
+            return id
+        }
+    }
+    
     var body: some View {
         HStack {
             NavigationLink(isActive: $showFavoriteView) {
@@ -47,6 +56,28 @@ struct EditFavoriteButton: View {
                         formDetail
                         
                         Section {
+                            HStack {
+                                Image(systemName: "plus.forwardslash.minus")
+                                    .foregroundColor(Color.secondary.opacity(0.7))
+                                    .padding(.leading, 2)
+                                    .padding(.trailing, 3)
+                                    .brightness(-0.4)
+                                
+                                TextField("Tricount Link/ID", text: $tricountLink)
+                                
+                                if !tricountLink.isEmpty {
+                                    isValidLabel(isValid: tricountID.count == 17)
+                                }
+                            }
+                            
+                        } header: {
+                            Text("Tricount Integration")
+                        } footer: {
+                            Text("Activate the integration with Tricount by pasting the share link (or ID) of your favorite Tricount. Make sure that all the members you enter here as favorites are listed on this Tricount with the same exact name.")
+                        }
+                        .listRowBackground(Color.secondary.opacity(0.1))
+                        
+                        Section {
                             Button {
                                 deleteConfirmation = true
                             } label: {
@@ -64,6 +95,7 @@ struct EditFavoriteButton: View {
                                         var preferences = Preferences()
                                         preferences.names = []
                                         preferences.currency = Currency.default
+                                        preferences.tricountID = ""
                                         
                                         PreferencesStore.save(preferences: preferences) { result in
                                             switch result {
@@ -87,6 +119,7 @@ struct EditFavoriteButton: View {
                                     var preferences = Preferences()
                                     preferences.names = savedNames
                                     preferences.currency = savedCurrency
+                                    preferences.tricountID = tricountID
                                     
                                     PreferencesStore.save(preferences: preferences) { result in
                                         switch result {
@@ -135,10 +168,12 @@ struct EditFavoriteButton: View {
                     switch result {
                     case .failure(let error):
                         fatalError(error.localizedDescription)
+                        //print("e")
                     case .success(let preferences):
                         savedNames = preferences.names
                         savedCurrency = preferences.currency
                         newUserName = ""
+                        tricountLink = preferences.tricountID
                     }
                 }
             }

@@ -24,10 +24,11 @@ struct TricountExportSheet: View {
             .padding(.top, 40)
             .padding(.bottom, 20)
             
-            VStack(alignment: .leading, spacing: 5) {
-                Text("Select the payer of the receipt, and then export to Tricount.")
-                    .font(.headline)
-                Text("Note: the export only works if all members who share the receipt are also listed on Tricount with exactly the same name. ")
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Select the payer of the receipt, then export to Tricount.")
+                    .font(.title2)
+                    .fontWeight(.semibold)
+                Text("Note: the export only works if all members who share the receipt are also listed on the provided Tricount with the exact same name.")
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
@@ -60,8 +61,13 @@ struct TricountExportSheet: View {
             .padding()
             
             TricountWebView(payerName: "Hugo")
-                .padding(.horizontal, 25)
+                .padding(.horizontal, 35)
                 .disabled(!model.users.contains(payer))
+            
+            Text("Split! is not affiliated in any way with Tricount.")
+                .font(.caption2)
+                .foregroundColor(.secondary)
+                .opacity(0.8)
         }
     }
 }

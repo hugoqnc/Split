@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4F1752FC2819EF2B0032D3FE /* TricountExportSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1752FB2819EF2B0032D3FE /* TricountExportSheet.swift */; };
+		4F1752FE281A02E60032D3FE /* isValidLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1752FD281A02E60032D3FE /* isValidLabel.swift */; };
 		4F2BCDB32798D2B200E6501E /* ScanTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2BCDB22798D2B200E6501E /* ScanTutorialView.swift */; };
 		4F309E232784B49900F55BC6 /* SplitApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F309E222784B49900F55BC6 /* SplitApp.swift */; };
 		4F309E272784B49A00F55BC6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F309E262784B49A00F55BC6 /* Assets.xcassets */; };
@@ -80,6 +81,7 @@
 
 /* Begin PBXFileReference section */
 		4F1752FB2819EF2B0032D3FE /* TricountExportSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TricountExportSheet.swift; sourceTree = "<group>"; };
+		4F1752FD281A02E60032D3FE /* isValidLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = isValidLabel.swift; sourceTree = "<group>"; };
 		4F2BCDB22798D2B200E6501E /* ScanTutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanTutorialView.swift; sourceTree = "<group>"; };
 		4F309E1F2784B49900F55BC6 /* Split!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Split!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F309E222784B49900F55BC6 /* SplitApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitApp.swift; sourceTree = "<group>"; };
@@ -273,6 +275,7 @@
 				4F94B8FE27A7326400F7B10F /* MiniRepartitionRow.swift */,
 				4F94B90027A7476F00F7B10F /* StatisticRectangle.swift */,
 				4FDC144327DBA81600FE7C2E /* AutomatedRecognitionLabel.swift */,
+				4F1752FD281A02E60032D3FE /* isValidLabel.swift */,
 			);
 			path = Others;
 			sourceTree = "<group>";
@@ -530,6 +533,7 @@
 				4F4902AE27CAC9D10047A441 /* ResultViewHistoryWrapper.swift in Sources */,
 				4F309E672785AB5500F55BC6 /* ModelData.swift in Sources */,
 				4FB4227428193EEE00DB83CC /* TricountWebView.swift in Sources */,
+				4F1752FE281A02E60032D3FE /* isValidLabel.swift in Sources */,
 				4F309E612784F89900F55BC6 /* Users.swift in Sources */,
 				4F309E5B2784F68200F55BC6 /* ScannerView.swift in Sources */,
 				4F4902B327CB8E100047A441 /* NoHistoryView.swift in Sources */,

@@ -19,7 +19,7 @@ final class ModelData: ObservableObject {
     @Published var receiptName = ""
     @Published var continueWithStandardRecognition = false
     
-    var tricountID = "mzJsYvsiSrsEDgivW"
+    var tricountID = ""
     
     var date = Date()
     

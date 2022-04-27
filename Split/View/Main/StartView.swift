@@ -51,6 +51,17 @@ struct StartView: View {
                         
                     }
                 }
+                .onAppear {
+                    PreferencesStore.load { result in
+                        switch result {
+                        case .failure(let error):
+                            fatalError(error.localizedDescription)
+                            //print("e")
+                        case .success(let preferences):
+                            model.tricountID = preferences.tricountID
+                        }
+                    }
+                }
                 .toolbar {
                     ToolbarItem(placement: .bottomBar) {
                         Button {
