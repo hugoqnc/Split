@@ -286,9 +286,9 @@ struct HistoryStatView: View {
                             .font(.largeTitle)
                             
                         VStack(alignment: .leading, spacing: 5) {
-                            Text("Unfortunately, there are no receipts saved since \(startingDate).")
+                            Text("Unfortunately, there are no receipts in \(Currency(symbol: currencyType).value) saved since \(startingDate).")
                                 .font(.headline)
-                            Text("To see other statistics, change the time scale.")
+                            Text("To see other statistics, change the currency or the time scale.")
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
                         }
