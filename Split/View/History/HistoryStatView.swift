@@ -8,17 +8,23 @@
 import SwiftUI
 
 struct HistoryStatView: View {
+    internal init(results: Results, favoriteCurrency: Currency) {
+        self.results = results
+        _currencyType = State(initialValue: favoriteCurrency.symbol)
+    }
+    
     var results: Results
     @Environment(\.horizontalSizeClass) var horizontalSizeClass //for iPad specificity
     
-    var timeOptions = ["Since always", "For a year", "For a month", "For a week"]
-    @State private var selectedTimeOption = "Since always"
+    var timeOptions = ["All", "For a year", "For a month", "For a week"]
+    @State private var selectedTimeOption = "All"
+    @State private var currencyType: Currency.SymbolType
     
     var filteredResultList: [ResultUnit] {
         get {
             let r = results.results
             let now = Date()
-            return r.filter { resultUnit in
+            let rFiltered = r.filter { resultUnit in
                 let d = resultUnit.date
                 
                 switch selectedTimeOption {
@@ -34,6 +40,10 @@ struct HistoryStatView: View {
                     return false
                 }
             }
+            let rFiltered2 = rFiltered.filter { resultUnit in
+                resultUnit.currency.symbol == currencyType
+            }
+            return rFiltered2
         }
     }
     
@@ -177,7 +187,8 @@ struct HistoryStatView: View {
     
     var body: some View {
         NavigationView {
-            Group {
+            VStack {
+
                 if !filteredResultList.isEmpty {
                     ScrollView {
                         VStack {
@@ -294,6 +305,15 @@ struct HistoryStatView: View {
                         }
                     }
                 }
+                ToolbarItem(placement: .bottomBar) {
+                    Picker("Currency", selection: $currencyType.animation()) {
+                        ForEach(Currency.SymbolType.allCases, id: \.self, content: { currencyType in
+                            Text(Currency(symbol: currencyType).value)
+                        })
+                    }
+                    .pickerStyle(.segmented)
+                    .padding(.horizontal)
+                }
             }
             .navigationTitle("Statistics")
         }
@@ -302,7 +322,7 @@ struct HistoryStatView: View {
 
 struct HistoryStatView_Previews: PreviewProvider {
     static var previews: some View {
-        HistoryStatView(results: Results(results: [ResultUnit(users: [], listOfProductsAndPrices: [], currency: Currency.default, date: Date(timeIntervalSince1970: 1645000000), imagesData: [], receiptName: "ALDI"), ResultUnit(users: [], listOfProductsAndPrices: [], currency: Currency.default, date: Date(timeIntervalSince1970: 1640000000), imagesData: [], receiptName: "Migros")]))
+        HistoryStatView(results: Results(results: [ResultUnit(users: [], listOfProductsAndPrices: [], currency: Currency.default, date: Date(timeIntervalSince1970: 1645000000), imagesData: [], receiptName: "ALDI"), ResultUnit(users: [], listOfProductsAndPrices: [], currency: Currency.default, date: Date(timeIntervalSince1970: 1640000000), imagesData: [], receiptName: "Migros")]), favoriteCurrency: Currency.default)
         //HistoryStatView(results: Results(results: []))
     
 

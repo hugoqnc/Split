@@ -61,6 +61,8 @@ struct StartView: View {
                             //print("e")
                         case .success(let preferences):
                             model.tricountID = preferences.tricountID
+                            //currencyType = preferences.currency.symbol
+                            model.currency = Currency(symbol: preferences.currency.symbol)
                         }
                     }
                 }

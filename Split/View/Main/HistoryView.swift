@@ -97,7 +97,7 @@ struct HistoryView: View {
                         }
                         //.padding(.trailing, 10)
                         .sheet(isPresented: $showStats) {
-                            HistoryStatView(results: results)
+                            HistoryStatView(results: results, favoriteCurrency: model.currency)
                         }
                     }
                 }
