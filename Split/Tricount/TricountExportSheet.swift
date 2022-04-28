@@ -62,7 +62,7 @@ struct TricountExportSheet: View {
             
             TricountWebView(payerName: payer.name)
                 .padding(.horizontal, 35)
-                .disabled(!model.users.contains(payer))
+                //.disabled(!model.users.contains(payer))
             
             Text("Split! is not affiliated in any way with Tricount.")
                 .font(.caption2)

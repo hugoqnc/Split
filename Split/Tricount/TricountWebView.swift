@@ -26,6 +26,8 @@ struct TricountWebView: View {
     @State var seconds1 = 0.5
     @State var seconds2 = 0.1
     
+    @State var showTricountID = false
+    
     var body: some View {
         ZStack {
             VStack {
@@ -113,7 +115,7 @@ struct TricountWebView: View {
                 //.opacity(success ? 0.8 : 1.0)
                 .font(success ? .caption : .body)
                 .padding(.top, 5)
-                .disabled(counter != 0 && !(success || errorOccured))
+                .disabled((counter != 0 && !(success || errorOccured)) || payerName.isEmpty)
                 .onChange(of: self.webViewStore.webView.isLoading) { newValue in
                     print("loading: \(newValue)")
                     
@@ -124,13 +126,26 @@ struct TricountWebView: View {
                     }
                 }
                 
-                HStack {
-                    isValidLabel(isValid: model.tricountID.count==numberOfCharactersForValidTricountID)
-                    Text("(\(model.tricountID))")
-                        .font(.caption2)
-                        .foregroundColor(.secondary)
+                Group {
+                    if showTricountID {
+                        HStack {
+                            isValidLabel(isValid: model.tricountID.count==numberOfCharactersForValidTricountID)
+                            Text("(\(model.tricountID))")
+                                .font(.caption2)
+                                .foregroundColor(.secondary)
+                        }
+                        .padding(.top, 5)
+                    } else {
+                        Image(systemName: "info.circle")
+                            .font(.caption2)
+                            .foregroundColor(.secondary)
+                            .padding(.vertical, 6)
+                            .padding(.horizontal)
+                    }
                 }
-                .padding(.top, 5)
+                .onTapGesture {
+                    showTricountID.toggle()
+                }
             }
             
             WebView(webView: webViewStore.webView)
