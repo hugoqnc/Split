@@ -111,7 +111,7 @@ struct FirstListView: View {
                                                 List() {
                                                     Section(header: Text("Receipt Name")) {
                                                         VStack {
-                                                            TextField("New user", text: $model.receiptName.animation())
+                                                            TextField("Receipt Name", text: $model.receiptName.animation())
                                                                 .disabled(editMode != .active)
                                                             if editMode == .active {
                                                                 Text("Tap to edit")
@@ -194,7 +194,7 @@ struct FirstListView: View {
                                             List() {
                                                 Section(header: Text("Receipt Name")) {
                                                     VStack {
-                                                        TextField("New user", text: $model.receiptName.animation())
+                                                        TextField("Receipt Name", text: $model.receiptName.animation())
                                                             .disabled(editMode != .active)
                                                         if editMode == .active {
                                                             Text("Tap to edit")
