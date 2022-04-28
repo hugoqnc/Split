@@ -99,8 +99,10 @@ struct TricountWebView: View {
                     if errorOccured {
                         errorOccured = false
                     }
+                    
+                    let roundedListOfAmounts = roundListOfAmounts(listOfAmounts: model.users.map({ user in model.balance(ofUser: user) }))
 
-                    queryTricount(tricountLink: URL(string: "https://api.tricount.com/displayTricount.jsp?tricountID=\(model.tricountID)&acceptGACookies=true")!, shopName: model.receiptName, payer: payerName, listOfNames: model.users.map({ user in user.name }), listOfAmounts: model.listOfProductsAndPrices.map({ pair in pair.price }), seconds1: seconds1, seconds2: seconds2)
+                    queryTricount(tricountLink: URL(string: "https://api.tricount.com/displayTricount.jsp?tricountID=\(model.tricountID)&acceptGACookies=true")!, shopName: model.receiptName, payer: payerName, listOfNames: model.users.map({ user in user.name }), listOfAmounts: roundedListOfAmounts, seconds1: seconds1, seconds2: seconds2)
                 } label: {
                     success ? Label("Export **again** to Tricount", systemImage: "square.and.arrow.up") : errorOccured ? Label("**Retry** export to Tricount", systemImage: "square.and.arrow.up") : Label("Export to Tricount", systemImage: "square.and.arrow.up")
                 }
@@ -119,6 +121,21 @@ struct TricountWebView: View {
         .animation(.easeInOut, value: errorOccured)
         .animation(.easeInOut, value: counter)
         
+    }
+    
+    func roundListOfAmounts(listOfAmounts: [Double]) -> [Double] {
+        let total = round(listOfAmounts.reduce(0, +) * 100) / 100.0
+        
+        var roundedListOfAmounts: [Double] = []
+        for (index, amount) in listOfAmounts.enumerated() {
+            if index == listOfAmounts.count - 1 {
+                roundedListOfAmounts.append(total - roundedListOfAmounts.reduce(0, +))
+            } else {
+                roundedListOfAmounts.append(round(amount * 100) / 100.0)
+            }
+        }
+        
+        return roundedListOfAmounts
     }
     
     func queryTricount(tricountLink: URL, shopName: String, payer: String, listOfNames: [String], listOfAmounts: [Double], seconds1: Double, seconds2: Double){

@@ -248,6 +248,7 @@ struct ResultView_Previews: PreviewProvider {
         model.listOfProductsAndPrices[1].chosenBy = [model.users[0].id, model.users[1].id]
         model.listOfProductsAndPrices[2].chosenBy = [model.users[0].id, model.users[1].id, model.users[2].id]
         model.receiptName = "ALDI SUISSE"
+        model.tricountID = "mzJsYvsiSrsEDgivW"
         return model
     }()
     
