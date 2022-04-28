@@ -10,65 +10,80 @@ import SwiftUI
 struct TricountExportSheet: View {
 
     @EnvironmentObject var model: ModelData
+    @Environment(\.dismiss) var dismiss
     @State var payer = User()
     
     var body: some View {
         
-        VStack {
-            HStack {
-                Image("tricount_logo")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxWidth: 200)
-            }
-            .padding(.top, 40)
-            .padding(.bottom, 20)
-            
-            VStack(alignment: .leading, spacing: 8) {
-                Text("Select the payer of the receipt, then export to Tricount.")
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                Text("Note: the export only works if all members who share the receipt are also listed on the provided Tricount with the exact same name.")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-            }
-            .padding(.horizontal, 25)
-
-            
-            Menu {
-                Picker("Payer", selection: $payer.animation()) {
-                    ForEach(model.users, id: \.self, content: { user in
-                        Text(user.name)
-                    })
-                }
-            } label: {
+        NavigationView {
+            VStack {
                 HStack {
-                    Image(systemName: "person")
-                        .foregroundColor(Color.accentColor)
-                        .padding(.trailing, 2)
-                    Text("Payer of the receipt")
-                        .foregroundColor(.primary)
-                    Spacer()
-                    Text("\(payer.name)")
-                        .fontWeight(.semibold)
-                        .padding(.trailing, 5)
+                    Image("tricount_logo")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxWidth: 200)
                 }
+                //.padding(.top, 40)
+                .padding(.bottom, 20)
                 
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Select the payer of the receipt, then export to Tricount.")
+                        .font(.title2)
+                        .fontWeight(.medium)
+                    Text("The export only works if all members who share the receipt are also listed on the provided Tricount under the exact same name.")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+                .padding(.horizontal, 25)
+
+                
+                Menu {
+                    Picker("Payer", selection: $payer.animation()) {
+                        ForEach(model.users, id: \.self, content: { user in
+                            Text(user.name)
+                        })
+                    }
+                } label: {
+                    HStack {
+                        Image(systemName: "person")
+                            .foregroundColor(Color.accentColor)
+                            .padding(.trailing, 2)
+                        Text("Payer of the receipt")
+                            .foregroundColor(.primary)
+                        Spacer()
+                        Text("\(payer.name)")
+                            .fontWeight(.semibold)
+                            .padding(.trailing, 5)
+                    }
+                    
+                }
+                .padding(15)
+                .background(Color.secondary.opacity(0.1))
+                .cornerRadius(10)
+                .padding()
+                
+                TricountWebView(payerName: payer.name)
+                    .padding(.horizontal, 35)
+                    //.disabled(!model.users.contains(payer))
+                
+                Text("Split! is not affiliated in any way with Tricount.")
+                    .font(.caption2)
+                    .foregroundColor(.secondary)
+                    .opacity(0.8)
             }
-            .padding(15)
-            .background(Color.secondary.opacity(0.1))
-            .cornerRadius(10)
-            .padding()
-            
-            TricountWebView(payerName: payer.name)
-                .padding(.horizontal, 35)
-                //.disabled(!model.users.contains(payer))
-            
-            Text("Split! is not affiliated in any way with Tricount.")
-                .font(.caption2)
-                .foregroundColor(.secondary)
-                .opacity(0.8)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Text("Done")
+                    }
+                }
+            }
+            //.navigationTitle("Tricount Export")
+            .navigationBarTitleDisplayMode(.inline)
         }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 
