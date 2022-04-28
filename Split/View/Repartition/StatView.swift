@@ -11,6 +11,19 @@ struct StatView: View {
     @EnvironmentObject var model: ModelData
     @Environment(\.horizontalSizeClass) var horizontalSizeClass //for iPad specificity
     
+    var minimumPriceName: String {
+        get {
+            return model.listOfProductsAndPrices.sorted(by: {$0.price<$1.price}).filter{$0.price>0}.first?.name ?? "none"
+        }
+    }
+    
+    var minimumPriceValue: String {
+        get {
+            let value = round((model.listOfProductsAndPrices.map({ pair in pair.price }).filter{$0>0}.min() ?? 0.0)*100) / 100.0
+            return String(value)+model.currency.value
+        }
+    }
+    
     var body: some View {
         
         if horizontalSizeClass == .compact {
@@ -31,9 +44,7 @@ struct StatView: View {
                     pair.price
                 }).max() ?? 0.0)*100) / 100.0)+model.currency.value, color: Color.green)
                 
-                StatisticRectangle(iconString: "arrow.down.right.circle", description: "Minimum price\n(\(model.listOfProductsAndPrices.sorted(by: {$0.price<$1.price}).first?.name ?? "none"))", value: String(round((model.listOfProductsAndPrices.map({ pair in
-                    pair.price
-                }).min() ?? 0.0)*100) / 100.0)+model.currency.value, color: Color.red)
+                StatisticRectangle(iconString: "arrow.down.right.circle", description: "Minimum price\n(\(minimumPriceName))", value: minimumPriceValue, color: Color.red)
                 
                 Spacer()
             }
@@ -52,9 +63,7 @@ struct StatView: View {
                     pair.price
                 }).max() ?? 0.0)*100) / 100.0)+model.currency.value, color: Color.green)
                 
-                StatisticRectangle(iconString: "arrow.down.right.circle", description: "Minimum price\n(\(model.listOfProductsAndPrices.sorted(by: {$0.price<$1.price}).first?.name ?? "none"))", value: String(round((model.listOfProductsAndPrices.map({ pair in
-                    pair.price
-                }).min() ?? 0.0)*100) / 100.0)+model.currency.value, color: Color.red)
+                StatisticRectangle(iconString: "arrow.down.right.circle", description: "Minimum price\n(\(minimumPriceName))", value: minimumPriceValue, color: Color.red)
                 
                 Spacer()
             }

@@ -127,7 +127,7 @@ struct HistoryStatView: View {
     var minimumItemName: String {
         get {
             let listOfMin = filteredResultList.compactMap { res in
-                return res.listOfProductsAndPrices.sorted(by: {$0.price<$1.price}).first
+                return res.listOfProductsAndPrices.sorted(by: {$0.price<$1.price}).filter{$0.price>0}.first
             }
             return listOfMin.sorted(by: {$0.price<$1.price}).first?.name ?? "none"
         }
@@ -136,7 +136,7 @@ struct HistoryStatView: View {
     var minimumItemPrice: Double {
         get {
             let listOfMin = filteredResultList.map { res in
-                return res.listOfProductsAndPrices.map({ pair in pair.price }).min() ?? 0.0
+                return res.listOfProductsAndPrices.map({ pair in pair.price }).filter{$0>0}.min() ?? 0.0
             }
             return listOfMin.min() ?? 0.0
         }
