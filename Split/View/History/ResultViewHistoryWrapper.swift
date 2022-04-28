@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ResultViewHistoryWrapper: View {
-    internal init(resultUnit: ResultUnit) {
+    internal init(resultUnit: ResultUnit, tricountID: String) {
         model = ModelData()
         model.users = resultUnit.users
         model.currency = resultUnit.currency
@@ -29,6 +29,8 @@ struct ResultViewHistoryWrapper: View {
             listOfProductsAndPrices.append(pair)
         }
         model.listOfProductsAndPrices = listOfProductsAndPrices
+        
+        model.tricountID = tricountID
     }
     
     var model: ModelData
@@ -68,7 +70,7 @@ struct ResultViewHistoryWrapper: View {
 struct ResultViewHistoryWrapper_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            ResultViewHistoryWrapper(resultUnit: ResultUnit(users: [], listOfProductsAndPrices: [], currency: Currency.default, date: Date(), imagesData: [], receiptName: "ALDI"))
+            ResultViewHistoryWrapper(resultUnit: ResultUnit(users: [], listOfProductsAndPrices: [], currency: Currency.default, date: Date(), imagesData: [], receiptName: "ALDI"), tricountID: "abc")
         }
     }
 }

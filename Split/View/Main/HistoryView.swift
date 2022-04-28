@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct HistoryView: View {
+    @EnvironmentObject var model: ModelData
     @Binding var showHistoryView: Bool
     @State private var results = Results.default
     @State private var loadingDataIsFinished = false
@@ -44,7 +45,7 @@ struct HistoryView: View {
 
                     ForEach(results.results.sorted(by: {$0.date > $1.date})) { resultUnit in
                         NavigationLink {
-                            ResultViewHistoryWrapper(resultUnit: resultUnit)
+                            ResultViewHistoryWrapper(resultUnit: resultUnit, tricountID: model.tricountID)
                                 .navigationTitle(date(resultUnit: resultUnit))
                         } label: {
                             ResultCard(resultUnit: resultUnit)

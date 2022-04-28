@@ -109,6 +109,7 @@ struct TricountWebView: View {
                 .opacity(success ? 0.8 : 1.0)
                 .font(success ? .caption : .body)
                 .padding(.top, 5)
+                .disabled(counter != 0 && !(success || errorOccured))
             }
             
             WebView(webView: webViewStore.webView)
