@@ -21,8 +21,8 @@ struct TricountWebView: View {
     @State var loadingText = ""
     @State var maxCounter = 0
     
-    var seconds1 = 2.0
-    var seconds2 = 0.1
+    @State var seconds1 = 0.5
+    @State var seconds2 = 0.1
     
     var body: some View {
         ZStack {
@@ -97,12 +97,12 @@ struct TricountWebView: View {
                         success = false
                     }
                     if errorOccured {
+                        seconds1+=0.5
+                        seconds2+=0.1
                         errorOccured = false
                     }
                     
-                    let roundedListOfAmounts = roundListOfAmounts(listOfAmounts: model.users.map({ user in model.balance(ofUser: user) }))
-
-                    queryTricount(tricountLink: URL(string: "https://api.tricount.com/displayTricount.jsp?tricountID=\(model.tricountID)&acceptGACookies=true")!, shopName: model.receiptName, payer: payerName, listOfNames: model.users.map({ user in user.name }), listOfAmounts: roundedListOfAmounts, seconds1: seconds1, seconds2: seconds2)
+                    loadTricount(tricountLink: URL(string: "https://api.tricount.com/displayTricount.jsp?tricountID=\(model.tricountID)&acceptGACookies=true")!, listOfNames: model.users.map({ user in user.name }))
                 } label: {
                     success ? Label("Export **again** to Tricount", systemImage: "square.and.arrow.up") : errorOccured ? Label("**Retry** export to Tricount", systemImage: "square.and.arrow.up") : Label("Export to Tricount", systemImage: "square.and.arrow.up")
                 }
@@ -112,6 +112,15 @@ struct TricountWebView: View {
                 .font(success ? .caption : .body)
                 .padding(.top, 5)
                 .disabled(counter != 0 && !(success || errorOccured))
+                .onChange(of: self.webViewStore.webView.isLoading) { newValue in
+                    print("loading: \(newValue)")
+                    
+                    if !newValue {
+                        let roundedListOfAmounts = roundListOfAmounts(listOfAmounts: model.users.map({ user in model.balance(ofUser: user) }))
+
+                        queryTricount(shopName: model.receiptName, payer: payerName, listOfNames: model.users.map({ user in user.name }), listOfAmounts: roundedListOfAmounts, seconds1: seconds1, seconds2: seconds2)
+                    }
+                }
             }
             
             WebView(webView: webViewStore.webView)
@@ -138,36 +147,22 @@ struct TricountWebView: View {
         return roundedListOfAmounts
     }
     
-    func queryTricount(tricountLink: URL, shopName: String, payer: String, listOfNames: [String], listOfAmounts: [Double], seconds1: Double, seconds2: Double){
-        
-        maxCounter = 15 + 6*Int(2*seconds1) + 2*listOfNames.count
-        counter += 2
+    func loadTricount(tricountLink: URL, listOfNames: [String]) {
+        maxCounter = 16 + 2*listOfNames.count
+        counter += 1
+        loadingText = "Loading Tricount API"
         
         self.webViewStore.webView.load(URLRequest(url: tricountLink))
+    }
+    
+    func queryTricount(shopName: String, payer: String, listOfNames: [String], listOfAmounts: [Double], seconds1: Double, seconds2: Double){
         
-        loadingText = "Loading Tricount API"
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + seconds1/6) {
-            counter += Int(2*seconds1)
-            DispatchQueue.main.asyncAfter(deadline: .now() + seconds1/6) {
-                counter += Int(2*seconds1)
-                DispatchQueue.main.asyncAfter(deadline: .now() + seconds1/6) {
-                    counter += Int(2*seconds1)
-                    DispatchQueue.main.asyncAfter(deadline: .now() + seconds1/6) {
-                        counter += Int(2*seconds1)
-                        DispatchQueue.main.asyncAfter(deadline: .now() + seconds1/6) {
-                            counter += Int(2*seconds1)
-                        }
-                    }
-                }
-            }
-        }
         DispatchQueue.main.asyncAfter(deadline: .now() + seconds1) {
             
             if !self.webViewStore.webView.isLoading {
                 loadingText = "Exporting Transaction"
                 
-                counter += Int(2*seconds1)
+                counter += 2
                 
                 let fillForm = #"[...document.querySelectorAll('div[class="identifiezVousFocusPanel"]')].find(name => name.textContent=="\#(payer)").click()"#
                 self.webViewStore.webView.evaluateJavaScript(fillForm, completionHandler: completionFunction)
