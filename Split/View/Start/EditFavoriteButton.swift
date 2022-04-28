@@ -17,6 +17,7 @@ struct EditFavoriteButton: View {
     
     @State private var showFavoriteView = false
     @State private var deleteConfirmation = false
+    @Binding var backConfirmation: Bool
     
     @State private var tricountLink = ""
     
@@ -27,11 +28,28 @@ struct EditFavoriteButton: View {
         }
     }
     
+    func savePreferences() {
+        var preferences = Preferences()
+        preferences.names = savedNames
+        preferences.currency = savedCurrency
+        preferences.tricountID = tricountID
+        
+        PreferencesStore.save(preferences: preferences) { result in
+            switch result {
+            case .failure(let error):
+                fatalError(error.localizedDescription)
+            case .success(_):
+                //print("Favorites saved")
+                showFavoriteView = false
+            }
+        }
+    }
+    
     var body: some View {
+        let formDetail = FormDetailsView(names: $savedNames, newUserName: $newUserName, currencyType: $savedCurrency.symbol, showAlert1: $showAlert1, showAlert2: $showAlert2)
         HStack {
             NavigationLink(isActive: $showFavoriteView) {
                 VStack {
-                    let formDetail = FormDetailsView(names: $savedNames, newUserName: $newUserName, currencyType: $savedCurrency.symbol, showAlert1: $showAlert1, showAlert2: $showAlert2)
                     Form {
                         HStack(alignment: .center) {
                             Image(systemName: "star")
@@ -66,7 +84,7 @@ struct EditFavoriteButton: View {
                                 TextField("Tricount Link/ID", text: $tricountLink)
                                 
                                 if !tricountLink.isEmpty {
-                                    isValidLabel(isValid: tricountID.count == 17)
+                                    isValidLabel(isValid: tricountID.count == numberOfCharactersForValidTricountID)
                                 }
                             }
                             
@@ -91,19 +109,22 @@ struct EditFavoriteButton: View {
                                 titleVisibility: .visible
                             ) {
                                 Button("Delete saved favorites", role: .destructive) {
-                                    withAnimation() {
-                                        var preferences = Preferences()
-                                        preferences.names = []
-                                        preferences.currency = Currency.default
-                                        preferences.tricountID = ""
-                                        
-                                        PreferencesStore.save(preferences: preferences) { result in
-                                            switch result {
-                                            case .failure(let error):
-                                                fatalError(error.localizedDescription)
-                                            case .success(_):
-                                                deleteConfirmation = false
-                                                showFavoriteView = false
+                                    deleteConfirmation = false
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                                        withAnimation() {
+                                            var preferences = Preferences()
+                                            preferences.names = []
+                                            preferences.currency = Currency.default
+                                            preferences.tricountID = ""
+                                            
+                                            PreferencesStore.save(preferences: preferences) { result in
+                                                switch result {
+                                                case .failure(let error):
+                                                    fatalError(error.localizedDescription)
+                                                case .success(_):
+                                                    deleteConfirmation = false
+                                                    showFavoriteView = false
+                                                }
                                             }
                                         }
                                     }
@@ -116,20 +137,7 @@ struct EditFavoriteButton: View {
                         ToolbarItem(placement: .bottomBar) {
                             Button {
                                 if formDetail.isFinalUsersCorrect() {
-                                    var preferences = Preferences()
-                                    preferences.names = savedNames
-                                    preferences.currency = savedCurrency
-                                    preferences.tricountID = tricountID
-                                    
-                                    PreferencesStore.save(preferences: preferences) { result in
-                                        switch result {
-                                        case .failure(let error):
-                                            fatalError(error.localizedDescription)
-                                        case .success(_):
-                                            //print("Favorites saved")
-                                            showFavoriteView = false
-                                        }
-                                    }
+                                    savePreferences()
                                 }
                             } label: {
                                 HStack {
@@ -145,6 +153,56 @@ struct EditFavoriteButton: View {
                 }
                 .navigationTitle("Favorites")
                 .navigationBarTitleDisplayMode(.inline)
+                .navigationBarBackButtonHidden(true)
+                .navigationBarItems(leading: Button(action : {
+                    PreferencesStore.load { result in
+                        switch result {
+                        case .failure(let error):
+                            fatalError(error.localizedDescription)
+                            //print("e")
+                        case .success(let preferences):
+                            if savedNames == preferences.names && savedCurrency.value == preferences.currency.value && tricountID == preferences.tricountID {
+                                showFavoriteView = false
+                            } else {
+                                backConfirmation = true
+                            }
+                            
+                        }
+                    }
+                }){
+                    HStack(spacing:5) {
+                        Image(systemName:"chevron.left")
+                            .font(Font.body.weight(.semibold))
+                        Text("Back").font(.body)
+                    }
+                    .padding(.leading, -7)
+                    .confirmationDialog(
+                        "You have made changes that you have not saved. Do you want to save them?",
+                        isPresented: $backConfirmation,
+                        titleVisibility: .visible
+                    ) {
+                        Button {
+                            backConfirmation = false
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { //prevents confirmation dialog to pop up a second time
+                                if formDetail.isFinalUsersCorrect() {
+                                    savePreferences()
+                                }
+                            }
+                        } label: {
+                            Text("Save changes")
+                        }
+
+                        
+                        Button(role: .destructive) {
+                            backConfirmation = false
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                                showFavoriteView = false
+                            }
+                        } label: {
+                            Text("Quit without saving")
+                        }
+                    }
+                })
 
             } label: {
                 HStack {
@@ -155,12 +213,6 @@ struct EditFavoriteButton: View {
                     Text(savedNames.isEmpty ? "Add favorites" : "Edit favorites")
                     Spacer()
                 }
-//                HStack {
-//                    VStack {
-//                        Label(savedNames.isEmpty ? "Add favorites" : "Edit favorites", systemImage: "ellipsis.circle")
-//                    }
-//                    Spacer()
-//                }
             }
             .buttonStyle(.plain)
             .onAppear {
@@ -184,7 +236,7 @@ struct EditFavoriteButton: View {
 struct EditFavoriteButton_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            EditFavoriteButton()
+            EditFavoriteButton(backConfirmation: .constant(false))
         }
     }
 }

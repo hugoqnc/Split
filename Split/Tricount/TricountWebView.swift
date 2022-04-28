@@ -8,6 +8,8 @@
 import SwiftUI
 import WebView
 
+let numberOfCharactersForValidTricountID = 17
+
 struct TricountWebView: View {
     
     var payerName: String
@@ -121,6 +123,14 @@ struct TricountWebView: View {
                         queryTricount(shopName: model.receiptName, payer: payerName, listOfNames: model.users.map({ user in user.name }), listOfAmounts: roundedListOfAmounts, seconds1: seconds1, seconds2: seconds2)
                     }
                 }
+                
+                HStack {
+                    isValidLabel(isValid: model.tricountID.count==numberOfCharactersForValidTricountID)
+                    Text("(\(model.tricountID))")
+                        .font(.caption2)
+                        .foregroundColor(.secondary)
+                }
+                .padding(.top, 5)
             }
             
             WebView(webView: webViewStore.webView)

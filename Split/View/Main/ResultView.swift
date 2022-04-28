@@ -87,7 +87,12 @@ struct ResultView: View {
                                 Button {
                                     showExportToTricount = true
                                 } label: {
-                                    Text("Export to Tricount")
+                                    HStack {
+                                        Image("tricount_icon")
+                                            .resizable()
+                                            .scaledToFit()
+                                        Text("Export to Tricount")
+                                    }
                                 }
                             }
                             
@@ -95,22 +100,21 @@ struct ResultView: View {
                                 chosenSharingOption = "overview"
                                 showSharingOptions = true
                             } label: {
-                                Text("Share totals")
-                                Text("hello")
+                                Label("Share totals", systemImage: "message")
                             }
                             
                             Button {
                                 chosenSharingOption = "details"
                                 showSharingOptions = true
                             } label: {
-                                Text("Share detailed results")
+                                Label("Share detailed results", systemImage: "plus.message")
                             }
                             
                             Button {
                                 chosenSharingOption = "scan"
                                 showSharingOptions = true
                             } label: {
-                                Text("Share scanned receipt")
+                                Label("Share scanned receipt", systemImage: "doc")
                             }
                         } label: {
                             Image(systemName: "square.and.arrow.up")

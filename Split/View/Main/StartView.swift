@@ -17,6 +17,8 @@ struct StartView: View {
     @State private var showHistoryView = false
     @State private var disabledBecauseOfTiming = false
     
+    @State private var backConfirmation = false
+    
     @State private var newUserName: String = ""
         
     var body: some View {
@@ -41,7 +43,7 @@ struct StartView: View {
                         
                         Section {
                             FillFavoriteButton(names: $names, newUserName: $newUserName, currencyType: $currencyType)
-                            EditFavoriteButton()
+                            EditFavoriteButton(backConfirmation: $backConfirmation)
                         } header: {
                             //Text("Favorites")
                         }

@@ -14,6 +14,7 @@ struct FillFavoriteButton: View {
     
     @State private var savedNames: [String] = []
     @State private var savedCurrency = Currency.default
+    @State private var savedTricountID = ""
     
     var nothingSaved: Bool {
         get {
@@ -26,14 +27,16 @@ struct FillFavoriteButton: View {
             if nothingSaved {
                 return "No saved favorites"
             } else {
-                var namesText = ""
+                var namesText = "\(savedCurrency.value) | "
                 for i in 0..<savedNames.count {
                     namesText.append(savedNames[i])
                     if i<savedNames.count-1 {
                         namesText.append(", ")
                     }
                 }
-                namesText.append(" (\(savedCurrency.value))")
+                if savedTricountID.count == numberOfCharactersForValidTricountID {
+                    namesText.append(" |")
+                }
                 return namesText
             }
         }
@@ -55,9 +58,31 @@ struct FillFavoriteButton: View {
                     VStack(alignment: .leading, spacing: 2) {
                         Text("Fill with favorites")
                             //.foregroundColor(Color.accentColor)
-                        Text(descriptiveString)
-                            .font(.caption)
-                            .foregroundColor(Color.secondary)
+                        HStack {
+                            Text(descriptiveString)
+                                .font(.caption)
+                                .foregroundColor(Color.secondary)
+                            
+                            if savedTricountID.count == numberOfCharactersForValidTricountID {
+//                                Image("tricount_icon")
+//                                    .resizable()
+//                                    .scaledToFit()
+//                                    .frame(maxHeight:5)
+//                                    .padding(.leading, -3)
+
+                                Label {
+                                    Text(" ")
+                                } icon: {
+                                    Image("tricount_icon")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(maxHeight:10)
+                                }
+                                .font(.caption)
+                                .padding(.leading, -10)
+
+                            }
+                        }
                     }
                     Spacer()
                 }
@@ -73,6 +98,7 @@ struct FillFavoriteButton: View {
                     case .success(let preferences):
                         savedNames = preferences.names
                         savedCurrency = preferences.currency
+                        savedTricountID = preferences.tricountID
                     }
                 }
             }
