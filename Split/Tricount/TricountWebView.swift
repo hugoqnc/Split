@@ -108,7 +108,7 @@ struct TricountWebView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .tint(errorOccured ? Color.red : Color.accentColor)
-                .opacity(success ? 0.8 : 1.0)
+                //.opacity(success ? 0.8 : 1.0)
                 .font(success ? .caption : .body)
                 .padding(.top, 5)
                 .disabled(counter != 0 && !(success || errorOccured))
@@ -169,7 +169,7 @@ struct TricountWebView: View {
                 
                 counter += Int(2*seconds1)
                 
-                let fillForm = "[...document.querySelectorAll('div[class=\"identifiezVousFocusPanel\"]')].find(name => name.textContent==\"Hugo\").click()"
+                let fillForm = #"[...document.querySelectorAll('div[class="identifiezVousFocusPanel"]')].find(name => name.textContent=="\#(payer)").click()"#
                 self.webViewStore.webView.evaluateJavaScript(fillForm, completionHandler: completionFunction)
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + seconds2) {

@@ -60,7 +60,7 @@ struct TricountExportSheet: View {
             .cornerRadius(10)
             .padding()
             
-            TricountWebView(payerName: "Hugo")
+            TricountWebView(payerName: payer.name)
                 .padding(.horizontal, 35)
                 .disabled(!model.users.contains(payer))
             
