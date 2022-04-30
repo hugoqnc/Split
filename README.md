@@ -25,6 +25,7 @@ https://user-images.githubusercontent.com/67365803/159295049-a5201b9e-ec59-4356-
 - [x] Use it from two to an unlimited number of people
 - [x] Quickly display images corresponding to the item name on the receipt, to easily understand what it refers to
 - [x] Share the results using any app you want
+- [x] Export the results to a [Tricount](https://www.tricount.com/) <sup id="a1">[1](#f1)</sup> of your choice in just a tap
 - [x] Keeps a history of all receipts and of their distribution
 - [x] Minimalist and native design for iOS
 - [X] Dark Mode fully supported
@@ -41,13 +42,18 @@ https://user-images.githubusercontent.com/67365803/159295049-a5201b9e-ec59-4356-
 - [x] Modify advanced image recognition parameters in settings
 
 ## Upcoming features
-- [ ] Integration to the [Tricount API](https://www.tricount.com/en/api)
-- [ ] And hopefully, publication of Split! on the App Store
+- [ ] Welcome screen and "getting started" tutorial
+- [ ] Hopefully, publication of Split! on the App Store
 
 ## Technical Details
 - This app works on Apple devices running iOS 15 / iPadOS 15 or higher
 - Developped using [SwiftUI](https://developer.apple.com/xcode/swiftui/), which results in native and fluid components and animations
 - The image recognition part is achieved through Apple's [Vision](https://developer.apple.com/documentation/vision) Framework
-- The only external dependency is [SlideOverCard](https://github.com/joogps/SlideOverCard), that provides beautiful tutorial cards
+- This project uses two (open source) [Swift Packages](https://developer.apple.com/documentation/swift_packages) dependencies:
+  - [SlideOverCard](https://github.com/joogps/SlideOverCard), that provides beautiful tutorial cards
+  - [WebView](https://github.com/kylehickinson/SwiftUI-WebView), that is used to facilitate the use of [WKWebView](https://developer.apple.com/documentation/webkit/wkwebview) in order to send requests to Tricount <sup id="a1">[1](#f1)</sup>
 - This app is not (yet?) on the App Store, but if you have a Mac with Xcode installed, you can install it on your iPhone or iPad using your own signing certificate
 
+---
+
+<b id="f1">1 —</b> Split! is not affiliated in any way with Tricount. It does not use the official [Tricount API](https://www.tricount.com/en/api), but a working [workaround](https://github.com/hugoqnc/Split/blob/main/Split/View/Tricount/TricountWebView.swift#L183). [↩](#a1)
