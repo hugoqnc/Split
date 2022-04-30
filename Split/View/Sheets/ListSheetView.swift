@@ -26,12 +26,14 @@ struct ListSheetView: View {
                         .frame(height:0)
 
                     List() {
-                        Section(header: Text("Receipt Name")) {
-                            VStack {
-                                TextField("Receipt Name", text: $model.receiptName.animation())
+                        if !isShownInHistory {
+                            Section(header: Text("Receipt Name")) {
+                                VStack {
+                                    TextField("Receipt Name", text: $model.receiptName.animation())
+                                }
                             }
+                            .listRowBackground(Color.secondary.opacity(0.1))
                         }
-                        .listRowBackground(Color.secondary.opacity(0.1))
                         
                         Section(header: Text("\(model.listOfProductsAndPrices.count) items — \(model.showPrice(price: model.totalPrice))"), footer: isShownInHistory ? Label("Items ordered as they were on the receipt", systemImage: "arrow.up.arrow.down") : Label("Long press on an assigned item to modify it", systemImage: "lightbulb")){
                             ForEach($model.listOfProductsAndPrices) { $pair in

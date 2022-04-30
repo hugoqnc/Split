@@ -11,6 +11,7 @@ struct TricountExportSheet: View {
 
     @EnvironmentObject var model: ModelData
     @Environment(\.dismiss) var dismiss
+    @Environment(\.colorScheme) var colorScheme
     @State var payer = User()
     
     var body: some View {
@@ -22,6 +23,7 @@ struct TricountExportSheet: View {
                         .resizable()
                         .scaledToFit()
                         .frame(maxWidth: 200)
+                        .brightness(colorScheme == .dark ? 0.2 : 0.0)
                 }
                 //.padding(.top, 40)
                 .padding(.bottom, 20)
@@ -102,6 +104,7 @@ struct TricountExportSheet_Previews: PreviewProvider {
     
     static var previews: some View {
         TricountExportSheet()
+            //.preferredColorScheme(.dark)
             .environmentObject(model)
     }
 }
