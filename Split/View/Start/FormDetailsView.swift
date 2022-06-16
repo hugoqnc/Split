@@ -28,7 +28,7 @@ struct FormDetailsView: View {
                 HStack {
                     Image(systemName: "creditcard")
                         .foregroundColor(Color.purple)
-                        .padding(.trailing, 2)
+                        .padding(.trailing, 1)
                     Text("Currency")
                         .foregroundColor(.primary)
                     Spacer()
@@ -40,7 +40,13 @@ struct FormDetailsView: View {
             }
             
             ForEach(names, id:\.self) { name in
-                Text(name)
+                HStack {
+                    Image(systemName: "person")
+                        .foregroundColor(Color.secondary.opacity(0.7))
+                        .padding(.leading, 2)
+                        .padding(.trailing, 3)
+                    Text(name)
+                }
             }
             .onDelete { indices in
                 withAnimation() {
@@ -49,6 +55,10 @@ struct FormDetailsView: View {
             }
             
             HStack {
+                Image(systemName: "person")
+                    .foregroundColor(Color.secondary.opacity(0.7))
+                    .padding(.leading, 2)
+                    .padding(.trailing, 3)
                 TextField("New user", text: $newUserName.animation())
                 Button(action: {
                     let _ = checkAndAddName()
@@ -68,6 +78,8 @@ struct FormDetailsView: View {
                         Alert(title: Text("Incorrect names"), message: Text("Users must have distinct names"), dismissButton: .default(Text("OK")))
                     }
             }
+        } footer: {
+            Label("To delete a name, swipe from right to left. To edit a name, delete it and add it again.", systemImage: "info.circle")
         }
         .listRowBackground(Color.secondary.opacity(0.1))
     }
@@ -106,7 +118,7 @@ struct FormDetailsView: View {
 struct FormDetailsView_Previews: PreviewProvider {
     
     static var previews: some View {
-        Form {
+        List {
             let v = FormDetailsView(names: .constant(["Hugo", "Thomas"]), newUserName: .constant("Lucas"), currencyType: .constant(Currency.SymbolType.euro), showAlert1: .constant(false), showAlert2: .constant(false))
             v
         }

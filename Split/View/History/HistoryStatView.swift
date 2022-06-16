@@ -89,7 +89,7 @@ struct HistoryStatView: View {
     }
     
     func showPrice(price: Double) -> String {
-        return String(round(price * 100) / 100.0)+currencyString
+        return formatPriceAndCurrency(price: price, currency: Currency(symbol: currencyType))
     }
     
     var totalPrice: Double {
@@ -187,8 +187,7 @@ struct HistoryStatView: View {
     
     var body: some View {
         NavigationView {
-            VStack {
-
+            Group {
                 if !filteredResultList.isEmpty {
                     ScrollView {
                         VStack {
@@ -247,21 +246,31 @@ struct HistoryStatView: View {
 
                                             StatisticRectangle(iconString: "creditcard", description: "Total paid price\n", value: showPrice(price: totalPrice), color: Color.purple)
                                             
+                                            Spacer()
+                                        }
+                                        
+                                        HStack {
+                                            Spacer()
+                                            
                                             StatisticRectangle(iconString: "cart", description: "Average price\nof an item", value: showPrice(price: averageItemPrice), color: Color.orange)
 
+                                            StatisticRectangle(iconString: "arrow.up.right.circle", description: "Maximum price\n(\(maximumItemName))", value: showPrice(price: maximumItemPrice), color: Color.green)
+                                            
+                                            StatisticRectangle(iconString: "arrow.down.right.circle", description: "Minimum price\n(\(minimumItemName))", value: showPrice(price: minimumItemPrice), color: Color.red)
+                                            
                                             Spacer()
                                         }
                                         
                                         HStack {
                                             Spacer()
 
-                                            StatisticRectangle(iconString: "arrow.up.right.circle", description: "Maximum price\n(\(maximumItemName))", value: showPrice(price: maximumItemPrice), color: Color.green)
-                                            
-                                            StatisticRectangle(iconString: "arrow.down.right.circle", description: "Minimum price\n(\(minimumItemName))", value: showPrice(price: minimumItemPrice), color: Color.red)
-
                                             StatisticRectangle(iconString: "calendar", description: selectedTimeOption == timeOptions[0] ? "Days passed since\nfirst receipt" : "Days passed since\nlast receipt", value: String(daysSince), color: Color(red: 255 / 255, green: 101 / 255, blue: 227 / 255))
                                             
                                             StatisticRectangle(iconString: "person.2", description: "Number of\ndifferent users", value: String(numberDifferentUsers), color: Color.teal)
+                                            
+                                            Text("") //empty stat rectangle
+                                                .frame(idealWidth: 140, maxWidth: 200, idealHeight: 140, maxHeight: 200)
+                                                .padding()
                                             
                                             Spacer()
                                         }

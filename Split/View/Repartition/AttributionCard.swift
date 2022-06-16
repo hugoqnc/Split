@@ -45,7 +45,7 @@ struct AttributionCard: View {
                         Text(pair.name)
                             .font(.title2)
 
-                        Text(String(pair.price)+model.currency.value)
+                        Text(model.showPrice(price: pair.price))
                             .font(.title)
                             .fontWeight(.bold)
                             .padding(.bottom,25)

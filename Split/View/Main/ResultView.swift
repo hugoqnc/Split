@@ -9,6 +9,7 @@ import SwiftUI
 import UIKit
 
 struct ResultView: View {
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass //for iPad specificity
     var isShownInHistory = false
     @EnvironmentObject var model: ModelData
     @State private var showAllList = false
@@ -126,52 +127,56 @@ struct ResultView: View {
                 
                 
                 ScrollView {
-                    ForEach(model.users.sorted(by: {model.balance(ofUser: $0)>model.balance(ofUser: $1)})) { user in
-                        HStack {
+                    VStack {
+                        ForEach(model.users.sorted(by: {model.balance(ofUser: $0)>model.balance(ofUser: $1)})) { user in
                             HStack {
-                                Button {
-                                    selectedUser = user
-                                    showUserDetails = true
-                                } label: {
-                                    Image(systemName: "person")
-                                        .font(.title2)
-                                    
-                                    VStack(alignment: .leading) {
-                                        Text(user.name)
-                                            .font(.title3)
-                                        Text("\(model.chosenItems(ofUser: user).count) items")
-                                            .font(.caption)
-                                    }
-                                    .foregroundColor(.primary)
-                                    
-                                    Spacer()
-                                    
-                                    Text(model.showPrice(price: model.balance(ofUser: user)))
-                                        .fontWeight(.semibold)
-                                        .font(.system(size: fontSizeProportionalToPrice(total: model.totalBalance, price: model.balance(ofUser: user))))
+                                HStack {
+                                    Button {
+                                        selectedUser = user
+                                        showUserDetails = true
+                                    } label: {
+                                        Image(systemName: "person")
+                                            .font(.title2)
+                                        
+                                        VStack(alignment: .leading) {
+                                            Text(user.name)
+                                                .font(.title3)
+                                            Text("\(model.chosenItems(ofUser: user).count) items")
+                                                .font(.caption)
+                                        }
                                         .foregroundColor(.primary)
+                                        
+                                        Spacer()
+                                        
+                                        Text(model.showPrice(price: model.balance(ofUser: user)))
+                                            .fontWeight(.semibold)
+                                            .font(.system(size: fontSizeProportionalToPrice(total: model.totalBalance, price: model.balance(ofUser: user))))
+                                            .foregroundColor(.primary)
+                                    }
+                                    
+                                    Button {
+                                        selectedUser = user
+                                        showIndividualSharingOptions = true
+                                    } label: {
+                                        Label("", systemImage: "square.and.arrow.up")
+                                            .labelStyle(.iconOnly)
+                                    }
+                                    .padding(.leading,7)
+                                    .padding(.bottom,4)
+                                    
                                 }
-                                
-                                Button {
-                                    selectedUser = user
-                                    showIndividualSharingOptions = true
-                                } label: {
-                                    Label("", systemImage: "square.and.arrow.up")
-                                        .labelStyle(.iconOnly)
-                                }
-                                .padding(.leading,7)
-                                .padding(.bottom,4)
-                                
+                                .padding()
                             }
-                            .padding()
+                            .background(Color.gray.opacity(0.1))
+                            .cornerRadius(15)
+                            .padding(.horizontal)
                         }
-                        .background(Color.gray.opacity(0.1))
-                        .cornerRadius(15)
-                        .padding(.horizontal)
                     }
+                    .padding(.top, horizontalSizeClass == .compact ? 5 : 25)
                     
                     StatView()
                         .padding(10)
+                        .padding(.top, horizontalSizeClass == .compact ? 0 : 10)
                     
                     Text("\(selectedUser.name) \(chosenSharingOption)") //due to https://developer.apple.com/forums/thread/652080
                          .hidden()
@@ -181,6 +186,7 @@ struct ResultView: View {
             }
             //.navigationBarTitle("", displayMode: .inline)
             .navigationBarHidden(true)
+            .padding(.horizontal, horizontalSizeClass == .compact ? 0 : 30)
             .toolbar {
                 ToolbarItem(placement: .bottomBar) {
                     if !isShownInHistory {

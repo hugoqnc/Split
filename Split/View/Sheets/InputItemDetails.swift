@@ -89,7 +89,7 @@ struct InputItemDetails: View {
                             .keyboardType(.decimalPad)
 
                     } header: {
-                        Text("Item details")
+                        Text("Name and Price")
                     }
                     
                     if initialSelections != nil{

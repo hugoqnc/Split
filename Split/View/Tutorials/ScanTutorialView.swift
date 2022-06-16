@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SlideOverCard
 
 struct ScanTutorialView: View {
     @Binding var advancedRecognition: Bool

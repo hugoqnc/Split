@@ -15,6 +15,9 @@ struct AttributionView: View {
     @State private var showResult = false
     @State private var firstCardAppear = false
     @State private var quitConfirmation = false
+    @State private var showTutorialScreen = false
+    
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass //for iPad specificity
     
     var body: some View {
         if showResult {
@@ -36,7 +39,25 @@ struct AttributionView: View {
                             .padding(.top, 10)
                     }
                     
-                    Spacer()
+                    if horizontalSizeClass == .compact {
+                        Spacer()
+                    } else {
+                        VStack(spacing: 4) {
+                            Spacer()
+                            Text("Split!")
+                                .font(.largeTitle)
+                                .foregroundColor(.secondary)
+                                .opacity(0.5)
+                            Text("Designed to facilitate fair sharing")
+                                .font(.title2)
+                                .foregroundColor(.secondary)
+                                .opacity(0.5)
+                            Spacer()
+                        }
+                        .animation(.easeInOut, value: firstCardAppear)
+                        .animation(.easeInOut, value: itemCounter)
+                    }
+                    
                     
                     ZStack{
                         if firstCardAppear {
@@ -53,7 +74,7 @@ struct AttributionView: View {
                                                             isValidated = false
                                                         }
                                                     }
-                                                    //.tint(.blue)
+                                                    .padding(.horizontal, horizontalSizeClass ==  .compact ? 0 : 50)
 
                                             }
                                         }
@@ -78,6 +99,7 @@ struct AttributionView: View {
                     .padding(15)
                     
                 }
+                .padding(.horizontal, horizontalSizeClass ==  .compact ? 0 : 60)
                 .navigationBarTitle(Text(model.receiptName), displayMode: .inline)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
@@ -126,6 +148,9 @@ struct AttributionView: View {
                     
                 }
             })
+            .slideOverCard(isPresented: $showTutorialScreen, content: {
+                DemoAttributionTutorialView()
+            })
         }
     }
 }
@@ -139,7 +164,7 @@ struct HomeView_Previews: PreviewProvider {
                 model.users = [User(name: "Hugo"), User(name: "Lucas"), User(name: "Thomas")]
                 model.listOfProductsAndPrices = [PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 4.99), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBC", name: "Finger Fish", price: 1.27), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBD", name: "Ice Cream Strawberry", price: 3.20)]
                 model.parameters.selectAllUsers = false
-                model.receiptName = "ALDI SUISSE"
             }
+            //.previewInterfaceOrientation(.portraitUpsideDown)
     }
 }

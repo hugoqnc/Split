@@ -18,10 +18,8 @@ final class ModelData: ObservableObject {
     @Published var parameters = Parameters.default
     @Published var receiptName = ""
     @Published var continueWithStandardRecognition = false
-    
-    var tricountID = ""
-    
     var date = Date()
+    var tricountID = ""
     
     func addNameToReceipt(name: String) -> Void {
         if receiptName.isEmpty {
@@ -73,7 +71,7 @@ final class ModelData: ObservableObject {
     }
     
     func showPrice(price: Double) -> String {
-        return String(round(price * 100) / 100.0)+currency.value
+        return formatPriceAndCurrency(price: price, currency: currency)
     }
     
     func individualSharedText(ofUser user: User) -> String {
@@ -210,5 +208,15 @@ final class ModelData: ObservableObject {
         self.images = []
         self.receiptName = ""
         self.continueWithStandardRecognition = false
+    }
+}
+
+func formatPriceAndCurrency(price: Double, currency: Currency) -> String {
+    let currenciesOnLeft = [Currency(symbol: Currency.SymbolType.dollar), Currency(symbol: Currency.SymbolType.yen), Currency(symbol: Currency.SymbolType.pound)]
+    
+    if currenciesOnLeft.contains(currency) {
+        return currency.value+String(round(price * 100) / 100.0)
+    } else {
+        return String(round(price * 100) / 100.0)+currency.value
     }
 }

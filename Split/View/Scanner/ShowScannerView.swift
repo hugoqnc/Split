@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SlideOverCard
 
 struct ShowScannerView: View {
     @EnvironmentObject var model: ModelData

@@ -85,7 +85,7 @@ struct ResultCard: View {
                     .foregroundColor(colorMatching)
                     .brightness(colorScheme == .dark ? 0.2 : -0.3)
                     
-                    Label("\(String(round(totalPrice * 100) / 100.0))\(resultUnit.currency.value) • \(resultUnit.listOfProductsAndPrices.count) items", systemImage: "cart")
+                    Label("\(formatPriceAndCurrency(price: totalPrice, currency: resultUnit.currency)) • \(resultUnit.listOfProductsAndPrices.count) items", systemImage: "cart")
                         .font(.subheadline)
                         .foregroundColor(colorMatching)
                         .brightness(colorScheme == .dark ? 0 : -0.1)

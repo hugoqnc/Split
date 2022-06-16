@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Currency: Codable {
+struct Currency: Codable, Hashable {
     
     var symbol: SymbolType
     

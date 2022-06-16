@@ -10,17 +10,39 @@ import SwiftUI
 struct StatView: View {
     @EnvironmentObject var model: ModelData
     @Environment(\.horizontalSizeClass) var horizontalSizeClass //for iPad specificity
+
     
-    var minimumPriceName: String {
+    var averageItemPrice: Double {
         get {
-            return model.listOfProductsAndPrices.sorted(by: {$0.price<$1.price}).filter{$0.price>0}.first?.name ?? "none"
+            return model.totalPrice / Double(model.listOfProductsAndPrices.count)
         }
     }
     
-    var minimumPriceValue: String {
+    var maximumItemPrice: Double {
         get {
-            let value = round((model.listOfProductsAndPrices.map({ pair in pair.price }).filter{$0>0}.min() ?? 0.0)*100) / 100.0
-            return String(value)+model.currency.value
+            return (model.listOfProductsAndPrices.map({ pair in
+                pair.price
+            }).max() ?? 0.0)
+        }
+    }
+    
+    var maximumItemName: String {
+        get {
+           return (model.listOfProductsAndPrices.sorted(by: {$0.price>$1.price}).first?.name ?? "none")
+        }
+    }
+    
+    var minimumItemName: String {
+        get {
+            return (model.listOfProductsAndPrices.sorted(by: {$0.price<$1.price}).filter{$0.price>0}.first?.name ?? "none")
+        }
+    }
+    
+    var minimumItemPrice: Double {
+        get {
+            return (model.listOfProductsAndPrices.map({ pair in
+                pair.price
+            }).filter{$0>0}.min() ?? 0.0)
         }
     }
     
@@ -33,18 +55,16 @@ struct StatView: View {
                 
                 StatisticRectangle(iconString: "number", description: "Number of\npurchases", value: String(model.listOfProductsAndPrices.count), color: Color.blue)
                 
-                StatisticRectangle(iconString: "cart", description: "Average price\nof an item", value: String(round((model.totalPrice/Double(model.listOfProductsAndPrices.count))*100) / 100.0)+model.currency.value, color: Color.orange)
+                StatisticRectangle(iconString: "cart", description: "Average price\nof an item", value: model.showPrice(price: averageItemPrice), color: Color.orange)
                 
                 Spacer()
             }
             HStack {
                 Spacer()
                 
-                StatisticRectangle(iconString: "arrow.up.right.circle", description: "Maximum price\n(\(model.listOfProductsAndPrices.sorted(by: {$0.price>$1.price}).first?.name ?? "none"))", value: String(round((model.listOfProductsAndPrices.map({ pair in
-                    pair.price
-                }).max() ?? 0.0)*100) / 100.0)+model.currency.value, color: Color.green)
+                StatisticRectangle(iconString: "arrow.up.right.circle", description: "Maximum price\n(\(maximumItemName))", value: model.showPrice(price: maximumItemPrice), color: Color.green)
                 
-                StatisticRectangle(iconString: "arrow.down.right.circle", description: "Minimum price\n(\(minimumPriceName))", value: minimumPriceValue, color: Color.red)
+                StatisticRectangle(iconString: "arrow.down.right.circle", description: "Minimum price\n(\(minimumItemName))", value: model.showPrice(price: minimumItemPrice), color: Color.red)
                 
                 Spacer()
             }
@@ -57,13 +77,11 @@ struct StatView: View {
                 
                 StatisticRectangle(iconString: "number", description: "Number of\npurchases", value: String(model.listOfProductsAndPrices.count), color: Color.blue)
                 
-                StatisticRectangle(iconString: "cart", description: "Average price\nof an item", value: String(round((model.totalPrice/Double(model.listOfProductsAndPrices.count))*100) / 100.0)+model.currency.value, color: Color.orange)
+                StatisticRectangle(iconString: "cart", description: "Average price\nof an item", value: model.showPrice(price: averageItemPrice), color: Color.orange)
                 
-                StatisticRectangle(iconString: "arrow.up.right.circle", description: "Maximum price\n(\(model.listOfProductsAndPrices.sorted(by: {$0.price>$1.price}).first?.name ?? "none"))", value: String(round((model.listOfProductsAndPrices.map({ pair in
-                    pair.price
-                }).max() ?? 0.0)*100) / 100.0)+model.currency.value, color: Color.green)
+                StatisticRectangle(iconString: "arrow.up.right.circle", description: "Maximum price\n(\(maximumItemName))", value: model.showPrice(price: maximumItemPrice), color: Color.green)
                 
-                StatisticRectangle(iconString: "arrow.down.right.circle", description: "Minimum price\n(\(minimumPriceName))", value: minimumPriceValue, color: Color.red)
+                StatisticRectangle(iconString: "arrow.down.right.circle", description: "Minimum price\n(\(minimumItemName))", value: model.showPrice(price: minimumItemPrice), color: Color.red)
                 
                 Spacer()
             }
