@@ -29,6 +29,10 @@ struct AttributionCard: View {
     @State private var createsNewItemCall = false
     @State private var deletesItemCall = false
     
+    @State private var dividesItemSheet = false
+    @State private var dividesItemCall = false
+    @State private var dividedBy = 2
+    
     @State private var xOffset: CGFloat = 0.0
     @State private var yOffset: CGFloat = 0.0
     @State private var opacity = 1.0
@@ -119,7 +123,15 @@ struct AttributionCard: View {
                         Button {
                             isEditorMode = true
                         } label: {
-                                Label("Edit this item", systemImage: "pencil")
+                            Label("Edit this item", systemImage: "pencil")
+                        }
+                        
+                        Button{
+                            withAnimation(.easeInOut(duration: 4)) {
+                                dividesItemSheet = true
+                            }
+                        } label: {
+                            Label("Divide this item", systemImage: "divide")
                         }
 
                         if !pair.isNewItem {
@@ -232,6 +244,36 @@ struct AttributionCard: View {
                 }
             }
         }
+        .sheet(isPresented: $dividesItemSheet, content: {
+            DivideItemView(pair: pair, dividedBy: $dividedBy, dividesItemCall: $dividesItemCall)
+        })
+        .onChange(of: dividesItemCall) { newValue in
+            if newValue {
+                withAnimation(.easeInOut(duration: 0.35)) {
+                    yOffset = 300
+                    opacity = 0.0
+                }
+                
+                for i in 1...dividedBy {
+                    var newPair = PairProductPrice()
+                    newPair.name = pair.name + " [\(i)/\(dividedBy)]"
+                    newPair.price = pair.price/Double(dividedBy)
+                    //newPair.isNewItem = true
+                    model.listOfProductsAndPrices.insert(newPair, at: itemCounter+i)
+                }
+                
+                let secondsToDelay = 0.35
+                DispatchQueue.main.asyncAfter(deadline: .now() + secondsToDelay) {
+                    dividesItemCall = false
+                }
+
+            } else {
+                if let index = model.listOfProductsAndPrices.firstIndex(where: {$0.id == pair.id}) {
+                    model.listOfProductsAndPrices.remove(at: index)
+                }
+            }
+        }
+
         .transition(
             pair.isNewItem ?
                 .asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .leading)) :
