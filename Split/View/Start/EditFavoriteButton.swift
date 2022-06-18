@@ -151,6 +151,31 @@ struct EditFavoriteButton: View {
                         }
                     }
                 }
+                .gesture(DragGesture(minimumDistance: 20, coordinateSpace: .global)
+                            .onEnded { value in
+                                let horizontalAmount = value.translation.width as CGFloat
+                                let verticalAmount = value.translation.height as CGFloat
+                                let xStart = value.startLocation.x
+                                
+                                if abs(horizontalAmount) > abs(verticalAmount) && xStart<20 {
+                                    if horizontalAmount > 0 { //swipe from left to right
+                                        PreferencesStore.load { result in
+                                            switch result {
+                                            case .failure(let error):
+                                                fatalError(error.localizedDescription)
+                                                //print("e")
+                                            case .success(let preferences):
+                                                if savedNames == preferences.names && savedCurrency.value == preferences.currency.value && tricountID == preferences.tricountID {
+                                                    showFavoriteView = false
+                                                } else {
+                                                    backConfirmation = true
+                                                }
+                                                
+                                            }
+                                        }
+                                    }
+                                }
+                })
                 .navigationTitle("Favorites")
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationBarBackButtonHidden(true)
