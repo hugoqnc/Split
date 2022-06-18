@@ -20,14 +20,17 @@ struct ListSheetView: View {
         VStack {
             NavigationView {
                 VStack{
-                    
-                    Text("\(editPair.name)") //due to https://developer.apple.com/forums/thread/652080
-                        .hidden()
-                        .frame(height:0)
-
+                
                     List() {
                         if !isShownInHistory {
-                            Section(header: Text("Receipt Name")) {
+                            Section(header:
+                                HStack{
+                                    Text("Receipt Name")
+                                    Text("\(editPair.name)") //due to https://developer.apple.com/forums/thread/652080
+                                        .hidden()
+                                        .frame(height:0)
+                                }
+                            ){
                                 VStack {
                                     TextField("Receipt Name", text: $model.receiptName.animation())
                                 }
@@ -130,8 +133,16 @@ struct ListSheetView: View {
                         }
                     }
                 }
-                .navigationBarTitle("")
-                .navigationBarHidden(true)
+                .navigationBarTitle(Text(""), displayMode: .inline)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            dismiss()
+                        } label: {
+                            Text("Done")
+                        }
+                    }
+                }
             }
             .navigationViewStyle(StackNavigationViewStyle())
         }
