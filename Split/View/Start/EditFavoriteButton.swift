@@ -84,7 +84,7 @@ struct EditFavoriteButton: View {
                                 TextField("Tricount Link/ID", text: $tricountLink)
                                 
                                 if !tricountLink.isEmpty {
-                                    isValidLabel(isValid: tricountID.count == numberOfCharactersForValidTricountID)
+                                    isValidLabel(isValid: numberOfCharactersForValidTricountID.contains(tricountID.count))
                                 }
                             }
                             

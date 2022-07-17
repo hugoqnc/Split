@@ -15,6 +15,8 @@ struct FormDetailsView: View {
     @Binding var showAlert1: Bool
     @Binding var showAlert2: Bool
     
+    @State var showInfo = false
+    
     var body: some View {
         Section {
             

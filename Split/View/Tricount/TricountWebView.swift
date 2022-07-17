@@ -8,7 +8,7 @@
 import SwiftUI
 import WebView
 
-let numberOfCharactersForValidTricountID = 17
+let numberOfCharactersForValidTricountID = [17, 18]
 
 struct TricountWebView: View {
     
@@ -129,7 +129,7 @@ struct TricountWebView: View {
                 Group {
                     if showTricountID {
                         HStack {
-                            isValidLabel(isValid: model.tricountID.count==numberOfCharactersForValidTricountID)
+                            isValidLabel(isValid: numberOfCharactersForValidTricountID.contains(model.tricountID.count))
                             Text("(\(model.tricountID))")
                                 .font(.caption2)
                                 .foregroundColor(.secondary)

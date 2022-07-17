@@ -34,7 +34,7 @@ struct FillFavoriteButton: View {
                         namesText.append(", ")
                     }
                 }
-                if savedTricountID.count == numberOfCharactersForValidTricountID {
+                if  numberOfCharactersForValidTricountID.contains(savedTricountID.count) {
                     namesText.append(" |")
                 }
                 return namesText
@@ -63,7 +63,7 @@ struct FillFavoriteButton: View {
                                 .font(.caption)
                                 .foregroundColor(Color.secondary)
                             
-                            if savedTricountID.count == numberOfCharactersForValidTricountID {
+                            if numberOfCharactersForValidTricountID.contains(savedTricountID.count) {
 //                                Image("tricount_icon")
 //                                    .resizable()
 //                                    .scaledToFit()
