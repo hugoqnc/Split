@@ -77,6 +77,16 @@ struct SettingsView: View {
                     }
                     .listRowBackground(Color.secondary.opacity(0.1))
                     
+                    Section {
+                        Button {
+                            
+                        } label: {
+                            Label("Add a Tricount", systemImage: "plus")
+                        }
+                    } header: {
+                        Text("Tricount")
+                    }
+                    .listRowBackground(Color.secondary.opacity(0.1))
                     
                     Section {
                         Toggle("Always show \"Scan\" tutorial", isOn: $parameters.showScanTutorial)

@@ -62,6 +62,8 @@
 		4FF60AFB27DA961A00AD58DB /* AdvancedParametersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF60AFA27DA961A00AD58DB /* AdvancedParametersView.swift */; };
 		4FF675D72799E60800B7F385 /* ShowScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF675D62799E60800B7F385 /* ShowScannerView.swift */; };
 		4FF675DC279A1E9400B7F385 /* FirstListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF675DB279A1E9400B7F385 /* FirstListView.swift */; };
+		4FF7F9252893162800468609 /* TricountAddSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF7F9242893162800468609 /* TricountAddSheet.swift */; };
+		4FF7F9272893172100468609 /* Tricount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF7F9262893172100468609 /* Tricount.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -138,6 +140,8 @@
 		4FF60AFA27DA961A00AD58DB /* AdvancedParametersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedParametersView.swift; sourceTree = "<group>"; };
 		4FF675D62799E60800B7F385 /* ShowScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowScannerView.swift; sourceTree = "<group>"; };
 		4FF675DB279A1E9400B7F385 /* FirstListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstListView.swift; sourceTree = "<group>"; };
+		4FF7F9242893162800468609 /* TricountAddSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TricountAddSheet.swift; sourceTree = "<group>"; };
+		4FF7F9262893172100468609 /* Tricount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tricount.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,6 +217,7 @@
 				4FB7813B2794821D00F5E2D8 /* Currency.swift */,
 				4F309E602784F89900F55BC6 /* Users.swift */,
 				4F898D0B279CC1F40067336F /* VisionParameters.swift */,
+				4FF7F9262893172100468609 /* Tricount.swift */,
 				4FA4ECB827C7CCAF00B0F012 /* Stores */,
 			);
 			path = Model;
@@ -330,6 +335,7 @@
 			children = (
 				4FB4227328193EEE00DB83CC /* TricountWebView.swift */,
 				4F1752FB2819EF2B0032D3FE /* TricountExportSheet.swift */,
+				4FF7F9242893162800468609 /* TricountAddSheet.swift */,
 			);
 			path = Tricount;
 			sourceTree = "<group>";
@@ -530,6 +536,7 @@
 				4FF04F50278B0DF700650EBC /* LastItemView.swift in Sources */,
 				4F7C128C279B530A00A5E50B /* ListTutorialView.swift in Sources */,
 				4FD7C2DD27E872BE009C4D9D /* FormDetailsView.swift in Sources */,
+				4FF7F9272893172100468609 /* Tricount.swift in Sources */,
 				4FF675D72799E60800B7F385 /* ShowScannerView.swift in Sources */,
 				4FF60AFB27DA961A00AD58DB /* AdvancedParametersView.swift in Sources */,
 				4F309E532784B55900F55BC6 /* ContentView.swift in Sources */,
@@ -538,6 +545,7 @@
 				4F43BDFD2789A9CD005CDD6D /* LoadItemsView.swift in Sources */,
 				4F43BDFF2789B0AD005CDD6D /* ResultView.swift in Sources */,
 				4F4902AE27CAC9D10047A441 /* ResultViewHistoryWrapper.swift in Sources */,
+				4FF7F9252893162800468609 /* TricountAddSheet.swift in Sources */,
 				4F309E672785AB5500F55BC6 /* ModelData.swift in Sources */,
 				4FB4227428193EEE00DB83CC /* TricountWebView.swift in Sources */,
 				4F1752FE281A02E60032D3FE /* isValidLabel.swift in Sources */,
