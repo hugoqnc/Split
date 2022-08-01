@@ -7,26 +7,71 @@
 
 import Foundation
 import WebKit
+import UIKit
 
 
 struct Tricount: Codable { //default values
     var tricountName = ""
     var tricountID = ""
     var names: [String] = []
+    var status = "" // status when loaded from network
 }
 
 
-func getInfoFromTricount(tricountID: String) async throws -> Tricount {
-    let webView = WKWebView()
+class TricountViewController: UIViewController, WKNavigationDelegate {
+    var webView: WKWebView!
+    var tricountID: String!
+    var hasLoaded = false
     
+    override func loadView() {
+        webView = WKWebView()
+        webView.navigationDelegate = self
+    }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        let myURL = URL(string: "https://api.tricount.com/displayTricount.jsp?tricountID=\(tricountID ?? "")&acceptGACookies=true")
+        //print(myURL)
+        let myRequest = URLRequest(url: myURL!)
+        webView.load(myRequest)
+    }
+    
+    func setTricountID(tricountID: String){
+        self.tricountID = tricountID
+    }
+
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        print("Finished navigating to url")
+        hasLoaded = true
+    }
+}
+
+func getInfoFromTricount(tricountID: String) async throws -> Tricount {
+    let tricountViewController = TricountViewController()
+    await tricountViewController.setTricountID(tricountID: tricountID)
+    await tricountViewController.loadView()
+    await tricountViewController.viewDidLoad()
+    
+    let webView = await tricountViewController.webView!
     var tricount = Tricount()
     tricount.tricountID = tricountID
     
-    let tricountLink = URL(string: "https://api.tricount.com/displayTricount.jsp?tricountID=\(tricountID)&acceptGACookies=true")!
+    // Wait for page to load before executing JavaScript
+    let maxTime = 10.0
+    var time = 0.0
+    let checkTimeInterval = 0.1
+    var hasLoaded = false
     
-    await webView.load(URLRequest(url: tricountLink))
+    while time<maxTime && !hasLoaded {
+        print("time: \(time)")
+        try await Task.sleep(nanoseconds: UInt64(checkTimeInterval * Double(NSEC_PER_SEC)))
+        hasLoaded = await tricountViewController.hasLoaded
+        time += checkTimeInterval
+    }
     
-    try await Task.sleep(nanoseconds: UInt64(2 * Double(NSEC_PER_SEC)))
+    // Here the page is loaded. We still need to wait for the Tricount UI to load, which supposedly takes a fixed amount of time, <1.2sc
+    try await Task.sleep(nanoseconds: UInt64(1.2 * Double(NSEC_PER_SEC)))
+    
     
     // Continuations help from:
     //  https://www.hackingwithswift.com/quick-start/concurrency/how-to-use-continuations-to-convert-completion-handlers-into-async-functions
@@ -85,5 +130,12 @@ func getInfoFromTricount(tricountID: String) async throws -> Tricount {
     tricount.tricountName = tricountName
     tricount.names = names
     
+    if (tricountName == "" || names == []) && !hasLoaded {
+        // case of a network failure
+        tricount.status = "NETWORK_FAILURE"
+    } else if (tricountName == "" || names == []) && hasLoaded {
+        // probably case of an invalid tricount ID, but it can also be due to a network failure
+        tricount.status = "UNKNOWN_FAILURE"
+    }
     return tricount
 }

@@ -8,23 +8,21 @@
 import SwiftUI
 
 struct TricountAddSheet: View {
-    @State var tricountName = ""
-    @State var names = [""]
+    @State var tricount = Tricount()
     
     var body: some View {
         
         VStack {
-            Text(tricountName)
-            Text(names.description)
+            Text(tricount.tricountName)
+            Text(tricount.names.description)
+            Text(tricount.status)
             
             Button {
                 Task {
                     do {
                         let tricount = try await getInfoFromTricount(tricountID: "aqFUjtBCMGOyLQhZjq")
-                        tricountName = tricount.tricountName
-                        names = tricount.names
+                        self.tricount = tricount
                         print(tricount)
-                        
                     } catch {
                         // .. handle error
                     }
