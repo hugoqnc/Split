@@ -59,7 +59,16 @@ struct TricountExportSheet: View {
                                 .padding(.trailing, 5)
                                 .lineLimit(1)
                         }
+                    }
+                    .onAppear {
+                        let exactTricounts = exactTricounts(users: model.users, tricountList: model.parameters.tricountList)
+                        let compatibleTricounts = compatibleTricounts(users: model.users, tricountList: model.parameters.tricountList)
                         
+                        if !exactTricounts.isEmpty {
+                            chosenTricount = exactTricounts.first!
+                        } else if compatibleTricounts.count == 1 {
+                            chosenTricount = compatibleTricounts.first!
+                        }
                     }
                     
                     Menu {
@@ -135,7 +144,7 @@ struct TricountExportSheet_Previews: PreviewProvider {
         var tricountTest2 = Tricount()
         tricountTest2.tricountID = "XXX"
         tricountTest2.tricountName = "Summer Vacations"
-        tricountTest2.names = ["Hugo", "Thomas", "Julie", "Octave", ""]
+        tricountTest2.names = ["Hugo", "Thomas", "Lucas"]
         param.tricountList = [tricountTest1, tricountTest2]
         model.parameters = param
 

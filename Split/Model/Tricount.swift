@@ -151,14 +151,26 @@ func compatibleTricounts(users: [User], tricountList:[Tricount]) -> [Tricount] {
     
     for tricount in tricountList {
         let intersection = Array(Set(nameList).intersection(tricount.names))
-        print("___\(tricount.tricountName)___")
-        print(intersection)
-        print(nameList)
-        print("_________________")
         if intersection.containsSameElements(as: nameList) {
             compatibleTricounts.append(tricount)
         }
     }
     
     return compatibleTricounts
+}
+
+func exactTricounts(users: [User], tricountList:[Tricount]) -> [Tricount] {
+    var exactTricounts: [Tricount] = []
+    
+    let nameList = users.map { user in
+        return user.name
+    }
+    
+    for tricount in tricountList {
+        if tricount.names.containsSameElements(as: nameList) {
+            exactTricounts.append(tricount)
+        }
+    }
+    
+    return exactTricounts
 }
