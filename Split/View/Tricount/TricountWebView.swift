@@ -104,7 +104,7 @@ struct TricountWebView: View {
                         errorOccured = false
                     }
                     
-                    loadTricount(tricountLink: URL(string: "https://api.tricount.com/displayTricount.jsp?tricountID=\(model.tricountID)&acceptGACookies=true")!, listOfNames: model.users.map({ user in user.name }))
+                    loadTricount(tricountLink: URL(string: "https://api.tricount.com/displayTricount.jsp?tricountID=\("")&acceptGACookies=true")!, listOfNames: model.users.map({ user in user.name }))
                 } label: {
                     success ? Label("Export **again** to Tricount", systemImage: "square.and.arrow.up") : errorOccured ? Label("**Retry** export to Tricount", systemImage: "square.and.arrow.up") : Label("Export to Tricount", systemImage: "square.and.arrow.up")
                 }
@@ -127,8 +127,8 @@ struct TricountWebView: View {
                 Group {
                     if showTricountID {
                         HStack {
-                            isValidLabel(isValid: numberOfCharactersForValidTricountID.contains(model.tricountID.count))
-                            Text("(\(model.tricountID))")
+                            //isValidLabel(isValid: numberOfCharactersForValidTricountID.contains(model.tricountID.count))
+                            Text("(\(""))")
                                 .font(.caption2)
                                 .foregroundColor(.secondary)
                         }

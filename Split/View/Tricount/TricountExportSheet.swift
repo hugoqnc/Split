@@ -13,6 +13,7 @@ struct TricountExportSheet: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.colorScheme) var colorScheme
     @State var payer = User()
+    @State var chosenTricount = Tricount()
     
     var body: some View {
         
@@ -38,31 +39,57 @@ struct TricountExportSheet: View {
                 }
                 .padding(.horizontal, 25)
 
-                
-                Menu {
-                    Picker("Payer", selection: $payer.animation()) {
-                        ForEach(model.users, id: \.self, content: { user in
-                            Text(user.name)
-                        })
-                    }
-                } label: {
-                    HStack {
-                        Image(systemName: "person")
-                            .foregroundColor(Color.accentColor)
-                            .padding(.trailing, 2)
-                        Text("Payer of the receipt")
-                            .foregroundColor(.primary)
-                        Spacer()
-                        Text("\(payer.name)")
-                            .fontWeight(.semibold)
-                            .padding(.trailing, 5)
+                Group {
+                    Menu {
+                        Picker("Tricount", selection: $chosenTricount.animation()) {
+                            ForEach(compatibleTricounts(users: model.users, tricountList: model.parameters.tricountList), id: \.self, content: { tricount in
+                                    Text(tricount.tricountName)
+                            })
+                        }
+                    } label: {
+                        HStack {
+                            Image(systemName: "plus.forwardslash.minus")
+                                .foregroundColor(Color.accentColor)
+                                .padding(.trailing, 2)
+                            Text("Tricount")
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Text("\(chosenTricount.tricountName)")
+                                .fontWeight(.semibold)
+                                .padding(.trailing, 5)
+                                .lineLimit(1)
+                        }
+                        
                     }
                     
+                    Menu {
+                        Picker("Payer", selection: $payer.animation()) {
+                            ForEach(model.users, id: \.self, content: { user in
+                                Text(user.name)
+                            })
+                        }
+                    } label: {
+                        HStack {
+                            Image(systemName: "person")
+                                .foregroundColor(Color.accentColor)
+                                .padding(.trailing, 2)
+                            Text("Payer of the receipt")
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Text("\(payer.name)")
+                                .fontWeight(.semibold)
+                                .padding(.trailing, 5)
+                                .lineLimit(1)
+                        }
+                        
+                    }
+
                 }
                 .padding(15)
                 .background(Color.secondary.opacity(0.1))
                 .cornerRadius(10)
-                .padding()
+                .padding(.horizontal)
+                .padding(.top,5)
                 
                 TricountWebView(payerName: payer.name)
                     .padding(.horizontal, 35)
@@ -99,6 +126,19 @@ struct TricountExportSheet_Previews: PreviewProvider {
         model.listOfProductsAndPrices[1].chosenBy = [model.users[0].id, model.users[1].id]
         model.listOfProductsAndPrices[2].chosenBy = [model.users[0].id, model.users[1].id, model.users[2].id]
         model.receiptName = "ALDI SUISSE"
+        
+        var param = Parameters()
+        var tricountTest1 = Tricount()
+        tricountTest1.tricountID = "YYY"
+        tricountTest1.tricountName = "This Is A Very Long Title For Testing"
+        tricountTest1.names = ["Hugo", "Thomas", "Lucas", "Julie", "Mahaut", "Aurélien", "Corentin", "Octave"]
+        var tricountTest2 = Tricount()
+        tricountTest2.tricountID = "XXX"
+        tricountTest2.tricountName = "Summer Vacations"
+        tricountTest2.names = ["Hugo", "Thomas", "Julie", "Octave", ""]
+        param.tricountList = [tricountTest1, tricountTest2]
+        model.parameters = param
+
         return model
     }()
     

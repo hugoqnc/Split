@@ -111,26 +111,6 @@ struct ResultCard: View {
 
 import UIKit
 
-extension UIColor {
-    /// Generate a color from the given string deterministically.
-    ///
-    /// Generated colors are *not* evenly distributed in the HSL color space, but you and/or your users also probably won't be able to tell.
-    convenience init(_ string: String, saturation: Double = 0.8, brightness: Double = 0.8) {
-        let seed = Double.pi // Can be any positive irrational number. Pi was chosen for flavor.
-        let hash = string
-            .compactMap { $0.unicodeScalars.first?.value.byteSwapped }
-            .map(Double.init)
-            .reduce(seed) { (hash, unicodeValue) in
-                return (hash * seed * unicodeValue)
-                    .truncatingRemainder(dividingBy: 360)
-            }
-
-        let hue = hash / 360
-
-        self.init(hue: CGFloat(hue), saturation: CGFloat(saturation), brightness: CGFloat(brightness), alpha: 1.0)
-    }
-}
-
 struct ResultCard_Previews: PreviewProvider {
     static let resultUnit: ResultUnit = {
         let users = [User(name: "Hugo"), User(name: "Lucas"), User(name: "Thomas"), User(name: "Corentin"), User(name: "Nicolas"), User(name: "Hortense")]

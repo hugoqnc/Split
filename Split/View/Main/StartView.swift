@@ -61,7 +61,6 @@ struct StartView: View {
                             fatalError(error.localizedDescription)
                             //print("e")
                         case .success(let preferences):
-                            model.tricountID = preferences.tricountID
                             //currencyType = preferences.currency.symbol
                             model.currency = Currency(symbol: preferences.currency.symbol)
                         }
@@ -86,6 +85,8 @@ struct StartView: View {
                                 model.currency = Currency(symbol: currencyType)
                                 withAnimation() {
                                     model.startTheProcess = true
+//                                    print(compatibleTricounts(users: model.users, tricountList: model.parameters.tricountList))
+//                                    model.users = []
                                 }
                             }
                         } label: {

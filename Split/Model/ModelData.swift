@@ -19,7 +19,6 @@ final class ModelData: ObservableObject {
     @Published var receiptName = ""
     @Published var continueWithStandardRecognition = false
     var date = Date()
-    var tricountID = ""
     
     func addNameToReceipt(name: String) -> Void {
         if receiptName.isEmpty {

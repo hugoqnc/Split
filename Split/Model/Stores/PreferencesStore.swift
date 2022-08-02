@@ -11,7 +11,6 @@ import SwiftUI
 struct Preferences: Codable {
     var names: [String] = []
     var currency: Currency = Currency.default
-    var tricountID = ""
 }
 
 class PreferencesStore: ObservableObject {

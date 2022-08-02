@@ -11,7 +11,7 @@ import UIKit
 
 let numberOfCharactersForValidTricountID = [17, 18]
 
-struct Tricount: Codable { //default values
+struct Tricount: Codable, Hashable { //default values
     var tricountName = ""
     var tricountID = ""
     var names: [String] = []
@@ -139,4 +139,26 @@ func getInfoFromTricount(tricountID: String) async throws -> Tricount {
         tricount.status = "UNKNOWN_FAILURE"
     }
     return tricount
+}
+
+
+func compatibleTricounts(users: [User], tricountList:[Tricount]) -> [Tricount] {
+    var compatibleTricounts: [Tricount] = []
+    
+    let nameList = users.map { user in
+        return user.name
+    }
+    
+    for tricount in tricountList {
+        let intersection = Array(Set(nameList).intersection(tricount.names))
+        print("___\(tricount.tricountName)___")
+        print(intersection)
+        print(nameList)
+        print("_________________")
+        if intersection.containsSameElements(as: nameList) {
+            compatibleTricounts.append(tricount)
+        }
+    }
+    
+    return compatibleTricounts
 }

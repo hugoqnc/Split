@@ -98,7 +98,6 @@ struct FillFavoriteButton: View {
                     case .success(let preferences):
                         savedNames = preferences.names
                         savedCurrency = preferences.currency
-                        savedTricountID = preferences.tricountID
                     }
                 }
             }
