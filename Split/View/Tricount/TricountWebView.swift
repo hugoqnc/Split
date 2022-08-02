@@ -8,8 +8,6 @@
 import SwiftUI
 import WebView
 
-let numberOfCharactersForValidTricountID = [17, 18]
-
 struct TricountWebView: View {
     
     var payerName: String

@@ -9,6 +9,7 @@ import Foundation
 import WebKit
 import UIKit
 
+let numberOfCharactersForValidTricountID = [17, 18]
 
 struct Tricount: Codable { //default values
     var tricountName = ""
@@ -97,7 +98,7 @@ func getInfoFromTricount(tricountID: String) async throws -> Tricount {
         }
     }
     
-    print("async tricountName:"+tricountName)
+    //print("async tricountName:"+tricountName)
     
     
     let getNames = #"[...document.querySelectorAll('div[class="identifiezVousFocusPanel"]')].map(div => div.textContent)"#
@@ -125,7 +126,7 @@ func getInfoFromTricount(tricountID: String) async throws -> Tricount {
         }
     }
     
-    print("async names:"+names.description)
+    //print("async names:"+names.description)
     
     tricount.tricountName = tricountName
     tricount.names = names

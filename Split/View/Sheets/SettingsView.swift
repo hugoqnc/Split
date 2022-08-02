@@ -19,6 +19,8 @@ struct SettingsView: View {
     @State private var showSharingOptions = false
     @State var showAdvancedParameters = false
     
+    @State var addTricountSheet = false
+    
     var year: String {
         get {
             let date = Date()
@@ -27,6 +29,17 @@ struct SettingsView: View {
             let yearString = dateFormatter.string(from: date)
             return yearString
         }
+    }
+    
+    func descriptiveStringTricount(tricount: Tricount) -> String {
+        var text = ""//\(tricount.names.count) | "
+            for i in 0..<tricount.names.count {
+                text.append(tricount.names[i])
+            if i<tricount.names.count-1 {
+                text.append(", ")
+            }
+        }
+        return text
     }
     
     var body: some View {
@@ -78,8 +91,30 @@ struct SettingsView: View {
                     .listRowBackground(Color.secondary.opacity(0.1))
                     
                     Section {
+                        List {
+                            ForEach(parameters.tricountList, id:\.tricountID) { tricount in
+                                VStack(alignment: .leading, spacing: 3) {
+                                    Text("**\(tricount.tricountName)** – \(tricount.names.count) people")
+                                        .lineLimit(1)
+                                    Text(descriptiveStringTricount(tricount: tricount))
+                                        .font(.subheadline)
+                                }
+                            }
+                            .onDelete { indexSet in
+                                withAnimation() {
+                                    parameters.tricountList.remove(atOffsets: indexSet)
+                                }
+                            }
+                        }
                         Button {
+                            addTricountSheet = true
                             
+                            // FOR TESTING PURPOSES
+//                            var tricountTest = Tricount()
+//                            tricountTest.tricountID = "YYY"
+//                            tricountTest.tricountName = "This Is A Very Long Title For Testing"
+//                            tricountTest.names = ["Hugo", "Thomas", "Lucas", "Julie", "Mahaut", "Aurélien", "Corentin", "Octave"]
+//                            parameters.tricountList.append(tricountTest)
                         } label: {
                             Label("Add a Tricount", systemImage: "plus")
                         }
@@ -87,6 +122,9 @@ struct SettingsView: View {
                         Text("Tricount")
                     }
                     .listRowBackground(Color.secondary.opacity(0.1))
+                    .sheet(isPresented: $addTricountSheet) {
+                        TricountAddSheet(tricountList: $parameters.tricountList)
+                    }
                     
                     Section {
                         Toggle("Always show \"Scan\" tutorial", isOn: $parameters.showScanTutorial)
@@ -167,7 +205,7 @@ struct SettingsView: View {
                         
                         dismiss()
                     } label: {
-                        Text("Done")
+                        Text("Save")
                     }
                 }
             }

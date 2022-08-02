@@ -17,6 +17,7 @@ struct Parameters: Codable {
     var showEditTutorial = true
     var selectAllUsers = false
     var visionParameters = VisionParameters()
+    var tricountList: [Tricount] = []
 }
 
 class ParametersStore: ObservableObject {
