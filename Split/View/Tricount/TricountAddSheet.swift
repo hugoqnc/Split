@@ -52,11 +52,11 @@ struct TricountAddSheet: View {
                 // Error message
                 Group {
                     Group {
-                    if tricount.status == "UNKNOWN_FAILURE" {
-                        InfoBlock(color: .red, icon: "xmark.octagon", title: "Nothing found", subtitle: "Please verify your Tricount link or your internet connection")
-                    } else if tricount.status == "NETWORK_FAILURE" {
-                        InfoBlock(color: .red, icon: "wifi.slash", title: "Connection failure", subtitle: "Please verify your internet connection and start again")
-                    }
+                        if tricount.status == "UNKNOWN_FAILURE" {
+                            InfoBlock(color: .red, icon: "xmark.octagon", title: "Nothing found", subtitle: "Please verify your Tricount link or your internet connection")
+                        } else if tricount.status == "NETWORK_FAILURE" {
+                            InfoBlock(color: .red, icon: "wifi.slash", title: "Connection failure", subtitle: "Please verify your internet connection and start again")
+                        }
                     }
                     .transition(.scale)
                 }

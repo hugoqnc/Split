@@ -89,10 +89,7 @@ struct ResultView: View {
                                     showExportToTricount = true
                                 } label: {
                                     HStack {
-                                        Image("tricount_icon")
-                                            .resizable()
-                                            .scaledToFit()
-                                        Text("Export to Tricount")
+                                        Label("Export to Tricount", systemImage: "plus.forwardslash.minus")
                                     }
                                 }
                             }

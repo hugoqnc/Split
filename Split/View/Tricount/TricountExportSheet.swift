@@ -21,25 +21,43 @@ struct TricountExportSheet: View {
         
         NavigationView {
             VStack {
-                HStack {
-                    Image("tricount_logo")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(maxWidth: 200)
-                        .brightness(colorScheme == .dark ? 0.2 : 0.0)
+
+                HStack(alignment: .center) {
+                    Image(systemName: "plus.forwardslash.minus")
+                        .frame(width: 30, height: 30)
+                        .font(.largeTitle)
+                        .foregroundColor(.primary)
+                        .padding()
+
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Export to Tricount")
+                            .font(.headline)
+                            .foregroundColor(.primary)
+
+                        Text("Select your Tricount and the payer of the receipt.")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
                 }
-                //.padding(.top, 40)
-                .padding(.bottom, 20)
+                .padding(.top)
+                .padding(.horizontal, 40)
                 
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Select the payer of the receipt, then export to Tricount.")
-                        .font(.title2)
-                        .fontWeight(.medium)
-                    Text("The export only works if all members who share the receipt are also listed on the provided Tricount under the exact same name.")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                // Error message
+                Group {
+                    Group {
+                        if exportStatus == "UNKNOWN_FAILURE" {
+                            InfoBlock(color: .red, icon: "xmark.octagon", title: "Export failure", subtitle: "Please try again later")
+                        } else if exportStatus == "NETWORK_FAILURE" {
+                            InfoBlock(color: .red, icon: "wifi.slash", title: "Connection failure", subtitle: "Please verify your internet connection and start again")
+                        }
+                    }
+                    .transition(.scale)
                 }
-                .padding(.horizontal, 25)
+                .padding(.horizontal, 40)
+                .padding(.top)
+                .padding(.bottom)
+
 
                 Group {
                     Menu {
@@ -109,6 +127,7 @@ struct TricountExportSheet: View {
                     .foregroundColor(.secondary)
                     .opacity(0.8)
             }
+            .animation(.easeInOut, value: exportStatus)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
@@ -128,6 +147,7 @@ struct TricountExportSheet: View {
                     Button {
                         Task {
                             inProgress = true
+                            exportStatus = "" //reset in case of previous errors
                             let roundedListOfAmounts = roundListOfAmounts(listOfAmounts: model.users.map({ user in model.balance(ofUser: user) }))
 
                             do {

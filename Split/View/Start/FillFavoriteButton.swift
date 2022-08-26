@@ -64,16 +64,11 @@ struct FillFavoriteButton: View {
                                 .foregroundColor(Color.secondary)
                             
                             if numberOfCharactersForValidTricountID.contains(savedTricountID.count) {
-//                                Image("tricount_icon")
-//                                    .resizable()
-//                                    .scaledToFit()
-//                                    .frame(maxHeight:5)
-//                                    .padding(.leading, -3)
 
                                 Label {
                                     Text(" ")
                                 } icon: {
-                                    Image("tricount_icon")
+                                    Image(systemName: "plus.forwardslash.minus")
                                         .resizable()
                                         .scaledToFit()
                                         .frame(maxHeight:10)
