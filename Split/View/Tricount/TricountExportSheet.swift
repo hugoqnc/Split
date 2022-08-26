@@ -14,6 +14,8 @@ struct TricountExportSheet: View {
     @Environment(\.colorScheme) var colorScheme
     @State var payer = User()
     @State var chosenTricount = Tricount()
+    @State var inProgress = false
+    @State var exportStatus = ""
     
     var body: some View {
         
@@ -100,9 +102,7 @@ struct TricountExportSheet: View {
                 .padding(.horizontal)
                 .padding(.top,5)
                 
-                TricountWebView(payerName: payer.name)
-                    .padding(.horizontal, 35)
-                    //.disabled(!model.users.contains(payer))
+                Spacer()
                 
                 Text("Split! is not affiliated in any way with Tricount.")
                     .font(.caption2)
@@ -110,12 +110,46 @@ struct TricountExportSheet: View {
                     .opacity(0.8)
             }
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .navigationBarLeading) {
                     Button {
                         dismiss()
                     } label: {
-                        Text("Done")
+                        Text("Cancel")
+                            .foregroundColor(.red)
                     }
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    if inProgress {
+                        ProgressView()
+                    }
+                }
+                
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        Task {
+                            inProgress = true
+                            let roundedListOfAmounts = roundListOfAmounts(listOfAmounts: model.users.map({ user in model.balance(ofUser: user) }))
+
+                            do {
+                                let res = try await addToTricount(tricountID: chosenTricount.tricountID, shopName: model.receiptName, payerName: payer.name, listOfNames: model.users.map({ user in user.name }), listOfAmounts: roundedListOfAmounts)
+                                print(res)
+                                exportStatus = res
+                            } catch {}
+                            
+                            inProgress = false
+                            
+                            if exportStatus == "SUCCESS" {
+                                dismiss()
+                            }
+                            
+                        }
+                        
+
+                    } label: {
+                        Text("Export")
+                            .bold()
+                    }
+                    .disabled(!model.users.contains(payer))
                 }
             }
             //.navigationTitle("Tricount Export")
@@ -123,13 +157,29 @@ struct TricountExportSheet: View {
         }
         .navigationViewStyle(StackNavigationViewStyle())
     }
+    
+    func roundListOfAmounts(listOfAmounts: [Double]) -> [Double] {
+        let total = round(listOfAmounts.reduce(0, +) * 100) / 100.0
+        
+        var roundedListOfAmounts: [Double] = []
+        for (index, amount) in listOfAmounts.enumerated() {
+            if index == listOfAmounts.count - 1 {
+                roundedListOfAmounts.append(total - roundedListOfAmounts.reduce(0, +))
+            } else {
+                roundedListOfAmounts.append(round(amount * 100) / 100.0)
+            }
+        }
+        
+        return roundedListOfAmounts
+    }
+
 }
 
 struct TricountExportSheet_Previews: PreviewProvider {
     static let model: ModelData = {
         var model = ModelData()
         model.images = [IdentifiedImage(id: "1111", image: UIImage(named: "scan1")), IdentifiedImage(id: "2222", image: UIImage(named: "scan2"))]
-        model.users = [User(name: "Hugo"), User(name: "Lucas"), User(name: "Thomas")]
+        model.users = [User(name: "Hugo"), User(name: "Lucas"), User(name: "Hortense")]
         model.listOfProductsAndPrices = [PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 4.99), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBC", name: "Finger Fish 850g x12 from Aldi 2022", price: 1.27), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBD", name: "Ice Cream Strawberry", price: 3.20)]
         model.listOfProductsAndPrices[0].chosenBy = [model.users[0].id]
         model.listOfProductsAndPrices[1].chosenBy = [model.users[0].id, model.users[1].id]
@@ -140,12 +190,16 @@ struct TricountExportSheet_Previews: PreviewProvider {
         var tricountTest1 = Tricount()
         tricountTest1.tricountID = "YYY"
         tricountTest1.tricountName = "This Is A Very Long Title For Testing"
-        tricountTest1.names = ["Hugo", "Thomas", "Lucas", "Julie", "Mahaut", "Aurélien", "Corentin", "Octave"]
+        tricountTest1.names = ["Hugo", "Thomas", "Lucas", "Julie", "Mahaut", "Aurélien", "Corentin", "Hortense"]
         var tricountTest2 = Tricount()
         tricountTest2.tricountID = "XXX"
         tricountTest2.tricountName = "Summer Vacations"
         tricountTest2.names = ["Hugo", "Thomas", "Lucas"]
-        param.tricountList = [tricountTest1, tricountTest2]
+        var tricountTest3 = Tricount()
+        tricountTest2.tricountID = "aqFUjtBCMGOyLQhZjq"
+        tricountTest2.tricountName = "Test API"
+        tricountTest2.names = ["Hugo", "Hortense", "Lucas"]
+        param.tricountList = [tricountTest1, tricountTest2, tricountTest3]
         model.parameters = param
 
         return model

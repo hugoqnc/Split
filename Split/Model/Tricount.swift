@@ -10,6 +10,7 @@ import WebKit
 import UIKit
 
 let numberOfCharactersForValidTricountID = [17, 18]
+let timeForTricountUIToLoad = 1.2 // seconds, after it has loaded its ressources from the internet
 
 struct Tricount: Codable, Hashable { //default values
     var tricountName = ""
@@ -71,7 +72,7 @@ func getInfoFromTricount(tricountID: String) async throws -> Tricount {
     }
     
     // Here the page is loaded. We still need to wait for the Tricount UI to load, which supposedly takes a fixed amount of time, <1.2sc
-    try await Task.sleep(nanoseconds: UInt64(1.2 * Double(NSEC_PER_SEC)))
+    try await Task.sleep(nanoseconds: UInt64(timeForTricountUIToLoad * Double(NSEC_PER_SEC)))
     
     
     // Continuations help from:
@@ -174,3 +175,119 @@ func exactTricounts(users: [User], tricountList:[Tricount]) -> [Tricount] {
     
     return exactTricounts
 }
+
+
+func addToTricount(tricountID: String, shopName: String, payerName: String, listOfNames: [String], listOfAmounts: [Double]) async throws -> String {
+    let tricountViewController = TricountViewController()
+    await tricountViewController.setTricountID(tricountID: tricountID)
+    await tricountViewController.loadView()
+    await tricountViewController.viewDidLoad()
+    
+    let webView = await tricountViewController.webView!
+    
+    // Wait for page to load before executing JavaScript
+    let maxTime = 10.0
+    var time = 0.0
+    let checkTimeInterval = 0.1
+    var hasLoaded = false
+    
+    while time<maxTime && !hasLoaded {
+        print("time: \(time)")
+        try await Task.sleep(nanoseconds: UInt64(checkTimeInterval * Double(NSEC_PER_SEC)))
+        hasLoaded = await tricountViewController.hasLoaded
+        time += checkTimeInterval
+    }
+    
+    // Here the page is loaded. We still need to wait for the Tricount UI to load, which supposedly takes a fixed amount of time, <1.2sc
+    print("Start Wait 1")
+    try await Task.sleep(nanoseconds: UInt64(timeForTricountUIToLoad * Double(NSEC_PER_SEC)))
+    print("End Wait 1")
+    
+    
+    // Continuations help from:
+    //  https://www.hackingwithswift.com/quick-start/concurrency/how-to-use-continuations-to-convert-completion-handlers-into-async-functions
+    //  https://stackoverflow.com/questions/70329835/call-to-main-actor-isolated-instance-method-xxx-in-a-synchronous-nonisolated-con
+    //  https://stackoverflow.com/questions/39793459/xcode-8-ios-10-starting-webfilter-logging-for-process (remove warnings)
+    
+    var counter = 0
+    let maxCounter = 10 + 2*listOfNames.count
+    
+    func evaluateJavaScriptWrapper(_ script: String) async throws -> String {
+        let result: String = await withCheckedContinuation { continuation in
+            Task{
+                await webView.evaluateJavaScript(script) { res, error in
+                    //print(res)
+                    if error == nil {
+                        continuation.resume(returning: "SUCCESS")
+                    } else {
+                        print(error as Any)
+                        if (error! as NSError).code == 5 {
+                            continuation.resume(returning: "SUCCESS")
+                        } else {
+                            continuation.resume(returning: "FAIL")
+                        }
+                    }
+                }
+            }
+        }
+        return result
+    }
+    
+    func counterUpdate(res: String) {
+        if res=="SUCCESS" {
+            counter += 1
+        }
+    }
+
+    let fillForm = #"[...document.querySelectorAll('div[class="identifiezVousFocusPanel"]')].find(name => name.textContent=="\#(payerName)").click()"#
+    var res = try await evaluateJavaScriptWrapper(fillForm)
+    counterUpdate(res: res)
+
+    print("Start Wait 2")
+    try await Task.sleep(nanoseconds: UInt64(timeForTricountUIToLoad/2 * Double(NSEC_PER_SEC)))
+    print("End Wait 2")
+
+    // Add expense
+    res = try await evaluateJavaScriptWrapper("document.querySelector('a[class=\"footerPanelText\"]').click()")
+    counterUpdate(res: res)
+
+    // Fill details
+    res = try await evaluateJavaScriptWrapper(#"document.querySelectorAll('input[class="inputTextField"]')[0].value = "\#(shopName)""#)
+    counterUpdate(res: res)
+    res = try await evaluateJavaScriptWrapper(#"document.querySelector('select[class="inputDropDown"]').value = "\#(payerName)""#)
+    counterUpdate(res: res)
+    res = try await evaluateJavaScriptWrapper(#"document.querySelectorAll('input[class="inputTextField"]')[2].value = "\#(listOfAmounts.reduce(0, +))""#)
+    counterUpdate(res: res)
+    res = try await evaluateJavaScriptWrapper("document.querySelector('a[class=\"detailsLink\"]').click()")
+    counterUpdate(res: res)
+
+    // Fill individual prices
+    res = try await evaluateJavaScriptWrapper("ev = new CustomEvent('change', { isTrusted: false })")
+    counterUpdate(res: res)
+    res = try await evaluateJavaScriptWrapper("users = [...users = document.querySelectorAll('div[style=\"width: 300px;\"]')]")
+    counterUpdate(res: res)
+
+    for (index, name) in listOfNames.enumerated() {
+        res = try await evaluateJavaScriptWrapper(#"users.find(name => name.innerText.includes("\#(name)")).querySelector('input[class="repartitionAmountField"]').value = "\#(listOfAmounts[index])""#)
+        counterUpdate(res: res)
+        res = try await evaluateJavaScriptWrapper(#"users.find(name => name.innerText.includes("\#(name)")).querySelector('input[class="repartitionAmountField"]').dispatchEvent(ev)"#)
+        counterUpdate(res: res)
+    }
+
+    print("Start Wait 3")
+    try await Task.sleep(nanoseconds: UInt64(timeForTricountUIToLoad/2 * Double(NSEC_PER_SEC)))
+    print("End Wait 3")
+
+    if counter==maxCounter-2 {
+        //res = try await evaluateJavaScriptWrapper("document.querySelector('a[class=\"footerPanelText\"]').textContent")
+        res = try await evaluateJavaScriptWrapper("document.querySelector('a[class=\"footerPanelText\"]').click()")
+        counterUpdate(res: res)
+        //res = try await evaluateJavaScriptWrapper("document.querySelector('a[class=\"footerPanelText\"]').textContent")
+        //res = try await evaluateJavaScriptWrapper(#"[...document.querySelectorAll('div[class="paymentListContent"]')].map(x => x.textContent);"#)
+        res = try await evaluateJavaScriptWrapper("document.querySelector('a[class=\"footerPanelText\"]').click()") // necessary to actually send the transaction (weird)
+        counterUpdate(res: res)
+    }
+    
+    return hasLoaded ? (counter==maxCounter ? "SUCCESS" : "UNKNOWN_FAILURE") : "NETWORK_FAILURE"
+}
+

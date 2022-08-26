@@ -106,11 +106,10 @@ struct TricountAddSheet: View {
                             inProgress = false
                             
                             if tricount.status == "" { //success
-                                if !tricountList.contains(where: { tricount2 in // no doubles
+                                tricountList.removeAll { tricount2 in // in case this Tricount is already present, update it (remove then add)
                                     return tricount2.tricountID == tricount.tricountID
-                                }) {
-                                    tricountList.append(tricount)
                                 }
+                                tricountList.append(tricount)
                                 dismiss()
                             }
                         }
