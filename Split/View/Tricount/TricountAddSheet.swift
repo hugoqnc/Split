@@ -82,8 +82,9 @@ struct TricountAddSheet: View {
                         dismiss()
                     } label: {
                         Text("Cancel")
-                            .foregroundColor(.red)
                     }
+                    .tint(.red)
+                    .disabled(inProgress)
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     if inProgress {
@@ -122,7 +123,7 @@ struct TricountAddSheet: View {
             }
         }
         .navigationViewStyle(StackNavigationViewStyle())
-        //.interactiveDismissDisabled()
+        .interactiveDismissDisabled(inProgress)
     }
 }
 

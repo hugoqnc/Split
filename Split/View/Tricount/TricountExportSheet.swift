@@ -134,8 +134,9 @@ struct TricountExportSheet: View {
                         dismiss()
                     } label: {
                         Text("Cancel")
-                            .foregroundColor(.red)
                     }
+                    .tint(.red)
+                    .disabled(inProgress)
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     if inProgress {
@@ -176,6 +177,7 @@ struct TricountExportSheet: View {
             .navigationBarTitleDisplayMode(.inline)
         }
         .navigationViewStyle(StackNavigationViewStyle())
+        .interactiveDismissDisabled(inProgress)
     }
     
     func roundListOfAmounts(listOfAmounts: [Double]) -> [Double] {

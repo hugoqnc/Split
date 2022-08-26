@@ -59,9 +59,7 @@ struct StartView: View {
                         switch result {
                         case .failure(let error):
                             fatalError(error.localizedDescription)
-                            //print("e")
                         case .success(let preferences):
-                            //currencyType = preferences.currency.symbol
                             model.currency = Currency(symbol: preferences.currency.symbol)
                         }
                     }
@@ -85,8 +83,6 @@ struct StartView: View {
                                 model.currency = Currency(symbol: currencyType)
                                 withAnimation() {
                                     model.startTheProcess = true
-//                                    print(compatibleTricounts(users: model.users, tricountList: model.parameters.tricountList))
-//                                    model.users = []
                                 }
                             }
                         } label: {
@@ -118,6 +114,14 @@ struct StartView: View {
                     
                     ToolbarItemGroup(placement: .navigationBarTrailing){
                         Button {
+                            ParametersStore.load { result in
+                                switch result {
+                                case .failure(let error):
+                                    fatalError(error.localizedDescription)
+                                case .success(let parameters):
+                                    model.parameters = parameters
+                                }
+                            }
                             withAnimation() {
                                 showHistoryView = true
                             }

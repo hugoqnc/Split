@@ -45,7 +45,7 @@ struct HistoryView: View {
 
                     ForEach(results.results.sorted(by: {$0.date > $1.date})) { resultUnit in
                         NavigationLink {
-                            ResultViewHistoryWrapper(resultUnit: resultUnit)
+                            ResultViewHistoryWrapper(resultUnit: resultUnit, tricountList: model.parameters.tricountList)
                                 .navigationTitle(date(resultUnit: resultUnit))
                         } label: {
                             ResultCard(resultUnit: resultUnit)

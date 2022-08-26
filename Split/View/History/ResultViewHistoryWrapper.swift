@@ -8,12 +8,16 @@
 import SwiftUI
 
 struct ResultViewHistoryWrapper: View {
-    internal init(resultUnit: ResultUnit) {
+    @EnvironmentObject var globalModel: ModelData
+    
+    internal init(resultUnit: ResultUnit, tricountList: [Tricount]) {
         model = ModelData()
         model.users = resultUnit.users
         model.currency = resultUnit.currency
         model.date = resultUnit.date
         model.receiptName = resultUnit.receiptName
+        model.parameters.tricountList = tricountList
+        print(tricountList)
         
         for d in resultUnit.imagesData {
             model.images.append(IdentifiedImage(id: UUID().uuidString, image: UIImage(data: d)!))
@@ -68,7 +72,8 @@ struct ResultViewHistoryWrapper: View {
 struct ResultViewHistoryWrapper_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            ResultViewHistoryWrapper(resultUnit: ResultUnit(users: [], listOfProductsAndPrices: [], currency: Currency.default, date: Date(), imagesData: [], receiptName: "ALDI"))
+            ResultViewHistoryWrapper(resultUnit: ResultUnit(users: [], listOfProductsAndPrices: [], currency: Currency.default, date: Date(), imagesData: [], receiptName: "ALDI"), tricountList: [])
+                .environmentObject(ModelData())
         }
     }
 }
