@@ -16,10 +16,9 @@ struct StartView: View {
     @State private var showAlert3 = false
     @State private var showSettings = false
     @State private var showHistoryView = false
+    @State private var showFavoriteView = false
     @State private var disabledBecauseOfTiming = false
-    
-    @State private var backConfirmation = false
-    
+        
     @State private var newUserName: String = ""
         
     var body: some View {
@@ -35,7 +34,7 @@ struct StartView: View {
                     NavigationLink(destination: HistoryView(showHistoryView: $showHistoryView), isActive: $showHistoryView) { EmptyView() }
                         .isDetailLink(false)
                         .navigationViewStyle(.stack)
-
+                    
                     Form {
                         Section {
                             EmptyView()
@@ -43,8 +42,8 @@ struct StartView: View {
                         }
                         
                         Section {
-                            FillFavoriteButton(names: $names, newUserName: $newUserName, currencyType: $currencyType)
-                            EditFavoriteButton(backConfirmation: $backConfirmation)
+                            FillFavoriteButton(names: $names, newUserName: $newUserName, currencyType: $currencyType, update: $showFavoriteView)
+                            EditFavoriteButton(showFavoriteView: $showFavoriteView)
                         } header: {
                             //Text("Favorites")
                         }
@@ -52,16 +51,6 @@ struct StartView: View {
                         
                         formDetails
                         
-                    }
-                }
-                .onAppear {
-                    PreferencesStore.load { result in
-                        switch result {
-                        case .failure(let error):
-                            fatalError(error.localizedDescription)
-                        case .success(let preferences):
-                            model.currency = Currency(symbol: preferences.currency.symbol)
-                        }
                     }
                 }
                 .toolbar {

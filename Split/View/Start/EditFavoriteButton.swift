@@ -15,9 +15,8 @@ struct EditFavoriteButton: View {
     @State private var showAlert1 = false
     @State private var showAlert2 = false
     
-    @State private var showFavoriteView = false
+    @Binding public var showFavoriteView: Bool
     @State private var deleteConfirmation = false
-    @Binding var backConfirmation: Bool
     
     func savePreferences() {
         var preferences = Preferences()
@@ -29,7 +28,6 @@ struct EditFavoriteButton: View {
             case .failure(let error):
                 fatalError(error.localizedDescription)
             case .success(_):
-                //print("Favorites saved")
                 showFavoriteView = false
             }
         }
@@ -38,173 +36,16 @@ struct EditFavoriteButton: View {
     var body: some View {
         let formDetail = FormDetailsView(names: $savedNames, newUserName: $newUserName, currencyType: $savedCurrency.symbol, showAlert1: $showAlert1, showAlert2: $showAlert2)
         HStack {
-            NavigationLink(isActive: $showFavoriteView) {
-                VStack {
-                    Form {
-                        HStack(alignment: .center) {
-                            Image(systemName: "star")
-                                .frame(width: 30, height: 30)
-                                .font(.largeTitle)
-                                .foregroundColor(.yellow)
-                                .padding()
 
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text("Choose your favorites")
-                                    .font(.headline)
-                                    .foregroundColor(.primary)
-
-                                Text("You will be able to autofill these details in a single tap")
-                                    .font(.subheadline)
-                                    .foregroundColor(.secondary)
-                                    .fixedSize(horizontal: false, vertical: true)
-                            }
-                        }
-                        .listRowBackground(Color.secondary.opacity(0.0))
-                        
-                        formDetail
-                        
-                        Section {
-                            Button {
-                                deleteConfirmation = true
-                            } label: {
-                                Label("Delete saved favorites", systemImage: "trash")
-                            }
-                            .buttonStyle(.borderless)
-                            .foregroundColor(.red)
-                            .confirmationDialog(
-                                "If you confirm, your favorites will be deleted.",
-                                isPresented: $deleteConfirmation,
-                                titleVisibility: .visible
-                            ) {
-                                Button("Delete saved favorites", role: .destructive) {
-                                    deleteConfirmation = false
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-                                        withAnimation() {
-                                            var preferences = Preferences()
-                                            preferences.names = []
-                                            preferences.currency = Currency.default
-                                            
-                                            PreferencesStore.save(preferences: preferences) { result in
-                                                switch result {
-                                                case .failure(let error):
-                                                    fatalError(error.localizedDescription)
-                                                case .success(_):
-                                                    deleteConfirmation = false
-                                                    showFavoriteView = false
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        .listRowBackground(Color.secondary.opacity(0.1))
-                    }
-                    .toolbar {
-                        ToolbarItem(placement: .bottomBar) {
-                            Button {
-                                if formDetail.isFinalUsersCorrect() {
-                                    savePreferences()
-                                }
-                            } label: {
-                                HStack {
-                                    Image(systemName: "checkmark")
-                                    Text("Save favorites")
-                                }
-                            }
-                            .disabled(savedNames.isEmpty)
-                            .buttonStyle(.borderedProminent)
-                            .tint(.accentColor)
-                        }
-                    }
-                }
-                .gesture(DragGesture(minimumDistance: 20, coordinateSpace: .global)
-                            .onEnded { value in
-                                let horizontalAmount = value.translation.width as CGFloat
-                                let verticalAmount = value.translation.height as CGFloat
-                                let xStart = value.startLocation.x
-                                
-                                if abs(horizontalAmount) > abs(verticalAmount) && xStart<20 {
-                                    if horizontalAmount > 0 { //swipe from left to right
-                                        PreferencesStore.load { result in
-                                            switch result {
-                                            case .failure(let error):
-                                                fatalError(error.localizedDescription)
-                                                //print("e")
-                                            case .success(let preferences):
-                                                if savedNames == preferences.names && savedCurrency.value == preferences.currency.value {
-                                                    showFavoriteView = false
-                                                } else {
-                                                    backConfirmation = true
-                                                }
-                                                
-                                            }
-                                        }
-                                    }
-                                }
-                })
-                .navigationTitle("Favorites")
-                .navigationBarTitleDisplayMode(.inline)
-                .navigationBarBackButtonHidden(true)
-                .navigationBarItems(leading: Button(action : {
-                    PreferencesStore.load { result in
-                        switch result {
-                        case .failure(let error):
-                            fatalError(error.localizedDescription)
-                            //print("e")
-                        case .success(let preferences):
-                            if savedNames == preferences.names && savedCurrency.value == preferences.currency.value {
-                                showFavoriteView = false
-                            } else {
-                                backConfirmation = true
-                            }
-                            
-                        }
-                    }
-                }){
-                    HStack(spacing:5) {
-                        Image(systemName:"chevron.left")
-                            .font(Font.body.weight(.semibold))
-                        Text("Back").font(.body)
-                    }
-                    .padding(.leading, -7)
-                    .confirmationDialog(
-                        "You have made changes that you have not saved. Do you want to save them?",
-                        isPresented: $backConfirmation,
-                        titleVisibility: .visible
-                    ) {
-                        Button {
-                            backConfirmation = false
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { //prevents confirmation dialog to pop up a second time
-                                if formDetail.isFinalUsersCorrect() {
-                                    savePreferences()
-                                }
-                            }
-                        } label: {
-                            Text("Save changes")
-                        }
-
-                        
-                        Button(role: .destructive) {
-                            backConfirmation = false
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-                                showFavoriteView = false
-                            }
-                        } label: {
-                            Text("Quit without saving")
-                        }
-                    }
-                })
-
+            Button {
+                showFavoriteView = true
             } label: {
-                HStack {
-                    Image(systemName: "ellipsis.circle")
-                        .foregroundColor(.accentColor)
-                        .padding(.trailing, 5)
-                        .padding(.leading, 1)
-                    Text(savedNames.isEmpty ? "Add favorites" : "Edit favorites")
-                    Spacer()
-                }
+                Image(systemName: "ellipsis.circle")
+                    .foregroundColor(.accentColor)
+                    .padding(.trailing, 5)
+                    .padding(.leading, 1)
+                Text(savedNames.isEmpty ? "Add favorites" : "Edit favorites")
+                Spacer()
             }
             .buttonStyle(.plain)
             .onAppear {
@@ -220,6 +61,113 @@ struct EditFavoriteButton: View {
                     }
                 }
             }
+            .onChange(of: showFavoriteView, perform: { newValue in
+                PreferencesStore.load { result in
+                    switch result {
+                    case .failure(let error):
+                        fatalError(error.localizedDescription)
+                        //print("e")
+                    case .success(let preferences):
+                        savedNames = preferences.names
+                        savedCurrency = preferences.currency
+                        newUserName = ""
+                    }
+                }
+            })
+            .sheet(isPresented: $showFavoriteView) {
+                NavigationView {
+                    VStack {
+                        Form {
+                            HStack(alignment: .center) {
+                                Image(systemName: "star")
+                                    .frame(width: 30, height: 30)
+                                    .font(.largeTitle)
+                                    .foregroundColor(.yellow)
+                                    .padding()
+
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text("Choose your favorites")
+                                        .font(.headline)
+                                        .foregroundColor(.primary)
+
+                                    Text("You will be able to autofill these details in a single tap")
+                                        .font(.subheadline)
+                                        .foregroundColor(.secondary)
+                                        .fixedSize(horizontal: false, vertical: true)
+                                }
+                            }
+                            .listRowBackground(Color.secondary.opacity(0.0))
+                            
+                            formDetail
+                            
+                            Section {
+                                if !savedNames.isEmpty {
+                                    Button {
+                                        deleteConfirmation = true
+                                    } label: {
+                                        Label("Delete saved favorites", systemImage: "trash")
+                                    }
+                                    .buttonStyle(.borderless)
+                                    .foregroundColor(.red)
+                                    .confirmationDialog(
+                                        "If you confirm, your favorites will be deleted.",
+                                        isPresented: $deleteConfirmation,
+                                        titleVisibility: .visible
+                                    ) {
+                                        Button("Delete saved favorites", role: .destructive) {
+                                            deleteConfirmation = false
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                                                withAnimation() {
+                                                    var preferences = Preferences()
+                                                    preferences.names = []
+                                                    preferences.currency = Currency.default
+                                                    
+                                                    PreferencesStore.save(preferences: preferences) { result in
+                                                        switch result {
+                                                        case .failure(let error):
+                                                            fatalError(error.localizedDescription)
+                                                        case .success(_):
+                                                            deleteConfirmation = false
+                                                            showFavoriteView = false
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            .listRowBackground(Color.secondary.opacity(0.1))
+                        }
+                        .toolbar {
+                            ToolbarItem(placement: .navigationBarLeading) {
+                                Button {
+                                    showFavoriteView = false
+                                } label: {
+                                    Text("Cancel")
+                                }
+                                //.tint(.red)
+                            }
+                            
+                            ToolbarItem(placement: .navigationBarTrailing) {
+                                Button {
+                                    if formDetail.isFinalUsersCorrect() {
+                                        savePreferences()
+                                    }
+                                } label: {
+                                    Text("Save")
+                                        .bold()
+                                }
+                                .disabled(savedNames.isEmpty)
+                            }
+                        }
+                    }
+                    .navigationTitle("")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .interactiveDismissDisabled()
+                    .navigationViewStyle(StackNavigationViewStyle())
+                }
+            }
         }
     }
 }
@@ -227,7 +175,7 @@ struct EditFavoriteButton: View {
 struct EditFavoriteButton_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            EditFavoriteButton(backConfirmation: .constant(false))
+            EditFavoriteButton(showFavoriteView: .constant(true))
         }
     }
 }

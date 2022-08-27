@@ -11,6 +11,7 @@ struct FillFavoriteButton: View {
     @Binding var names: [String]
     @Binding var newUserName: String
     @Binding var currencyType: Currency.SymbolType
+    @Binding var update: Bool
     
     @State private var savedNames: [String] = []
     @State private var savedCurrency = Currency.default
@@ -96,12 +97,24 @@ struct FillFavoriteButton: View {
                     }
                 }
             }
+            .onChange(of: update) { newValue in
+                PreferencesStore.load { result in
+                    switch result {
+                    case .failure(let error):
+                        fatalError(error.localizedDescription)
+                        //print("e")
+                    case .success(let preferences):
+                        savedNames = preferences.names
+                        savedCurrency = preferences.currency
+                    }
+                }
+            }
         }
     }
 }
 
 struct FillFavoriteButton_Previews: PreviewProvider {
     static var previews: some View {
-        FillFavoriteButton(names: .constant(["Hugo", "Thomas"]), newUserName: .constant("Lucas"), currencyType: .constant(Currency.SymbolType.euro))
+        FillFavoriteButton(names: .constant(["Hugo", "Thomas"]), newUserName: .constant("Lucas"), currencyType: .constant(Currency.SymbolType.euro), update: .constant(true))
     }
 }

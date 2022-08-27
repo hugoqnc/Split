@@ -81,7 +81,7 @@ struct FormDetailsView: View {
                     }
             }
         } footer: {
-            Label("To delete a name, swipe from right to left. To edit a name, delete it and add it again.", systemImage: "info.circle")
+            //Label("To delete a name, swipe from right to left. To edit a name, delete it and add it again.", systemImage: "info.circle")
         }
         .listRowBackground(Color.secondary.opacity(0.1))
     }

@@ -107,7 +107,7 @@ struct InputItemDetails: View {
                         dismiss()
                     } label: {
                         Text("Cancel")
-                            .foregroundColor(.red)
+                            //.foregroundColor(.red)
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -116,6 +116,7 @@ struct InputItemDetails: View {
                         dismiss()
                     } label: {
                         Text("Done")
+                            .bold()
                     }
                     .disabled(textState.isEmpty || (initialSelections != nil) ? ((textState==initialText && doubleState==initialDouble && selectionsState==initialSelections) || selectionsState.isEmpty) : (textState==initialText && doubleState==initialDouble))
                 }

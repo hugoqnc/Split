@@ -135,7 +135,7 @@ struct TricountExportSheet: View {
                     } label: {
                         Text("Cancel")
                     }
-                    .tint(.red)
+                    //.tint(.red)
                     .disabled(inProgress)
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
