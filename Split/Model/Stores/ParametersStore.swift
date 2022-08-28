@@ -8,6 +8,8 @@
 import Foundation
 import SwiftUI
 
+var JPEGQuality = 0.4 //compression factor, between 0 (maximum compression) and 1 (best quality)
+
 struct Parameters: Codable {
     
     static let `default` = Parameters()
@@ -20,6 +22,7 @@ struct Parameters: Codable {
     var visionParameters = VisionParameters()
     var tricountList: [Tricount] = []
     var defaultCurrency = Currency.default
+    var compressImages = true
 }
 
 class ParametersStore: ObservableObject {

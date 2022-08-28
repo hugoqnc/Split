@@ -103,7 +103,7 @@ class ResultsStore: ObservableObject {
         }
     }
     
-    static func append(receiptName: String, users: [User], listOfProductsAndPrices: [PairProductPrice], currency: Currency, date: Date, images: [IdentifiedImage], completion: @escaping (Result<Bool, Error>)->Void) {
+    static func append(receiptName: String, users: [User], listOfProductsAndPrices: [PairProductPrice], currency: Currency, date: Date, images: [IdentifiedImage], compressImages: Bool, completion: @escaping (Result<Bool, Error>)->Void) {
         var listOfProductsAndPricesCodable: [PairProductPriceCodable] = []
         for pair in listOfProductsAndPrices {
             var pairCod = PairProductPriceCodable()
@@ -116,7 +116,7 @@ class ResultsStore: ObservableObject {
         
         var imagesData: [Data] = []
         for image in images {
-            imagesData.append(image.image!.pngData()!)
+            imagesData.append(image.image!.jpegData(compressionQuality: compressImages ? JPEGQuality : 1.0)!)
         }
         
         let resultUnit = ResultUnitText(users: users, listOfProductsAndPrices: listOfProductsAndPricesCodable, currency: currency, date: date, receiptName: receiptName)

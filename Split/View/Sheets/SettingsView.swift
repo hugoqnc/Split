@@ -108,7 +108,9 @@ struct SettingsView: View {
                             }
                         }
                         
-                        Toggle("Select everyone per default", isOn: $parameters.selectAllUsers)
+                        Toggle("Compress saved receipts", isOn: $parameters.compressImages)
+                        
+                        Toggle("Assign to everyone per default", isOn: $parameters.selectAllUsers)
                     } header: {
                         Text("General")
                     } footer: {
