@@ -1,5 +1,5 @@
 //
-//  DemoAttributionTutorialView.swift
+//  AttributionTutorialView.swift
 //  Split
 //
 //  Created by Hugo Queinnec on 20/01/2022.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DemoAttributionTutorialView: View {
+struct AttributionTutorialView: View {
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
@@ -53,7 +53,7 @@ struct DemoAttributionTutorialView: View {
     }
 }
 
-struct DemoAttributionTutorialView_Previews: PreviewProvider {
+struct AttributionTutorialView_Previews: PreviewProvider {
     static var previews: some View {
         PreviewWrapper()
             
@@ -67,7 +67,7 @@ struct DemoAttributionTutorialView_Previews: PreviewProvider {
         var body: some View {
             Text("test")
                 .slideOverCard(isPresented: $show, content: {
-                    DemoAttributionTutorialView()
+                    AttributionTutorialView()
                 })
                 .onTapGesture {
                     show=true

@@ -170,7 +170,6 @@ struct ScanTutorialView: View {
             .tint(.teal)
             .cornerRadius(10)
             .padding(.vertical,5)
-
         }
         .frame(maxWidth: 300)
         
@@ -191,7 +190,9 @@ struct TutorialView_Previews: PreviewProvider {
         var body: some View {
             Text("test")
                 .slideOverCard(isPresented: $show, content: {
-                    ScanTutorialView(advancedRecognition: $toggle)
+                    VStack{
+                        ScanTutorialView(advancedRecognition: $toggle)
+                    }
                 })
                 .onTapGesture {
                     show=true

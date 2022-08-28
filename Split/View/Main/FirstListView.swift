@@ -356,7 +356,25 @@ struct FirstListView: View {
             }
             .transition(.opacity)
             .slideOverCard(isPresented: $showTutorialScreen, content: {
-                ListTutorialView(advancedRecognition: $model.parameters.advancedRecognition)
+                VStack {
+                    ListTutorialView(advancedRecognition: $model.parameters.advancedRecognition)
+                    Button {
+                        showTutorialScreen = false
+                        model.parameters.showEditTutorial = false
+                        ParametersStore.save(parameters: model.parameters) { result in
+                            switch result {
+                            case .failure(let error):
+                                fatalError(error.localizedDescription)
+                            case .success(_):
+                                print("Settings Saved")
+                            }
+                        }
+                    } label: {
+                        Text("OK, do not show again")
+                            .font(Font.footnote)
+                    }
+                    .padding(.top,10)
+                }
             })
         }
     }

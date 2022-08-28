@@ -158,7 +158,7 @@ struct SettingsView: View {
                     
                     Section {
                         Toggle("Always show \"Scan\" tutorial", isOn: $parameters.showScanTutorial)
-                        Toggle("Always show \"Edition\" tutorial", isOn: $parameters.showEditTutorial)
+                        Toggle("Always show \"Edit\" tutorial", isOn: $parameters.showEditTutorial)
                         Toggle("Always show \"Card\" tutorial", isOn: $parameters.showAttributionTutorial)
                     } header: {
                         Text("Tutorials")
