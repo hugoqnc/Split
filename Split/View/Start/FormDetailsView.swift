@@ -40,6 +40,18 @@ struct FormDetailsView: View {
                 }
                 
             }
+            .onAppear {
+                ParametersStore.load { result in
+                    switch result {
+                    case .failure(let error):
+                        fatalError(error.localizedDescription)
+                    case .success(let parameters):
+                        if names.isEmpty && newUserName.isEmpty {
+                            currencyType = parameters.defaultCurrency.symbol
+                        }
+                    }
+                }
+            }
             
             ForEach(names, id:\.self) { name in
                 HStack {

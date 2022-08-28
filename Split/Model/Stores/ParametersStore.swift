@@ -19,6 +19,7 @@ struct Parameters: Codable {
     var selectAllUsers = false
     var visionParameters = VisionParameters()
     var tricountList: [Tricount] = []
+    var defaultCurrency = Currency.default
 }
 
 class ParametersStore: ObservableObject {

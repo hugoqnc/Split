@@ -91,6 +91,32 @@ struct SettingsView: View {
                     .listRowBackground(Color.secondary.opacity(0.1))
                     
                     Section {
+                        Menu {
+                            Picker("Currency", selection: $parameters.defaultCurrency.symbol.animation()) {
+                                ForEach(Currency.SymbolType.allCases, id: \.self, content: { currencyType in
+                                    Text(Currency(symbol: currencyType).value)
+                                })
+                            }
+                        } label: {
+                            HStack {
+                                Text("Default currency symbol")
+                                    .foregroundColor(.primary)
+                                Spacer()
+                                Text("\(Currency(symbol: parameters.defaultCurrency.symbol).value)")
+                                    .fontWeight(.semibold)
+                                    .padding(.trailing, 5)
+                            }
+                        }
+                        
+                        Toggle("Select everyone per default", isOn: $parameters.selectAllUsers)
+                    } header: {
+                        Text("General")
+                    } footer: {
+                        parameters.selectAllUsers ? Text("Currently, when assigning items to users, they will **all** be selected by default.") : Text("Currently, when assigning items to users, **no one** will be selected by default.")
+                    }
+                    .listRowBackground(Color.secondary.opacity(0.1))
+                    
+                    Section {
                         List {
                             ForEach(parameters.tricountList, id:\.tricountID) { tricount in
                                 VStack(alignment: .leading, spacing: 3) {
@@ -134,15 +160,6 @@ struct SettingsView: View {
                         Toggle("Always show \"Card\" tutorial", isOn: $parameters.showAttributionTutorial)
                     } header: {
                         Text("Tutorials")
-                    }
-                    .listRowBackground(Color.secondary.opacity(0.1))
-                    
-                    Section {
-                        Toggle("Select everyone per default", isOn: $parameters.selectAllUsers)
-                    } header: {
-                        Text("Attribution")
-                    } footer: {
-                        parameters.selectAllUsers ? Text("Currently, when assigning items to users, they will **all** be selected by default.") : Text("Currently, when assigning items to users, **no one** will be selected by default.")
                     }
                     .listRowBackground(Color.secondary.opacity(0.1))
                     
