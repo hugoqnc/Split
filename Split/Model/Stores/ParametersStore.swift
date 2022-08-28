@@ -15,6 +15,7 @@ struct Parameters: Codable {
     var advancedRecognition = true
     var showScanTutorial = true
     var showEditTutorial = true
+    var showAttributionTutorial = true
     var selectAllUsers = false
     var visionParameters = VisionParameters()
     var tricountList: [Tricount] = []

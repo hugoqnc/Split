@@ -17,7 +17,7 @@ struct ResultViewHistoryWrapper: View {
         model.date = resultUnit.date
         model.receiptName = resultUnit.receiptName
         model.parameters.tricountList = tricountList
-        print(tricountList)
+        //print(tricountList)
         
         for d in resultUnit.imagesData {
             model.images.append(IdentifiedImage(id: UUID().uuidString, image: UIImage(data: d)!))

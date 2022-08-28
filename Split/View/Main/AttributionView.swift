@@ -131,6 +131,7 @@ struct AttributionView: View {
                 let secondsToDelay = 0.35
                 DispatchQueue.main.asyncAfter(deadline: .now() + secondsToDelay) {
                     firstCardAppear = true
+                    showTutorialScreen = model.parameters.showAttributionTutorial
                 }
             })
             .sheet(isPresented: $showAllList, content: {

@@ -34,7 +34,7 @@ struct TricountExportSheet: View {
                             .font(.headline)
                             .foregroundColor(.primary)
 
-                        Text("Select your Tricount and the payer of the receipt.")
+                        Text("Select your Tricount and the payer of the receipt")
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                             .fixedSize(horizontal: false, vertical: true)
@@ -42,6 +42,7 @@ struct TricountExportSheet: View {
                 }
                 .padding(.top)
                 .padding(.horizontal, 40)
+                .padding(.bottom)
                 
                 // Error message
                 Group {

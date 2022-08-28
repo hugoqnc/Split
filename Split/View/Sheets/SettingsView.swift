@@ -71,7 +71,7 @@ struct SettingsView: View {
                                 }
                                 .padding(.bottom,8)
                                 
-                                Text("Depending on your device, Advanced Recognition can be slower and more energy consuming than standard image recognition. It also may not work with all receipts.")
+                                Text("Depending on the type of your receipts, Advanced Recognition can sometimes fail to identify them. If this happens to you often, you can disable it.")
                                     .font(.caption2)
                             }
                             .multilineTextAlignment(.leading)
@@ -120,6 +120,8 @@ struct SettingsView: View {
                         }
                     } header: {
                         Text("Tricount")
+                    } footer: {
+                        Text("Tricount is a free application that you can use with Split! to synchronize and share your expenses with your friends.")
                     }
                     .listRowBackground(Color.secondary.opacity(0.1))
                     .sheet(isPresented: $addTricountSheet) {
@@ -129,6 +131,7 @@ struct SettingsView: View {
                     Section {
                         Toggle("Always show \"Scan\" tutorial", isOn: $parameters.showScanTutorial)
                         Toggle("Always show \"Edition\" tutorial", isOn: $parameters.showEditTutorial)
+                        Toggle("Always show \"Card\" tutorial", isOn: $parameters.showAttributionTutorial)
                     } header: {
                         Text("Tutorials")
                     }
