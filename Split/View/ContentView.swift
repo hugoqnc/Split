@@ -13,7 +13,6 @@ struct ContentView: View {
     }
     var body: some View {
         StartView()
-        //ConvertionView()
         //FirstListView_Previews.previews
     }
 }
