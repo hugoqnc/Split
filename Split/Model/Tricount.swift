@@ -9,7 +9,6 @@ import Foundation
 import WebKit
 import UIKit
 
-let numberOfCharactersForValidTricountID = [17, 18]
 let timeForTricountUIToLoad = 1.2 // seconds, after it has loaded its ressources from the internet
 
 struct Tricount: Codable, Hashable { //default values

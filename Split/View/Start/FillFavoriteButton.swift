@@ -15,7 +15,6 @@ struct FillFavoriteButton: View {
     
     @State private var savedNames: [String] = []
     @State private var savedCurrency = Currency.default
-    @State private var savedTricountID = ""
     
     var nothingSaved: Bool {
         get {
@@ -34,9 +33,6 @@ struct FillFavoriteButton: View {
                     if i<savedNames.count-1 {
                         namesText.append(", ")
                     }
-                }
-                if  numberOfCharactersForValidTricountID.contains(savedTricountID.count) {
-                    namesText.append(" |")
                 }
                 return namesText
             }
@@ -64,20 +60,16 @@ struct FillFavoriteButton: View {
                                 .font(.caption)
                                 .foregroundColor(Color.secondary)
                             
-                            if numberOfCharactersForValidTricountID.contains(savedTricountID.count) {
-
-                                Label {
-                                    Text(" ")
-                                } icon: {
-                                    Image(systemName: "plus.forwardslash.minus")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(maxHeight:10)
-                                }
-                                .font(.caption)
-                                .padding(.leading, -10)
-
+                            Label {
+                                Text(" ")
+                            } icon: {
+                                Image(systemName: "plus.forwardslash.minus")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(maxHeight:10)
                             }
+                            .font(.caption)
+                            .padding(.leading, -10)
                         }
                     }
                     Spacer()
