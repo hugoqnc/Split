@@ -20,7 +20,7 @@ struct HistoryStatView: View {
     @State private var selectedTimeOption = "All"
     @State private var currencyType: Currency.SymbolType
     
-    var filteredResultList: [ResultUnit] {
+    var filteredResultList: [ResultUnitText] {
         get {
             let r = results.results
             let now = Date()
@@ -331,7 +331,7 @@ struct HistoryStatView: View {
 
 struct HistoryStatView_Previews: PreviewProvider {
     static var previews: some View {
-        HistoryStatView(results: Results(results: [ResultUnit(users: [], listOfProductsAndPrices: [], currency: Currency.default, date: Date(timeIntervalSince1970: 1645000000), imagesData: [], receiptName: "ALDI"), ResultUnit(users: [], listOfProductsAndPrices: [], currency: Currency.default, date: Date(timeIntervalSince1970: 1640000000), imagesData: [], receiptName: "Migros")]), favoriteCurrency: Currency.default)
+        HistoryStatView(results: Results(results: [ResultUnitText(users: [], listOfProductsAndPrices: [], currency: Currency.default, date: Date(timeIntervalSince1970: 1645000000), receiptName: "ALDI"), ResultUnitText(users: [], listOfProductsAndPrices: [], currency: Currency.default, date: Date(timeIntervalSince1970: 1640000000), receiptName: "Migros")]), favoriteCurrency: Currency.default)
         //HistoryStatView(results: Results(results: []))
     
 

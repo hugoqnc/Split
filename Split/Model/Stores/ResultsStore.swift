@@ -12,7 +12,7 @@ struct Results: Codable {
     
     static let `default` = Results()
 
-    var results: [ResultUnit] = []
+    var results: [ResultUnitText] = []
 }
 
 struct ResultUnit: Codable, Identifiable {
@@ -28,13 +28,40 @@ struct ResultUnit: Codable, Identifiable {
     var receiptName: String
 }
 
+struct ResultUnitText: Codable, Identifiable {
+    var id = UUID()
+    var users: [User]
+    var listOfProductsAndPrices: [PairProductPriceCodable]
+    var currency: Currency
+    var date: Date
+    var receiptName: String
+}
+
+//struct ImagesData: Codable, Identifiable {
+//    var imagesData: [Data]
+//}
+
 class ResultsStore: ObservableObject {
     private static func fileURL() throws -> URL {
         try FileManager.default.url(for: .documentDirectory,
                                        in: .userDomainMask,
                                        appropriateFor: nil,
                                        create: true)
-            .appendingPathComponent("results.data")
+            .appendingPathComponent("results.json")
+    }
+    
+    private static func imageURL(id: UUID) throws -> URL {
+        let folderPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("images")
+        
+        if !FileManager.default.fileExists(atPath: folderPath.path) {
+            do {
+                try FileManager.default.createDirectory(atPath: folderPath.path, withIntermediateDirectories: true, attributes: nil)
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        return folderPath.appendingPathComponent("\(id.uuidString).data")
     }
     
     static func load(completion: @escaping (Result<Results, Error>)->Void) {
@@ -47,7 +74,7 @@ class ResultsStore: ObservableObject {
                     }
                     return
                 }
-                let results = try PropertyListDecoder().decode(Results.self, from: file.availableData)
+                let results = try JSONDecoder().decode(Results.self, from: file.availableData)
                 DispatchQueue.main.async {
                     completion(.success(results))
                 }
@@ -64,19 +91,30 @@ class ResultsStore: ObservableObject {
             }
         }
     }
-    
-    static func save(results: Results, completion: @escaping (Result<Bool, Error>)->Void) {
+
+    static func loadImage(id: UUID, completion: @escaping (Result<[Data], Error>)->Void) {
         DispatchQueue.global(qos: .background).async {
             do {
-                let data = try PropertyListEncoder().encode(results)
-                let outfile = try fileURL()
-                try data.write(to: outfile)
-                DispatchQueue.main.async {
-                    completion(.success(true))
+                let fileURL = try imageURL(id: id)
+                guard let file = try? FileHandle(forReadingFrom: fileURL) else {
+                    DispatchQueue.main.async {
+                        completion(.success([]))
+                    }
+                    return
                 }
-            } catch {
+                let results = try PropertyListDecoder().decode([Data].self, from: file.availableData)
                 DispatchQueue.main.async {
-                    completion(.failure(error))
+                    completion(.success(results))
+                }
+            } catch let error {
+                if case DecodingError.keyNotFound(error: _) = error {
+                    DispatchQueue.main.async {
+                        completion(.success([]))
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        completion(.failure(error))
+                    }
                 }
             }
         }
@@ -98,22 +136,28 @@ class ResultsStore: ObservableObject {
             imagesData.append(image.image!.pngData()!)
         }
         
-        let resultUnit = ResultUnit(users: users, listOfProductsAndPrices: listOfProductsAndPricesCodable, currency: currency, date: date, imagesData: imagesData, receiptName: receiptName)
-        append(resultUnit: resultUnit, completion: completion)
+        let resultUnit = ResultUnitText(users: users, listOfProductsAndPrices: listOfProductsAndPricesCodable, currency: currency, date: date, receiptName: receiptName)
+        append(resultUnit: resultUnit, imagesData: imagesData, completion: completion)
     }
     
-    static func append(resultUnit: ResultUnit, completion: @escaping (Result<Bool, Error>)->Void) {
+    static func append(resultUnit: ResultUnitText, imagesData: [Data], completion: @escaping (Result<Bool, Error>)->Void) {
         DispatchQueue.global(qos: .background).async {
             
             load { result in
                 switch result {
-                case .failure(_): //first tiem when the file is not yet created
+                case .failure(_): //first time when the file is not yet created
                     //fatalError(error.localizedDescription)
                     
                     do {
-                        let data = try PropertyListEncoder().encode(Results(results: [resultUnit]))
+                        let data = try JSONEncoder().encode(Results(results: [resultUnit]))
                         let outfile = try fileURL()
                         try data.write(to: outfile)
+                        
+                        let data2 = try PropertyListEncoder().encode(imagesData)
+                        let outfile2 = try imageURL(id: resultUnit.id)
+                        //print(outfile2)
+                        try data2.write(to: outfile2)
+                        
                         DispatchQueue.main.async {
                             completion(.success(true))
                         }
@@ -128,9 +172,15 @@ class ResultsStore: ObservableObject {
                     newResults.results.append(resultUnit)
                     
                     do {
-                        let data = try PropertyListEncoder().encode(newResults)
+                        let data = try JSONEncoder().encode(newResults)
                         let outfile = try fileURL()
                         try data.write(to: outfile)
+                        
+                        let data2 = try PropertyListEncoder().encode(imagesData)
+                        let outfile2 = try imageURL(id: resultUnit.id)
+                        //print(outfile2)
+                        try data2.write(to: outfile2)
+                        
                         DispatchQueue.main.async {
                             completion(.success(true))
                         }
@@ -145,7 +195,7 @@ class ResultsStore: ObservableObject {
         }
     }
     
-    static func remove(resultUnit: ResultUnit, completion: @escaping (Result<Bool, Error>)->Void) {
+    static func remove(resultUnit: ResultUnitText, completion: @escaping (Result<Bool, Error>)->Void) {
         DispatchQueue.global(qos: .background).async {
             
             load { result in
@@ -160,9 +210,14 @@ class ResultsStore: ObservableObject {
                     }
                     
                     do {
-                        let data = try PropertyListEncoder().encode(newResults)
+                        let data = try JSONEncoder().encode(newResults)
                         let outfile = try fileURL()
                         try data.write(to: outfile)
+                        
+                        let outfile2 = try imageURL(id: resultUnit.id)
+                        //print(outfile2)
+                        try FileManager.default.removeItem(at: outfile2)
+
                         DispatchQueue.main.async {
                             completion(.success(true))
                         }

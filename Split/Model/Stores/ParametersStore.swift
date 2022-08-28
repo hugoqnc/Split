@@ -28,7 +28,7 @@ class ParametersStore: ObservableObject {
                                        in: .userDomainMask,
                                        appropriateFor: nil,
                                        create: true)
-            .appendingPathComponent("parameters.data")
+            .appendingPathComponent("parameters.json")
     }
     
     static func load(completion: @escaping (Result<Parameters, Error>)->Void) {

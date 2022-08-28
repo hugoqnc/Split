@@ -9,19 +9,17 @@ import SwiftUI
 
 struct ResultViewHistoryWrapper: View {
     @EnvironmentObject var globalModel: ModelData
+    private var resultUnitId: UUID
     
-    internal init(resultUnit: ResultUnit, tricountList: [Tricount]) {
+    internal init(resultUnit: ResultUnitText, tricountList: [Tricount]) {
+        resultUnitId = resultUnit.id
+        
         model = ModelData()
         model.users = resultUnit.users
         model.currency = resultUnit.currency
         model.date = resultUnit.date
         model.receiptName = resultUnit.receiptName
         model.parameters.tricountList = tricountList
-        //print(tricountList)
-        
-        for d in resultUnit.imagesData {
-            model.images.append(IdentifiedImage(id: UUID().uuidString, image: UIImage(data: d)!))
-        }
         
         var listOfProductsAndPrices: [PairProductPrice] = []
         for pairCod in resultUnit.listOfProductsAndPrices {
@@ -53,6 +51,18 @@ struct ResultViewHistoryWrapper: View {
 
                 }
             }
+            .onAppear(perform: {
+                ResultsStore.loadImage(id: resultUnitId) { result in
+                    switch result {
+                    case .failure(let error):
+                        fatalError(error.localizedDescription)
+                    case .success(let imagesData):
+                        for d in imagesData {
+                            model.images.append(IdentifiedImage(id: UUID().uuidString, image: UIImage(data: d)!))
+                        }
+                    }
+                }
+            })
             .sheet(isPresented: $showReceiptImage) {
                 ScrollView {
                     ForEach(model.images){ idImage in
@@ -72,7 +82,7 @@ struct ResultViewHistoryWrapper: View {
 struct ResultViewHistoryWrapper_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            ResultViewHistoryWrapper(resultUnit: ResultUnit(users: [], listOfProductsAndPrices: [], currency: Currency.default, date: Date(), imagesData: [], receiptName: "ALDI"), tricountList: [])
+            ResultViewHistoryWrapper(resultUnit: ResultUnitText(users: [], listOfProductsAndPrices: [], currency: Currency.default, date: Date(), receiptName: "ALDI"), tricountList: [])
                 .environmentObject(ModelData())
         }
     }

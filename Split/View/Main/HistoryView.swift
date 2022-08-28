@@ -14,7 +14,7 @@ struct HistoryView: View {
     @State private var loadingDataIsFinished = false
     @State private var showStats = false
     
-    func date(resultUnit: ResultUnit) -> String {
+    func date(resultUnit: ResultUnitText) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .none

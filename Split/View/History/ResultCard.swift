@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ResultCard: View {
-    var resultUnit: ResultUnit
+    var resultUnit: ResultUnitText
     
     @Environment(\.colorScheme) var colorScheme
     
@@ -112,13 +112,13 @@ struct ResultCard: View {
 import UIKit
 
 struct ResultCard_Previews: PreviewProvider {
-    static let resultUnit: ResultUnit = {
+    static let resultUnit: ResultUnitText = {
         let users = [User(name: "Hugo"), User(name: "Lucas"), User(name: "Thomas"), User(name: "Corentin"), User(name: "Nicolas"), User(name: "Hortense")]
         var listOfProductsAndPrices = [PairProductPriceCodable(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 4.99), PairProductPriceCodable(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBC", name: "Finger Fish", price: 1.27), PairProductPriceCodable(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBD", name: "Ice Cream Strawberry", price: 3.20)]
         listOfProductsAndPrices[0].chosenBy = [users[0].id]
         listOfProductsAndPrices[1].chosenBy = [users[0].id, users[1].id]
         
-        var resultUnit = ResultUnit(id: UUID(), users: users, listOfProductsAndPrices: listOfProductsAndPrices, currency: Currency.default, date: Date(), imagesData: [], receiptName: "ALDI Suisse, Monoprix, Migros")
+        var resultUnit = ResultUnitText(id: UUID(), users: users, listOfProductsAndPrices: listOfProductsAndPrices, currency: Currency.default, date: Date(), receiptName: "ALDI Suisse, Monoprix, Migros")
         
         return resultUnit
     }()

@@ -21,7 +21,7 @@ class PreferencesStore: ObservableObject {
                                        in: .userDomainMask,
                                        appropriateFor: nil,
                                        create: true)
-            .appendingPathComponent("preferences.data")
+            .appendingPathComponent("preferences.json")
     }
     
     static func load(completion: @escaping (Result<Preferences, Error>)->Void) {
