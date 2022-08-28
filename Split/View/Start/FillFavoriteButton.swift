@@ -59,17 +59,6 @@ struct FillFavoriteButton: View {
                             Text(descriptiveString)
                                 .font(.caption)
                                 .foregroundColor(Color.secondary)
-                            
-                            Label {
-                                Text(" ")
-                            } icon: {
-                                Image(systemName: "plus.forwardslash.minus")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(maxHeight:10)
-                            }
-                            .font(.caption)
-                            .padding(.leading, -10)
                         }
                     }
                     Spacer()
