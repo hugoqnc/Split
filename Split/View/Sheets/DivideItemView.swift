@@ -59,21 +59,30 @@ struct DivideItemView: View {
                     Label("The current card \"\(pair.name)\" costing \(model.showPrice(price: pair.price)) will be replaced by \(chosenInt) new cards costing \(model.showPrice(price: pair.price/Double(chosenInt))) each.", systemImage: "info.circle")
                         .font(.subheadline)
                         .padding()
-                    
-                    Button{
-                        dividedBy = chosenInt
-                        dividesItemCall = true
-                        dismiss()
-                    } label: {
-                        Label("Divide", systemImage: "checkmark")
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .padding(.top,10)
                 }
                 .padding()
                 .padding(.top)
                 
                 Spacer()
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Text("Cancel")
+                    }
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        dividedBy = chosenInt
+                        dividesItemCall = true
+                        dismiss()
+                    } label: {
+                        Text("Divide")
+                            .bold()
+                    }
+                }
             }
             .navigationBarTitle(Text(""), displayMode: .inline)
         }
