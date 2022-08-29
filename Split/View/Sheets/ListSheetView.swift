@@ -17,135 +17,133 @@ struct ListSheetView: View {
     @State private var showSafariView = false
 
     var body: some View {
-        VStack {
-            NavigationView {
-                VStack{
-                
-                    List() {
-                        if !isShownInHistory {
-                            Section(header:
-                                HStack{
-                                    Text("Receipt Name")
-                                    Text("\(editPair.name)") //due to https://developer.apple.com/forums/thread/652080
-                                        .hidden()
-                                        .frame(height:0)
-                                }
-                            ){
-                                VStack {
-                                    TextField("Receipt Name", text: $model.receiptName.animation())
-                                }
+        NavigationView {
+            VStack{
+            
+                List() {
+                    if !isShownInHistory {
+                        Section(header:
+                            HStack{
+                                Text("Receipt Name")
+                                Text("\(editPair.name)") //due to https://developer.apple.com/forums/thread/652080
+                                    .hidden()
+                                    .frame(height:0)
                             }
-                            .listRowBackground(Color.secondary.opacity(0.1))
+                        ){
+                            VStack {
+                                TextField("Receipt Name", text: $model.receiptName.animation())
+                            }
                         }
-                        
-                        Section(header: Text("\(model.listOfProductsAndPrices.count) items — \(model.showPrice(price: model.totalPrice))"), footer: isShownInHistory ? Label("Items ordered as they were on the receipt", systemImage: "arrow.up.arrow.down") : Label("Long press on an assigned item to modify it", systemImage: "lightbulb")){
-                            ForEach($model.listOfProductsAndPrices) { $pair in
-                                HStack {
-                                    if itemCounter>=0 ? pair.id==model.listOfProductsAndPrices[itemCounter].id : false {
-                                        VStack(alignment: .leading) {
-                                            Text("Current item".uppercased())
-                                                .font(.caption)
-                                                .padding(.top,3)
+                        .listRowBackground(Color.secondary.opacity(0.1))
+                    }
+                    
+                    Section(header: Text("\(model.listOfProductsAndPrices.count) items — \(model.showPrice(price: model.totalPrice))"), footer: isShownInHistory ? Label("Items ordered as they were on the receipt", systemImage: "arrow.up.arrow.down") : Label("Long press on an assigned item to modify it", systemImage: "lightbulb")){
+                        ForEach($model.listOfProductsAndPrices) { $pair in
+                            HStack {
+                                if itemCounter>=0 ? pair.id==model.listOfProductsAndPrices[itemCounter].id : false {
+                                    VStack(alignment: .leading) {
+                                        Text("Current item".uppercased())
+                                            .font(.caption)
+                                            .padding(.top,3)
+                                        Text(pair.name)
+                                            .font(.headline)
+                                    }
+                                } else {
+                                    if !pair.chosenBy.isEmpty {
+                                        VStack(alignment: .leading, spacing: 2) {
                                             Text(pair.name)
-                                                .font(.headline)
+                                                .padding(.vertical, 3)
+                                            MiniRepartitionRow(userIDs: pair.chosenBy)
+                                                .padding(.horizontal, 4)
+                                                .padding(.bottom, 3)
+                                        }
+                                        .fullScreenCover(isPresented: $showSafariView) {
+                                            let urlString = ("http://www.google.com/images?q="+editPair.name).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+                                            SafariView(url: URL(string: urlString!)!).edgesIgnoringSafeArea(.all)
+                                        }
+                                        .contextMenu{
+                                            Button{
+                                                editPair = pair
+                                                showSafariView = true
+                                            } label: {
+                                                Label("Search for images", systemImage: "magnifyingglass")
+                                            }
+
+                                            if !isShownInHistory {
+                                                Button{
+                                                    editItemAlert = true
+                                                    editPair = pair
+                                                } label: {
+                                                    Label("Edit this item", systemImage: "pencil")
+                                                }
+                                                Button(role: .destructive){
+                                                    withAnimation() {
+                                                        itemCounter -= 1
+                                                        if let index = model.listOfProductsAndPrices.firstIndex(where: {$0.id == pair.id}) {
+                                                            model.listOfProductsAndPrices.remove(at: index)
+                                                        }
+                                                    }
+                                                } label: {
+                                                    Label("Delete this item", systemImage: "trash")
+                                                }
+                                            }
                                         }
                                     } else {
-                                        if !pair.chosenBy.isEmpty {
-                                            VStack(alignment: .leading, spacing: 2) {
-                                                Text(pair.name)
-                                                    .padding(.vertical, 3)
-                                                MiniRepartitionRow(userIDs: pair.chosenBy)
-                                                    .padding(.horizontal, 4)
-                                                    .padding(.bottom, 3)
-                                            }
-                                            .fullScreenCover(isPresented: $showSafariView) {
-                                                let urlString = ("http://www.google.com/images?q="+editPair.name).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-                                                SafariView(url: URL(string: urlString!)!).edgesIgnoringSafeArea(.all)
-                                            }
-                                            .contextMenu{
-                                                Button{
-                                                    editPair = pair
-                                                    showSafariView = true
-                                                } label: {
-                                                    Label("Search for images", systemImage: "magnifyingglass")
-                                                }
-
-                                                if !isShownInHistory {
-                                                    Button{
-                                                        editItemAlert = true
-                                                        editPair = pair
-                                                    } label: {
-                                                        Label("Edit this item", systemImage: "pencil")
-                                                    }
-                                                    Button(role: .destructive){
-                                                        withAnimation() {
-                                                            itemCounter -= 1
-                                                            if let index = model.listOfProductsAndPrices.firstIndex(where: {$0.id == pair.id}) {
-                                                                model.listOfProductsAndPrices.remove(at: index)
-                                                            }
-                                                        }
-                                                    } label: {
-                                                        Label("Delete this item", systemImage: "trash")
-                                                    }
-                                                }
-                                            }
-                                        } else {
-                                            Text(pair.name)
-                                        }
+                                        Text(pair.name)
                                     }
-
-                                    Spacer()
-                                    
-                                    Text(model.showPrice(price: pair.price))
-                                        .fontWeight(.semibold)
                                 }
-                                .listRowBackground(Color.secondary.opacity(0.1))
-                                .foregroundColor(itemCounter>=0 ? pair.id==model.listOfProductsAndPrices[itemCounter].id ? .blue : nil : nil)
-                            }
-                            .sheet(isPresented: $editItemAlert) {
-                                let name = editPair.name
-                                let price = editPair.price
+
+                                Spacer()
                                 
-                                InputItemDetails(title: "Modify item",
-                                                 message:"You can change the name, price and repartition of \"\(name)\" between users",
-                                                 placeholder1: "Name",
-                                                 placeholder2: "Price",
-                                                 initialText: name,
-                                                 initialDouble: price,
-                                                 initialSelections: editPair.chosenBy,
-                                                 action: {
-                                                      if $0 != nil && $1 != nil {
-                                                          if $0! != "" {
-                                                              let index = model.listOfProductsAndPrices.firstIndex(of: editPair)!
-                                                              let name = $0!
-                                                              let price = $1!
-                                                              let chosenBy = $2!
-                                                              withAnimation() {
-                                                                  model.listOfProductsAndPrices[index].name = name
-                                                                  model.listOfProductsAndPrices[index].price = price
-                                                                  model.listOfProductsAndPrices[index].chosenBy = chosenBy
-                                                                  return
-                                                              }
+                                Text(model.showPrice(price: pair.price))
+                                    .fontWeight(.semibold)
+                            }
+                            .listRowBackground(Color.secondary.opacity(0.1))
+                            .foregroundColor(itemCounter>=0 ? pair.id==model.listOfProductsAndPrices[itemCounter].id ? .blue : nil : nil)
+                        }
+                        .sheet(isPresented: $editItemAlert) {
+                            let name = editPair.name
+                            let price = editPair.price
+                            
+                            InputItemDetails(title: "Modify item",
+                                             message:"You can change the name, price and repartition of \"\(name)\" between users",
+                                             placeholder1: "Name",
+                                             placeholder2: "Price",
+                                             initialText: name,
+                                             initialDouble: price,
+                                             initialSelections: editPair.chosenBy,
+                                             action: {
+                                                  if $0 != nil && $1 != nil {
+                                                      if $0! != "" {
+                                                          let index = model.listOfProductsAndPrices.firstIndex(of: editPair)!
+                                                          let name = $0!
+                                                          let price = $1!
+                                                          let chosenBy = $2!
+                                                          withAnimation() {
+                                                              model.listOfProductsAndPrices[index].name = name
+                                                              model.listOfProductsAndPrices[index].price = price
+                                                              model.listOfProductsAndPrices[index].chosenBy = chosenBy
+                                                              return
                                                           }
                                                       }
-                                                  })
-                            }
-                        }
-                    }
-                }
-                .navigationBarTitle(Text(""), displayMode: .inline)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button {
-                            dismiss()
-                        } label: {
-                            Text("Done")
+                                                  }
+                                              })
                         }
                     }
                 }
             }
-            .navigationViewStyle(StackNavigationViewStyle())
+            .navigationBarTitle(Text(""), displayMode: .inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Text("Done")
+                    }
+                }
+            }
         }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 

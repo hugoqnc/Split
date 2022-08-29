@@ -13,12 +13,12 @@ struct ContentView: View {
     }
     var body: some View {
         StartView()
-        //FirstListView_Previews.previews
+        //ResultView_Previews.previews
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContentView()
+//    }
+//}

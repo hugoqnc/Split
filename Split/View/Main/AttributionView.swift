@@ -22,7 +22,6 @@ struct AttributionView: View {
     var body: some View {
         if showResult {
             ResultView()
-                //.transition(.slide)
         } else {
             NavigationView {
                 VStack{
@@ -135,18 +134,10 @@ struct AttributionView: View {
                 }
             })
             .sheet(isPresented: $showAllList, content: {
-                if model.listOfProductsAndPrices.isEmpty {
-                    VStack {
-                        //Text("nothingFound: \(String(nothingFound))")
-                        //LoadItemsView(nothingFound: $nothingFound)
-                    }
+                if itemCounter<model.listOfProductsAndPrices.count {
+                    ListSheetView(itemCounter: $itemCounter)
                 } else {
-                    if itemCounter<model.listOfProductsAndPrices.count {
-                        ListSheetView(itemCounter: $itemCounter)
-                    } else {
-                        ListSheetView(itemCounter: .constant(-1))
-                    }
-                    
+                    ListSheetView(itemCounter: .constant(-1))
                 }
             })
             .slideOverCard(isPresented: $showTutorialScreen, content: {
