@@ -63,14 +63,11 @@ struct TricountAddSheet: View {
                 .padding(.horizontal, 40)
                 .padding(.top)
                 
-//                Text(tricount.tricountName)
-//                Text(tricount.names.description)
-//                Text(tricount.status)
-                
                 Form {
                     TextField("Tricount Link/ID", text: $tricountLinkInput)
                         .listRowBackground(Color.secondary.opacity(0.1))
                 }
+                .disabled(inProgress)
                 
 
             }

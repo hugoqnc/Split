@@ -115,6 +115,7 @@ struct TricountExportSheet: View {
                     }
 
                 }
+                .disabled(inProgress)
                 .padding(15)
                 .background(Color.secondary.opacity(0.1))
                 .cornerRadius(10)
@@ -171,7 +172,7 @@ struct TricountExportSheet: View {
                         Text("Export")
                             .bold()
                     }
-                    .disabled(!model.users.contains(payer))
+                    .disabled(!(model.users.contains(payer) && compatibleTricounts(users: model.users, tricountList: model.parameters.tricountList).contains(chosenTricount)))
                 }
             }
             //.navigationTitle("Tricount Export")
