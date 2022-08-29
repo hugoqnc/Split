@@ -32,19 +32,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4F309E2E2784B49A00F55BC6"
-               BuildableName = "SplitTests.xctest"
-               BlueprintName = "SplitTests"
-               ReferencedContainer = "container:Split!.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4F309E382784B49A00F55BC6"
-               BuildableName = "SplitUITests.xctest"
-               BlueprintName = "SplitUITests"
+               BlueprintIdentifier = "4FDE9B2928BCF556008A622E"
+               BuildableName = "TricountTests.xctest"
+               BlueprintName = "TricountTests"
                ReferencedContainer = "container:Split!.xcodeproj">
             </BuildableReference>
          </TestableReference>
