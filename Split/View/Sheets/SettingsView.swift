@@ -14,6 +14,7 @@ struct SettingsView: View {
     @Environment(\.colorScheme) var colorScheme
     
     var githubLink = "https://github.com/hugoqnc/Split"
+    var appStoreLink = "https://apps.apple.com/us/app/split-your-receipts/id1642182485"
 
     @State var parameters = Parameters()
     @State private var showSharingOptions = false
@@ -173,11 +174,17 @@ struct SettingsView: View {
                         }
                         .buttonStyle(.borderless)
                         .sheet(isPresented: $showSharingOptions, content: {
-                            ActivityViewController(activityItems: ["Hey, I use Split! to easily share my receipts, you should check it out: "+githubLink])
+                            ActivityViewController(activityItems: ["Hey, I use Split! to easily share my receipts, you should check it out: "+appStoreLink])
                         })
                         
                         Button {
-                            openURL(URL(string: "mailto:hugo.queinnec@gmail.com?subject=%5BSplit!%5D%20New%20Request&body=Please%20write%20here%20about%20an%20issue%2C%20or%20suggest%20me%20a%20new%20feature%20I%20should%20add%20to%20Split!.%0D%0AIf%20it%20is%20about%20an%20issue%2C%20first%20make%20sure%20you%20are%20using%20the%20latest%20version%20of%20Split!.%20Then%2C%20specify%20the%20device%20you%20are%20using%2C%20and%20what%20exact%20steps%20led%20to%20the%20bug.")!)
+                            openURL(URL(string: appStoreLink)!)
+                        } label: {
+                            Label("Leave a review", systemImage: "star")
+                        }
+                        
+                        Button {
+                            openURL(URL(string: "mailto:hugoqueinnec+split@gmail.com?subject=%5BSplit!%5D%20New%20Request&body=Please%20write%20here%20about%20an%20issue%2C%20or%20suggest%20me%20a%20new%20feature%20I%20should%20add%20to%20Split!.%0D%0AIf%20it%20is%20about%20an%20issue%2C%20first%20make%20sure%20you%20are%20using%20the%20latest%20version%20of%20Split!.%20Then%2C%20specify%20the%20device%20you%20are%20using%2C%20what%20exact%20steps%20led%20to%20the%20bug%2C%20and%20join%20screenshots%20if%20necessary.")!)
                         } label: {
                             Label("Send me an email!", systemImage: "envelope")
                         }
