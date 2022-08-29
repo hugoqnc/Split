@@ -15,7 +15,8 @@ The app will calculate everyone's total, much faster than if you had to do it by
 <br/>
 
 <p align="center">
-<b>Coming to the App Store in early September 2022</b>
+<b>Coming to the App Store in early September 2022</b><br/>
+<a href="https://testflight.apple.com/join/UgAxQCh2">Test it today on TestFlight</a>
 </p>
 
 <br/>
