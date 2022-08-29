@@ -117,6 +117,8 @@ func getInfoFromTricount(tricountID: String) async throws -> Tricount {
                         if i != names.count-1 {
                             names[i] = String(names[i].dropLast())
                         }
+                        // Decode Unicode to UTF8 (for special characters)
+                        names[i] = names[i].decoded.replacingOccurrences(of: "\"", with: "")
                     }
                     continuation.resume(returning: names)
                 } else {
@@ -290,3 +292,10 @@ func addToTricount(tricountID: String, shopName: String, payerName: String, list
     return hasLoaded ? (counter==maxCounter ? "SUCCESS" : "UNKNOWN_FAILURE") : "NETWORK_FAILURE"
 }
 
+extension String { // decode Uicode to UTF8
+    var decoded : String {
+        let data = self.data(using: .utf8)
+        let message = String(data: data!, encoding: .nonLossyASCII) ?? ""
+        return message
+    }
+}
