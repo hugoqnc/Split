@@ -23,7 +23,6 @@
 		4F309E6A2785EB7600F55BC6 /* CurrentExpensesRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F309E692785EB7600F55BC6 /* CurrentExpensesRow.swift */; };
 		4F309E6C2785F80600F55BC6 /* AttributionCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F309E6B2785F80600F55BC6 /* AttributionCard.swift */; };
 		4F309E732786DA4700F55BC6 /* SelectableItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F309E722786DA4700F55BC6 /* SelectableItems.swift */; };
-		4F37A8982787AF4900947426 /* SafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F37A8972787AF4800947426 /* SafariView.swift */; };
 		4F37A89A27883C2B00947426 /* ListSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F37A89927883C2A00947426 /* ListSheetView.swift */; };
 		4F38B06D27CF949E004CD810 /* HistoryStatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F38B06C27CF949E004CD810 /* HistoryStatView.swift */; };
 		4F42BA1027D4EF2800535706 /* TextRecognitionAdvanced.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F42BA0F27D4EF2800535706 /* TextRecognitionAdvanced.swift */; };
@@ -52,6 +51,7 @@
 		4F90A7AC27A713F9003A1D97 /* UserChoicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F90A7AB27A713F9003A1D97 /* UserChoicesView.swift */; };
 		4F94B8FF27A7326400F7B10F /* MiniRepartitionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F94B8FE27A7326400F7B10F /* MiniRepartitionRow.swift */; };
 		4F94B90127A7476F00F7B10F /* StatisticRectangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F94B90027A7476F00F7B10F /* StatisticRectangle.swift */; };
+		4FA5B91328BD20FB000B9AFF /* RestrictedBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA5B91228BD20FB000B9AFF /* RestrictedBrowserView.swift */; };
 		4FB7813C2794821D00F5E2D8 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB7813B2794821D00F5E2D8 /* Currency.swift */; };
 		4FD7C2D927E86EE6009C4D9D /* FillFavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD7C2D827E86EE6009C4D9D /* FillFavoriteButton.swift */; };
 		4FD7C2DB27E86EF2009C4D9D /* EditFavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD7C2DA27E86EF2009C4D9D /* EditFavoriteButton.swift */; };
@@ -110,7 +110,6 @@
 		4F309E692785EB7600F55BC6 /* CurrentExpensesRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentExpensesRow.swift; sourceTree = "<group>"; };
 		4F309E6B2785F80600F55BC6 /* AttributionCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributionCard.swift; sourceTree = "<group>"; };
 		4F309E722786DA4700F55BC6 /* SelectableItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableItems.swift; sourceTree = "<group>"; };
-		4F37A8972787AF4800947426 /* SafariView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariView.swift; sourceTree = "<group>"; };
 		4F37A89927883C2A00947426 /* ListSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSheetView.swift; sourceTree = "<group>"; };
 		4F38B06C27CF949E004CD810 /* HistoryStatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryStatView.swift; sourceTree = "<group>"; };
 		4F42BA0F27D4EF2800535706 /* TextRecognitionAdvanced.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognitionAdvanced.swift; sourceTree = "<group>"; };
@@ -139,6 +138,7 @@
 		4F90A7AB27A713F9003A1D97 /* UserChoicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserChoicesView.swift; sourceTree = "<group>"; };
 		4F94B8FE27A7326400F7B10F /* MiniRepartitionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniRepartitionRow.swift; sourceTree = "<group>"; };
 		4F94B90027A7476F00F7B10F /* StatisticRectangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticRectangle.swift; sourceTree = "<group>"; };
+		4FA5B91228BD20FB000B9AFF /* RestrictedBrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestrictedBrowserView.swift; sourceTree = "<group>"; };
 		4FB7813B2794821D00F5E2D8 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		4FD7C2D827E86EE6009C4D9D /* FillFavoriteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillFavoriteButton.swift; sourceTree = "<group>"; };
 		4FD7C2DA27E86EF2009C4D9D /* EditFavoriteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFavoriteButton.swift; sourceTree = "<group>"; };
@@ -300,7 +300,7 @@
 			isa = PBXGroup;
 			children = (
 				4F42BA1727D51B6200535706 /* LoadItems */,
-				4F37A8972787AF4800947426 /* SafariView.swift */,
+				4FA5B91228BD20FB000B9AFF /* RestrictedBrowserView.swift */,
 				4F94B8FE27A7326400F7B10F /* MiniRepartitionRow.swift */,
 				4F94B90027A7476F00F7B10F /* StatisticRectangle.swift */,
 				4FDC144327DBA81600FE7C2E /* AutomatedRecognitionLabel.swift */,
@@ -566,6 +566,7 @@
 				4FDC144427DBA81600FE7C2E /* AutomatedRecognitionLabel.swift in Sources */,
 				4F309E6A2785EB7600F55BC6 /* CurrentExpensesRow.swift in Sources */,
 				4F90A7AC27A713F9003A1D97 /* UserChoicesView.swift in Sources */,
+				4FA5B91328BD20FB000B9AFF /* RestrictedBrowserView.swift in Sources */,
 				4F898D0C279CC1F40067336F /* VisionParameters.swift in Sources */,
 				4F309E652784F9E700F55BC6 /* StartView.swift in Sources */,
 				4F309E732786DA4700F55BC6 /* SelectableItems.swift in Sources */,
@@ -587,7 +588,6 @@
 				4F4A55B327A1B906001F84E3 /* PreferencesStore.swift in Sources */,
 				4F83AA7E285BD6C800F45FC6 /* AttributionTutorialView.swift in Sources */,
 				4F2BCDB32798D2B200E6501E /* ScanTutorialView.swift in Sources */,
-				4F37A8982787AF4900947426 /* SafariView.swift in Sources */,
 				4F63DF0727A421B000E2CA3A /* InputItemDetails.swift in Sources */,
 				4F80BED527C794C900CA73B3 /* SettingsView.swift in Sources */,
 				4FF04F50278B0DF700650EBC /* LastItemView.swift in Sources */,

@@ -13,6 +13,7 @@ struct ContentView: View {
     }
     var body: some View {
         StartView()
+        //RestrictedBrowserView(isShown: .constant(true), imageName: "camembert")
         //ResultView_Previews.previews
     }
 }

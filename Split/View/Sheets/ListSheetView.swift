@@ -57,10 +57,13 @@ struct ListSheetView: View {
                                                 .padding(.horizontal, 4)
                                                 .padding(.bottom, 3)
                                         }
-                                        .fullScreenCover(isPresented: $showSafariView) {
-                                            let urlString = ("http://www.google.com/images?q="+editPair.name).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-                                            SafariView(url: URL(string: urlString!)!).edgesIgnoringSafeArea(.all)
-                                        }
+//                                        .fullScreenCover(isPresented: $showSafariView) {
+//                                            let urlString = ("http://www.google.com/images?q="+editPair.name).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+//                                            SafariView(url: URL(string: urlString!)!).edgesIgnoringSafeArea(.all)
+//                                        }
+                                        .sheet(isPresented: $showSafariView, content: {
+                                            RestrictedBrowserView(isShown: $showSafariView, imageName: editPair.name)
+                                        })
                                         .contextMenu{
                                             Button{
                                                 editPair = pair

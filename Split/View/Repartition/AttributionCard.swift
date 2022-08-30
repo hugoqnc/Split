@@ -103,9 +103,12 @@ struct AttributionCard: View {
                         
                     }
                 }
-                .fullScreenCover(isPresented: $showSafariView) {
-                    let urlString = ("http://www.google.com/images?q="+pair.name).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-                    SafariView(url: URL(string: urlString!)!).edgesIgnoringSafeArea(.all)}
+//                .fullScreenCover(isPresented: $showSafariView) {
+//                    let urlString = ("http://www.google.com/images?q="+pair.name).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+//                    SafariView(url: URL(string: urlString!)!).edgesIgnoringSafeArea(.all)}
+                .sheet(isPresented: $showSafariView, content: {
+                    RestrictedBrowserView(isShown: $showSafariView, imageName: pair.name)
+                })
                 .padding(.top,5)
                 
                 Divider()
