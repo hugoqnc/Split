@@ -26,8 +26,7 @@ The app will calculate everyone's total, much faster than if you had to do it by
 Image: some screenshots of Split!, on iPhone and iPad, in light and dark mode. 
 
 ## Quick demo
-
-https://user-images.githubusercontent.com/67365803/159295049-a5201b9e-ec59-4356-a12f-6d40171c7870.mp4
+https://user-images.githubusercontent.com/67365803/187445035-cd8ae00c-e1be-445f-83ce-e9cc731e0ba1.mp4
 
 ## Features
 ### General
