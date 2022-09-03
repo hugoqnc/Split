@@ -11,7 +11,7 @@ struct AttributionView: View {
     @EnvironmentObject var model: ModelData
     @State private var showAllList = false
     @State private var isValidated = false
-    @State private var itemCounter = 0
+    @State public var itemCounter = 0 // public for preview purposes
     @State private var showResult = false
     @State private var firstCardAppear = false
     @State private var quitConfirmation = false

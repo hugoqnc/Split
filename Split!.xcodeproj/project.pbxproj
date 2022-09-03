@@ -42,6 +42,7 @@
 		4F7C1289279B46D100A5E50B /* SlideOverCard in Frameworks */ = {isa = PBXBuildFile; productRef = 4F7C1288279B46D100A5E50B /* SlideOverCard */; };
 		4F7C128C279B530A00A5E50B /* ListTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7C128B279B530A00A5E50B /* ListTutorialView.swift */; };
 		4F7C128E279C047E00A5E50B /* Visualization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7C128D279C047E00A5E50B /* Visualization.swift */; };
+		4F7CA06228BF8B0700050B47 /* ShowroomPreviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7CA06128BF8B0700050B47 /* ShowroomPreviews.swift */; };
 		4F80BED527C794C900CA73B3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F80BED427C794C900CA73B3 /* SettingsView.swift */; };
 		4F80BED727C7B7A400CA73B3 /* ParametersStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F80BED627C7B7A400CA73B3 /* ParametersStore.swift */; };
 		4F83AA7E285BD6C800F45FC6 /* AttributionTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F83AA7D285BD6C800F45FC6 /* AttributionTutorialView.swift */; };
@@ -129,6 +130,7 @@
 		4F63DF0627A421B000E2CA3A /* InputItemDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputItemDetails.swift; sourceTree = "<group>"; };
 		4F7C128B279B530A00A5E50B /* ListTutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTutorialView.swift; sourceTree = "<group>"; };
 		4F7C128D279C047E00A5E50B /* Visualization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Visualization.swift; sourceTree = "<group>"; };
+		4F7CA06128BF8B0700050B47 /* ShowroomPreviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowroomPreviews.swift; sourceTree = "<group>"; };
 		4F80BED427C794C900CA73B3 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		4F80BED627C7B7A400CA73B3 /* ParametersStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParametersStore.swift; sourceTree = "<group>"; };
 		4F83AA7D285BD6C800F45FC6 /* AttributionTutorialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributionTutorialView.swift; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 			isa = PBXGroup;
 			children = (
 				4F309E4F2784B55900F55BC6 /* ContentView.swift */,
+				4F7CA06128BF8B0700050B47 /* ShowroomPreviews.swift */,
 				4F309E632784F9CD00F55BC6 /* Main */,
 				4FF675D8279A1E4E00B7F385 /* Sheets */,
 				4F309E682785EB4400F55BC6 /* Repartition */,
@@ -576,6 +579,7 @@
 				4F94B8FF27A7326400F7B10F /* MiniRepartitionRow.swift in Sources */,
 				4F309E592784F68200F55BC6 /* AttributionView.swift in Sources */,
 				4F8EBD8927AAF75300CBD6AD /* StatView.swift in Sources */,
+				4F7CA06228BF8B0700050B47 /* ShowroomPreviews.swift in Sources */,
 				4F42BA1427D51B4C00535706 /* NoMatchFound.swift in Sources */,
 				4FD7C2D927E86EE6009C4D9D /* FillFavoriteButton.swift in Sources */,
 				4F94B90127A7476F00F7B10F /* StatisticRectangle.swift in Sources */,
@@ -793,7 +797,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "fr.telecom-paris.queinnec.hugo.Split";
 				PRODUCT_NAME = "Split!";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -824,7 +828,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "fr.telecom-paris.queinnec.hugo.Split";
 				PRODUCT_NAME = "Split!";
 				SWIFT_EMIT_LOC_STRINGS = YES;

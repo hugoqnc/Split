@@ -43,13 +43,14 @@ struct PairProductPrice: Identifiable, Equatable {
         self.name = name
         self.price = price
     }
-    init(id: String, name: String = "", price: Double = 0, isNewItem: Bool = false, imageId: String? = nil, box: VNDetectedObjectObservation? = nil) {
+    init(id: String, name: String = "", price: Double = 0, isNewItem: Bool = false, imageId: String? = nil, box: VNDetectedObjectObservation? = nil, chosenBy: [UUID] = []) {
         self.id = id
         self.name = name
         self.price = price
         self.isNewItem = isNewItem
         self.imageId = imageId
         self.box = box
+        self.chosenBy = chosenBy
     }
 }
 

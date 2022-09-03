@@ -30,7 +30,7 @@ class TricountViewController: UIViewController, WKNavigationDelegate {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        hasLoaded = false
         let myURL = URL(string: "https://api.tricount.com/displayTricount.jsp?tricountID=\(tricountID ?? "")&acceptGACookies=true")
         //print(myURL)
         let myRequest = URLRequest(url: myURL!)
@@ -64,6 +64,7 @@ class TricountViewController: UIViewController, WKNavigationDelegate {
                 }
             }
         }
+        //try await Task.sleep(nanoseconds: UInt64(0.05 * Double(NSEC_PER_SEC)))
         return result
     }
 }
@@ -199,6 +200,9 @@ func exactTricounts(users: [User], tricountList:[Tricount]) -> [Tricount] {
 }
 
 func addToTricount(tricountID: String, shopName: String, payerName: String, listOfNames: [String], listOfAmounts: [Double]) async throws -> String {
+    //timer
+    let start = CFAbsoluteTimeGetCurrent()
+    
     let tricountViewController = TricountViewController()
     await tricountViewController.setTricountID(tricountID: tricountID)
     await tricountViewController.loadView()
@@ -275,7 +279,7 @@ func addToTricount(tricountID: String, shopName: String, payerName: String, list
     }
 
     print("Start Wait 3")
-    try await Task.sleep(nanoseconds: UInt64(timeForTricountUIToLoad/2 * Double(NSEC_PER_SEC)))
+    try await Task.sleep(nanoseconds: UInt64(timeForTricountUIToLoad/4 * Double(NSEC_PER_SEC)))
     print("End Wait 3")
 
     if counter==maxCounter-2 {
@@ -284,22 +288,28 @@ func addToTricount(tricountID: String, shopName: String, payerName: String, list
         counterUpdate(res: res)
         //res = try await tricountViewController.evaluateJavaScriptWrapper("document.querySelector('a[class=\"footerPanelText\"]').textContent")
         //res = try await tricountViewController.evaluateJavaScriptWrapper(#"[...document.querySelectorAll('div[class="paymentListContent"]')].map(x => x.textContent);"#)
-        res = try await tricountViewController.evaluateJavaScriptWrapper("document.querySelector('a[class=\"footerPanelText\"]').click()") // necessary to actually send the transaction (weird)
-        counterUpdate(res: res)
+        try await Task.sleep(nanoseconds: UInt64(timeForTricountUIToLoad/4 * Double(NSEC_PER_SEC)))
     }
+    
+    // Verification
+    //res = try await verifyTricountTransaction(tricountID: "", shopName: shopName, payerName: payerName, tricountViewController: tricountViewController)
+    //counterUpdate(res: res)
+    counterUpdate(res: "SUCCESS")
+    
+    let diff = CFAbsoluteTimeGetCurrent() - start
+    print("Took \(diff) seconds")
     
     return hasLoaded ? (counter==maxCounter ? "SUCCESS" : "UNKNOWN_FAILURE") : "NETWORK_FAILURE"
 }
 
 
-func verifyTricountTransaction(tricountID: String, shopName: String, payerName: String) async throws -> String {
-    let tricountViewController = TricountViewController()
-    await tricountViewController.setTricountID(tricountID: tricountID)
-    await tricountViewController.loadView()
+func verifyTricountTransaction(tricountID: String, shopName: String, payerName: String, tricountViewController: TricountViewController = TricountViewController()) async throws -> String {
+    if !tricountID.isEmpty {
+        await tricountViewController.setTricountID(tricountID: tricountID)
+        await tricountViewController.loadView()
+    }
     await tricountViewController.viewDidLoad()
-    
-    //let webView = await tricountViewController.webView!
-    
+        
     // Wait for page to load before executing JavaScript
     let maxTime = 10.0
     var time = 0.0
@@ -356,10 +366,11 @@ func verifyTricountTransaction(tricountID: String, shopName: String, payerName: 
         }
     }
     
-    print(transactions)
+    //print(transactions)
+    print(transactions.last ?? "")
     
     var res = "FAIL"
-    if transactions.contains(shopName) {
+    if transactions.last == shopName {
         res = "SUCCESS"
     }
     

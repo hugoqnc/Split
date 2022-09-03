@@ -23,9 +23,9 @@ public func visualization(_ image: UIImage, observations: [VNDetectedObjectObser
 
     context?.setLineWidth(2)
     context?.setLineJoin(CGLineJoin.round)
-    context?.setStrokeColor(UIColor.gray.cgColor)
+    context?.setStrokeColor(UIColor.init(red: 48/255, green: 123/255, blue: 246/255, alpha: 0.4).cgColor)
     context?.setLineWidth(2)
-    context?.setFillColor(red: 48/255, green: 123/255, blue: 246/255, alpha: 0.3)
+    context?.setFillColor(red: 48/255, green: 123/255, blue: 246/255, alpha: 0.2)
 
     observations.forEach { observation in
         let bounds = observation.boundingBox.applying(transform)
