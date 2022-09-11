@@ -115,7 +115,7 @@ struct TricountAddSheet: View {
                         Text("Add")
                             .bold()
                     }
-                    .disabled(tricountLinkInput == "")
+                    .disabled(tricountLinkInput == "" || inProgress)
                 }
             }
         }

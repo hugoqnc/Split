@@ -172,7 +172,7 @@ struct TricountExportSheet: View {
                         Text("Export")
                             .bold()
                     }
-                    .disabled(!(model.users.contains(payer) && compatibleTricounts(users: model.users, tricountList: model.parameters.tricountList).contains(chosenTricount)))
+                    .disabled(!(model.users.contains(payer) && compatibleTricounts(users: model.users, tricountList: model.parameters.tricountList).contains(chosenTricount)) || inProgress)
                 }
             }
             //.navigationTitle("Tricount Export")

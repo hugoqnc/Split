@@ -10,18 +10,18 @@ import Vision
 
 
 struct ShowroomPreviews: View {
-    @State var previewNumber = 4
+    @State var previewNumber = 1
     
     var body: some View {
         Group {
             switch previewNumber {
-            case 1:
-                Scan_Previews.previews
             case 2:
-                Attribution_Previews.previews
+                Scan_Previews.previews
             case 3:
-                Results_Previews.previews
+                Attribution_Previews.previews
             case 4:
+                Results_Previews.previews
+            case 1:
                 Start_Previews.previews
             default:
                 Text("Hello")
@@ -45,7 +45,7 @@ func previewModel(_ previewNumber: Int) -> ModelData {
     model.images = [IdentifiedImage(id: "1111", image: UIImage(named: "sample_receipt_scan"))]
     model.receiptName = "Local Food Market"
     
-//    model.parameters.tricountList.append(Tricount(tricountName: "Shared Flat", tricountID: "", names: ["Hugo", "Alicia", "Thomas"], status: ""))
+    model.parameters.tricountList.append(Tricount(tricountName: "Shared Flat", tricountID: "", names: ["Hugo", "Alicia", "Thomas"], status: ""))
     
     var lowercase = true
     if previewNumber == 1 || previewNumber == 2 {
