@@ -16,6 +16,7 @@ struct TricountExportSheet: View {
     @State var chosenTricount = Tricount()
     @State var inProgress = false
     @State var exportStatus = ""
+    @State var showTricountDisclaimer = false
     
     var body: some View {
         
@@ -124,10 +125,21 @@ struct TricountExportSheet: View {
                 
                 Spacer()
                 
-                Text("Split! is not affiliated in any way with Tricount.")
-                    .font(.caption2)
-                    .foregroundColor(.secondary)
-                    .opacity(0.8)
+                VStack(spacing: 3) {
+                    Text("Split! is not affiliated in any way with Tricount.")
+                        .foregroundColor(.secondary)
+                        .font(.caption)
+                        //.opacity(0.8)
+                    Button {
+                        showTricountDisclaimer = true
+                    } label: {
+                        Text("See more...")
+                            .font(.caption)
+                    }
+                    .sheet(isPresented: $showTricountDisclaimer) {
+                        TricountDisclaimerSheet()
+                    }
+                }
             }
             .animation(.easeInOut, value: exportStatus)
             .toolbar {

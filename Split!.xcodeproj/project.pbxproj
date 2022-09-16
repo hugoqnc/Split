@@ -59,6 +59,7 @@
 		4FD7C2DD27E872BE009C4D9D /* FormDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD7C2DC27E872BE009C4D9D /* FormDetailsView.swift */; };
 		4FDC144427DBA81600FE7C2E /* AutomatedRecognitionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDC144327DBA81600FE7C2E /* AutomatedRecognitionLabel.swift */; };
 		4FDE9B2D28BCF556008A622E /* TricountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE9B2C28BCF556008A622E /* TricountTests.swift */; };
+		4FE6F25228D4AB7700C8D2AA /* TricountDisclaimerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE6F25128D4AB7700C8D2AA /* TricountDisclaimerSheet.swift */; };
 		4FF04F50278B0DF700650EBC /* LastItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF04F4F278B0DF700650EBC /* LastItemView.swift */; };
 		4FF60AFB27DA961A00AD58DB /* AdvancedParametersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF60AFA27DA961A00AD58DB /* AdvancedParametersView.swift */; };
 		4FF675D72799E60800B7F385 /* ShowScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF675D62799E60800B7F385 /* ShowScannerView.swift */; };
@@ -148,6 +149,7 @@
 		4FDC144327DBA81600FE7C2E /* AutomatedRecognitionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedRecognitionLabel.swift; sourceTree = "<group>"; };
 		4FDE9B2A28BCF556008A622E /* TricountTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TricountTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FDE9B2C28BCF556008A622E /* TricountTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TricountTests.swift; sourceTree = "<group>"; };
+		4FE6F25128D4AB7700C8D2AA /* TricountDisclaimerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TricountDisclaimerSheet.swift; sourceTree = "<group>"; };
 		4FF04F4F278B0DF700650EBC /* LastItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastItemView.swift; sourceTree = "<group>"; };
 		4FF60AFA27DA961A00AD58DB /* AdvancedParametersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedParametersView.swift; sourceTree = "<group>"; };
 		4FF675D62799E60800B7F385 /* ShowScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowScannerView.swift; sourceTree = "<group>"; };
@@ -357,6 +359,7 @@
 			isa = PBXGroup;
 			children = (
 				4F1752FB2819EF2B0032D3FE /* TricountExportSheet.swift */,
+				4FE6F25128D4AB7700C8D2AA /* TricountDisclaimerSheet.swift */,
 				4FF7F9242893162800468609 /* TricountAddSheet.swift */,
 			);
 			path = Tricount;
@@ -577,6 +580,7 @@
 				4F38B06D27CF949E004CD810 /* HistoryStatView.swift in Sources */,
 				4F4902A827CA99AF0047A441 /* HistoryView.swift in Sources */,
 				4F94B8FF27A7326400F7B10F /* MiniRepartitionRow.swift in Sources */,
+				4FE6F25228D4AB7700C8D2AA /* TricountDisclaimerSheet.swift in Sources */,
 				4F309E592784F68200F55BC6 /* AttributionView.swift in Sources */,
 				4F8EBD8927AAF75300CBD6AD /* StatView.swift in Sources */,
 				4F7CA06228BF8B0700050B47 /* ShowroomPreviews.swift in Sources */,

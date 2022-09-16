@@ -21,6 +21,7 @@ struct SettingsView: View {
     @State var showAdvancedParameters = false
     
     @State var addTricountSheet = false
+    @State var showTricountDisclaimer = false
     
     var year: String {
         get {
@@ -150,9 +151,19 @@ struct SettingsView: View {
                     } header: {
                         Text("Tricount")
                     } footer: {
-                        Text("Tricount is an app that you can use with Split! to synchronize your expenses with your friends.\n*Export to Tricount* appears as a sharing option if all members who share the receipt are also listed on a provided Tricount under the exact same name.")
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Tricount is an app that you can use with Split! to synchronize your expenses with your friends.\n*Export to Tricount* appears as a sharing option if all members who share the receipt are also listed on a provided Tricount under the exact same name.")
+                            Button {
+                                showTricountDisclaimer = true
+                            } label: {
+                                Text("See more...")
+                                    .font(.footnote)
+                            }
+                        }
                     }
-                    
+                    .sheet(isPresented: $showTricountDisclaimer) {
+                        TricountDisclaimerSheet()
+                    }
                     .sheet(isPresented: $addTricountSheet) {
                         TricountAddSheet(tricountList: $parameters.tricountList)
                     }
