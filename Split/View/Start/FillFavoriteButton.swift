@@ -96,6 +96,8 @@ struct FillFavoriteButton: View {
 
 struct FillFavoriteButton_Previews: PreviewProvider {
     static var previews: some View {
-        FillFavoriteButton(names: .constant(["Hugo", "Thomas"]), newUserName: .constant("Lucas"), currencyType: .constant(Currency.SymbolType.euro), update: .constant(true))
+        Form {
+            FillFavoriteButton(names: .constant(["Hugo", "Thomas"]), newUserName: .constant("Lucas"), currencyType: .constant(Currency.SymbolType.euro), update: .constant(true))
+        }
     }
 }

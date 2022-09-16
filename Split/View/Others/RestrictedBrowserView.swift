@@ -10,7 +10,7 @@ import WebKit
 import Foundation
 import Combine
 
-var verboseDebug = false
+var verboseDebug = true
 
 class LoadingModel: ObservableObject {
     @Published var hasLoaded = false
@@ -18,7 +18,7 @@ class LoadingModel: ObservableObject {
 
 struct WebView: UIViewRepresentable {
     var imageName: String
-    @ObservedObject var model: LoadingModel
+    @StateObject var model: LoadingModel
     
     // Make a coordinator to co-ordinate with WKWebView's default delegate functions
     func makeCoordinator() -> Coordinator {
@@ -64,10 +64,10 @@ struct WebView: UIViewRepresentable {
             if let host = navigationAction.request.url?.absoluteString {
                 if verboseDebug {
                     print(host)
-                    print("Authorized: "+String(host.contains(parent.urlString())))
+                    print("Authorized: "+String(host.contains(parent.urlString()) || host.contains("consent.google.com")))
                 }
                 if host.contains(parent.urlString()) || host.contains("consent.google.com") {
-                    // Navigation is cancelled
+                    // Navigation is authorized
                     decisionHandler(.allow)
                     return
                 }
@@ -79,12 +79,13 @@ struct WebView: UIViewRepresentable {
 
 struct RestrictedBrowserView: View {
     @Binding public var isShown: Bool
-    @ObservedObject var model = LoadingModel()
+    @StateObject var model = LoadingModel()
     public var imageName: String
     
     var body: some View {
         NavigationView {
             VStack {
+                //Text("\(String(model.hasLoaded))")
                 WebView(imageName: imageName, model: model)
                     .ignoresSafeArea()
             }
