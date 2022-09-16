@@ -58,29 +58,30 @@ struct InputItemDetails: View {
     var body: some View {
         NavigationView {
             VStack {
-                HStack(alignment: .center) {
-                    Image(systemName: "square.and.pencil")
-                        .frame(width: 30, height: 30)
-                        .font(.largeTitle)
-                        .foregroundColor(.primary)
-                        .padding()
-
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(title)
-                            .font(.headline)
-                            .foregroundColor(.primary)
-
-                        Text(message)
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
-                    
-                }
-                .padding(.top)
-                .padding(.horizontal, 40)
-                
                 Form {
+                    
+                    HStack(alignment: .center) {
+                        Image(systemName: "square.and.pencil")
+                            .frame(width: 30, height: 30)
+                            .font(.largeTitle)
+                            .foregroundColor(.primary)
+                            .padding()
+
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(title)
+                                .font(.headline)
+                                .foregroundColor(.primary)
+
+                            Text(message)
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                        
+                    }
+                    .padding(.horizontal)
+                    .listRowBackground(Color.clear)
+                    
                     Section {
                         TextField(placeholder1, text: $textState)
                             
