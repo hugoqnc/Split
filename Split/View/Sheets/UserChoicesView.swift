@@ -18,22 +18,22 @@ struct UserChoicesView: View {
         VStack {
             NavigationView {
                 VStack{
-                    
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text("\(user.name),")
-                                .font(.title)
-                                .fontWeight(.semibold)
-                            Text("Here are the details of your purchases")
-                                .font(.title)
-                                .fontWeight(.regular)
-                        }
-                        .padding(.horizontal, 40)
-                        .padding(.top,35)
-                        Spacer()
-                    }
 
                     List() {
+                        
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text("\(user.name),")
+                                    .font(.title)
+                                    .fontWeight(.semibold)
+                                Text("Here are the details of your purchases")
+                                    .font(.title)
+                                    .fontWeight(.regular)
+                            }
+                            Spacer()
+                        }
+                        .listRowBackground(Color.clear)
+                        
                         Section(header: Text("\(chosenItems.count) items — \(model.showPrice(price: model.balance(ofUser: user)))"), footer: Label("Items sorted by decreasing price contribution", systemImage: "arrow.up.arrow.down")){
                         //Section {
                             ForEach(chosenItems.sorted(by: {$0.price/Double($0.chosenBy.count)>$1.price/Double($1.chosenBy.count)})) { item in

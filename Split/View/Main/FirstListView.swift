@@ -113,48 +113,45 @@ struct FirstListView: View {
                                                         VStack {
                                                             TextField("Receipt Name", text: $model.receiptName.animation())
                                                                 .disabled(editMode != .active)
-                                                            if editMode == .active {
-                                                                Text("Tap to edit")
-                                                                    .font(.caption)
-                                                                    .foregroundColor(Color.accentColor)
-                                                                    .padding(0)
-                                                            }
+                                                                .foregroundColor(editMode == .active ? .blue : .primary)
                                                         }
                                                     }
                                                     
-                                                    
-                                                    ForEach(model.listOfProductsAndPrices) { pair in
-                                                        VStack(alignment: .leading) {
-                                                            HStack {
-                                                                Text(pair.name)
-                                                                Spacer()
-                                                                Text(model.showPrice(price: pair.price))
-                                                                    .padding(.trailing, 10)
+                                                    Section(header: Text("Detected Items")) {
+                                                        ForEach(model.listOfProductsAndPrices) { pair in
+                                                            VStack(alignment: .leading) {
+                                                                HStack {
+                                                                    Text(pair.name)
+                                                                    Spacer()
+                                                                    Text(model.showPrice(price: pair.price))
+                                                                        .padding(.trailing, 10)
+                                                                }
+                                                                if editMode == .active {
+                                                                    Text("Double-tap to edit")
+                                                                        .font(.caption)
+                                                                        .foregroundColor(Color.accentColor)
+                                                                        .padding(0)
+                                                                }
                                                             }
-                                                            if editMode == .active {
-                                                                Text("Double-tap to edit")
-                                                                    .font(.caption)
-                                                                    .foregroundColor(Color.accentColor)
-                                                                    .padding(0)
+                                                            
+                                                            .onTapGesture(count: 2) {
+                                                                if editMode == .active {
+                                                                    editItemAlertPair = pair
+                                                                    editItemAlert = true
+                                                                }
                                                             }
                                                         }
-                                                        
-                                                        .onTapGesture(count: 2) {
-                                                            if editMode == .active {
-                                                                editItemAlertPair = pair
-                                                                editItemAlert = true
+                                                        .onDelete { indexSet in
+                                                            withAnimation() {
+                                                                model.listOfProductsAndPrices.remove(atOffsets: indexSet)
                                                             }
-                                                        }
-                                                    }
-                                                    .onDelete { indexSet in
-                                                        withAnimation() {
-                                                            model.listOfProductsAndPrices.remove(atOffsets: indexSet)
-                                                        }
-                                                        if model.listOfProductsAndPrices.count == 0 {
-                                                            nothingFound = true //so that if a user deletes all items, he is redirected to the nothing found screen
+                                                            if model.listOfProductsAndPrices.count == 0 {
+                                                                nothingFound = true //so that if a user deletes all items, he is redirected to the nothing found screen
+                                                            }
                                                         }
                                                     }
                                                 }
+                                                .listStyle(.inset)
                                                 .environment(\.editMode, $editMode)
                                             }
                                         }
@@ -206,39 +203,43 @@ struct FirstListView: View {
                                                         }
                                                     }
                                                     
-                                                    
-                                                    ForEach(model.listOfProductsAndPrices) { pair in
-                                                        VStack(alignment: .leading) {
-                                                            HStack {
-                                                                Text(pair.name)
-                                                                Spacer()
-                                                                Text(model.showPrice(price: pair.price))
-                                                                    .padding(.trailing, 10)
+                                                    Section(header: Text("Detected Items")) {
+                                                        ForEach(model.listOfProductsAndPrices) { pair in
+                                                            VStack(alignment: .leading) {
+                                                                HStack {
+                                                                    Text(pair.name)
+                                                                    Spacer()
+                                                                    Text(model.showPrice(price: pair.price))
+                                                                        //.padding(.trailing, 10)
+                                                                }
+                                                                if editMode == .active {
+                                                                    Text("Double-tap to edit")
+                                                                        .font(.caption)
+                                                                        .foregroundColor(Color.accentColor)
+                                                                        .padding(0)
+                                                                }
                                                             }
-                                                            if editMode == .active {
-                                                                Text("Double-tap to edit")
-                                                                    .font(.caption)
-                                                                    .foregroundColor(Color.accentColor)
-                                                                    .padding(0)
+                                                            
+                                                            .onTapGesture(count: 2) {
+                                                                if editMode == .active {
+                                                                    editItemAlertPair = pair
+                                                                    editItemAlert = true
+                                                                }
                                                             }
                                                         }
-                                                        
-                                                        .onTapGesture(count: 2) {
-                                                            if editMode == .active {
-                                                                editItemAlertPair = pair
-                                                                editItemAlert = true
+                                                        .onDelete { indexSet in
+                                                            withAnimation() {
+                                                                model.listOfProductsAndPrices.remove(atOffsets: indexSet)
                                                             }
-                                                        }
-                                                    }
-                                                    .onDelete { indexSet in
-                                                        withAnimation() {
-                                                            model.listOfProductsAndPrices.remove(atOffsets: indexSet)
-                                                        }
-                                                        if model.listOfProductsAndPrices.count == 0 {
-                                                            nothingFound = true //so that if a user deletes all items, he is redirected to the nothing found screen
+                                                            if model.listOfProductsAndPrices.count == 0 {
+                                                                nothingFound = true //so that if a user deletes all items, he is redirected to the nothing found screen
+                                                            }
                                                         }
                                                     }
                                                 }
+                                                .listStyle(.inset)
+                                                .padding(.horizontal, 5)
+                                                .padding(.trailing, 10)
                                                 .environment(\.editMode, $editMode)
                                                 
                                                 Text("") //necessary to keep the bottom bar blurred
