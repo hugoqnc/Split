@@ -92,20 +92,6 @@ struct MultipleSelectionRow: View {
     }
 }
 
-//extension View {
-//
-//    func conditionalModifier<M1: ViewModifier, M2: ViewModifier>
-//        (on condition: Bool, trueCase: M1, falseCase: M2) -> some View {
-//        Group {
-//            if condition {
-//                self.modifier(trueCase)
-//            } else {
-//                self.modifier(falseCase)
-//            }
-//        }
-//    }
-//}
-
 struct SelectableItems_Previews: PreviewProvider {
     static var previews: some View {
         SelectableItems(users: [User(name: "Hugo"), User(name: "Lucas"), User(name: "Thomas")], selections: .constant([]))

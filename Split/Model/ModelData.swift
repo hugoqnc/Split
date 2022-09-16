@@ -18,6 +18,7 @@ final class ModelData: ObservableObject {
     @Published var parameters = Parameters.default
     @Published var receiptName = ""
     @Published var continueWithStandardRecognition = false
+    @Published var numberOfScanFails = 0
     var date = Date()
     
     func addNameToReceipt(name: String) -> Void {
@@ -187,13 +188,14 @@ final class ModelData: ObservableObject {
             return sharedText        }
     }
     
-    func eraseModelData() {
+    func eraseModelData(eraseScanFails: Bool = true) {
         withAnimation {
             self.startTheProcess = false
         }
         
         let secondsToDelay = 0.35
         DispatchQueue.main.asyncAfter(deadline: .now() + secondsToDelay) {
+            if eraseScanFails {self.numberOfScanFails = 0}
             self.users = []
             self.listOfProductsAndPrices = []
             self.currency = Currency.default
@@ -203,6 +205,8 @@ final class ModelData: ObservableObject {
         }
     }
     func eraseScanData() {
+        self.numberOfScanFails += 1 // when eraseScanData is called, it means that a scan parsing has failed and that the user tries again
+        
         self.listOfProductsAndPrices = []
         self.images = []
         self.receiptName = ""

@@ -383,12 +383,3 @@ func verifyTricountTransaction(tricountID: String, shopName: String, payerName: 
     
     return res
 }
-
-
-extension String { // decode Uicode to UTF8
-    var decoded : String {
-        let data = self.data(using: .utf8)
-        let message = String(data: data!, encoding: .nonLossyASCII) ?? ""
-        return message
-    }
-}

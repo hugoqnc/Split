@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import StoreKit
 
 extension Array where Element: Comparable {
     func containsSameElements(as other: [Element]) -> Bool {
@@ -30,7 +31,6 @@ extension StringProtocol {
 
 extension UIColor {
     /// Generate a color from the given string deterministically.
-    ///
     /// Generated colors are *not* evenly distributed in the HSL color space, but you and/or your users also probably won't be able to tell.
     convenience init(_ string: String, saturation: Double = 0.8, brightness: Double = 0.8) {
         let seed = Double.pi // Can be any positive irrational number. Pi was chosen for flavor.
@@ -45,5 +45,21 @@ extension UIColor {
         let hue = hash / 360
 
         self.init(hue: CGFloat(hue), saturation: CGFloat(saturation), brightness: CGFloat(brightness), alpha: 1.0)
+    }
+}
+
+extension String { // decode Unicode to UTF8
+    var decoded : String {
+        let data = self.data(using: .utf8)
+        let message = String(data: data!, encoding: .nonLossyASCII) ?? ""
+        return message
+    }
+}
+
+extension SKStoreReviewController {
+    public static func requestReviewInCurrentScene() {
+        if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+            requestReview(in: scene)
+        }
     }
 }

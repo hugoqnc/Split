@@ -7,9 +7,11 @@
 
 import SwiftUI
 import UIKit
+import StoreKit
 
 struct ResultView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass //for iPad specificity
+    
     var isShownInHistory = false
     @EnvironmentObject var model: ModelData
     @State private var showAllList = false
@@ -195,6 +197,9 @@ struct ResultView: View {
                                     fatalError(error.localizedDescription)
                                 case .success(_):
                                     withAnimation() {
+                                        if model.numberOfScanFails == 0 {
+                                            SKStoreReviewController.requestReviewInCurrentScene()
+                                        }
                                         model.eraseModelData()
                                     }
                                 }

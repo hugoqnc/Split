@@ -86,7 +86,7 @@ struct ShowScannerView: View {
                     } didCancelScanning: {
                         // Dismiss the scanner controller and the sheet.
                         withAnimation() {
-                            model.eraseModelData()
+                            model.eraseModelData(eraseScanFails: false)
                         }
                     }
                 } else {

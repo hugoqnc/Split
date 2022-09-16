@@ -15,6 +15,7 @@ struct SettingsView: View {
     
     var githubLink = "https://github.com/hugoqnc/Split"
     var appStoreLink = "https://apps.apple.com/us/app/split-your-receipts/id1642182485"
+    var privacyLink = "https://github.com/hugoqnc/Split/blob/main/PRIVACY.md"
 
     @State var parameters = Parameters()
     @State private var showSharingOptions = false
@@ -218,12 +219,20 @@ struct SettingsView: View {
                     
                     HStack{
                         Spacer()
-                        Text("© \(year) Hugo Queinnec ")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
+                        VStack(spacing: 3) {
+                            Text("© \(year) Hugo Queinnec ")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                            Button {
+                                openURL(URL(string: privacyLink)!)
+                            } label: {
+                                Text("Privacy Policy")
+                                    .font(.caption)
+                            }
+                        }
                         Spacer()
                     }
-                    .listRowBackground(Color.secondary.opacity(0.0))
+                    .listRowBackground(Color.clear)
 
                 }
             }
