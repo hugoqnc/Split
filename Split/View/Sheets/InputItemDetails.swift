@@ -83,9 +83,9 @@ struct InputItemDetails: View {
                 Form {
                     Section {
                         TextField(placeholder1, text: $textState)
-                            .listRowBackground(Color.secondary.opacity(0.1))
+                            
                         TextField(placeholder2, value: $doubleState, format: .number)
-                            .listRowBackground(Color.secondary.opacity(0.1))
+                            
                             .keyboardType(.decimalPad)
 
                     } header: {
@@ -95,7 +95,7 @@ struct InputItemDetails: View {
                     if initialSelections != nil{
                         SelectableItems(users: model.users, selections: $selectionsState)
                             .padding(.vertical, 10)
-                            .listRowBackground(Color.secondary.opacity(0.1))
+                            
                     }
                 }
 
@@ -152,9 +152,6 @@ struct InputItemDetails_Previews: PreviewProvider {
                                  action: {_,_,_ in
                                   })
                     .environmentObject(model)
-                    .onAppear {
-                        UITableView.appearance().backgroundColor = .clear
-                    }
             //}
     }
 }

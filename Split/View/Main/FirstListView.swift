@@ -121,7 +121,7 @@ struct FirstListView: View {
                                                             }
                                                         }
                                                     }
-                                                    .listRowBackground(Color.secondary.opacity(0.1))
+                                                    
                                                     
                                                     ForEach(model.listOfProductsAndPrices) { pair in
                                                         VStack(alignment: .leading) {
@@ -138,7 +138,7 @@ struct FirstListView: View {
                                                                     .padding(0)
                                                             }
                                                         }
-                                                        .listRowBackground(Color.secondary.opacity(0.1))
+                                                        
                                                         .onTapGesture(count: 2) {
                                                             if editMode == .active {
                                                                 editItemAlertPair = pair
@@ -205,7 +205,7 @@ struct FirstListView: View {
                                                             }
                                                         }
                                                     }
-                                                    .listRowBackground(Color.secondary.opacity(0.1))
+                                                    
                                                     
                                                     ForEach(model.listOfProductsAndPrices) { pair in
                                                         VStack(alignment: .leading) {
@@ -222,7 +222,7 @@ struct FirstListView: View {
                                                                     .padding(0)
                                                             }
                                                         }
-                                                        .listRowBackground(Color.secondary.opacity(0.1))
+                                                        
                                                         .onTapGesture(count: 2) {
                                                             if editMode == .active {
                                                                 editItemAlertPair = pair

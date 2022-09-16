@@ -89,7 +89,7 @@ struct SettingsView: View {
                     } header: {
                         Text("Image Recognition")
                     }
-                    .listRowBackground(Color.secondary.opacity(0.1))
+                    
                     
                     Section {
                         Menu {
@@ -117,7 +117,7 @@ struct SettingsView: View {
                     } footer: {
                         parameters.selectAllUsers ? Text("Currently, when assigning items to users, they will **all** be selected by default.") : Text("Currently, when assigning items to users, **no one** will be selected by default.")
                     }
-                    .listRowBackground(Color.secondary.opacity(0.1))
+                    
                     
                     Section {
                         List {
@@ -152,7 +152,7 @@ struct SettingsView: View {
                     } footer: {
                         Text("Tricount is an app that you can use with Split! to synchronize your expenses with your friends.\n*Export to Tricount* appears as a sharing option if all members who share the receipt are also listed on a provided Tricount under the exact same name.")
                     }
-                    .listRowBackground(Color.secondary.opacity(0.1))
+                    
                     .sheet(isPresented: $addTricountSheet) {
                         TricountAddSheet(tricountList: $parameters.tricountList)
                     }
@@ -164,7 +164,7 @@ struct SettingsView: View {
                     } header: {
                         Text("Tutorials")
                     }
-                    .listRowBackground(Color.secondary.opacity(0.1))
+                    
                     
                     Section {
                         Button {
@@ -201,7 +201,7 @@ struct SettingsView: View {
                     } footer: {
                         Text("Tell me about an issue with the app, or suggest me an idea for a new feature! You can also contribute on Github, by submitting an issue or a pull request.")
                     }
-                    .listRowBackground(Color.secondary.opacity(0.1))
+                    
 
 
                     
@@ -258,10 +258,6 @@ struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {
             SettingsView()
-                .onAppear {
-                    UITableView.appearance().backgroundColor = .clear
-            }
         }
-        //.preferredColorScheme(.dark)
     }
 }

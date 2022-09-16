@@ -61,7 +61,7 @@ struct UserChoicesView: View {
 
                                     }
                                 }
-                                .listRowBackground(Color.secondary.opacity(0.1))
+                                
                             }
                         }
                     }

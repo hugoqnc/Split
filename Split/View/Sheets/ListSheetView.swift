@@ -34,7 +34,7 @@ struct ListSheetView: View {
                                 TextField("Receipt Name", text: $model.receiptName.animation())
                             }
                         }
-                        .listRowBackground(Color.secondary.opacity(0.1))
+                        
                     }
                     
                     Section(header: Text("\(model.listOfProductsAndPrices.count) items — \(model.showPrice(price: model.totalPrice))"), footer: isShownInHistory ? Label("Items ordered as they were on the receipt", systemImage: "arrow.up.arrow.down") : Label("Long press on an assigned item to modify it", systemImage: "lightbulb")){
@@ -101,7 +101,7 @@ struct ListSheetView: View {
                                 Text(model.showPrice(price: pair.price))
                                     .fontWeight(.semibold)
                             }
-                            .listRowBackground(Color.secondary.opacity(0.1))
+                            
                             .foregroundColor(itemCounter>=0 ? pair.id==model.listOfProductsAndPrices[itemCounter].id ? .blue : nil : nil)
                         }
                         .sheet(isPresented: $editItemAlert) {

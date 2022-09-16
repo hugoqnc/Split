@@ -65,7 +65,7 @@ struct TricountAddSheet: View {
                 
                 Form {
                     TextField("Tricount Link/ID", text: $tricountLinkInput)
-                        .listRowBackground(Color.secondary.opacity(0.1))
+                        
                 }
                 .disabled(inProgress)
                 
@@ -127,8 +127,5 @@ struct TricountAddSheet: View {
 struct TricountAddSheet_Previews: PreviewProvider {
     static var previews: some View {
         TricountAddSheet(tricountList: .constant([]))
-            .onAppear {
-                UITableView.appearance().backgroundColor = .clear
-            }
     }
 }

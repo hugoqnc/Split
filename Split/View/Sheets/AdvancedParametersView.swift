@@ -76,7 +76,7 @@ struct AdvancedParametersView: View {
                 } header: {
                     Text("Standard Recognition")
                 }
-                .listRowBackground(Color.secondary.opacity(0.1))
+                
                 
                 Section {
                     HStack {
@@ -202,7 +202,7 @@ struct AdvancedParametersView: View {
                 } header: {
                     Text("Advanced Recognition")
                 }
-                .listRowBackground(Color.secondary.opacity(0.1))
+                
                 
                 Section {
                     Button {
@@ -242,7 +242,7 @@ struct AdvancedParametersView: View {
                     }
                     
                 }
-                .listRowBackground(Color.secondary.opacity(0.1))
+                
             }
         }
         //.navigationBarHidden(true)

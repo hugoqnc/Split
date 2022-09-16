@@ -47,7 +47,7 @@ struct StartView: View {
                         } header: {
                             //Text("Favorites")
                         }
-                        .listRowBackground(Color.secondary.opacity(0.1))
+                        
                         
                         formDetails
                         
@@ -142,8 +142,5 @@ struct StartView_Previews: PreviewProvider {
     static var previews: some View {
         StartView()
             .environmentObject(ModelData())
-            .onAppear {
-                UITableView.appearance().backgroundColor = .clear
-            }
     }
 }

@@ -137,7 +137,7 @@ struct EditFavoriteButton: View {
                                     }
                                 }
                             }
-                            .listRowBackground(Color.secondary.opacity(0.1))
+                            
                         }
                         .toolbar {
                             ToolbarItem(placement: .navigationBarLeading) {
