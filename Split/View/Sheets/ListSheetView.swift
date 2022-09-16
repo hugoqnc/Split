@@ -25,16 +25,12 @@ struct ListSheetView: View {
                         Section(header:
                             HStack{
                                 Text("Receipt Name")
-                                Text("\(editPair.name)") //due to https://developer.apple.com/forums/thread/652080
-                                    .hidden()
-                                    .frame(height:0)
                             }
                         ){
                             VStack {
                                 TextField("Receipt Name", text: $model.receiptName.animation())
                             }
                         }
-                        
                     }
                     
                     Section(header: Text("\(model.listOfProductsAndPrices.count) items — \(model.showPrice(price: model.totalPrice))"), footer: isShownInHistory ? Label("Items ordered as they were on the receipt", systemImage: "arrow.up.arrow.down") : Label("Long press on an assigned item to modify it", systemImage: "lightbulb")){
@@ -44,18 +40,19 @@ struct ListSheetView: View {
                                     VStack(alignment: .leading) {
                                         Text("Current item".uppercased())
                                             .font(.caption)
-                                            .padding(.top,3)
+                                            //.padding(.top,3)
                                         Text(pair.name)
                                             .font(.headline)
                                     }
+                                    .padding(.vertical,1)
                                 } else {
                                     if !pair.chosenBy.isEmpty {
                                         VStack(alignment: .leading, spacing: 2) {
                                             Text(pair.name)
-                                                .padding(.vertical, 3)
+                                                //.padding(.bottom, 3)
                                             MiniRepartitionRow(userIDs: pair.chosenBy)
                                                 .padding(.horizontal, 4)
-                                                .padding(.bottom, 3)
+                                                //.padding(.bottom, 3)
                                         }
 //                                        .fullScreenCover(isPresented: $showSafariView) {
 //                                            let urlString = ("http://www.google.com/images?q="+editPair.name).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
@@ -133,6 +130,11 @@ struct ListSheetView: View {
                                               })
                         }
                     }
+                    
+                    Text("\(editPair.name)") //due to https://developer.apple.com/forums/thread/652080
+                        .hidden()
+                        .frame(height:0)
+                        .listRowBackground(Color.clear)
                 }
             }
             .navigationBarTitle(Text(""), displayMode: .inline)

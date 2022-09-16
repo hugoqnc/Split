@@ -11,6 +11,8 @@ struct UserChoicesView: View {
     @EnvironmentObject var model: ModelData
     var user: User
     @Environment(\.dismiss) var dismiss
+    @State private var editPair = PairProductPrice()
+    @State private var showSafariView = false
 
     var body: some View {
         let chosenItems: [PairProductPrice] = model.chosenItems(ofUser: user)
@@ -29,9 +31,13 @@ struct UserChoicesView: View {
                                 Text("Here are the details of your purchases")
                                     .font(.title)
                                     .fontWeight(.regular)
+                                Text("\(editPair.name)") //due to https://developer.apple.com/forums/thread/652080
+                                    .hidden()
+                                    .frame(height:0)
                             }
                             Spacer()
                         }
+                        .padding(.bottom, -20)
                         .listRowBackground(Color.clear)
                         
                         Section(header: Text("\(chosenItems.count) items — \(model.showPrice(price: model.balance(ofUser: user)))"), footer: Label("Items sorted by decreasing price contribution", systemImage: "arrow.up.arrow.down")){
@@ -41,11 +47,23 @@ struct UserChoicesView: View {
                                     HStack {
                                         VStack(alignment: .leading, spacing: 2) {
                                             Text(item.name)
-                                                .padding(.vertical, 3)
+                                                //.padding(.vertical, 3)
                                             MiniRepartitionRow(userIDs: item.chosenBy)
                                                 .padding(.horizontal, 4)
-                                                .padding(.bottom, 3)
+                                                //.padding(.bottom, 3)
                                         }
+                                        .sheet(isPresented: $showSafariView, content: {
+                                            RestrictedBrowserView(isShown: $showSafariView, imageName: editPair.name)
+                                        })
+                                        .contextMenu{
+                                            Button{
+                                                editPair = item
+                                                showSafariView = true
+                                            } label: {
+                                                Label("Search for images", systemImage: "magnifyingglass")
+                                            }
+                                        }
+                                        
                                         Spacer()
                                         
 

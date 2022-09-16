@@ -13,7 +13,6 @@ struct SplitApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(ModelData())
-            //TricountExportSheet_Previews.previews
         }
     }
 }
