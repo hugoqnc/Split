@@ -39,7 +39,6 @@
 		4F4944272899D41100FBC482 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4944262899D41100FBC482 /* Extensions.swift */; };
 		4F4A55B327A1B906001F84E3 /* PreferencesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4A55B227A1B906001F84E3 /* PreferencesStore.swift */; };
 		4F63DF0727A421B000E2CA3A /* InputItemDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F63DF0627A421B000E2CA3A /* InputItemDetails.swift */; };
-		4F7C1289279B46D100A5E50B /* SlideOverCard in Frameworks */ = {isa = PBXBuildFile; productRef = 4F7C1288279B46D100A5E50B /* SlideOverCard */; };
 		4F7C128C279B530A00A5E50B /* ListTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7C128B279B530A00A5E50B /* ListTutorialView.swift */; };
 		4F7C128E279C047E00A5E50B /* Visualization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7C128D279C047E00A5E50B /* Visualization.swift */; };
 		4F7CA06228BF8B0700050B47 /* ShowroomPreviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7CA06128BF8B0700050B47 /* ShowroomPreviews.swift */; };
@@ -60,6 +59,7 @@
 		4FDC144427DBA81600FE7C2E /* AutomatedRecognitionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDC144327DBA81600FE7C2E /* AutomatedRecognitionLabel.swift */; };
 		4FDE9B2D28BCF556008A622E /* TricountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE9B2C28BCF556008A622E /* TricountTests.swift */; };
 		4FE6F25228D4AB7700C8D2AA /* TricountDisclaimerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE6F25128D4AB7700C8D2AA /* TricountDisclaimerSheet.swift */; };
+		4FE6F25528D4C02800C8D2AA /* SlideOverCard in Frameworks */ = {isa = PBXBuildFile; productRef = 4FE6F25428D4C02800C8D2AA /* SlideOverCard */; };
 		4FF04F50278B0DF700650EBC /* LastItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF04F4F278B0DF700650EBC /* LastItemView.swift */; };
 		4FF60AFB27DA961A00AD58DB /* AdvancedParametersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF60AFA27DA961A00AD58DB /* AdvancedParametersView.swift */; };
 		4FF675D72799E60800B7F385 /* ShowScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF675D62799E60800B7F385 /* ShowScannerView.swift */; };
@@ -163,7 +163,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F7C1289279B46D100A5E50B /* SlideOverCard in Frameworks */,
+				4FE6F25528D4C02800C8D2AA /* SlideOverCard in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -413,7 +413,7 @@
 			);
 			name = Split;
 			packageProductDependencies = (
-				4F7C1288279B46D100A5E50B /* SlideOverCard */,
+				4FE6F25428D4C02800C8D2AA /* SlideOverCard */,
 			);
 			productName = ReceiptSplitter;
 			productReference = 4F309E1F2784B49900F55BC6 /* Split!.app */;
@@ -510,7 +510,7 @@
 			);
 			mainGroup = 4F309E162784B49900F55BC6;
 			packageReferences = (
-				4F7C1287279B46D100A5E50B /* XCRemoteSwiftPackageReference "SlideOverCard" */,
+				4FE6F25328D4C02800C8D2AA /* XCRemoteSwiftPackageReference "SlideOverCard" */,
 			);
 			productRefGroup = 4F309E202784B49900F55BC6 /* Products */;
 			projectDirPath = "";
@@ -806,6 +806,9 @@
 				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "fr.telecom-paris.queinnec.hugo.Split";
 				PRODUCT_NAME = "Split!";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -839,6 +842,9 @@
 				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "fr.telecom-paris.queinnec.hugo.Split";
 				PRODUCT_NAME = "Split!";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1012,20 +1018,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		4F7C1287279B46D100A5E50B /* XCRemoteSwiftPackageReference "SlideOverCard" */ = {
+		4FE6F25328D4C02800C8D2AA /* XCRemoteSwiftPackageReference "SlideOverCard" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/joogps/SlideOverCard.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
+				kind = exactVersion;
+				version = 2.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		4F7C1288279B46D100A5E50B /* SlideOverCard */ = {
+		4FE6F25428D4C02800C8D2AA /* SlideOverCard */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4F7C1287279B46D100A5E50B /* XCRemoteSwiftPackageReference "SlideOverCard" */;
+			package = 4FE6F25328D4C02800C8D2AA /* XCRemoteSwiftPackageReference "SlideOverCard" */;
 			productName = SlideOverCard;
 		};
 /* End XCSwiftPackageProductDependency section */

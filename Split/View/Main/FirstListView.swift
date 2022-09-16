@@ -194,12 +194,7 @@ struct FirstListView: View {
                                                         VStack {
                                                             TextField("Receipt Name", text: $model.receiptName.animation())
                                                                 .disabled(editMode != .active)
-                                                            if editMode == .active {
-                                                                Text("Tap to edit")
-                                                                    .font(.caption)
-                                                                    .foregroundColor(Color.accentColor)
-                                                                    .padding(0)
-                                                            }
+                                                                .foregroundColor(editMode == .active ? .blue : .primary)
                                                         }
                                                     }
                                                     

@@ -140,6 +140,7 @@ struct TricountExportSheet: View {
                         TricountDisclaimerSheet()
                     }
                 }
+                .padding(.bottom, 10)
             }
             .animation(.easeInOut, value: exportStatus)
             .toolbar {

@@ -74,6 +74,7 @@ struct TricountDisclaimerSheet: View {
                 .padding()
                 .padding(.horizontal, 10)
             }
+            .navigationBarTitle("", displayMode: .inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
