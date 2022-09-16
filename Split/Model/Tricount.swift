@@ -70,7 +70,7 @@ class TricountViewController: UIViewController, WKNavigationDelegate {
 }
 
 func getInfoFromTricount(tricountID: String) async throws -> Tricount {
-    let tricountViewController = TricountViewController()
+    let tricountViewController = await TricountViewController()
     await tricountViewController.setTricountID(tricountID: tricountID)
     await tricountViewController.loadView()
     await tricountViewController.viewDidLoad()
@@ -203,7 +203,7 @@ func addToTricount(tricountID: String, shopName: String, payerName: String, list
     //timer
     let start = CFAbsoluteTimeGetCurrent()
     
-    let tricountViewController = TricountViewController()
+    let tricountViewController = await TricountViewController()
     await tricountViewController.setTricountID(tricountID: tricountID)
     await tricountViewController.loadView()
     await tricountViewController.viewDidLoad()
@@ -292,7 +292,7 @@ func addToTricount(tricountID: String, shopName: String, payerName: String, list
     }
     
     // Verification
-    //res = try await verifyTricountTransaction(tricountID: "", shopName: shopName, payerName: payerName, tricountViewController: tricountViewController)
+    //res = try await verifyTricountTransaction(tricountID: "", shopName: shopName, payerName: payerName, tricountViewControllerOpt: tricountViewController)
     //counterUpdate(res: res)
     counterUpdate(res: "SUCCESS")
     
@@ -303,7 +303,14 @@ func addToTricount(tricountID: String, shopName: String, payerName: String, list
 }
 
 
-func verifyTricountTransaction(tricountID: String, shopName: String, payerName: String, tricountViewController: TricountViewController = TricountViewController()) async throws -> String {
+func verifyTricountTransaction(tricountID: String, shopName: String, payerName: String, tricountViewControllerOpt: TricountViewController?) async throws -> String {
+    var tricountViewController: TricountViewController
+    if let unwrapped = tricountViewControllerOpt {
+        tricountViewController = unwrapped
+    } else {
+        tricountViewController = await TricountViewController()
+    }
+    
     if !tricountID.isEmpty {
         await tricountViewController.setTricountID(tricountID: tricountID)
         await tricountViewController.loadView()

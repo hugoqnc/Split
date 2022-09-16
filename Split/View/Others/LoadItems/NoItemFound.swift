@@ -11,7 +11,7 @@ struct NoItemFound: View {
     var body: some View {
         VStack {
             Image(systemName: "exclamationmark.triangle")
-                .resizable(resizingMode: .tile)
+                .resizable(resizingMode: .stretch)
                 .frame(width: 30.0, height: 30.0)
                 .font(.largeTitle)
                 .foregroundColor(.orange)

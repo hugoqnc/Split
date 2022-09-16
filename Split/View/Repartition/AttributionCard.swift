@@ -95,7 +95,7 @@ struct AttributionCard: View {
                             showSafariView = true
                         }) {
                             Image(systemName: "magnifyingglass")
-                                .resizable(resizingMode: .tile)
+                                .resizable(resizingMode: .stretch)
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 30.0, height: 25.0)
                         }
@@ -157,7 +157,7 @@ struct AttributionCard: View {
                         
                     } label: {
                         Image(systemName: "ellipsis.circle")
-                            .resizable(resizingMode: .tile)
+                            .resizable(resizingMode: .stretch)
                             .frame(width: 25.0, height: 25.0)
                             .padding(.top)
                             .padding(.trailing,5)
@@ -177,7 +177,7 @@ struct AttributionCard: View {
                         }
                     } label: {
                         Image(systemName: "checkmark.circle.fill")
-                            .resizable(resizingMode: .tile)
+                            .resizable(resizingMode: .stretch)
                             .frame(width: 40.0, height: 40.0)
                             .padding(.top,5)
                     }

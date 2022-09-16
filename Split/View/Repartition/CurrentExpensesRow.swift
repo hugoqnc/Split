@@ -29,7 +29,7 @@ struct CurrentExpensesRow: View {
             HStack {
                 VStack{
                     Image(systemName: "person.2")
-                        .resizable(resizingMode: .tile)
+                        .resizable(resizingMode: .stretch)
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 35.0, height: 30.0)
                         .foregroundColor(.primary)

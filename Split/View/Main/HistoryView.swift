@@ -47,6 +47,7 @@ struct HistoryView: View {
                         NavigationLink {
                             ResultViewHistoryWrapper(resultUnit: resultUnit, tricountList: model.parameters.tricountList)
                                 .navigationTitle(date(resultUnit: resultUnit))
+                                .navigationBarTitleDisplayMode(.inline)
                         } label: {
                             ResultCard(resultUnit: resultUnit)
                         }

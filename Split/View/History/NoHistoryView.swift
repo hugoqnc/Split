@@ -15,7 +15,7 @@ struct NoHistoryView: View {
             VStack {
                 
                 Image(systemName: "clock.arrow.circlepath")
-                    .resizable(resizingMode: .tile)
+                    .resizable(resizingMode: .stretch)
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 33.0, height: 30.0)
                     .font(.largeTitle)

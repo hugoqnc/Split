@@ -21,7 +21,7 @@ struct StatisticRectangle: View {
                     HStack {
                         VStack {
                             Image(systemName: iconString)
-                                .resizable(resizingMode: .tile)
+                                .resizable(resizingMode: .stretch)
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 65.0, height: 65.0)
                                 .foregroundColor(color)

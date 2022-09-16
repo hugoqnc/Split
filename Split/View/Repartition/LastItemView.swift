@@ -27,7 +27,7 @@ struct LastItemView: View {
                     //Text(debug)
                     
                     Image(systemName: "cart")
-                        .resizable(resizingMode: .tile)
+                        .resizable(resizingMode: .stretch)
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 40, height: 40)
                         .foregroundColor(.orange)
@@ -67,7 +67,7 @@ struct LastItemView: View {
                             } label: {
                                 HStack {
                                     Image(systemName: "plus.circle.fill")
-                                        .resizable(resizingMode: .tile)
+                                        .resizable(resizingMode: .stretch)
                                     .frame(width: 30, height: 30)
                                     Text("Add a new item")
                                         .font(.title3)
@@ -91,7 +91,7 @@ struct LastItemView: View {
                             } label: {
                                 HStack {
                                     Image(systemName: "checkmark.circle.fill")
-                                        .resizable(resizingMode: .tile)
+                                        .resizable(resizingMode: .stretch)
                                     .frame(width: 30, height: 30)
                                     Text("Finish")
                                         .font(.title3)

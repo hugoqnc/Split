@@ -11,7 +11,7 @@ struct NoMatchFound: View {
     var body: some View {
         VStack {
             Image(systemName: "doc.viewfinder")
-                .resizable(resizingMode: .tile)
+                .resizable(resizingMode: .stretch)
                 .frame(width: 30.0, height: 30.0)
                 .font(.largeTitle)
                 .foregroundColor(.orange)

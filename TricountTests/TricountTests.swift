@@ -46,7 +46,7 @@ class TricountTests: XCTestCase {
         
         var exportStatus = ""
         do {
-            let res = try await verifyTricountTransaction(tricountID: tricountID, shopName: shopName, payerName: payerName)
+            let res = try await verifyTricountTransaction(tricountID: tricountID, shopName: shopName, payerName: payerName, tricountViewControllerOpt: nil)
             print(res)
             exportStatus = res
         } catch {}
@@ -55,7 +55,7 @@ class TricountTests: XCTestCase {
     }
     
     func testMultipleTricountExports() async throws {
-        let numberOfIterations = 200
+        let numberOfIterations = 5
         
         for _ in 1...numberOfIterations {
             var randomID = UUID().uuidString
