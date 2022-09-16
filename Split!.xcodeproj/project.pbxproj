@@ -803,7 +803,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "fr.telecom-paris.queinnec.hugo.Split";
 				PRODUCT_NAME = "Split!";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -839,7 +839,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "fr.telecom-paris.queinnec.hugo.Split";
 				PRODUCT_NAME = "Split!";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
