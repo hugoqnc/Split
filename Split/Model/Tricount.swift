@@ -32,8 +32,8 @@ class TricountViewController: UIViewController, WKNavigationDelegate {
         super.viewDidLoad()
         hasLoaded = false
         let myURL = URL(string: "https://api.tricount.com/displayTricount.jsp?tricountID=\(tricountID ?? "")&acceptGACookies=true")
-        //print(myURL)
-        let myRequest = URLRequest(url: myURL!)
+        print(myURL)
+        let myRequest = URLRequest(url: myURL ?? URL(string: "https://api.tricount.com/")!)
         webView.load(myRequest)
     }
     

@@ -85,6 +85,7 @@ struct TricountDisclaimerSheet: View {
                 }
             }
         }
+        .navigationViewStyle(.stack)
     }
 }
 

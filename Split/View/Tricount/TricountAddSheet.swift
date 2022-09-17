@@ -27,45 +27,51 @@ struct TricountAddSheet: View {
     var body: some View {
         NavigationView {
             VStack {
-                HStack(alignment: .center) {
-                    Image(systemName: "plus.forwardslash.minus")
-                        .frame(width: 30, height: 30)
-                        .font(.largeTitle)
-                        .foregroundColor(.primary)
-                        .padding()
-
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("Add a Tricount")
-                            .font(.headline)
-                            .foregroundColor(.primary)
-
-                        Text("Paste below the share link (or ID) of a Tricount.")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
-                    
-                }
-                .padding(.top)
-                .padding(.horizontal, 40)
-                
-                // Error message
-                Group {
-                    Group {
-                        if tricount.status == "UNKNOWN_FAILURE" {
-                            InfoBlock(color: .red, icon: "xmark.octagon", title: "Nothing found", subtitle: "Please verify your Tricount link or your internet connection")
-                        } else if tricount.status == "NETWORK_FAILURE" {
-                            InfoBlock(color: .red, icon: "wifi.slash", title: "Connection failure", subtitle: "Please verify your internet connection and start again")
-                        }
-                    }
-                    .transition(.scale)
-                }
-                .padding(.horizontal, 40)
-                .padding(.top)
                 
                 Form {
-                    TextField("Tricount Link/ID", text: $tricountLinkInput)
-                        
+                    Section {
+                        VStack {
+                            HStack(alignment: .center) {
+                                Image(systemName: "plus.forwardslash.minus")
+                                    .frame(width: 30, height: 30)
+                                    .font(.largeTitle)
+                                    .foregroundColor(.primary)
+                                    .padding()
+                                
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text("Add a Tricount")
+                                        .font(.headline)
+                                        .foregroundColor(.primary)
+                                    
+                                    Text("Paste below the share link (or ID) of a Tricount.")
+                                        .font(.subheadline)
+                                        .foregroundColor(.secondary)
+                                        .fixedSize(horizontal: false, vertical: true)
+                                }
+                                
+                            }
+                            .padding(.horizontal)
+                            
+                            // Error message
+                            Group {
+                                Group {
+                                    if tricount.status == "UNKNOWN_FAILURE" {
+                                        InfoBlock(color: .red, icon: "xmark.octagon", title: "Nothing found", subtitle: "Please verify your Tricount link or your internet connection")
+                                    } else if tricount.status == "NETWORK_FAILURE" {
+                                        InfoBlock(color: .red, icon: "wifi.slash", title: "Connection failure", subtitle: "Please verify your internet connection and start again")
+                                    }
+                                }
+                                .transition(.scale)
+                            }
+                            .padding(.horizontal)
+                            .padding(.top)
+                        }
+                    }
+                    .listRowBackground(Color.clear)
+                    
+                    Section {
+                        TextField("Tricount Link or ID", text: $tricountLinkInput)
+                    }
                 }
                 .disabled(inProgress)
                 
