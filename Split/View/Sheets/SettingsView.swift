@@ -15,7 +15,7 @@ struct SettingsView: View {
     
     var githubLink = "https://github.com/hugoqnc/Split"
     var appStoreLink = "https://apps.apple.com/us/app/split-your-receipts/id1642182485"
-    var privacyLink = "https://github.com/hugoqnc/Split/blob/main/PRIVACY.md"
+    var privacyLink = "https://github.com/hugoqnc/Split/blob/main/PRIVACY.md#privacy-policy"
 
     @State var parameters = Parameters()
     @State private var showSharingOptions = false
