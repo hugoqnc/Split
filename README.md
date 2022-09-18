@@ -15,15 +15,15 @@ The app will calculate everyone's total, much faster than if you had to do it by
 <br/>
 
 <p align="center">
-<b>Coming to the App Store in early September 2022</b><br/>
-<a href="https://testflight.apple.com/join/UgAxQCh2">Test it today on TestFlight</a>
+  <a href="https://apps.apple.com/fr/app/split-your-receipts/id1642182485">
+    <img src="Resources/app-store.svg">
+  </a>
 </p>
 
 <br/>
 
-![](Resources/presentation.png)
+![](Resources/presentation.jpeg)
 
-Image: some screenshots of Split!, on iPhone and iPad, in light and dark mode. 
 
 ## Quick demo
 https://user-images.githubusercontent.com/67365803/187445035-cd8ae00c-e1be-445f-83ce-e9cc731e0ba1.mp4
@@ -61,6 +61,7 @@ https://user-images.githubusercontent.com/67365803/187445035-cd8ae00c-e1be-445f-
 - Developped using [SwiftUI](https://developer.apple.com/xcode/swiftui/), which results in native and fluid components and animations
 - The image recognition part is achieved through Apple's [Vision](https://developer.apple.com/documentation/vision) Framework
 - This project uses a single [Swift Packages](https://developer.apple.com/documentation/swift_packages) dependency: [SlideOverCard](https://github.com/joogps/SlideOverCard), that provides beautiful tutorial cards
+- Split! does not collect your data. You can find the privacy policy [here](PRIVACY.md).
 
 ## Highlights
 Split! was selected as a **winner of Apple's Swift Student Challenge** at WWDC 2022. My project was further selected among the 12 best projects of this year, and presented in front of Tim Cook!
