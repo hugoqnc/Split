@@ -9,12 +9,14 @@ import PhotosUI
 import SwiftUI
 
 struct ImagePicker: UIViewControllerRepresentable {
-    @Binding var image: UIImage?
+    @Binding var images: [UIImage]
     var onCancel: (() -> Void)?
+    var onDone: (() -> Void)?
 
     func makeUIViewController(context: Context) -> PHPickerViewController {
         var config = PHPickerConfiguration()
         config.filter = .images
+        config.selectionLimit = 0
         let picker = PHPickerViewController(configuration: config)
         picker.delegate = context.coordinator
         return picker
@@ -42,12 +44,23 @@ struct ImagePicker: UIViewControllerRepresentable {
                 parent.onCancel?()
                 return
             }
-
-            guard let provider = results.first?.itemProvider else { return }
-
-            if provider.canLoadObject(ofClass: UIImage.self) {
-                provider.loadObject(ofClass: UIImage.self) { image, _ in
-                    self.parent.image = image as? UIImage
+            
+            var resCounter = 0
+            for result in results {
+                guard result.itemProvider.canLoadObject(ofClass: UIImage.self) else { continue }
+                result.itemProvider.loadObject(ofClass: UIImage.self) { image, error in
+                    if let error = error {
+                        print("Error loading image: \(error.localizedDescription)")
+                        self.parent.onCancel?()
+                    } else if let image = image as? UIImage {
+                        DispatchQueue.main.async {
+                            self.parent.images.append(image)
+                            resCounter += 1
+                            if resCounter == results.count {
+                                self.parent.onDone?() // callback only when images contains everything
+                            }
+                        }
+                    }
                 }
             }
         }

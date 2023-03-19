@@ -13,7 +13,6 @@ struct ShowLibraryView: View {
     @ObservedObject var recognizedContent = TextData()
     
     @State private var selectedImages: [UIImage] = []
-    @State private var inputImage: UIImage?
     
     @State private var nothingFound = false
     @State private var showResults = false
@@ -26,18 +25,17 @@ struct ShowLibraryView: View {
             Group {
                 Text("")
                     .sheet(isPresented: $showingImagePicker) {
-                        ImagePicker(image: $inputImage) {
+                        ImagePicker(images: $selectedImages) {
                             withAnimation() {
                                 model.eraseModelData(eraseScanFails: false)
                             }
+                        } onDone: {
+                            let textRecognitionFunctions = TextRecognitionFunctions(model: model, recognizedContent: recognizedContent)
+                            textRecognitionFunctions.fillInModel(images: selectedImages) { nothing in
+                                nothingFound = nothing
+                            }
+                            showResults = true
                         }
-                    }
-                    .onChange(of: inputImage) { _ in
-                        let textRecognitionFunctions = TextRecognitionFunctions(model: model, recognizedContent: recognizedContent)
-                        textRecognitionFunctions.fillInModel(images: [inputImage!]) { nothing in
-                            nothingFound = nothing
-                        }
-                        showResults = true
                     }
             }
             .onAppear {
