@@ -33,9 +33,9 @@ struct LoadItemsView: View {
                             HStack {
                                 Spacer()
                                 VStack(spacing: 3) {
-                                    Label("Try again", systemImage: "arrow.clockwise")
+                                    Label(model.photoFromLibrary ? "Select another photo" : "Try again", systemImage: "arrow.clockwise")
                                         .font(.headline)
-                                    Text("with Advanced Recognition")
+                                    Text(model.photoFromLibrary ? "from the photo library" : "with Advanced Recognition")
                                         .font(.caption)
                                         .multilineTextAlignment(.leading)
                                 }
@@ -105,7 +105,7 @@ struct LoadItemsView: View {
                             }
                             
                         } label: {
-                            Label("Try again", systemImage: "arrow.clockwise")
+                            Label(model.photoFromLibrary ? "Try with another photo" : "Try again", systemImage: "arrow.clockwise")
                         }
                         .buttonStyle(.bordered)
                         .padding(.bottom,10)

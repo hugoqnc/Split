@@ -312,9 +312,8 @@ struct FirstListView: View {
                                 }
                                 ToolbarItem(id: UUID().uuidString, placement: .bottomBar, showsByDefault: true) {
                                     Button {
-                                        model.eraseScanData()
-                                        
                                         withAnimation() {
+                                            model.eraseScanData()
                                             showScanningResults = false
                                         }
                                     } label: {
