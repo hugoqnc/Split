@@ -23,6 +23,9 @@
 		4F309E6A2785EB7600F55BC6 /* CurrentExpensesRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F309E692785EB7600F55BC6 /* CurrentExpensesRow.swift */; };
 		4F309E6C2785F80600F55BC6 /* AttributionCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F309E6B2785F80600F55BC6 /* AttributionCard.swift */; };
 		4F309E732786DA4700F55BC6 /* SelectableItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F309E722786DA4700F55BC6 /* SelectableItems.swift */; };
+		4F3161F729C715F100E3C323 /* ShowLibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3161F629C715F100E3C323 /* ShowLibraryView.swift */; };
+		4F3161FB29C7214000E3C323 /* TextRecognitionFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3161FA29C7214000E3C323 /* TextRecognitionFunctions.swift */; };
+		4F3161FD29C758E400E3C323 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3161FC29C758E400E3C323 /* ImagePicker.swift */; };
 		4F37A89A27883C2B00947426 /* ListSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F37A89927883C2A00947426 /* ListSheetView.swift */; };
 		4F38B06D27CF949E004CD810 /* HistoryStatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F38B06C27CF949E004CD810 /* HistoryStatView.swift */; };
 		4F42BA1027D4EF2800535706 /* TextRecognitionAdvanced.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F42BA0F27D4EF2800535706 /* TextRecognitionAdvanced.swift */; };
@@ -112,6 +115,9 @@
 		4F309E692785EB7600F55BC6 /* CurrentExpensesRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentExpensesRow.swift; sourceTree = "<group>"; };
 		4F309E6B2785F80600F55BC6 /* AttributionCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributionCard.swift; sourceTree = "<group>"; };
 		4F309E722786DA4700F55BC6 /* SelectableItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableItems.swift; sourceTree = "<group>"; };
+		4F3161F629C715F100E3C323 /* ShowLibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowLibraryView.swift; sourceTree = "<group>"; };
+		4F3161FA29C7214000E3C323 /* TextRecognitionFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognitionFunctions.swift; sourceTree = "<group>"; };
+		4F3161FC29C758E400E3C323 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		4F37A89927883C2A00947426 /* ListSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSheetView.swift; sourceTree = "<group>"; };
 		4F38B06C27CF949E004CD810 /* HistoryStatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryStatView.swift; sourceTree = "<group>"; };
 		4F42BA0F27D4EF2800535706 /* TextRecognitionAdvanced.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognitionAdvanced.swift; sourceTree = "<group>"; };
@@ -242,6 +248,7 @@
 				4F309E602784F89900F55BC6 /* Users.swift */,
 				4F898D0B279CC1F40067336F /* VisionParameters.swift */,
 				4FF7F9262893172100468609 /* Tricount.swift */,
+				4F3161FA29C7214000E3C323 /* TextRecognitionFunctions.swift */,
 				4FA4ECB827C7CCAF00B0F012 /* Stores */,
 			);
 			path = Model;
@@ -310,6 +317,8 @@
 				4F94B90027A7476F00F7B10F /* StatisticRectangle.swift */,
 				4FDC144327DBA81600FE7C2E /* AutomatedRecognitionLabel.swift */,
 				4F4944242899B7A500FBC482 /* InfoBlock.swift */,
+				4F3161F629C715F100E3C323 /* ShowLibraryView.swift */,
+				4F3161FC29C758E400E3C323 /* ImagePicker.swift */,
 			);
 			path = Others;
 			sourceTree = "<group>";
@@ -567,6 +576,7 @@
 				4F42BA1027D4EF2800535706 /* TextRecognitionAdvanced.swift in Sources */,
 				4F4902B127CADA6E0047A441 /* ResultCard.swift in Sources */,
 				4F4902AC27CAC12F0047A441 /* ResultsStore.swift in Sources */,
+				4F3161FB29C7214000E3C323 /* TextRecognitionFunctions.swift in Sources */,
 				4F37A89A27883C2B00947426 /* ListSheetView.swift in Sources */,
 				4F309E6C2785F80600F55BC6 /* AttributionCard.swift in Sources */,
 				4FDC144427DBA81600FE7C2E /* AutomatedRecognitionLabel.swift in Sources */,
@@ -578,6 +588,7 @@
 				4F309E732786DA4700F55BC6 /* SelectableItems.swift in Sources */,
 				4F42BA1627D51B5A00535706 /* NoItemFound.swift in Sources */,
 				4F38B06D27CF949E004CD810 /* HistoryStatView.swift in Sources */,
+				4F3161FD29C758E400E3C323 /* ImagePicker.swift in Sources */,
 				4F4902A827CA99AF0047A441 /* HistoryView.swift in Sources */,
 				4F94B8FF27A7326400F7B10F /* MiniRepartitionRow.swift in Sources */,
 				4FE6F25228D4AB7700C8D2AA /* TricountDisclaimerSheet.swift in Sources */,
@@ -611,6 +622,7 @@
 				4F43BDFF2789B0AD005CDD6D /* ResultView.swift in Sources */,
 				4F4902AE27CAC9D10047A441 /* ResultViewHistoryWrapper.swift in Sources */,
 				4FF7F9252893162800468609 /* TricountAddSheet.swift in Sources */,
+				4F3161F729C715F100E3C323 /* ShowLibraryView.swift in Sources */,
 				4F309E672785AB5500F55BC6 /* ModelData.swift in Sources */,
 				4F309E612784F89900F55BC6 /* Users.swift in Sources */,
 				4F309E5B2784F68200F55BC6 /* ScannerView.swift in Sources */,

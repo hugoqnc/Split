@@ -11,6 +11,7 @@ import SwiftUI
 
 final class ModelData: ObservableObject {
     @Published var startTheProcess = false
+    @Published var photoFromLibrary = false
     @Published var users: [User] = []
     @Published var listOfProductsAndPrices: [PairProductPrice] = []
     @Published var currency: Currency = Currency.default
@@ -191,6 +192,7 @@ final class ModelData: ObservableObject {
     func eraseModelData(eraseScanFails: Bool = true) {
         withAnimation {
             self.startTheProcess = false
+            self.photoFromLibrary = false
         }
         
         let secondsToDelay = 0.35

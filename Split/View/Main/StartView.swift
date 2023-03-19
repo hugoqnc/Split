@@ -24,7 +24,11 @@ struct StartView: View {
     var body: some View {
         
         if model.startTheProcess {
-            ShowScannerView()
+            if model.photoFromLibrary {
+                ShowLibraryView()
+            } else {
+                ShowScannerView()
+            }
         } else {
             
             let formDetails = FormDetailsView(names: $names, newUserName: $newUserName, currencyType: $currencyType, showAlert1: $showAlert1, showAlert2: $showAlert2)
@@ -54,32 +58,64 @@ struct StartView: View {
                     }
                 }
                 .toolbar {
-                    ToolbarItem(placement: .bottomBar) {
-                        Button {
-                            let ok = formDetails.isFinalUsersCorrect()
-                            if ok {
-                                ParametersStore.load { result in
-                                    switch result {
-                                    case .failure(let error):
-                                        fatalError(error.localizedDescription)
-                                    case .success(let parameters):
-                                        model.parameters = parameters
+                    ToolbarItemGroup(placement: .bottomBar) {
+                        Spacer()
+                        
+                        Group {
+                            Button {
+                                let ok = formDetails.isFinalUsersCorrect()
+                                if ok {
+                                    ParametersStore.load { result in
+                                        switch result {
+                                        case .failure(let error):
+                                            fatalError(error.localizedDescription)
+                                        case .success(let parameters):
+                                            model.parameters = parameters
+                                        }
+                                    }
+                                    for name in names{
+                                        model.users.append(User(name: name))
+                                    }
+                                    model.currency = Currency(symbol: currencyType)
+                                    withAnimation() {
+                                        model.photoFromLibrary = true
+                                        model.startTheProcess = true
                                     }
                                 }
-                                for name in names{
-                                    model.users.append(User(name: name))
-                                }
-                                model.currency = Currency(symbol: currencyType)
-                                withAnimation() {
-                                    model.startTheProcess = true
+                            } label: {
+                                HStack {
+                                    Image(systemName: "photo.stack")
+                                    Text("Load")
                                 }
                             }
-                        } label: {
-                            HStack {
-                                Image(systemName: "viewfinder")
-                                Text("Scan")
+                            
+                            Button {
+                                let ok = formDetails.isFinalUsersCorrect()
+                                if ok {
+                                    ParametersStore.load { result in
+                                        switch result {
+                                        case .failure(let error):
+                                            fatalError(error.localizedDescription)
+                                        case .success(let parameters):
+                                            model.parameters = parameters
+                                        }
+                                    }
+                                    for name in names{
+                                        model.users.append(User(name: name))
+                                    }
+                                    model.currency = Currency(symbol: currencyType)
+                                    withAnimation() {
+                                        model.startTheProcess = true
+                                    }
+                                }
+                            } label: {
+                                HStack {
+                                    Image(systemName: "viewfinder")
+                                    Text("Scan")
+                                }
                             }
                         }
+                        .padding(.horizontal, 10)
                         .disabled(names.isEmpty || disabledBecauseOfTiming)
                         .onTapGesture {
                             if names.isEmpty {
@@ -99,6 +135,8 @@ struct StartView: View {
                                 }
                             }
                         }
+                        
+                        Spacer()
                     }
                     
                     ToolbarItemGroup(placement: .navigationBarTrailing){

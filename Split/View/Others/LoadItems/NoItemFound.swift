@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct NoItemFound: View {
+    @EnvironmentObject var model: ModelData
+    
     var body: some View {
         VStack {
             Image(systemName: "exclamationmark.triangle")
@@ -24,7 +26,7 @@ struct NoItemFound: View {
                         .foregroundColor(.primary)
                         .fixedSize(horizontal: false, vertical: true)
 
-                    Text("Please ensure that you have scanned your receipt correctly, following the instructions given on the tutorial card.")
+                    Text(model.photoFromLibrary ? "Make sure you have correctly cropped your receipt image when you import it from the library." : "Please ensure that you have scanned your receipt correctly, following the instructions given on the tutorial card.")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
@@ -46,7 +48,7 @@ struct NoItemFound: View {
                             .foregroundColor(.accentColor)
                             .padding(7)
                             .padding(.trailing,5)
-                        Text("If your receipt is very long, try to scan it in several pictures for better results.")
+                        Text(model.photoFromLibrary ? "The edges of the image must match the edges of the receipt perfectly." : "If your receipt is very long, try to scan it in several pictures for better results.")
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
@@ -76,5 +78,6 @@ struct NoItemFound: View {
 struct NoItemFound_Previews: PreviewProvider {
     static var previews: some View {
         NoItemFound()
+            .environmentObject(ModelData())
     }
 }
