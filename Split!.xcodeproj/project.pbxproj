@@ -26,6 +26,7 @@
 		4F3161F729C715F100E3C323 /* ShowLibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3161F629C715F100E3C323 /* ShowLibraryView.swift */; };
 		4F3161FB29C7214000E3C323 /* TextRecognitionFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3161FA29C7214000E3C323 /* TextRecognitionFunctions.swift */; };
 		4F3161FD29C758E400E3C323 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3161FC29C758E400E3C323 /* ImagePicker.swift */; };
+		4F31620029C777D100E3C323 /* LibraryTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3161FF29C777D100E3C323 /* LibraryTutorialView.swift */; };
 		4F37A89A27883C2B00947426 /* ListSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F37A89927883C2A00947426 /* ListSheetView.swift */; };
 		4F38B06D27CF949E004CD810 /* HistoryStatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F38B06C27CF949E004CD810 /* HistoryStatView.swift */; };
 		4F42BA1027D4EF2800535706 /* TextRecognitionAdvanced.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F42BA0F27D4EF2800535706 /* TextRecognitionAdvanced.swift */; };
@@ -118,6 +119,7 @@
 		4F3161F629C715F100E3C323 /* ShowLibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowLibraryView.swift; sourceTree = "<group>"; };
 		4F3161FA29C7214000E3C323 /* TextRecognitionFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognitionFunctions.swift; sourceTree = "<group>"; };
 		4F3161FC29C758E400E3C323 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		4F3161FF29C777D100E3C323 /* LibraryTutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryTutorialView.swift; sourceTree = "<group>"; };
 		4F37A89927883C2A00947426 /* ListSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSheetView.swift; sourceTree = "<group>"; };
 		4F38B06C27CF949E004CD810 /* HistoryStatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryStatView.swift; sourceTree = "<group>"; };
 		4F42BA0F27D4EF2800535706 /* TextRecognitionAdvanced.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognitionAdvanced.swift; sourceTree = "<group>"; };
@@ -275,6 +277,7 @@
 		4F309E622784F9BA00F55BC6 /* Scanner */ = {
 			isa = PBXGroup;
 			children = (
+				4F3161FE29C7778D00E3C323 /* Library */,
 				4FF675D62799E60800B7F385 /* ShowScannerView.swift */,
 				4F309E562784F68200F55BC6 /* ScannerView.swift */,
 				4F309E582784F68200F55BC6 /* TextRecognition.swift */,
@@ -317,10 +320,17 @@
 				4F94B90027A7476F00F7B10F /* StatisticRectangle.swift */,
 				4FDC144327DBA81600FE7C2E /* AutomatedRecognitionLabel.swift */,
 				4F4944242899B7A500FBC482 /* InfoBlock.swift */,
+			);
+			path = Others;
+			sourceTree = "<group>";
+		};
+		4F3161FE29C7778D00E3C323 /* Library */ = {
+			isa = PBXGroup;
+			children = (
 				4F3161F629C715F100E3C323 /* ShowLibraryView.swift */,
 				4F3161FC29C758E400E3C323 /* ImagePicker.swift */,
 			);
-			path = Others;
+			path = Library;
 			sourceTree = "<group>";
 		};
 		4F42BA1727D51B6200535706 /* LoadItems */ = {
@@ -350,6 +360,7 @@
 				4F2BCDB22798D2B200E6501E /* ScanTutorialView.swift */,
 				4F7C128B279B530A00A5E50B /* ListTutorialView.swift */,
 				4F83AA7D285BD6C800F45FC6 /* AttributionTutorialView.swift */,
+				4F3161FF29C777D100E3C323 /* LibraryTutorialView.swift */,
 			);
 			path = Tutorials;
 			sourceTree = "<group>";
@@ -592,6 +603,7 @@
 				4F4902A827CA99AF0047A441 /* HistoryView.swift in Sources */,
 				4F94B8FF27A7326400F7B10F /* MiniRepartitionRow.swift in Sources */,
 				4FE6F25228D4AB7700C8D2AA /* TricountDisclaimerSheet.swift in Sources */,
+				4F31620029C777D100E3C323 /* LibraryTutorialView.swift in Sources */,
 				4F309E592784F68200F55BC6 /* AttributionView.swift in Sources */,
 				4F8EBD8927AAF75300CBD6AD /* StatView.swift in Sources */,
 				4F7CA06228BF8B0700050B47 /* ShowroomPreviews.swift in Sources */,

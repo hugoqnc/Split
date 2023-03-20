@@ -58,7 +58,7 @@ struct ShowScannerView: View {
                     showTutorialScreen = model.parameters.showScanTutorial
                 }
             })
-            .transition(.move(edge: .bottom))
+//            .transition(.move(edge: .bottom))
             .slideOverCard(isPresented: $showTutorialScreen, content: {
                 VStack {
                     ScanTutorialView(advancedRecognition: $model.parameters.advancedRecognition)
