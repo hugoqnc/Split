@@ -136,15 +136,33 @@ struct TextRecognitionAdvanced {
                     prices.append(obs)
                 }
             }
+            
+            // A.bis: Additional filter for prices: remove prices to far away of the median x axis
+            let pricesX: [CGFloat] = prices.map { obs in
+                obs.boundingBox.origin.x + obs.boundingBox.size.width
+            }
+            let medianPriceX = pricesX.count>0 ? pricesX.sorted(by: <)[pricesX.count / 2] : 1
+            
+            var prices2: [VNRecognizedTextObservation] = []
+            for obs in prices {
+                let pxEnd = obs.boundingBox.origin.x + obs.boundingBox.size.width
+                let epsilonX = priceMarginRight/2
+                
+                if pxEnd<medianPriceX*(1+epsilonX) && pxEnd>medianPriceX*(1-epsilonX) {
+                    prices2.append(obs)
+                }
+            }
+            
+            prices = prices2
                     
             prices = prices.filter { obs in
                 let candidates = obs.topCandidates(2)
                 if var cleanedString = candidates.first?.string.replacingOccurrences(of:",", with: ".") {
+                    cleanedString = removeCurrencySymbols(s: cleanedString)
+                    // print(cleanedString)
                     let scanner = Scanner(string: cleanedString)
                     if let double = scanner.scanDouble() {
-                        
                         if cleanedString.contains(".") && double != 0 {
-                            //print("\(double)")
                             
                             var p = PairStringDouble()
                             p.string = cleanedString
@@ -384,6 +402,17 @@ struct TextRecognitionAdvanced {
         recognizeTextRequest.minimumTextHeight = currentMinimumTextHeight
         
         return recognizeTextRequest
+    }
+    
+    
+    func removeCurrencySymbols(s: String) -> String {
+        var result = ""
+        for char in s {
+            if !(char.isCurrencySymbol) {
+                result.append(char)
+            }
+        }
+        return result
     }
     
 }

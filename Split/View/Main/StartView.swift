@@ -123,7 +123,7 @@ struct StartView: View {
                             }
                         }
                         .alert(isPresented: $showAlert3) {
-                            Alert(title: Text("No users"), message: Text("Please add the name of at least one user to start scanning"), dismissButton: .default(Text("OK")))
+                            Alert(title: Text("No users"), message: Text("Please add the name of at least one user to start"), dismissButton: .default(Text("OK")))
                         }
                         .buttonStyle(.borderedProminent)
                         .onChange(of: model.startTheProcess) { newValue in

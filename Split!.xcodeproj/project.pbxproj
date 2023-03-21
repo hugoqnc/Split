@@ -250,7 +250,6 @@
 				4F309E602784F89900F55BC6 /* Users.swift */,
 				4F898D0B279CC1F40067336F /* VisionParameters.swift */,
 				4FF7F9262893172100468609 /* Tricount.swift */,
-				4F3161FA29C7214000E3C323 /* TextRecognitionFunctions.swift */,
 				4FA4ECB827C7CCAF00B0F012 /* Stores */,
 			);
 			path = Model;
@@ -282,6 +281,7 @@
 				4F309E562784F68200F55BC6 /* ScannerView.swift */,
 				4F309E582784F68200F55BC6 /* TextRecognition.swift */,
 				4F42BA0F27D4EF2800535706 /* TextRecognitionAdvanced.swift */,
+				4F3161FA29C7214000E3C323 /* TextRecognitionFunctions.swift */,
 				4F7C128D279C047E00A5E50B /* Visualization.swift */,
 			);
 			path = Scanner;
