@@ -210,7 +210,7 @@ struct AdvancedParametersView: View {
                             eraseConfirmation = true
                         }
                     } label: {
-                        Label("Reset Advanced Parameters", systemImage: "gobackward")
+                        Label("Reset advanced parameters", systemImage: "gobackward")
                     }
                     .buttonStyle(.borderless)
                     .foregroundColor(.red)
@@ -219,7 +219,7 @@ struct AdvancedParametersView: View {
                         isPresented: $eraseConfirmation,
                         titleVisibility: .visible
                     ) {
-                        Button("Reset Advanced Parameters", role: .destructive) {
+                        Button("Reset advanced parameters", role: .destructive) {
                             withAnimation() {
                                 parameters.visionParameters = Parameters().visionParameters
                             }
@@ -246,7 +246,7 @@ struct AdvancedParametersView: View {
             }
         }
         //.navigationBarHidden(true)
-        .navigationTitle("Advanced Parameters")
+        .navigationTitle("Advanced parameters")
         .navigationViewStyle(.stack)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {

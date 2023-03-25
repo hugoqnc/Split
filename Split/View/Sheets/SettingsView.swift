@@ -20,6 +20,7 @@ struct SettingsView: View {
     @State var parameters = Parameters()
     @State private var showSharingOptions = false
     @State var showAdvancedParameters = false
+    @State var showTipTaxParameters = false
     
     @State var addTricountSheet = false
     @State var showTricountDisclaimer = false
@@ -85,7 +86,7 @@ struct SettingsView: View {
                         .foregroundColor(parameters.advancedRecognition ? .teal : .secondary)
                         //.background((parameters.advancedRecognition ? Color.teal : Color.secondary).opacity(0.1))
                         
-                        NavigationLink(destination: AdvancedParametersView(parameters: $parameters), isActive: $showAdvancedParameters) { Text("Advanced Parameters") }
+                        NavigationLink(destination: AdvancedParametersView(parameters: $parameters), isActive: $showAdvancedParameters) { Text("Advanced parameters") }
                             .navigationViewStyle(.stack)
                         
                     } header: {
@@ -112,12 +113,25 @@ struct SettingsView: View {
                         }
                         
                         Toggle("Compress saved receipts", isOn: $parameters.compressImages)
+                                                
+                        Toggle(isOn: $parameters.selectAllUsers) {
+                            VStack(alignment: .leading, spacing: 3) {
+                                Text("Assign to everyone per default")
+                                Text(parameters.selectAllUsers ? "Currently, when assigning items to users, they will **all** be selected by default." : "Currently, when assigning items to users, **no one** will be selected by default.")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
+                        }
                         
-                        Toggle("Assign to everyone per default", isOn: $parameters.selectAllUsers)
+                        Toggle("Show tip and tax options", isOn: $parameters.showTipAndTax.animation())
+                        
+                        if parameters.showTipAndTax {
+                            NavigationLink(destination: TipTaxParametersView(parameters: $parameters), isActive: $showTipTaxParameters) { Text("Tip and tax parameters") }
+                                .navigationViewStyle(.stack)
+                        }
+                        
                     } header: {
                         Text("General")
-                    } footer: {
-                        parameters.selectAllUsers ? Text("Currently, when assigning items to users, they will **all** be selected by default.") : Text("Currently, when assigning items to users, **no one** will be selected by default.")
                     }
                     
                     

@@ -60,7 +60,7 @@ struct InputPercentDetails: View {
                             
                             HStack {
                                 Spacer()
-                                Text("= \(model.showPrice(price: model.totalPrice*(doubleState/100))) ")
+                                Text("= \(model.showPrice(price: model.totalPriceBeforeTaxTip*(doubleState/100))) ")
                                     .font(.title2)
                             }
                         }
@@ -72,30 +72,37 @@ struct InputPercentDetails: View {
                         Slider(value: $doubleState, in: 0...40, step: 1)
                             .padding(5)
 
-                        if isTip {
-                            VStack {
-                                HStack {
-                                    Spacer()
-                                    ForEach(model.parameters.usualTips, id: \.self) { tipAmount in
-                                        Button {
-                                            doubleState = tipAmount
-                                        } label: {
-                                            Text(String(round(tipAmount * 100) / 100.0))
-                                                .font(.title3)
-                                                .padding(3)
+                        Group {
+                            if isTip {
+                                VStack(alignment: .leading) {
+                                    HStack {
+                                        Spacer()
+                                        ForEach(model.parameters.usualTips, id: \.self) { tipAmount in
+                                            Button {
+                                                doubleState = tipAmount
+                                            } label: {
+                                                Text(String(round(tipAmount * 100) / 100.0)+"%")
+                                                    .font(.title3)
+                                                    .padding(3)
+                                            }
+                                            .buttonStyle(.bordered)
+                                            .overlay(RoundedRectangle(cornerRadius: 10).stroke(.blue, lineWidth: doubleState == tipAmount ? 1.5 : 0))
+                                            .padding(5)
+                                            
                                         }
-                                        .buttonStyle(.bordered)
-                                        .padding(5)
-                                        
+                                        Spacer()
                                     }
-                                    Spacer()
+                                    HStack {
+                                        Spacer()
+                                        Text("Define your favorite tip amounts in settings")
+                                            .font(.caption2)
+                                            .foregroundColor(.secondary)
+                                        Spacer()
+                                    }
                                 }
-                                Text("Define your favorite tip amounts in settings")
-                                    .font(.caption2)
-                                    .foregroundColor(.secondary)
                             }
                         }
-                        
+                                                
                         Picker("", selection: $sharingSelection) {
                             Text("Share evenly").tag("even")
                             Text("Share proportionally").tag("proportional")
@@ -173,11 +180,17 @@ struct InputPercentDetails: View {
                 if let t = model.tipRate, let even = model.tipEvenly {
                     doubleState = t
                     sharingSelection = even ? "even" : "proportional"
+                } else {
+                    doubleState = model.parameters.usualTips[1]
+                    sharingSelection = model.parameters.defaultTipEvenly ? "even" : "proportional"
                 }
             } else {
                 if let t = model.taxRate, let even = model.taxEvenly {
                     doubleState = t
                     sharingSelection = even ? "even" : "proportional"
+                } else {
+                    doubleState = model.parameters.defaultTaxRate
+                    sharingSelection = model.parameters.defaultTaxEvenly ? "even" : "proportional"
                 }
             }
         }

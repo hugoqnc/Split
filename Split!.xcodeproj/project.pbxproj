@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4F0DF06229CEFC110034D4CF /* AddPercentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0DF06129CEFC110034D4CF /* AddPercentButton.swift */; };
+		4F0DF06429CF40760034D4CF /* TipTaxParametersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0DF06329CF40760034D4CF /* TipTaxParametersView.swift */; };
 		4F1752FC2819EF2B0032D3FE /* TricountExportSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1752FB2819EF2B0032D3FE /* TricountExportSheet.swift */; };
 		4F2BCDB32798D2B200E6501E /* ScanTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2BCDB22798D2B200E6501E /* ScanTutorialView.swift */; };
 		4F309E232784B49900F55BC6 /* SplitApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F309E222784B49900F55BC6 /* SplitApp.swift */; };
@@ -100,6 +101,7 @@
 
 /* Begin PBXFileReference section */
 		4F0DF06129CEFC110034D4CF /* AddPercentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPercentButton.swift; sourceTree = "<group>"; };
+		4F0DF06329CF40760034D4CF /* TipTaxParametersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipTaxParametersView.swift; sourceTree = "<group>"; };
 		4F1752FB2819EF2B0032D3FE /* TricountExportSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TricountExportSheet.swift; sourceTree = "<group>"; };
 		4F2BCDB22798D2B200E6501E /* ScanTutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanTutorialView.swift; sourceTree = "<group>"; };
 		4F309E1F2784B49900F55BC6 /* Split!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Split!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -413,6 +415,7 @@
 			children = (
 				4F80BED427C794C900CA73B3 /* SettingsView.swift */,
 				4FF60AFA27DA961A00AD58DB /* AdvancedParametersView.swift */,
+				4F0DF06329CF40760034D4CF /* TipTaxParametersView.swift */,
 				4F63DF0627A421B000E2CA3A /* InputItemDetails.swift */,
 				4FDA115029CA3E8900F16788 /* InputPercentDetails.swift */,
 				4F37A89927883C2A00947426 /* ListSheetView.swift */,
@@ -619,6 +622,7 @@
 				4FB7813C2794821D00F5E2D8 /* Currency.swift in Sources */,
 				4FF675DC279A1E9400B7F385 /* FirstListView.swift in Sources */,
 				4F0DF06229CEFC110034D4CF /* AddPercentButton.swift in Sources */,
+				4F0DF06429CF40760034D4CF /* TipTaxParametersView.swift in Sources */,
 				4F1752FC2819EF2B0032D3FE /* TricountExportSheet.swift in Sources */,
 				4F4944252899B7A500FBC482 /* InfoBlock.swift in Sources */,
 				4F7C128E279C047E00A5E50B /* Visualization.swift in Sources */,
