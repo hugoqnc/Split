@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F0DF06229CEFC110034D4CF /* AddPercentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0DF06129CEFC110034D4CF /* AddPercentButton.swift */; };
 		4F1752FC2819EF2B0032D3FE /* TricountExportSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1752FB2819EF2B0032D3FE /* TricountExportSheet.swift */; };
 		4F2BCDB32798D2B200E6501E /* ScanTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2BCDB22798D2B200E6501E /* ScanTutorialView.swift */; };
 		4F309E232784B49900F55BC6 /* SplitApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F309E222784B49900F55BC6 /* SplitApp.swift */; };
@@ -60,6 +61,7 @@
 		4FD7C2D927E86EE6009C4D9D /* FillFavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD7C2D827E86EE6009C4D9D /* FillFavoriteButton.swift */; };
 		4FD7C2DB27E86EF2009C4D9D /* EditFavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD7C2DA27E86EF2009C4D9D /* EditFavoriteButton.swift */; };
 		4FD7C2DD27E872BE009C4D9D /* FormDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD7C2DC27E872BE009C4D9D /* FormDetailsView.swift */; };
+		4FDA115129CA3E8900F16788 /* InputPercentDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDA115029CA3E8900F16788 /* InputPercentDetails.swift */; };
 		4FDC144427DBA81600FE7C2E /* AutomatedRecognitionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDC144327DBA81600FE7C2E /* AutomatedRecognitionLabel.swift */; };
 		4FDE9B2D28BCF556008A622E /* TricountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE9B2C28BCF556008A622E /* TricountTests.swift */; };
 		4FE6F25228D4AB7700C8D2AA /* TricountDisclaimerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE6F25128D4AB7700C8D2AA /* TricountDisclaimerSheet.swift */; };
@@ -97,6 +99,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4F0DF06129CEFC110034D4CF /* AddPercentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPercentButton.swift; sourceTree = "<group>"; };
 		4F1752FB2819EF2B0032D3FE /* TricountExportSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TricountExportSheet.swift; sourceTree = "<group>"; };
 		4F2BCDB22798D2B200E6501E /* ScanTutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanTutorialView.swift; sourceTree = "<group>"; };
 		4F309E1F2784B49900F55BC6 /* Split!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Split!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -154,6 +157,7 @@
 		4FD7C2D827E86EE6009C4D9D /* FillFavoriteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillFavoriteButton.swift; sourceTree = "<group>"; };
 		4FD7C2DA27E86EF2009C4D9D /* EditFavoriteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFavoriteButton.swift; sourceTree = "<group>"; };
 		4FD7C2DC27E872BE009C4D9D /* FormDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormDetailsView.swift; sourceTree = "<group>"; };
+		4FDA115029CA3E8900F16788 /* InputPercentDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputPercentDetails.swift; sourceTree = "<group>"; };
 		4FDC144327DBA81600FE7C2E /* AutomatedRecognitionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedRecognitionLabel.swift; sourceTree = "<group>"; };
 		4FDE9B2A28BCF556008A622E /* TricountTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TricountTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FDE9B2C28BCF556008A622E /* TricountTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TricountTests.swift; sourceTree = "<group>"; };
@@ -320,6 +324,7 @@
 				4F94B90027A7476F00F7B10F /* StatisticRectangle.swift */,
 				4FDC144327DBA81600FE7C2E /* AutomatedRecognitionLabel.swift */,
 				4F4944242899B7A500FBC482 /* InfoBlock.swift */,
+				4F0DF06129CEFC110034D4CF /* AddPercentButton.swift */,
 			);
 			path = Others;
 			sourceTree = "<group>";
@@ -409,6 +414,7 @@
 				4F80BED427C794C900CA73B3 /* SettingsView.swift */,
 				4FF60AFA27DA961A00AD58DB /* AdvancedParametersView.swift */,
 				4F63DF0627A421B000E2CA3A /* InputItemDetails.swift */,
+				4FDA115029CA3E8900F16788 /* InputPercentDetails.swift */,
 				4F37A89927883C2A00947426 /* ListSheetView.swift */,
 				4F90A7AB27A713F9003A1D97 /* UserChoicesView.swift */,
 				4F83AA7F285CD57C00F45FC6 /* DivideItemView.swift */,
@@ -612,6 +618,7 @@
 				4F94B90127A7476F00F7B10F /* StatisticRectangle.swift in Sources */,
 				4FB7813C2794821D00F5E2D8 /* Currency.swift in Sources */,
 				4FF675DC279A1E9400B7F385 /* FirstListView.swift in Sources */,
+				4F0DF06229CEFC110034D4CF /* AddPercentButton.swift in Sources */,
 				4F1752FC2819EF2B0032D3FE /* TricountExportSheet.swift in Sources */,
 				4F4944252899B7A500FBC482 /* InfoBlock.swift in Sources */,
 				4F7C128E279C047E00A5E50B /* Visualization.swift in Sources */,
@@ -629,6 +636,7 @@
 				4FF60AFB27DA961A00AD58DB /* AdvancedParametersView.swift in Sources */,
 				4F309E532784B55900F55BC6 /* ContentView.swift in Sources */,
 				4F309E232784B49900F55BC6 /* SplitApp.swift in Sources */,
+				4FDA115129CA3E8900F16788 /* InputPercentDetails.swift in Sources */,
 				4F309E5A2784F68200F55BC6 /* Text.swift in Sources */,
 				4F43BDFD2789A9CD005CDD6D /* LoadItemsView.swift in Sources */,
 				4F43BDFF2789B0AD005CDD6D /* ResultView.swift in Sources */,

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct InputItemDetails: View {
-    internal init(title: String, message: String, placeholder1: String = "", placeholder2: String = "", initialText: String? = nil, initialDouble: Double? = nil, initialSelections: [UUID]? = nil, accept: String = "OK", cancel: String = "Cancel", action: @escaping (String?, Double?, [UUID]?) -> ()) {
+    internal init(title: String, message: String, placeholder1: String = "", placeholder2: String = "", initialText: String? = nil, initialDouble: Double? = nil, initialSelections: [UUID]? = nil, accept: String = "Done", cancel: String = "Cancel", action: @escaping (String?, Double?, [UUID]?) -> ()) {
         self.title = title
         self.message = message
         self.placeholder1 = placeholder1
@@ -47,7 +47,7 @@ struct InputItemDetails: View {
     var initialText: String?
     var initialDouble: Double?
     var initialSelections: [UUID]?
-    var accept: String = "OK"
+    var accept: String = "Done"
     var cancel: String = "Cancel"
     var action: (String?, Double?, [UUID]?) -> ()
     
@@ -107,8 +107,7 @@ struct InputItemDetails: View {
                         action(nil,nil,nil)
                         dismiss()
                     } label: {
-                        Text("Cancel")
-                            //.foregroundColor(.red)
+                        Text(cancel)
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -116,7 +115,7 @@ struct InputItemDetails: View {
                         action(textState, doubleState, selectionsState)
                         dismiss()
                     } label: {
-                        Text("Done")
+                        Text(accept)
                             .bold()
                     }
                     .disabled(textState.isEmpty || (initialSelections != nil) ? ((textState==initialText && doubleState==initialDouble && selectionsState==initialSelections) || selectionsState.isEmpty) : (textState==initialText && doubleState==initialDouble))

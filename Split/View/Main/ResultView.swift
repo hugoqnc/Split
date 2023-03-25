@@ -67,7 +67,7 @@ struct ResultView: View {
                                             .font(.title2)
                                             .foregroundColor(.primary)
                                     }
-                                    Text(model.showPrice(price: model.totalBalance))
+                                    Text(model.showPrice(price: model.totalPrice))
                                         .font(.largeTitle)
                                         .fontWeight(.semibold)
                                         .foregroundColor(.primary)
@@ -126,6 +126,13 @@ struct ResultView: View {
                 
                 
                 ScrollView {
+                    HStack {
+                        AddPercentButton(isTip: true, color: Color.pink)
+                        AddPercentButton(isTip: false, color: Color.green)
+                    }
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 5)
+                    
                     VStack {
                         ForEach(model.users.sorted(by: {model.balance(ofUser: $0)>model.balance(ofUser: $1)})) { user in
                             HStack {
@@ -149,7 +156,7 @@ struct ResultView: View {
                                         
                                         Text(model.showPrice(price: model.balance(ofUser: user)))
                                             .fontWeight(.semibold)
-                                            .font(.system(size: fontSizeProportionalToPrice(total: model.totalBalance, price: model.balance(ofUser: user))))
+                                            .font(.system(size: fontSizeProportionalToPrice(total: model.totalPrice, price: model.balance(ofUser: user))))
                                             .foregroundColor(.primary)
                                     }
                                     
@@ -255,11 +262,13 @@ struct ResultView_Previews: PreviewProvider {
         var model = ModelData()
         model.images = [IdentifiedImage(id: "1111", image: UIImage(named: "scan1")), IdentifiedImage(id: "2222", image: UIImage(named: "scan2"))]
         model.users = [User(name: "Hugo"), User(name: "Corentin"), User(name: "Thomas")]
-        model.listOfProductsAndPrices = [PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 0.99), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBC", name: "Finger Fish 850g x12 from Aldi 2022", price: 1.27), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBD", name: "Ice Cream Strawberry", price: 3.20)]
+        model.listOfProductsAndPrices = [PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 1.0), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBC", name: "Finger Fish 850g x12 from Aldi 2022", price: 2.0), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBD", name: "Ice Cream Strawberry", price: 7.0)]
         model.listOfProductsAndPrices[0].chosenBy = [model.users[0].id]
         model.listOfProductsAndPrices[1].chosenBy = [model.users[0].id, model.users[1].id]
         model.listOfProductsAndPrices[2].chosenBy = [model.users[0].id, model.users[1].id, model.users[2].id]
         model.receiptName = "ALDI SUISSE"
+        model.tipRate = 10.0
+        model.tipEvenly = false
         return model
     }()
     

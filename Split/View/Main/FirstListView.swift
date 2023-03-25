@@ -108,6 +108,13 @@ struct FirstListView: View {
                                                     .padding(.top, 10)
                                                 }
                                             } else {
+                                                HStack {
+                                                    AddPercentButton(isTip: true, color: Color.pink)
+                                                    AddPercentButton(isTip: false, color: Color.green)
+                                                }
+                                                .padding(.horizontal, 20)
+                                                .padding(.vertical, 5)
+                                                
                                                 List() {
                                                     Section(header: Text("Receipt Name")) {
                                                         VStack {
@@ -189,6 +196,14 @@ struct FirstListView: View {
                                             Divider()
                                             
                                             VStack {
+                                                
+                                                HStack {
+                                                    AddPercentButton(isTip: true, color: Color.pink)
+                                                    AddPercentButton(isTip: false, color: Color.green)
+                                                }
+                                                .padding(.horizontal, 20)
+                                                .padding(.vertical, 5)
+                                                
                                                 List() {
                                                     Section(header: Text("Receipt Name")) {
                                                         VStack {

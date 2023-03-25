@@ -146,7 +146,7 @@ struct TextRecognitionAdvanced {
             var prices2: [VNRecognizedTextObservation] = []
             for obs in prices {
                 let pxEnd = obs.boundingBox.origin.x + obs.boundingBox.size.width
-                let epsilonX = priceMarginRight/2
+                let epsilonX = priceMarginRight/2 //TODO: "2" is arbitrary here, and should require a dedicated parameter or a better approach (using stddev)
                 
                 if pxEnd<medianPriceX*(1+epsilonX) && pxEnd>medianPriceX*(1-epsilonX) {
                     prices2.append(obs)

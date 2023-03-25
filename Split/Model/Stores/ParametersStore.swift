@@ -24,6 +24,7 @@ struct Parameters: Codable {
     var tricountList: [Tricount] = []
     var defaultCurrency = Currency.default
     var compressImages = true
+    var usualTips = [18.0, 20.0, 22.0]
     
     static func createFromOld(oldP: OldParameters) -> Parameters {
         var newP = Parameters.default

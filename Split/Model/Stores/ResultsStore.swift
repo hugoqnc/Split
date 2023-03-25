@@ -22,6 +22,11 @@ struct ResultUnitText: Codable, Identifiable {
     var currency: Currency
     var date: Date
     var receiptName: String
+    
+    var tipRate: Double?
+    var tipEvenly: Bool? // if false, tip proportionally
+    var taxRate: Double?
+    var taxEvenly: Bool? // if false, tax proportionally
 }
 
 class ResultsStore: ObservableObject {
