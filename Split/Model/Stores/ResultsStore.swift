@@ -108,7 +108,7 @@ class ResultsStore: ObservableObject {
         }
     }
     
-    static func append(receiptName: String, users: [User], listOfProductsAndPrices: [PairProductPrice], currency: Currency, date: Date, images: [IdentifiedImage], compressImages: Bool, completion: @escaping (Result<Bool, Error>)->Void) {
+    static func append(receiptName: String, users: [User], listOfProductsAndPrices: [PairProductPrice], currency: Currency, date: Date, images: [IdentifiedImage], compressImages: Bool, tipRate: Double? = nil, tipEvenly: Bool? = nil, taxRate: Double? = nil, taxEvenly: Bool? = nil, completion: @escaping (Result<Bool, Error>)->Void) {
         var listOfProductsAndPricesCodable: [PairProductPriceCodable] = []
         for pair in listOfProductsAndPrices {
             var pairCod = PairProductPriceCodable()
@@ -124,7 +124,7 @@ class ResultsStore: ObservableObject {
             imagesData.append(image.image!.jpegData(compressionQuality: compressImages ? JPEGQuality : 1.0)!)
         }
         
-        let resultUnit = ResultUnitText(users: users, listOfProductsAndPrices: listOfProductsAndPricesCodable, currency: currency, date: date, receiptName: receiptName)
+        let resultUnit = ResultUnitText(users: users, listOfProductsAndPrices: listOfProductsAndPricesCodable, currency: currency, date: date, receiptName: receiptName, tipRate: tipRate, tipEvenly: tipEvenly, taxRate: taxRate, taxEvenly: taxEvenly)
         append(resultUnit: resultUnit, imagesData: imagesData, completion: completion)
     }
     

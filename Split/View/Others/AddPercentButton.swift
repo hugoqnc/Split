@@ -12,7 +12,7 @@ struct AddPercentButton: View {
     @State var showInputSheet = false
     var isTip:  Bool
     var color: Color
-    var clickable: Bool = true // use false for History view
+    var isShownInHistory: Bool = false
     
     func buttonLabel() -> String {
         if isTip {
@@ -62,7 +62,7 @@ struct AddPercentButton: View {
         }
     }
     
-    func isFilled() -> Bool {
+    func isFilled() -> Bool { // returns true if the button has content to display
         if isTip {
             if model.tipRate != nil {
                 return true
@@ -80,52 +80,54 @@ struct AddPercentButton: View {
     }
     
     var body: some View {
-        Group {
+        if !isShownInHistory || isFilled() {
             Group {
-                HStack {
-                    Image(systemName: buttonLabel())
-                        .resizable(resizingMode: .stretch)
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 25, height: 25)
-                        .foregroundColor((isFilled() ? color : Color.accentColor))
-                    
-                    Spacer()
-                    
-                    VStack(alignment: .trailing) {
+                Group {
+                    HStack {
+                        Image(systemName: buttonLabel())
+                            .resizable(resizingMode: .stretch)
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 25, height: 25)
+                            .foregroundColor((isFilled() ? color : Color.accentColor))
+                        
                         Spacer()
+                        
                         VStack(alignment: .trailing) {
-                            Text(buttonTitle())
-                                .font(.title2)
-                                .fontWeight(.semibold)
+                            Spacer()
+                            VStack(alignment: .trailing) {
+                                Text(buttonTitle())
+                                    .font(.title3)
+                                    .fontWeight(.semibold)
                                 //.minimumScaleFactor(0.3)
-                                .lineLimit(1)
-                            Text(buttonDescription())
-                                .font(.footnote)
-                                .multilineTextAlignment(.trailing)
-                                .foregroundColor(.secondary)
-                                .minimumScaleFactor(0.8)
-                                .lineLimit(2)
+                                    .lineLimit(1)
+                                Text(buttonDescription())
+                                    .font(.footnote)
+                                    .multilineTextAlignment(.trailing)
+                                    .foregroundColor(.secondary)
+                                    .minimumScaleFactor(0.8)
+                                    .lineLimit(2)
+                            }
                         }
                     }
                 }
+                .frame(idealWidth: 140, maxWidth: 200, idealHeight: 50, maxHeight: 50)
+                .padding(10)
+                .padding(.horizontal, 4)
             }
-            .frame(idealWidth: 140, maxWidth: 200, idealHeight: 50, maxHeight: 50)
-            .padding(10)
-            .padding(.horizontal, 10)
-        }
-        .background((isFilled() ? color : Color.secondary).opacity(0.1))
-        .cornerRadius(15)
-        .overlay(
-            RoundedRectangle(cornerRadius: 15)
-                .stroke((isFilled() ? color : Color.secondary.opacity(0.3)), lineWidth: 1.5)
-        )
-        .onTapGesture {
-            if clickable {
-                showInputSheet = true
+            .background((isFilled() ? color : Color.secondary).opacity(0.1))
+            .cornerRadius(15)
+            .overlay(
+                RoundedRectangle(cornerRadius: 15)
+                    .stroke((isFilled() ? color : Color.secondary.opacity(0.3)), lineWidth: 1.5)
+            )
+            .onTapGesture {
+                if !isShownInHistory {
+                    showInputSheet = true
+                }
             }
-        }
-        .sheet(isPresented: $showInputSheet) {
-            InputPercentDetails(isTip: isTip)
+            .sheet(isPresented: $showInputSheet) {
+                InputPercentDetails(isTip: isTip)
+            }
         }
     }
 }

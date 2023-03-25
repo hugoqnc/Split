@@ -52,6 +52,13 @@ struct ResultCard: View {
             for item in resultUnit.listOfProductsAndPrices{
                 total += item.price
             }
+            let totalPriceBeforeTaxTip = total
+            if let t = resultUnit.tipRate {
+                total += t*totalPriceBeforeTaxTip/100
+            }
+            if let t = resultUnit.taxRate {
+                total += t*totalPriceBeforeTaxTip/100
+            }
             return total
         }
     }

@@ -141,8 +141,8 @@ struct ResultView: View {
                 
                 ScrollView {
                     HStack {
-                        AddPercentButton(isTip: true, color: Color.pink)
-                        AddPercentButton(isTip: false, color: Color.green)
+                        AddPercentButton(isTip: true, color: Color.pink, isShownInHistory: isShownInHistory)
+                        AddPercentButton(isTip: false, color: Color.green, isShownInHistory: isShownInHistory)
                     }
                     .padding(.horizontal, 20)
                     .padding(.vertical, 5)
@@ -220,7 +220,7 @@ struct ResultView: View {
                     if !isShownInHistory {
                         Button {
                             model.date = Date()
-                            ResultsStore.append(receiptName: model.receiptName, users: model.users, listOfProductsAndPrices: model.listOfProductsAndPrices, currency: model.currency, date: model.date, images: model.images, compressImages: model.parameters.compressImages) { result in
+                            ResultsStore.append(receiptName: model.receiptName, users: model.users, listOfProductsAndPrices: model.listOfProductsAndPrices, currency: model.currency, date: model.date, images: model.images, compressImages: model.parameters.compressImages, tipRate: model.tipRate, tipEvenly: model.tipEvenly, taxRate: model.taxRate, taxEvenly: model.taxEvenly) { result in
                                 switch result {
                                 case .failure(let error):
                                     fatalError(error.localizedDescription)
@@ -284,13 +284,15 @@ struct ResultView_Previews: PreviewProvider {
         var model = ModelData()
         model.images = [IdentifiedImage(id: "1111", image: UIImage(named: "scan1")), IdentifiedImage(id: "2222", image: UIImage(named: "scan2"))]
         model.users = [User(name: "Hugo"), User(name: "Corentin"), User(name: "Thomas")]
-        model.listOfProductsAndPrices = [PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 1.0), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBC", name: "Finger Fish 850g x12 from Aldi 2022", price: 2.0), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBD", name: "Ice Cream Strawberry", price: 7.0)]
+        model.listOfProductsAndPrices = [PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 11.0), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBC", name: "Finger Fish 850g x12 from Aldi 2022", price: 21.0), PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBD", name: "Ice Cream Strawberry", price: 78.91)]
         model.listOfProductsAndPrices[0].chosenBy = [model.users[0].id]
         model.listOfProductsAndPrices[1].chosenBy = [model.users[0].id, model.users[1].id]
         model.listOfProductsAndPrices[2].chosenBy = [model.users[0].id, model.users[1].id, model.users[2].id]
         model.receiptName = "ALDI SUISSE"
-        model.tipRate = 10.0
-        model.tipEvenly = false
+        model.tipRate = 17.3
+        model.tipEvenly = true
+        model.taxRate = 12.4
+        model.taxEvenly = false
         return model
     }()
     

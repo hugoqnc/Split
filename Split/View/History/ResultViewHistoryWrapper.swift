@@ -20,6 +20,10 @@ struct ResultViewHistoryWrapper: View {
         model.date = resultUnit.date
         model.receiptName = resultUnit.receiptName
         model.parameters.tricountList = tricountList
+        model.tipRate = resultUnit.tipRate
+        model.tipEvenly = resultUnit.tipEvenly
+        model.taxRate = resultUnit.taxRate
+        model.taxEvenly = resultUnit.taxEvenly
         
         var listOfProductsAndPrices: [PairProductPrice] = []
         for pairCod in resultUnit.listOfProductsAndPrices {
