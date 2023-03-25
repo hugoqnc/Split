@@ -82,19 +82,19 @@ struct InputPercentDetails: View {
                                                 doubleState = tipAmount
                                             } label: {
                                                 Text(String(round(tipAmount * 100) / 100.0)+"%")
-                                                    .font(.title3)
+                                                    .font(.headline)
                                                     .padding(3)
                                             }
                                             .buttonStyle(.bordered)
                                             .overlay(RoundedRectangle(cornerRadius: 10).stroke(.blue, lineWidth: doubleState == tipAmount ? 1.5 : 0))
-                                            .padding(5)
+                                            .padding(3)
                                             
                                         }
                                         Spacer()
                                     }
                                     HStack {
                                         Spacer()
-                                        Text("Define your favorite tip amounts in settings")
+                                        Text("Define your favorite tip percentages in settings")
                                             .font(.caption2)
                                             .foregroundColor(.secondary)
                                         Spacer()

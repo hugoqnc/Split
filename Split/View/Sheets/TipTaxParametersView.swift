@@ -23,15 +23,31 @@ struct TipTaxParametersView: View {
                             .foregroundColor(.secondary)
                         HStack {
                             Spacer()
-                            ForEach($parameters.usualTips, id: \.self) { $usualTip in
-                                TextField("", value: $usualTip, format: .number)
-                                    .textFieldStyle(.roundedBorder)
-                                    .keyboardType(.decimalPad)
-                                    .frame(width: 55)
-                                    .foregroundColor(.accentColor)
-                                    .focused($isKeyboardShown)
-                                    .padding(5)
-                            }
+
+                            TextField("", value: $parameters.usualTips[0], format: .number)
+                                .textFieldStyle(.roundedBorder)
+                                .keyboardType(.decimalPad)
+                                .frame(width: 55)
+                                .foregroundColor(.accentColor)
+                                .focused($isKeyboardShown)
+                                .padding(5)
+                            
+                            TextField("", value: $parameters.usualTips[1], format: .number)
+                                .textFieldStyle(.roundedBorder)
+                                .keyboardType(.decimalPad)
+                                .frame(width: 55)
+                                .foregroundColor(.accentColor)
+                                .focused($isKeyboardShown)
+                                .padding(5)
+                            
+                            TextField("", value: $parameters.usualTips[2], format: .number)
+                                .textFieldStyle(.roundedBorder)
+                                .keyboardType(.decimalPad)
+                                .frame(width: 55)
+                                .foregroundColor(.accentColor)
+                                .focused($isKeyboardShown)
+                                .padding(5)
+                            
                             Spacer()
                         }
                         .padding(.top,5)

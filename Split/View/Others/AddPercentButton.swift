@@ -92,22 +92,19 @@ struct AddPercentButton: View {
                         
                         Spacer()
                         
-                        VStack(alignment: .trailing) {
-                            Spacer()
                             VStack(alignment: .trailing) {
                                 Text(buttonTitle())
                                     .font(.title3)
                                     .fontWeight(.semibold)
-                                //.minimumScaleFactor(0.3)
+                                    //.minimumScaleFactor(0.3)
                                     .lineLimit(1)
                                 Text(buttonDescription())
-                                    .font(.footnote)
+                                    .font(.caption)
                                     .multilineTextAlignment(.trailing)
                                     .foregroundColor(.secondary)
-                                    .minimumScaleFactor(0.8)
-                                    .lineLimit(2)
+                                    .minimumScaleFactor(0.7)
+                                    .lineLimit(1)
                             }
-                        }
                     }
                 }
                 .frame(idealWidth: 140, maxWidth: 200, idealHeight: 50, maxHeight: 50)
