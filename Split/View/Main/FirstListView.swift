@@ -26,6 +26,16 @@ struct FirstListView: View {
     @State private var showView = "Scan"
     
     @Environment(\.horizontalSizeClass) var horizontalSizeClass //for iPad specificity
+    
+    var textTipTax: String {
+        get {
+            var text = ""
+            if (model.tipRate != nil || model.taxRate != nil) {
+                text = "excl. \(model.tipRate != nil ? "tip" : "")\(model.tipRate != nil && model.taxRate != nil ? " and " : "")\(model.taxRate != nil ? "taxes" : "")"
+            }
+            return text
+        }
+    }
 
     var body: some View {
         if startAttribution {
@@ -45,9 +55,12 @@ struct FirstListView: View {
                                         Text("\(model.listOfProductsAndPrices.count) items")
                                             .font(.title2)
                                             .fontWeight(.semibold)
-                                        Text("\(model.showPrice(price: model.totalPrice))")
+                                        Text("\(model.showPrice(price: model.totalPriceBeforeTaxTip))")
                                             .font(.largeTitle)
                                             .fontWeight(.bold)
+                                        Text(textTipTax)
+                                            .font(.caption)
+                                            .foregroundColor(.secondary)
                                     }
                                     
                                     Spacer()

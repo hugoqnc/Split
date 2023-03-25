@@ -15,6 +15,16 @@ struct ListSheetView: View {
     @State private var editItemAlert = false
     @State private var editPair = PairProductPrice()
     @State private var showSafariView = false
+    
+    var textTipTax: String {
+        get {
+            var text = ""
+            if (model.tipRate != nil || model.taxRate != nil) {
+                text = "incl. \(model.tipRate != nil ? "tip" : "")\(model.tipRate != nil && model.taxRate != nil ? " and " : "")\(model.taxRate != nil ? "taxes" : "")"
+            }
+            return text
+        }
+    }
 
     var body: some View {
         NavigationView {
@@ -33,7 +43,7 @@ struct ListSheetView: View {
                         }
                     }
                     
-                    Section(header: Text("\(model.listOfProductsAndPrices.count) items — \(model.showPrice(price: model.totalPrice))"), footer: isShownInHistory ? Label("Items ordered as they were on the receipt", systemImage: "arrow.up.arrow.down") : Label("Long press on an assigned item to modify it", systemImage: "lightbulb")){
+                    Section(header: Text("\(model.listOfProductsAndPrices.count) items — \(model.showPrice(price: model.totalPrice)) \(textTipTax)"), footer: isShownInHistory ? Label("Items ordered as they were on the receipt", systemImage: "arrow.up.arrow.down") : Label("Long press on an assigned item to modify it", systemImage: "lightbulb")){
                         ForEach($model.listOfProductsAndPrices) { $pair in
                             HStack {
                                 if itemCounter>=0 ? pair.id==model.listOfProductsAndPrices[itemCounter].id : false {

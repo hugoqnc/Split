@@ -13,6 +13,16 @@ struct UserChoicesView: View {
     @Environment(\.dismiss) var dismiss
     @State private var editPair = PairProductPrice()
     @State private var showSafariView = false
+    
+    func textTipTax(short: Bool = false) -> String {
+        var text = ""
+        if short && (model.tipRate != nil || model.taxRate != nil) {
+            text = "incl. \(model.tipRate != nil ? "tip" : "")\(model.tipRate != nil && model.taxRate != nil ? " and " : "")\(model.taxRate != nil ? "taxes" : "")"
+        } else if !short && (model.tipRate != nil || model.taxRate != nil) {
+            text = "The total includes \(model.tipRate != nil ? "a \(model.showPrice(price: model.tipAmount(ofUser: user))) tip (\(model.tipRate!)%) shared \(model.tipEvenly! ? "evenly" : "proportionally")" : "")\(model.tipRate != nil && model.taxRate != nil ? ", and " : "")\(model.taxRate != nil ? "\(model.showPrice(price: model.taxAmount(ofUser: user))) taxes (\(model.taxRate!)%) shared \(model.taxEvenly! ? "evenly" : "proportionally")" : "")"
+        }
+        return text
+    }
 
     var body: some View {
         let chosenItems: [PairProductPrice] = model.chosenItems(ofUser: user)
@@ -34,13 +44,18 @@ struct UserChoicesView: View {
                                 Text("\(editPair.name)") //due to https://developer.apple.com/forums/thread/652080
                                     .hidden()
                                     .frame(height:0)
+                                if textTipTax() != ""{
+                                    Text(textTipTax())
+                                        .font(.subheadline)
+                                        .fontWeight(.regular)
+                                }
                             }
                             Spacer()
                         }
-                        .padding(.bottom, -20)
+                        //.padding(.bottom, -20)
                         .listRowBackground(Color.clear)
                         
-                        Section(header: Text("\(chosenItems.count) items — \(model.showPrice(price: model.balance(ofUser: user)))"), footer: Label("Items sorted by decreasing price contribution", systemImage: "arrow.up.arrow.down")){
+                        Section(header: Text("\(chosenItems.count) items — \(model.showPrice(price: model.balance(ofUser: user))) \(textTipTax(short: true))"), footer: Label("Items sorted by decreasing price contribution", systemImage: "arrow.up.arrow.down")){
                         //Section {
                             ForEach(chosenItems.sorted(by: {$0.price/Double($0.chosenBy.count)>$1.price/Double($1.chosenBy.count)})) { item in
                                 VStack {
@@ -100,6 +115,10 @@ struct UserChoicesDetailView_Previews: PreviewProvider {
         model.listOfProductsAndPrices[0].chosenBy = [model.users[0].id]
         model.listOfProductsAndPrices[1].chosenBy = [model.users[0].id, model.users[1].id]
         model.listOfProductsAndPrices[2].chosenBy = [model.users[0].id, model.users[1].id, model.users[2].id]
+        model.tipRate = 10.0
+        model.tipEvenly = true
+        model.taxRate = 18.3
+        model.taxEvenly = false
         return model
     }()
     

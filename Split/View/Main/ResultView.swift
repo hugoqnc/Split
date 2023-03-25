@@ -51,6 +51,16 @@ struct ResultView: View {
         }
     }
     
+    var textTipTax: String {
+        get {
+            var text = ""
+            if (model.tipRate != nil || model.taxRate != nil) {
+                text = "incl. \(model.tipRate != nil ? "tip" : "")\(model.tipRate != nil && model.taxRate != nil ? " and " : "")\(model.taxRate != nil ? "taxes" : "")"
+            }
+            return text
+        }
+    }
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -63,9 +73,13 @@ struct ResultView: View {
                                 VStack {
                                     HStack(spacing:4) {
                                         Image(systemName: "info.circle")
-                                        Text("Total".uppercased())
-                                            .font(.title2)
-                                            .foregroundColor(.primary)
+                                        HStack(alignment: .firstTextBaseline) {
+                                            Text("Total".uppercased())
+                                                .font(.title2)
+                                                .foregroundColor(.primary)
+                                            Text(textTipTax)
+                                                .foregroundColor(.secondary)
+                                        }
                                     }
                                     Text(model.showPrice(price: model.totalPrice))
                                         .font(.largeTitle)
@@ -154,10 +168,18 @@ struct ResultView: View {
                                         
                                         Spacer()
                                         
-                                        Text(model.showPrice(price: model.balance(ofUser: user)))
-                                            .fontWeight(.semibold)
-                                            .font(.system(size: fontSizeProportionalToPrice(total: model.totalPrice, price: model.balance(ofUser: user))))
+                                        VStack(alignment: .trailing) {
+                                            Text(model.showPrice(price: model.balance(ofUser: user)))
+                                                .fontWeight(.semibold)
+                                                .font(.system(size: fontSizeProportionalToPrice(total: model.totalPrice, price: model.balance(ofUser: user))))
                                             .foregroundColor(.primary)
+                                            
+                                            if textTipTax != ""{
+                                                Text(textTipTax)
+                                                    .foregroundColor(.secondary)
+                                                    .font(.caption2)
+                                            }
+                                        }
                                     }
                                     
                                     Button {

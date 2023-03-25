@@ -92,19 +92,34 @@ final class ModelData: ObservableObject {
     }
     
     func balance(ofUser user: User) -> Double { // Including tax and tip
+        return balanceBeforeTaxTip(ofUser: user) + tipAmount(ofUser: user) + taxAmount(ofUser: user)
+    }
+    
+    func balanceBeforeTaxTip(ofUser user: User) -> Double { // Including tax and tip
         var total: Double = 0.0
         for item in chosenItems(ofUser: user){
             total += item.price/Double(item.chosenBy.count)
         }
-        var additional: Double = 0
-        if let t = tipRate, let even = tipEvenly {
-            additional += even ? (totalPriceBeforeTaxTip*t/100)/Double(users.count) :t*total/100
-        }
-        if let t = taxRate, let even = taxEvenly {
-            additional += even ? (totalPriceBeforeTaxTip*t/100)/Double(users.count) :t*total/100
-        }
-        total += additional
         return total
+    }
+    
+    func tipAmount(ofUser user: User) -> Double {
+        let total = balanceBeforeTaxTip(ofUser: user)
+        var tip: Double = 0
+        if let t = tipRate, let even = tipEvenly {
+            tip = even ? (totalPriceBeforeTaxTip*t/100)/Double(users.count) :t*total/100
+        }
+        return tip
+        
+    }
+    
+    func taxAmount(ofUser user: User) -> Double {
+        let total = balanceBeforeTaxTip(ofUser: user)
+        var tax: Double = 0
+        if let t = taxRate, let even = taxEvenly {
+            tax = even ? (totalPriceBeforeTaxTip*t/100)/Double(users.count) :t*total/100
+        }
+        return tax
     }
     
     func showPrice(price: Double) -> String {
@@ -127,10 +142,17 @@ final class ModelData: ObservableObject {
         let items = chosenItems(ofUser: user)
         
         for item in items.sorted(by: {$0.price/Double($0.chosenBy.count)>$1.price/Double($1.chosenBy.count)}) {
-            var text = "\n  \(item.name)\n"
-            text.append("  \(showPrice(price: item.price/Double(item.chosenBy.count))) [\(showPrice(price: item.price) + " ÷ "+String(item.chosenBy.count))]\n")
+            var text = "\n\(item.name)\n"
+            text.append("\(showPrice(price: item.price/Double(item.chosenBy.count))) [\(showPrice(price: item.price) + " ÷ "+String(item.chosenBy.count))]\n")
             sharedText.append(text)
         }
+        
+        var textTipTax = ""
+        if (tipRate != nil || taxRate != nil) {
+            textTipTax = "\nAdding \(tipRate != nil ? "a \(showPrice(price: tipAmount(ofUser: user))) tip (\(tipRate!)%) shared \(tipEvenly! ? "evenly" : "proportionally")" : "")\(tipRate != nil && taxRate != nil ? ", and " : "")\(taxRate != nil ? "\(showPrice(price: taxAmount(ofUser: user))) taxes (\(taxRate!)%) shared \(taxEvenly! ? "evenly" : "proportionally")" : "")"
+            textTipTax+="\n"
+        }
+        sharedText.append(textTipTax)
         
         sharedText.append(
         """
@@ -207,6 +229,13 @@ final class ModelData: ObservableObject {
                 }
                 sharedText.append(text)
             }
+            
+            var textTipTax = ""
+            if (tipRate != nil || taxRate != nil) {
+                textTipTax = "\nAdding \(tipRate != nil ? "a \(showPrice(price: tipAmount)) tip (\(tipRate!)%) shared \(tipEvenly! ? "evenly" : "proportionally")" : "")\(tipRate != nil && taxRate != nil ? ", and " : "")\(taxRate != nil ? "\(showPrice(price: taxAmount)) taxes (\(taxRate!)%) shared \(taxEvenly! ? "evenly" : "proportionally")" : "")"
+                textTipTax+="\n"
+            }
+            sharedText.append(textTipTax)
             
             sharedText.append("________________\n\n")
             for user in users {
