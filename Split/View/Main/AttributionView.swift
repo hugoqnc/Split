@@ -11,6 +11,7 @@ struct AttributionView: View {
     @EnvironmentObject var model: ModelData
     @State private var showAllList = false
     @State private var isValidated = false
+    @State private var goesBack = false
     @State public var itemCounter = 0 // public for preview purposes
     @State private var showResult = false
     @State private var firstCardAppear = false
@@ -66,11 +67,16 @@ struct AttributionView: View {
                                         ForEach(model.listOfProductsAndPrices) { pair in
                                             let number = model.listOfProductsAndPrices.firstIndex(of: pair)!
                                             if itemCounter==number {
-                                                AttributionCard(pair: $model.listOfProductsAndPrices[number], isValidated: $isValidated, itemCounter: itemCounter, initialSelection: model.parameters.selectAllUsers ? model.users.map({ user in user.id }) : [])
+                                                AttributionCard(pair: $model.listOfProductsAndPrices[number], isValidated: $isValidated, goesBack: $goesBack, itemCounter: itemCounter, initialSelection: model.listOfProductsAndPrices[number].chosenBy == [] ? (model.parameters.selectAllUsers ? model.users.map({ user in user.id }) : []) : model.listOfProductsAndPrices[number].chosenBy)
                                                     .onChange(of: isValidated) { newValue in
                                                         if newValue {
                                                             itemCounter += 1
                                                             isValidated = false
+                                                        }
+                                                    }
+                                                    .onChange(of: goesBack) { newValue in
+                                                        if newValue && itemCounter > 0 {
+                                                            itemCounter -= 1
                                                         }
                                                     }
                                                     .padding(.horizontal, horizontalSizeClass ==  .compact ? 0 : 50)

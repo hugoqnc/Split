@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct AttributionCard: View {
-    internal init(pair: Binding<PairProductPrice>, isValidated: Binding<Bool>, itemCounter: Int, initialSelection: [UUID]) {
+    internal init(pair: Binding<PairProductPrice>, isValidated: Binding<Bool>, goesBack: Binding<Bool>, itemCounter: Int, initialSelection: [UUID]) {
         self._pair = pair
         self._isValidated = isValidated
+        self._goesBack = goesBack
         self.itemCounter = itemCounter
         self._selections = State(initialValue: initialSelection)
     }
@@ -18,6 +19,7 @@ struct AttributionCard: View {
     
     @Binding var pair: PairProductPrice
     @Binding var isValidated: Bool
+    @Binding var goesBack: Bool
     var itemCounter: Int
     
     @EnvironmentObject var model: ModelData
@@ -38,6 +40,13 @@ struct AttributionCard: View {
     @State private var opacity = 1.0
     
     static let textOfNewItem = "Additional Product"
+    
+    func validate() {
+        let index = model.listOfProductsAndPrices.firstIndex(of: pair)!
+        model.listOfProductsAndPrices[index].chosenBy = selections
+        isValidated = true
+        model.listOfProductsAndPrices[index].isNewItem = false
+    }
         
     var body: some View {
         VStack {
@@ -170,10 +179,7 @@ struct AttributionCard: View {
                         if divider==0 {
                             showAlert1 = true
                         } else {
-                            let index = model.listOfProductsAndPrices.firstIndex(of: pair)!
-                            model.listOfProductsAndPrices[index].chosenBy = selections
-                            isValidated = true
-                            //selections = []
+                            validate()
                         }
                     } label: {
                         Image(systemName: "checkmark.circle.fill")
@@ -227,6 +233,7 @@ struct AttributionCard: View {
             } else {
                 var newPair = PairProductPrice(id: UUID().uuidString, name: AttributionCard.textOfNewItem, price: 0.0)
                 newPair.isNewItem = true
+                goesBack = true
                 model.listOfProductsAndPrices.insert(newPair, at: itemCounter)
             }
         }
@@ -277,10 +284,48 @@ struct AttributionCard: View {
             }
         }
 
-        .transition(
-            pair.isNewItem ?
-                .asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .leading)) :
-                    .asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
+        .transition(goesBack ? .asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .trailing)) : .asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
+        .gesture(DragGesture()
+            .onChanged({ gesture in
+                if itemCounter == 0 {
+                    if selections.count > 0 {
+                        withAnimation {
+                            xOffset = min(gesture.translation.width, 30)
+                        }
+                    } else {
+                        withAnimation {
+                            xOffset = min(max(gesture.translation.width, -30),30)
+                        }
+                    }
+                } else {
+                    if selections.count > 0 {
+                        withAnimation {
+                            xOffset = gesture.translation.width
+                        }
+                    } else {
+                        withAnimation {
+                            xOffset = max(gesture.translation.width, -30)
+                        }
+                    }
+                }
+            })
+            .onEnded({ _ in
+                if xOffset > 150 {
+                    goesBack = true
+                } else if xOffset < -150 {
+                    validate()
+                } else {
+                    withAnimation {
+                        xOffset = 0
+                    }
+                }
+            })
+        )
+        .onAppear {
+            if goesBack {
+                goesBack = false
+            }
+        }
     }
     
 }
@@ -289,7 +334,7 @@ struct AttributionView_Previews: PreviewProvider {
     static let model = ModelData()
 
     static var previews: some View {
-        AttributionCard(pair: .constant(PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 4.99)), isValidated: .constant(false), itemCounter: 0, initialSelection: [])
+        AttributionCard(pair: .constant(PairProductPrice(id: "D401ECD5-109F-408D-A65E-E13C9B3EBDBB", name: "Potato Wedges 1kg", price: 4.99)), isValidated: .constant(false), goesBack: .constant(false), itemCounter: 0, initialSelection: [])
             .environmentObject(model)
             .onAppear {
                 model.users = [User(name: "Hugo"), User(name: "Lucas"), User(name: "Thomas")]
