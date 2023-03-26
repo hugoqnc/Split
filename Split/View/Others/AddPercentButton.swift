@@ -115,7 +115,7 @@ struct AddPercentButton: View {
             .cornerRadius(15)
             .overlay(
                 RoundedRectangle(cornerRadius: 15)
-                    .stroke((isFilled() ? color : Color.secondary.opacity(0.3)), lineWidth: 1.5)
+                    .stroke((isFilled() ? color : Color.secondary.opacity(0.3)), lineWidth: isShownInHistory ? 0 : 1.5)
             )
             .onTapGesture {
                 if !isShownInHistory {

@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import StoreKit
+import SwiftUI
 
 extension Array where Element: Comparable {
     func containsSameElements(as other: [Element]) -> Bool {
@@ -62,4 +63,9 @@ extension SKStoreReviewController {
             requestReview(in: scene)
         }
     }
+}
+
+struct CustomColor {
+    static let bankGreen = Color(red: 30 / 255, green: 225 / 255, blue: 149 / 255)
+    static let realPink = Color(red: 255 / 255, green: 101 / 255, blue: 227 / 255)
 }

@@ -142,7 +142,7 @@ struct ResultView: View {
                 ScrollView {
                     HStack {
                         AddPercentButton(isTip: true, color: Color.pink, isShownInHistory: isShownInHistory)
-                        AddPercentButton(isTip: false, color: Color.green, isShownInHistory: isShownInHistory)
+                        AddPercentButton(isTip: false, color: CustomColor.bankGreen, isShownInHistory: isShownInHistory)
                     }
                     .padding(.horizontal, 20)
                     .padding(.vertical, 5)

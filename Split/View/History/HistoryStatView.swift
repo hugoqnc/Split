@@ -8,12 +8,14 @@
 import SwiftUI
 
 struct HistoryStatView: View {
-    internal init(results: Results, favoriteCurrency: Currency) {
+    internal init(results: Results, favoriteCurrency: Currency, showTipAndTax: Bool) {
         self.results = results
+        self.showTipAndTax = showTipAndTax
         _currencyType = State(initialValue: favoriteCurrency.symbol)
     }
     
     var results: Results
+    var showTipAndTax : Bool
     @Environment(\.horizontalSizeClass) var horizontalSizeClass //for iPad specificity
     
     var timeOptions = ["All", "For a year", "For a month", "For a week"]
@@ -98,6 +100,24 @@ struct HistoryStatView: View {
                 return res.listOfProductsAndPrices.reduce(0, {$0 + $1.price})
             }
             return listOfTotals.reduce(0, {$0 + $1})
+        }
+    }
+    
+    var totalTipAmount: Double {
+        get {
+            let listOfTips = filteredResultList.map { res in
+                return res.listOfProductsAndPrices.reduce(0, {$0 + $1.price}) * (res.tipRate ?? 0)/100
+            }
+            return listOfTips.reduce(0, {$0 + $1})
+        }
+    }
+    
+    var totalTaxAmount: Double {
+        get {
+            let listOfTaxes = filteredResultList.map { res in
+                return res.listOfProductsAndPrices.reduce(0, {$0 + $1.price}) * (res.taxRate ?? 0)/100
+            }
+            return listOfTaxes.reduce(0, {$0 + $1})
         }
     }
     
@@ -221,10 +241,21 @@ struct HistoryStatView: View {
                                         
                                         Spacer()
                                     }
+                                    if showTipAndTax {
+                                        HStack {
+                                            Spacer()
+                                            
+                                            StatisticRectangle(iconString: "giftcard", description: "Total amount of tips\n", value: showPrice(price: totalTipAmount), color: Color.pink)
+                                            
+                                            StatisticRectangle(iconString: "building.columns", description: "Total amount of taxes\n", value: showPrice(price: totalTaxAmount), color: CustomColor.bankGreen)
+                                            
+                                            Spacer()
+                                        }
+                                    }
                                     HStack {
                                         Spacer()
                                         
-                                        StatisticRectangle(iconString: "calendar", description: selectedTimeOption == timeOptions[0] ? "Days passed since\nfirst receipt" : "Days passed since\nlast receipt", value: String(daysSince), color: Color(red: 255 / 255, green: 101 / 255, blue: 227 / 255))
+                                        StatisticRectangle(iconString: "calendar", description: selectedTimeOption == timeOptions[0] ? "Days passed since\nfirst receipt" : "Days passed since\nlast receipt", value: String(daysSince), color: CustomColor.realPink)
                                         
                                         StatisticRectangle(iconString: "person.2", description: "Number of\ndifferent users", value: String(numberDifferentUsers), color: Color.teal)
                                         
@@ -261,18 +292,49 @@ struct HistoryStatView: View {
                                             Spacer()
                                         }
                                         
-                                        HStack {
-                                            Spacer()
+                                        if showTipAndTax {
+                                            HStack {
+                                                Spacer()
 
-                                            StatisticRectangle(iconString: "calendar", description: selectedTimeOption == timeOptions[0] ? "Days passed since\nfirst receipt" : "Days passed since\nlast receipt", value: String(daysSince), color: Color(red: 255 / 255, green: 101 / 255, blue: 227 / 255))
+                                                StatisticRectangle(iconString: "giftcard", description: "Total amount of tips\n", value: showPrice(price: totalTipAmount), color: Color.pink)
+                                                
+                                                StatisticRectangle(iconString: "building.columns", description: "Total amount of taxes\n", value: showPrice(price: totalTaxAmount), color: CustomColor.bankGreen)
+                                                
+                                                StatisticRectangle(iconString: "calendar", description: selectedTimeOption == timeOptions[0] ? "Days passed since\nfirst receipt" : "Days passed since\nlast receipt", value: String(daysSince), color: CustomColor.realPink)
+                                                
+                                                Spacer()
+                                            }
                                             
-                                            StatisticRectangle(iconString: "person.2", description: "Number of\ndifferent users", value: String(numberDifferentUsers), color: Color.teal)
+                                            HStack {
+                                                Spacer()
+                                                
+                                                StatisticRectangle(iconString: "person.2", description: "Number of\ndifferent users", value: String(numberDifferentUsers), color: Color.teal)
+                                                
+                                                Text("") //empty stat rectangle
+                                                    .frame(idealWidth: 140, maxWidth: 200, idealHeight: 140, maxHeight: 200)
+                                                    .padding()
+                                                
+                                                Text("") //empty stat rectangle
+                                                    .frame(idealWidth: 140, maxWidth: 200, idealHeight: 140, maxHeight: 200)
+                                                    .padding()
+                                                
+                                                Spacer()
+                                            }
                                             
-                                            Text("") //empty stat rectangle
-                                                .frame(idealWidth: 140, maxWidth: 200, idealHeight: 140, maxHeight: 200)
-                                                .padding()
-                                            
-                                            Spacer()
+                                        } else {
+                                            HStack {
+                                                Spacer()
+
+                                                StatisticRectangle(iconString: "calendar", description: selectedTimeOption == timeOptions[0] ? "Days passed since\nfirst receipt" : "Days passed since\nlast receipt", value: String(daysSince), color: CustomColor.realPink)
+                                                
+                                                StatisticRectangle(iconString: "person.2", description: "Number of\ndifferent users", value: String(numberDifferentUsers), color: Color.teal)
+                                                
+                                                Text("") //empty stat rectangle
+                                                    .frame(idealWidth: 140, maxWidth: 200, idealHeight: 140, maxHeight: 200)
+                                                    .padding()
+                                                
+                                                Spacer()
+                                            }
                                         }
                                         
                                         Spacer()
@@ -331,7 +393,7 @@ struct HistoryStatView: View {
 
 struct HistoryStatView_Previews: PreviewProvider {
     static var previews: some View {
-        HistoryStatView(results: Results(results: [ResultUnitText(users: [], listOfProductsAndPrices: [], currency: Currency.default, date: Date(timeIntervalSince1970: 1645000000), receiptName: "ALDI"), ResultUnitText(users: [], listOfProductsAndPrices: [], currency: Currency.default, date: Date(timeIntervalSince1970: 1640000000), receiptName: "Migros")]), favoriteCurrency: Currency.default)
+        HistoryStatView(results: Results(results: [ResultUnitText(users: [], listOfProductsAndPrices: [], currency: Currency.default, date: Date(timeIntervalSince1970: 1645000000), receiptName: "ALDI"), ResultUnitText(users: [], listOfProductsAndPrices: [], currency: Currency.default, date: Date(timeIntervalSince1970: 1640000000), receiptName: "Migros")]), favoriteCurrency: Currency.default, showTipAndTax: true)
         //HistoryStatView(results: Results(results: []))
     
 

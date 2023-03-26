@@ -18,7 +18,7 @@ struct TipTaxParametersView: View {
                 Section {
                     VStack(alignment: .leading, spacing: 3) {
                         Text("Predefined tip percentages")
-                        Text("The middle one will be the selected default")
+                        Text("The middle one will be the selected default.")
                             .font(.caption)
                             .foregroundColor(.secondary)
                         HStack {

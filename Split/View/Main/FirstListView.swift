@@ -123,7 +123,7 @@ struct FirstListView: View {
                                             } else {
                                                 HStack {
                                                     AddPercentButton(isTip: true, color: Color.pink)
-                                                    AddPercentButton(isTip: false, color: Color.green)
+                                                    AddPercentButton(isTip: false, color: CustomColor.bankGreen)
                                                 }
                                                 .padding(.horizontal, 20)
                                                 .padding(.vertical, 5)
@@ -212,7 +212,7 @@ struct FirstListView: View {
                                                 
                                                 HStack {
                                                     AddPercentButton(isTip: true, color: Color.pink)
-                                                    AddPercentButton(isTip: false, color: Color.green)
+                                                    AddPercentButton(isTip: false, color: CustomColor.bankGreen)
                                                 }
                                                 .padding(.horizontal, 20)
                                                 .padding(.vertical, 5)

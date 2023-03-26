@@ -117,7 +117,7 @@ struct SettingsView: View {
                         Toggle(isOn: $parameters.selectAllUsers) {
                             VStack(alignment: .leading, spacing: 3) {
                                 Text("Assign to everyone per default")
-                                Text(parameters.selectAllUsers ? "Currently, when assigning items to users, they will **all** be selected by default." : "Currently, when assigning items to users, **no one** will be selected by default.")
+                                Text(parameters.selectAllUsers ? "Currently, when assigning items to users, **everyone** will be selected by default." : "Currently, when assigning items to users, **no one** will be selected by default.")
                                     .font(.caption)
                                     .foregroundColor(.secondary)
                             }
