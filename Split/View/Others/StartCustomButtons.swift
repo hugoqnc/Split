@@ -14,6 +14,7 @@ struct StartCustomButtons: View {
         switch role {
         case "scan":
             Label("Scan", systemImage: "viewfinder")
+                .font(.subheadline)
                 .labelStyle(.titleAndIcon)
                 .foregroundColor(.white)
                 .padding(.horizontal, 15)
@@ -23,19 +24,22 @@ struct StartCustomButtons: View {
 
         case "library":
             Label("", systemImage: "photo.on.rectangle.angled")
+                .font(.subheadline)
                 .labelStyle(.iconOnly)
-                .foregroundColor(.white)
+                .foregroundColor(.accentColor)
                 .padding(10)
-                .background(Color.accentColor)
+                .background(Color.accentColor.opacity(0.15))
                 .clipShape(Circle())
             
         case "files":
             Label("", systemImage: "folder")
+                .font(.subheadline)
                 .labelStyle(.iconOnly)
-                .foregroundColor(.white)
+                .foregroundColor(.accentColor)
                 .padding(10)
-                .background(Color.accentColor)
+                .background(Color.accentColor.opacity(0.15))
                 .clipShape(Circle())
+
 
         default:
             EmptyView()

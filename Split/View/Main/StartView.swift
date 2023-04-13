@@ -11,6 +11,7 @@ struct StartView: View {
 
     @EnvironmentObject var model: ModelData
     @ObservedObject var recognizedContent = TextData()
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass //for iPad specificity
     
     @State private var names: [String] = []
     @State private var currencyType = Currency.default.symbol
@@ -156,8 +157,18 @@ struct StartView: View {
                             } label: {
                                 StartCustomButtons(role: "library")
                             }
-                            .sheet(isPresented: $photoLibrarySheet) {
+                            .sheet(isPresented: $photoLibrarySheet, onDismiss: {
+                                if !showResults { // sheet dismissed because the user has cancelled
+                                    withAnimation() {
+                                        model.eraseModelData(eraseScanFails: false, fast: true)
+                                    }
+                                }
+                            }){
                                 ShowLibraryView(nothingFound: $nothingFound, showResults: $showResults, showSheet: $photoLibrarySheet)
+                            }
+
+                            if horizontalSizeClass == .compact { // Only appears on iPhone
+                                Spacer()
                             }
                             
                             Button {
@@ -184,7 +195,7 @@ struct StartView: View {
                             }
                         }
                         .padding(.horizontal, 6)
-                        .disabled(names.isEmpty || !model.users.isEmpty) // 2nd case: disabled if the model has not been cleaned yet
+                        .disabled(names.isEmpty || (!model.startTheProcess && !model.users.isEmpty)) // 2nd case: disabled if the model has not been fully cleaned yet
                         .onTapGesture {
                             if names.isEmpty {
                                 showAlert3 = true

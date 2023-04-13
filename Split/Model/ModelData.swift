@@ -11,7 +11,7 @@ import SwiftUI
 
 final class ModelData: ObservableObject {
     @Published var startTheProcess = false
-    @Published var photoIsImported = true //TODO: change
+    @Published var photoIsImported = false
     @Published var users: [User] = []
     @Published var listOfProductsAndPrices: [PairProductPrice] = []
     @Published var currency: Currency = Currency.default
