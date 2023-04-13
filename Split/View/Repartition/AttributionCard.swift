@@ -310,9 +310,9 @@ struct AttributionCard: View {
                 }
             })
             .onEnded({ _ in
-                if xOffset > 150 {
+                if xOffset > 100 {
                     goesBack = true
-                } else if xOffset < -150 {
+                } else if xOffset < -100 {
                     validate()
                 } else {
                     withAnimation {

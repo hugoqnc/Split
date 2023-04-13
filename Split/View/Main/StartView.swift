@@ -83,10 +83,7 @@ struct StartView: View {
                                     }
                                 }
                             } label: {
-                                HStack {
-                                    Image(systemName: "photo.stack")
-                                    Text("Load")
-                                }
+                                StartCustomButtons(role: "library")
                             }
                             
                             Button {
@@ -109,13 +106,10 @@ struct StartView: View {
                                     }
                                 }
                             } label: {
-                                HStack {
-                                    Image(systemName: "viewfinder")
-                                    Text("Scan")
-                                }
+                                StartCustomButtons(role: "scan")
                             }
                         }
-                        .padding(.horizontal, 10)
+//                        .padding(.horizontal, 10)
                         .disabled(names.isEmpty || disabledBecauseOfTiming)
                         .onTapGesture {
                             if names.isEmpty {
@@ -125,7 +119,7 @@ struct StartView: View {
                         .alert(isPresented: $showAlert3) {
                             Alert(title: Text("No users"), message: Text("Please add the name of at least one user to start"), dismissButton: .default(Text("OK")))
                         }
-                        .buttonStyle(.borderedProminent)
+//                        .buttonStyle(.borderedProminent)
                         .onChange(of: model.startTheProcess) { newValue in
                             if !newValue {
                                 disabledBecauseOfTiming = true //disables the "next" button for a short moment when "startTheProcess" has changed, but the rest of the model may not have been cleaned yet

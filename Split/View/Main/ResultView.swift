@@ -100,7 +100,7 @@ struct ResultView: View {
                         Spacer()
                         
                         Menu {
-                            if !compatibleTricounts(users: model.users, tricountList: model.parameters.tricountList).isEmpty && model.users.map {model.balance(ofUser: $0)}.min() ?? 0 >= 0 {
+                            if !compatibleTricounts(users: model.users, tricountList: model.parameters.tricountList).isEmpty && model.users.map({model.balance(ofUser: $0)}).min() ?? 0 >= 0 {
                                 Button {
                                     showExportToTricount = true
                                 } label: {

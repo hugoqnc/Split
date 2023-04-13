@@ -58,6 +58,7 @@
 		4F94B8FF27A7326400F7B10F /* MiniRepartitionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F94B8FE27A7326400F7B10F /* MiniRepartitionRow.swift */; };
 		4F94B90127A7476F00F7B10F /* StatisticRectangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F94B90027A7476F00F7B10F /* StatisticRectangle.swift */; };
 		4FA5B91328BD20FB000B9AFF /* RestrictedBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA5B91228BD20FB000B9AFF /* RestrictedBrowserView.swift */; };
+		4FAACF5029E8006F00678CBA /* StartCustomButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FAACF4F29E8006F00678CBA /* StartCustomButtons.swift */; };
 		4FB7813C2794821D00F5E2D8 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB7813B2794821D00F5E2D8 /* Currency.swift */; };
 		4FD7C2D927E86EE6009C4D9D /* FillFavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD7C2D827E86EE6009C4D9D /* FillFavoriteButton.swift */; };
 		4FD7C2DB27E86EF2009C4D9D /* EditFavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD7C2DA27E86EF2009C4D9D /* EditFavoriteButton.swift */; };
@@ -155,6 +156,7 @@
 		4F94B8FE27A7326400F7B10F /* MiniRepartitionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniRepartitionRow.swift; sourceTree = "<group>"; };
 		4F94B90027A7476F00F7B10F /* StatisticRectangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticRectangle.swift; sourceTree = "<group>"; };
 		4FA5B91228BD20FB000B9AFF /* RestrictedBrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestrictedBrowserView.swift; sourceTree = "<group>"; };
+		4FAACF4F29E8006F00678CBA /* StartCustomButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartCustomButtons.swift; sourceTree = "<group>"; };
 		4FB7813B2794821D00F5E2D8 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		4FD7C2D827E86EE6009C4D9D /* FillFavoriteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillFavoriteButton.swift; sourceTree = "<group>"; };
 		4FD7C2DA27E86EF2009C4D9D /* EditFavoriteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFavoriteButton.swift; sourceTree = "<group>"; };
@@ -327,6 +329,7 @@
 				4FDC144327DBA81600FE7C2E /* AutomatedRecognitionLabel.swift */,
 				4F4944242899B7A500FBC482 /* InfoBlock.swift */,
 				4F0DF06129CEFC110034D4CF /* AddPercentButton.swift */,
+				4FAACF4F29E8006F00678CBA /* StartCustomButtons.swift */,
 			);
 			path = Others;
 			sourceTree = "<group>";
@@ -652,6 +655,7 @@
 				4F309E5B2784F68200F55BC6 /* ScannerView.swift in Sources */,
 				4F4902B327CB8E100047A441 /* NoHistoryView.swift in Sources */,
 				4F83AA80285CD57C00F45FC6 /* DivideItemView.swift in Sources */,
+				4FAACF5029E8006F00678CBA /* StartCustomButtons.swift in Sources */,
 				4F80BED727C7B7A400CA73B3 /* ParametersStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
