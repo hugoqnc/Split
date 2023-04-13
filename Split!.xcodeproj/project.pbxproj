@@ -59,6 +59,7 @@
 		4F94B90127A7476F00F7B10F /* StatisticRectangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F94B90027A7476F00F7B10F /* StatisticRectangle.swift */; };
 		4FA5B91328BD20FB000B9AFF /* RestrictedBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA5B91228BD20FB000B9AFF /* RestrictedBrowserView.swift */; };
 		4FAACF5029E8006F00678CBA /* StartCustomButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FAACF4F29E8006F00678CBA /* StartCustomButtons.swift */; };
+		4FAACF5F29E85C4C00678CBA /* UpdateSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FAACF5E29E85C4C00678CBA /* UpdateSheet.swift */; };
 		4FB7813C2794821D00F5E2D8 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB7813B2794821D00F5E2D8 /* Currency.swift */; };
 		4FD7C2D927E86EE6009C4D9D /* FillFavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD7C2D827E86EE6009C4D9D /* FillFavoriteButton.swift */; };
 		4FD7C2DB27E86EF2009C4D9D /* EditFavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD7C2DA27E86EF2009C4D9D /* EditFavoriteButton.swift */; };
@@ -157,6 +158,7 @@
 		4F94B90027A7476F00F7B10F /* StatisticRectangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticRectangle.swift; sourceTree = "<group>"; };
 		4FA5B91228BD20FB000B9AFF /* RestrictedBrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestrictedBrowserView.swift; sourceTree = "<group>"; };
 		4FAACF4F29E8006F00678CBA /* StartCustomButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartCustomButtons.swift; sourceTree = "<group>"; };
+		4FAACF5E29E85C4C00678CBA /* UpdateSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateSheet.swift; sourceTree = "<group>"; };
 		4FB7813B2794821D00F5E2D8 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		4FD7C2D827E86EE6009C4D9D /* FillFavoriteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillFavoriteButton.swift; sourceTree = "<group>"; };
 		4FD7C2DA27E86EF2009C4D9D /* EditFavoriteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFavoriteButton.swift; sourceTree = "<group>"; };
@@ -267,6 +269,7 @@
 			isa = PBXGroup;
 			children = (
 				4F309E4F2784B55900F55BC6 /* ContentView.swift */,
+				4FAACF5E29E85C4C00678CBA /* UpdateSheet.swift */,
 				4F7CA06128BF8B0700050B47 /* ShowroomPreviews.swift */,
 				4F309E632784F9CD00F55BC6 /* Main */,
 				4FF675D8279A1E4E00B7F385 /* Sheets */,
@@ -602,6 +605,7 @@
 				4F3161FB29C7214000E3C323 /* TextRecognitionFunctions.swift in Sources */,
 				4F37A89A27883C2B00947426 /* ListSheetView.swift in Sources */,
 				4F309E6C2785F80600F55BC6 /* AttributionCard.swift in Sources */,
+				4FAACF5F29E85C4C00678CBA /* UpdateSheet.swift in Sources */,
 				4FDC144427DBA81600FE7C2E /* AutomatedRecognitionLabel.swift in Sources */,
 				4F309E6A2785EB7600F55BC6 /* CurrentExpensesRow.swift in Sources */,
 				4F90A7AC27A713F9003A1D97 /* UserChoicesView.swift in Sources */,
@@ -754,7 +758,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -809,7 +813,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

@@ -24,6 +24,7 @@ struct Parameters: Codable {
     var tricountList: [Tricount] = []
     var defaultCurrency = Currency.default
     var compressImages = true
+    var appVersion = "0"
     
     var showTipAndTax = true
     var usualTips = [18.0, 20.0, 22.0]
