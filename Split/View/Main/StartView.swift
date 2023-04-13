@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct StartView: View {
+
     @EnvironmentObject var model: ModelData
+    @ObservedObject var recognizedContent = TextData()
+    
     @State private var names: [String] = []
     @State private var currencyType = Currency.default.symbol
     @State private var showAlert1 = false
@@ -17,18 +20,21 @@ struct StartView: View {
     @State private var showSettings = false
     @State private var showHistoryView = false
     @State private var showFavoriteView = false
-    @State private var disabledBecauseOfTiming = false
+    @State var photoLibrarySheet = false
+    @State var filesSheet = false
+    
+    // Results of image recognition from library or files
+    @State private var showResults = false
+    @State private var nothingFound = false
         
     @State private var newUserName: String = ""
         
     var body: some View {
         
-        if model.startTheProcess {
-            if model.photoFromLibrary {
-                ShowLibraryView()
-            } else {
-                ShowScannerView()
-            }
+        if model.startTheProcess && !model.photoIsImported {
+            ShowScannerView()
+        } else if model.startTheProcess && model.photoIsImported && showResults {
+            FirstListView(showScanningResults: $showResults, nothingFound: $nothingFound)
         } else {
             
             let formDetails = FormDetailsView(names: $names, newUserName: $newUserName, currencyType: $currencyType, showAlert1: $showAlert1, showAlert2: $showAlert2)
@@ -78,12 +84,80 @@ struct StartView: View {
                                     }
                                     model.currency = Currency(symbol: currencyType)
                                     withAnimation() {
-                                        model.photoFromLibrary = true
+                                        model.photoIsImported = true
                                         model.startTheProcess = true
+                                        filesSheet = true
+                                    }
+                                }
+                            } label: {
+                                StartCustomButtons(role: "files")
+                            }
+                            .fileImporter(
+                                isPresented: $filesSheet,
+                                allowedContentTypes: [.image],
+                                allowsMultipleSelection: true
+                            ) { result in
+                                do {
+                                    var selectedImages: [UIImage] = []
+                                    let selectedFiles: [URL] = try result.get()
+                                    for selectedFile in selectedFiles {
+                                        guard selectedFile.startAccessingSecurityScopedResource() else { return }
+                                        
+                                        if let imageData = try? Data(contentsOf: selectedFile),
+                                           let image = UIImage(data: imageData) {
+                                            selectedImages.append(image)
+                                        }
+                                        
+                                        selectedFile.stopAccessingSecurityScopedResource()
+                                    }
+//                                    self.selectedImages = selectedImages
+                                    
+                                    let textRecognitionFunctions = TextRecognitionFunctions(model: model, recognizedContent: recognizedContent)
+                                    textRecognitionFunctions.fillInModel(images: selectedImages) { nothing in
+                                        nothingFound = nothing
+                                    }
+                                    withAnimation {
+                                        showResults = true
+                                        filesSheet = false
+                                    }
+                                } catch {
+                                    Swift.print(error.localizedDescription)
+                                }
+                            }
+                            .onChange(of: filesSheet, perform: { newValue in
+                                if !newValue && !showResults { // sheet dismissed because the user has cancelled
+                                    withAnimation() {
+                                        model.eraseModelData(eraseScanFails: false, fast: true)
+                                    }
+                                }
+                            })
+                            
+                            Button {
+                                let ok = formDetails.isFinalUsersCorrect()
+                                if ok {
+                                    ParametersStore.load { result in
+                                        switch result {
+                                        case .failure(let error):
+                                            fatalError(error.localizedDescription)
+                                        case .success(let parameters):
+                                            model.parameters = parameters
+                                        }
+                                    }
+                                    for name in names{
+                                        model.users.append(User(name: name))
+                                    }
+                                    model.currency = Currency(symbol: currencyType)
+                                    withAnimation() {
+                                        model.photoIsImported = true
+                                        model.startTheProcess = true
+                                        photoLibrarySheet = true
                                     }
                                 }
                             } label: {
                                 StartCustomButtons(role: "library")
+                            }
+                            .sheet(isPresented: $photoLibrarySheet) {
+                                ShowLibraryView(nothingFound: $nothingFound, showResults: $showResults, showSheet: $photoLibrarySheet)
                             }
                             
                             Button {
@@ -109,8 +183,8 @@ struct StartView: View {
                                 StartCustomButtons(role: "scan")
                             }
                         }
-//                        .padding(.horizontal, 10)
-                        .disabled(names.isEmpty || disabledBecauseOfTiming)
+                        .padding(.horizontal, 6)
+                        .disabled(names.isEmpty || !model.users.isEmpty) // 2nd case: disabled if the model has not been cleaned yet
                         .onTapGesture {
                             if names.isEmpty {
                                 showAlert3 = true
@@ -119,16 +193,7 @@ struct StartView: View {
                         .alert(isPresented: $showAlert3) {
                             Alert(title: Text("No users"), message: Text("Please add the name of at least one user to start"), dismissButton: .default(Text("OK")))
                         }
-//                        .buttonStyle(.borderedProminent)
-                        .onChange(of: model.startTheProcess) { newValue in
-                            if !newValue {
-                                disabledBecauseOfTiming = true //disables the "next" button for a short moment when "startTheProcess" has changed, but the rest of the model may not have been cleaned yet
-                                let secondsToDelay = 0.4
-                                DispatchQueue.main.asyncAfter(deadline: .now() + secondsToDelay) {
-                                    disabledBecauseOfTiming = false
-                                }
-                            }
-                        }
+                        .buttonStyle(.plain)
                         
                         Spacer()
                     }

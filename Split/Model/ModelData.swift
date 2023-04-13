@@ -11,7 +11,7 @@ import SwiftUI
 
 final class ModelData: ObservableObject {
     @Published var startTheProcess = false
-    @Published var photoFromLibrary = false
+    @Published var photoIsImported = true //TODO: change
     @Published var users: [User] = []
     @Published var listOfProductsAndPrices: [PairProductPrice] = []
     @Published var currency: Currency = Currency.default
@@ -254,14 +254,12 @@ final class ModelData: ObservableObject {
             return sharedText        }
     }
     
-    func eraseModelData(eraseScanFails: Bool = true) {
+    func eraseModelData(eraseScanFails: Bool = true, fast: Bool = false) {
         withAnimation {
             self.startTheProcess = false
-            self.photoFromLibrary = false
         }
         
-        let secondsToDelay = 0.35
-        DispatchQueue.main.asyncAfter(deadline: .now() + secondsToDelay) {
+        if fast {
             if eraseScanFails {self.numberOfScanFails = 0}
             self.users = []
             self.listOfProductsAndPrices = []
@@ -273,6 +271,23 @@ final class ModelData: ObservableObject {
             self.tipEvenly = nil
             self.taxRate = nil
             self.taxEvenly = nil
+            self.photoIsImported = false
+        } else {
+            let secondsToDelay = 0.35
+            DispatchQueue.main.asyncAfter(deadline: .now() + secondsToDelay) {
+                if eraseScanFails {self.numberOfScanFails = 0}
+                self.users = []
+                self.listOfProductsAndPrices = []
+                self.currency = Currency.default
+                self.images = []
+                self.receiptName = ""
+                self.continueWithStandardRecognition = false
+                self.tipRate = nil
+                self.tipEvenly = nil
+                self.taxRate = nil
+                self.taxEvenly = nil
+                self.photoIsImported = false
+            }
         }
     }
     func eraseScanData() {

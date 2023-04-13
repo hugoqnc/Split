@@ -58,7 +58,7 @@ struct NoMatchFound: View {
                             .foregroundColor(.accentColor)
                             .padding(7)
                             .padding(.trailing,5)
-                        Text(model.photoFromLibrary ? "Make sure you have correctly cropped your receipt when you import it from the photo library. The edges of the image must match the edges of the receipt perfectly." : "If you disable Advanced Recognition, you should manually crop your receipt.")
+                        Text(model.photoIsImported ? "Make sure you have correctly cropped your receipt when you import it from the photo library. The edges of the image must match the edges of the receipt perfectly." : "If you disable Advanced Recognition, you should manually crop your receipt.")
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }

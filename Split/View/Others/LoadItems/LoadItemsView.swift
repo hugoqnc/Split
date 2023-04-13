@@ -23,7 +23,11 @@ struct LoadItemsView: View {
                     if model.parameters.advancedRecognition && !nothingFoundWithSecondTry {
                         NoMatchFound()
                         Button {
-                            model.eraseScanData()
+                            if model.photoIsImported {
+                                model.eraseModelData(eraseScanFails: false, fast: true)
+                            } else {
+                                model.eraseScanData()
+                            }
                             nothingFound = false
                             withAnimation() {
                                 showScanningResults = false
@@ -33,9 +37,9 @@ struct LoadItemsView: View {
                             HStack {
                                 Spacer()
                                 VStack(spacing: 3) {
-                                    Label(model.photoFromLibrary ? "Select another photo" : "Try again", systemImage: "arrow.clockwise")
+                                    Label(model.photoIsImported ? "Go back" : "Try again", systemImage: "arrow.clockwise")
                                         .font(.headline)
-                                    Text(model.photoFromLibrary ? "from the photo library" : "with Advanced Recognition")
+                                    Text(model.photoIsImported ? "and start again" : "with Advanced Recognition")
                                         .font(.caption)
                                         .multilineTextAlignment(.leading)
                                 }
@@ -43,6 +47,7 @@ struct LoadItemsView: View {
                             }
                         }
                         .buttonStyle(.borderedProminent)
+                        .tint(model.photoIsImported ? .red : .accentColor)
                         .padding(.horizontal, 25)
                         .padding(.bottom,5)
                         .padding(.top,5)
@@ -97,7 +102,11 @@ struct LoadItemsView: View {
                         NoItemFound()
                         
                         Button {
-                            model.eraseScanData()
+                            if model.photoIsImported {
+                                model.eraseModelData(eraseScanFails: false, fast: true)
+                            } else {
+                                model.eraseScanData()
+                            }
                             nothingFound = false
                             nothingFoundWithSecondTry = false
                             withAnimation() {
@@ -105,7 +114,7 @@ struct LoadItemsView: View {
                             }
                             
                         } label: {
-                            Label(model.photoFromLibrary ? "Try with another photo" : "Try again", systemImage: "arrow.clockwise")
+                            Label(model.photoIsImported ? "Start again" : "Try again", systemImage: "arrow.clockwise")
                         }
                         .buttonStyle(.bordered)
                         .padding(.bottom,10)

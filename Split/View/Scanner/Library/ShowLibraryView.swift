@@ -14,24 +14,26 @@ struct ShowLibraryView: View {
     
     @State private var selectedImages: [UIImage] = []
     
-    @State private var nothingFound = false
-    @State private var showResults = false
+    @Binding var nothingFound: Bool
+    @Binding var showResults: Bool
+    @Binding var showSheet: Bool
+    
     @State private var showTutorialScreen = false
     
     var body: some View {
-        if showResults {
-            FirstListView(showScanningResults: $showResults, nothingFound: $nothingFound)
-        } else {
             ImagePicker(images: $selectedImages) {
                 withAnimation() {
-                    model.eraseModelData(eraseScanFails: false)
+                    model.eraseModelData(eraseScanFails: false, fast: true)
                 }
             } onDone: {
                 let textRecognitionFunctions = TextRecognitionFunctions(model: model, recognizedContent: recognizedContent)
                 textRecognitionFunctions.fillInModel(images: selectedImages) { nothing in
                     nothingFound = nothing
                 }
-                showResults = true
+                withAnimation() {
+                    showResults = true
+                    showSheet = false
+                }
             }
             .onAppear {
                 selectedImages = [] // re-initialize when the user goes back to this interface after having cancelled the next step
@@ -64,13 +66,12 @@ struct ShowLibraryView: View {
                 }
             })
             .ignoresSafeArea(.all)
-        }
     }
 }
 
 struct ShowLibraryView_Previews: PreviewProvider {
     static var previews: some View {
-        ShowLibraryView()
+        ShowLibraryView(nothingFound: .constant(false), showResults: .constant(false), showSheet: .constant(false))
             .environmentObject(ModelData())
     }
 }

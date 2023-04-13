@@ -8,26 +8,11 @@
 import SwiftUI
 
 struct StartCustomButtons: View {
-    var role: String // "scan", "library"
+    var role: String // "scan", "library", "files"
     
     var body: some View {
         switch role {
         case "scan":
-//            Group {
-//                ZStack {
-//                    VStack(spacing: 1) {
-//                        Image(systemName: "viewfinder")
-//                            .font(Font.system(size: 20, weight: .semibold))
-//                        Text("Scan")
-//                            .font(.subheadline)
-//                            .fontWeight(.semibold)
-//                    }
-//                    .foregroundColor(.white)
-//                    .padding(10)
-//                    .background(Color.accentColor)
-//                    .clipShape(RoundedRectangle(cornerRadius: 15))
-//                }
-//            }
             Label("Scan", systemImage: "viewfinder")
                 .labelStyle(.titleAndIcon)
                 .foregroundColor(.white)
@@ -37,22 +22,15 @@ struct StartCustomButtons: View {
                 .clipShape(Capsule())
 
         case "library":
-//            Group {
-//                ZStack {
-//                    VStack(spacing: 1) {
-//                        Image(systemName: "photo.on.rectangle.angled")
-//                            .font(Font.system(size: 20, weight: .semibold))
-//                        Text("Load")
-//                            .font(.subheadline)
-//                            .fontWeight(.semibold)
-//                    }
-//                    .foregroundColor(.white)
-//                    .padding(10)
-//                    .background(Color.accentColor)
-//                    .clipShape(RoundedRectangle(cornerRadius: 15))
-//                }
-//            }
             Label("", systemImage: "photo.on.rectangle.angled")
+                .labelStyle(.iconOnly)
+                .foregroundColor(.white)
+                .padding(10)
+                .background(Color.accentColor)
+                .clipShape(Circle())
+            
+        case "files":
+            Label("", systemImage: "folder")
                 .labelStyle(.iconOnly)
                 .foregroundColor(.white)
                 .padding(10)
@@ -70,6 +48,7 @@ struct StartCustomButtons_Previews: PreviewProvider {
         Group {
             StartCustomButtons(role: "scan")
             StartCustomButtons(role: "library")
+            StartCustomButtons(role: "files")
         }
         .previewLayout(PreviewLayout.sizeThatFits)
         .padding()

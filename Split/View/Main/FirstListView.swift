@@ -341,7 +341,11 @@ struct FirstListView: View {
                                 ToolbarItem(id: UUID().uuidString, placement: .bottomBar, showsByDefault: true) {
                                     Button {
                                         withAnimation() {
-                                            model.eraseScanData()
+                                            if model.photoIsImported {
+                                                model.eraseModelData(eraseScanFails: false, fast: true)
+                                            } else {
+                                                model.eraseScanData()
+                                            }
                                             showScanningResults = false
                                         }
                                     } label: {
