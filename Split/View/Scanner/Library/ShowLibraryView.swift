@@ -32,7 +32,7 @@ struct ShowLibraryView: View {
                 }
                 withAnimation() {
                     showResults = true
-                    // showSheet = false
+                    showSheet = false
                 }
             }
             .onAppear {

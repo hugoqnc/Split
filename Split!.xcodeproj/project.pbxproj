@@ -55,6 +55,10 @@
 		4F898D0C279CC1F40067336F /* VisionParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F898D0B279CC1F40067336F /* VisionParameters.swift */; };
 		4F8EBD8927AAF75300CBD6AD /* StatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8EBD8827AAF75300CBD6AD /* StatView.swift */; };
 		4F90A7AC27A713F9003A1D97 /* UserChoicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F90A7AB27A713F9003A1D97 /* UserChoicesView.swift */; };
+		4F91350529EAA12F00699C73 /* TipsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F91350429EAA12F00699C73 /* TipsView.swift */; };
+		4F91350729EAA71300699C73 /* PurchaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F91350629EAA71300699C73 /* PurchaseManager.swift */; };
+		4F91350A29EADE4900699C73 /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 4F91350929EADE4900699C73 /* ConfettiSwiftUI */; };
+		4F91350C29EADE5C00699C73 /* DonationSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F91350B29EADE5C00699C73 /* DonationSheet.swift */; };
 		4F94B8FF27A7326400F7B10F /* MiniRepartitionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F94B8FE27A7326400F7B10F /* MiniRepartitionRow.swift */; };
 		4F94B90127A7476F00F7B10F /* StatisticRectangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F94B90027A7476F00F7B10F /* StatisticRectangle.swift */; };
 		4FA5B91328BD20FB000B9AFF /* RestrictedBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA5B91228BD20FB000B9AFF /* RestrictedBrowserView.swift */; };
@@ -154,6 +158,10 @@
 		4F898D0B279CC1F40067336F /* VisionParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionParameters.swift; sourceTree = "<group>"; };
 		4F8EBD8827AAF75300CBD6AD /* StatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatView.swift; sourceTree = "<group>"; };
 		4F90A7AB27A713F9003A1D97 /* UserChoicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserChoicesView.swift; sourceTree = "<group>"; };
+		4F91350129EA9FE300699C73 /* Tips.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Tips.storekit; sourceTree = "<group>"; };
+		4F91350429EAA12F00699C73 /* TipsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsView.swift; sourceTree = "<group>"; };
+		4F91350629EAA71300699C73 /* PurchaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseManager.swift; sourceTree = "<group>"; };
+		4F91350B29EADE5C00699C73 /* DonationSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonationSheet.swift; sourceTree = "<group>"; };
 		4F94B8FE27A7326400F7B10F /* MiniRepartitionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniRepartitionRow.swift; sourceTree = "<group>"; };
 		4F94B90027A7476F00F7B10F /* StatisticRectangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticRectangle.swift; sourceTree = "<group>"; };
 		4FA5B91228BD20FB000B9AFF /* RestrictedBrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestrictedBrowserView.swift; sourceTree = "<group>"; };
@@ -181,6 +189,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F91350A29EADE4900699C73 /* ConfettiSwiftUI in Frameworks */,
 				4FE6F25528D4C02800C8D2AA /* SlideOverCard in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -280,6 +289,7 @@
 				4FD7C2D727E86ECE009C4D9D /* Start */,
 				4F7C128A279B52D900A5E50B /* Tutorials */,
 				4F309E712786D90B00F55BC6 /* Others */,
+				4F91350029EA9FB000699C73 /* Store */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -378,6 +388,16 @@
 			path = Tutorials;
 			sourceTree = "<group>";
 		};
+		4F91350029EA9FB000699C73 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				4F91350129EA9FE300699C73 /* Tips.storekit */,
+				4F91350429EAA12F00699C73 /* TipsView.swift */,
+				4F91350629EAA71300699C73 /* PurchaseManager.swift */,
+			);
+			path = Store;
+			sourceTree = "<group>";
+		};
 		4FA4ECB827C7CCAF00B0F012 /* Stores */ = {
 			isa = PBXGroup;
 			children = (
@@ -427,6 +447,7 @@
 				4F37A89927883C2A00947426 /* ListSheetView.swift */,
 				4F90A7AB27A713F9003A1D97 /* UserChoicesView.swift */,
 				4F83AA7F285CD57C00F45FC6 /* DivideItemView.swift */,
+				4F91350B29EADE5C00699C73 /* DonationSheet.swift */,
 			);
 			path = Sheets;
 			sourceTree = "<group>";
@@ -449,6 +470,7 @@
 			name = Split;
 			packageProductDependencies = (
 				4FE6F25428D4C02800C8D2AA /* SlideOverCard */,
+				4F91350929EADE4900699C73 /* ConfettiSwiftUI */,
 			);
 			productName = ReceiptSplitter;
 			productReference = 4F309E1F2784B49900F55BC6 /* Split!.app */;
@@ -546,6 +568,7 @@
 			mainGroup = 4F309E162784B49900F55BC6;
 			packageReferences = (
 				4FE6F25328D4C02800C8D2AA /* XCRemoteSwiftPackageReference "SlideOverCard" */,
+				4F91350829EADE4900699C73 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */,
 			);
 			productRefGroup = 4F309E202784B49900F55BC6 /* Products */;
 			projectDirPath = "";
@@ -602,8 +625,10 @@
 				4F42BA1027D4EF2800535706 /* TextRecognitionAdvanced.swift in Sources */,
 				4F4902B127CADA6E0047A441 /* ResultCard.swift in Sources */,
 				4F4902AC27CAC12F0047A441 /* ResultsStore.swift in Sources */,
+				4F91350529EAA12F00699C73 /* TipsView.swift in Sources */,
 				4F3161FB29C7214000E3C323 /* TextRecognitionFunctions.swift in Sources */,
 				4F37A89A27883C2B00947426 /* ListSheetView.swift in Sources */,
+				4F91350C29EADE5C00699C73 /* DonationSheet.swift in Sources */,
 				4F309E6C2785F80600F55BC6 /* AttributionCard.swift in Sources */,
 				4FAACF5F29E85C4C00678CBA /* UpdateSheet.swift in Sources */,
 				4FDC144427DBA81600FE7C2E /* AutomatedRecognitionLabel.swift in Sources */,
@@ -624,6 +649,7 @@
 				4F8EBD8927AAF75300CBD6AD /* StatView.swift in Sources */,
 				4F7CA06228BF8B0700050B47 /* ShowroomPreviews.swift in Sources */,
 				4F42BA1427D51B4C00535706 /* NoMatchFound.swift in Sources */,
+				4F91350729EAA71300699C73 /* PurchaseManager.swift in Sources */,
 				4FD7C2D927E86EE6009C4D9D /* FillFavoriteButton.swift in Sources */,
 				4F94B90127A7476F00F7B10F /* StatisticRectangle.swift in Sources */,
 				4FB7813C2794821D00F5E2D8 /* Currency.swift in Sources */,
@@ -828,6 +854,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Split/Split.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Split/Preview Content\"";
@@ -847,7 +874,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.2;
+				MARKETING_VERSION = 1.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "fr.telecom-paris.queinnec.hugo.Split";
 				PRODUCT_NAME = "Split!";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -864,6 +891,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Split/Split.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Split/Preview Content\"";
@@ -883,7 +911,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.2;
+				MARKETING_VERSION = 1.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "fr.telecom-paris.queinnec.hugo.Split";
 				PRODUCT_NAME = "Split!";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1062,6 +1090,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		4F91350829EADE4900699C73 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/simibac/ConfettiSwiftUI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		4FE6F25328D4C02800C8D2AA /* XCRemoteSwiftPackageReference "SlideOverCard" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/joogps/SlideOverCard.git";
@@ -1073,6 +1109,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		4F91350929EADE4900699C73 /* ConfettiSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4F91350829EADE4900699C73 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */;
+			productName = ConfettiSwiftUI;
+		};
 		4FE6F25428D4C02800C8D2AA /* SlideOverCard */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4FE6F25328D4C02800C8D2AA /* XCRemoteSwiftPackageReference "SlideOverCard" */;

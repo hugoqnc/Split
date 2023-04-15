@@ -9,6 +9,8 @@ import SwiftUI
 
 struct SettingsView: View {
     
+    @EnvironmentObject private var purchaseManager: PurchaseManager
+    
     @Environment(\.dismiss) var dismiss
     @Environment(\.openURL) var openURL
     @Environment(\.colorScheme) var colorScheme
@@ -50,6 +52,11 @@ struct SettingsView: View {
         NavigationView {
             VStack {
                 Form {
+                    
+                    if !purchaseManager.hasTipped {
+                        TipsView()
+                            .listRowBackground(Color.accentColor.opacity(0.15))
+                    }
                     
                     Section {
                         VStack(alignment: .leading, spacing: 3) {
@@ -230,7 +237,12 @@ struct SettingsView: View {
                     }
                     
 
-
+                    if purchaseManager.hasTipped {
+                        Section {
+                            TipsView()
+                                .listRowBackground(Color.accentColor.opacity(0.15))
+                        }
+                    }
                     
                     HStack{
                         Spacer()
@@ -293,6 +305,7 @@ struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {
             SettingsView()
+                .environmentObject(PurchaseManager())
         }
     }
 }

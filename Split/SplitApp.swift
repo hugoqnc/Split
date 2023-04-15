@@ -9,10 +9,17 @@ import SwiftUI
 
 @main
 struct SplitApp: App {
+    @StateObject private var model = ModelData()
+    @StateObject private var purchaseManager = PurchaseManager()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(ModelData())
+                .environmentObject(model)
+                .environmentObject(purchaseManager)
+                .task {
+                    await purchaseManager.updatePurchasedProducts()
+                }
         }
     }
 }

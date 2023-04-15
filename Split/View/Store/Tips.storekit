@@ -1,0 +1,63 @@
+{
+  "identifier" : "F3A43EDE",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "1.49",
+      "familyShareable" : false,
+      "internalID" : "70CF9CE8",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "Supporter",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "patron.small",
+      "referenceName" : "Small Patron",
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "2.99",
+      "familyShareable" : false,
+      "internalID" : "EE9B7C61",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "Benefactor",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "patron.medium",
+      "referenceName" : "Medium Patron",
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "5.99",
+      "familyShareable" : false,
+      "internalID" : "5886A2DB",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "Patron",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "patron.big",
+      "referenceName" : "Big Patron",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 2,
+    "minor" : 0
+  }
+}
