@@ -20,20 +20,23 @@ struct TipsView: View {
         } else {
             VStack(spacing: 20) {
                 VStack {
-                    if purchaseManager.hasTipped {
-                        VStack(alignment: .leading, spacing: 5) {
-                            Label("Thank you for supporting Split!", systemImage: "heart")
-                                .font(.headline)
-                            Text("You have helped make Split! available to everyone for free!")
-                                .font(.subheadline)
+                    HStack {
+                        if purchaseManager.hasTipped {
+                            VStack(alignment: .leading, spacing: 5) {
+                                Label("Thank you for supporting Split!", systemImage: "heart")
+                                    .font(.headline)
+                                Text("You have helped make Split! available to everyone for free!")
+                                    .font(.subheadline)
+                            }
+                        } else {
+                            VStack(alignment: .leading, spacing: 5) {
+                                Label("Tips to support Split!", systemImage: "heart")
+                                    .font(.headline)
+                                Text("Split! is **free**, **ad-free**, does **not collect your data**, and is developed **independently** by a student in his spare time. You can contribute to its future evolution!")
+                                    .font(.subheadline)
+                            }
                         }
-                    } else {
-                        VStack(alignment: .leading, spacing: 5) {
-                            Label("Tips to support Split!", systemImage: "heart")
-                                .font(.headline)
-                            Text("Split! is **free**, **ad-free**, does **not collect your data**, and is developed **independently** by a student in his spare time. You can contribute to its future evolution!")
-                                .font(.subheadline)
-                        }
+                        Spacer()
                     }
                     
                     HStack {

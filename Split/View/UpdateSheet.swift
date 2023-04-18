@@ -41,86 +41,100 @@ struct UpdateSheet: View {
                         size: titleFont.pointSize
                     )))
             }
-            .padding(.vertical, 50)
+            .padding(.top, 50)
             
-            VStack(alignment: .leading, spacing: 20) {
-                HStack(alignment: .center) {
-                    Image(systemName: "photo.on.rectangle.angled")
-                        .frame(width: 35, height: 35)
-                        .font(.largeTitle)
-                        .foregroundColor(.accentColor)
-                        .padding()
+            ScrollView {
+                VStack(alignment: .leading, spacing: 20) {
+                    HStack(alignment: .center) {
+                        Image(systemName: "photo.on.rectangle.angled")
+                            .frame(width: 35, height: 35)
+                            .font(.largeTitle)
+                            .foregroundColor(.accentColor)
+                            .padding()
 
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("Photo import")
-                            .font(.headline)
-                            .foregroundColor(.primary)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Photo import")
+                                .font(.headline)
+                                .foregroundColor(.primary)
 
-                        Text("Use your receipt photos directly from your photo library or files, without having to scan.")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                            .fixedSize(horizontal: false, vertical: true)
+                            Text("Use your receipt photos directly from your photo library or files, without having to scan.")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                        
+                    }
+                    .padding(.top, 40)
+                    
+                    HStack(alignment: .center) {
+                        Image(systemName: "building.columns")
+                            .frame(width: 35, height: 35)
+                            .font(.largeTitle)
+                            .foregroundColor(.green)
+                            .padding()
+
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Tips and taxes")
+                                .font(.headline)
+                                .foregroundColor(.primary)
+
+                            Text("Easily specify tip and tax percentages to apply to your receipts. Choose whether you want to split them evenly or proportionally to each person's expenses.")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                    }
+                    
+                    HStack(alignment: .center) {
+                        Image(systemName: "hand.draw")
+                            .frame(width: 35, height: 35)
+                            .font(.largeTitle)
+                            .foregroundColor(.pink)
+                            .padding()
+
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Swipe back")
+                                .font(.headline)
+                                .foregroundColor(.primary)
+
+                            Text("When assigning items, swipe through the cards to go back and correct a mistake.")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
                     }
                     
                 }
-                
-                HStack(alignment: .center) {
-                    Image(systemName: "building.columns")
-                        .frame(width: 35, height: 35)
-                        .font(.largeTitle)
-                        .foregroundColor(.green)
-                        .padding()
-
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("Tips and taxes")
-                            .font(.headline)
-                            .foregroundColor(.primary)
-
-                        Text("Easily specify tip and tax percentages to apply to your receipts. Choose whether you want to split them evenly or proportionally to each person's expenses.")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
-                }
-                
-                HStack(alignment: .center) {
-                    Image(systemName: "hand.draw")
-                        .frame(width: 35, height: 35)
-                        .font(.largeTitle)
-                        .foregroundColor(.pink)
-                        .padding()
-
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("Swipe back")
-                            .font(.headline)
-                            .foregroundColor(.primary)
-
-                        Text("When assigning items, swipe through the cards to go back and correct a mistake.")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
-                }
-            }
-            .padding(.horizontal, 30)
+                .padding(.horizontal, 30)
             .padding(.trailing, 10)
+            }
             
             Spacer()
             
-            Button{
-                dismiss()
-            } label: {
-                HStack {
-                    Spacer()
-                    Text("Continue")
-                        .font(.headline)
-                        .padding(10)
-                    Spacer()
-                }
+            VStack {
                 
+                Label("If you like this app, you can support its evolution by giving a tip in the Settings tab", systemImage: "heart")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                    .padding(.bottom, 5)
+                    .lineLimit(3)
+                
+                Button{
+                    dismiss()
+                } label: {
+                    HStack {
+                        Spacer()
+                        Text("Continue")
+                            .font(.headline)
+                            .padding(10)
+                        Spacer()
+                    }
+                    
+                }
+                .buttonStyle(.borderedProminent)
+            
             }
-            .buttonStyle(.borderedProminent)
-            .padding(35)
+            .padding([.horizontal, .bottom], 35)
         }
     }
 }
