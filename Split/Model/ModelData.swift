@@ -53,7 +53,7 @@ final class ModelData: ObservableObject {
         }
     }
     
-    var totalPriceBeforeTaxTip: Double {
+    var totalPriceBeforeTaxTip: Double { // Excluding tax and tip
         get {
             var total: Double = 0
             for item in listOfProductsAndPrices{
@@ -95,7 +95,7 @@ final class ModelData: ObservableObject {
         return balanceBeforeTaxTip(ofUser: user) + tipAmount(ofUser: user) + taxAmount(ofUser: user)
     }
     
-    func balanceBeforeTaxTip(ofUser user: User) -> Double { // Including tax and tip
+    func balanceBeforeTaxTip(ofUser user: User) -> Double { // Excluding tax and tip
         var total: Double = 0.0
         for item in chosenItems(ofUser: user){
             total += item.price/Double(item.chosenBy.count)

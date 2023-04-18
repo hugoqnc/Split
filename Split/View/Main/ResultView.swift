@@ -91,6 +91,21 @@ struct ResultView: View {
                                         .foregroundColor(.secondary)
                                 }
                             }
+                            .sheet(isPresented: $showAllList, content: {
+                                ListSheetView(itemCounter: .constant(-1), isShownInHistory: isShownInHistory)
+                            })
+                            .sheet(isPresented: $showUserDetails, content: {
+                                UserChoicesView(user: selectedUser)
+                            })
+                            .sheet(isPresented: $showSharingOptions, content: {
+                                ActivityViewController(activityItems: contentToShare)
+                            })
+                            .sheet(isPresented: $showIndividualSharingOptions, content: {
+                                ActivityViewController(activityItems: [model.individualSharedText(ofUser: selectedUser)])
+                            })
+                            .sheet(isPresented: $showExportToTricount, content: {
+                                TricountExportSheet()
+                            })
                         }
                         .padding(.top,isShownInHistory ? 8 : 35)
                         .padding(.bottom,5)
@@ -244,21 +259,6 @@ struct ResultView: View {
                     }
                 }
             }
-            .sheet(isPresented: $showAllList, content: {
-                ListSheetView(itemCounter: .constant(-1), isShownInHistory: isShownInHistory)
-            })
-            .sheet(isPresented: $showUserDetails, content: {
-                UserChoicesView(user: selectedUser)
-            })
-            .sheet(isPresented: $showSharingOptions, content: {
-                ActivityViewController(activityItems: contentToShare)
-            })
-            .sheet(isPresented: $showIndividualSharingOptions, content: {
-                ActivityViewController(activityItems: [model.individualSharedText(ofUser: selectedUser)])
-            })
-            .sheet(isPresented: $showExportToTricount, content: {
-                TricountExportSheet()
-            })
         }
         .transition(.move(edge: .bottom))
         .navigationViewStyle(StackNavigationViewStyle())
