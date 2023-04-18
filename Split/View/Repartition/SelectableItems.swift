@@ -26,13 +26,11 @@ struct SelectableItems: View {
                             self.selections.removeAll()
                         }
                         else {
-                            self.selections.removeAll()
-                            for user in users {
-                                self.selections.append(user.id)
-                            }
+                            self.selections = users.map({ user in user.id })
                         }
                     } label: {
                         Text(boolAllSelected ? "Deselect all" : "Select all")
+                            .animation(nil, value: boolAllSelected) // remove unecessary animation
                     }
                     .padding(.leading, 3)
                     

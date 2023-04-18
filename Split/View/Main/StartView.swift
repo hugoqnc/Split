@@ -72,6 +72,7 @@ struct StartView: View {
                             Button {
                                 let ok = formDetails.isFinalUsersCorrect()
                                 if ok {
+                                    showResults = false
                                     ParametersStore.load { result in
                                         switch result {
                                         case .failure(let error):
@@ -136,6 +137,7 @@ struct StartView: View {
                             Button {
                                 let ok = formDetails.isFinalUsersCorrect()
                                 if ok {
+                                    showResults = false
                                     ParametersStore.load { result in
                                         switch result {
                                         case .failure(let error):
