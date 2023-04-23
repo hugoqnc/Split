@@ -19,7 +19,7 @@ struct UserChoicesView: View {
         if short && (model.tipRate != nil || model.taxRate != nil) {
             text = "incl. \(model.tipRate != nil ? "tip" : "")\(model.tipRate != nil && model.taxRate != nil ? " and " : "")\(model.taxRate != nil ? "taxes" : "")"
         } else if !short && (model.tipRate != nil || model.taxRate != nil) {
-            text = "Your total amount is composed of \(model.showPrice(price: model.balanceBeforeTaxTip(ofUser: user))) of items, to which is added a \(model.tipRate != nil ? "a \(model.showPrice(price: model.tipAmount(ofUser: user))) tip (\(model.tipRate!)% shared \(model.tipEvenly! ? "evenly" : "proportionally"))" : "")\(model.tipRate != nil && model.taxRate != nil ? ", and " : "")\(model.taxRate != nil ? "\(model.showPrice(price: model.taxAmount(ofUser: user))) taxes (\(model.taxRate!)% shared \(model.taxEvenly! ? "evenly" : "proportionally"))" : "")."
+            text = "Your total amount is composed of \(model.showPrice(price: model.balanceBeforeTaxTip(ofUser: user))) of items, to which is added \(model.tipRate != nil ? "a \(model.showPrice(price: model.tipAmount(ofUser: user))) tip (\(model.tipRate!)% shared \(model.tipEvenly! ? "evenly" : "proportionally"))" : "")\(model.tipRate != nil && model.taxRate != nil ? ", and " : "")\(model.taxRate != nil ? "\(model.showPrice(price: model.taxAmount(ofUser: user))) taxes (\(model.taxRate!)% shared \(model.taxEvenly! ? "evenly" : "proportionally"))" : "")."
         }
         return text
     }
