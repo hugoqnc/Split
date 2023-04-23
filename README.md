@@ -8,7 +8,7 @@
   <img align="center" src="https://user-images.githubusercontent.com/67365803/170351861-d1d8803d-094c-4909-bf58-3d90d5aa52c6.png#gh-dark-mode-only" width=250px>
 </p>
 
-Split! is an app for iOS and iPadOS, that allows a group of people to easily share expenses from a common receipt.
+Split! is a free[^1] app for iOS and iPadOS, that allows a group of people to easily share expenses from a common receipt.
 For example, roommates can do their shopping and pay for everything together.
 Afterwards, one of them can scan the receipt, and attribute each expense to one person, several people or the whole group.
 The app will calculate everyone's total, much faster than if you had to do it by hand.
@@ -33,7 +33,7 @@ https://user-images.githubusercontent.com/67365803/187445035-cd8ae00c-e1be-445f-
 - [x] Scan any receipt, regardless of the brand, language or currency
 - [x] Take your scan in a single tap, with no need to manually crop it
 - [x] Reliable image recognition results, that are automatically verified by matching the price of all items to the total price
-- [x] No account, no internet connection is required to run the application (everything happens locally and no data is shared)[^1]
+- [x] No account, no internet connection is required to run the application (everything happens locally and no data is shared)[^3]
 - [x] Keeps a history of all receipts and of their distribution
 - [x] Quickly display images corresponding to the item name on the receipt, to easily understand what it refers to
 
@@ -48,8 +48,10 @@ https://user-images.githubusercontent.com/67365803/187445035-cd8ae00c-e1be-445f-
 - [x] Export the scanned receipt
 
 ### And much more...
+- [x] Import receipt images from your photo library or files
 - [x] Save your most frequently used list of people
 - [x] Display and use the currency symbol of your choice (€, $, £, ¥)
+- [x] Easily add a tip and taxes, and distribute them fairly
 - [x] Scan several receipts from the beginning to group all transactions 
 - [x] Add, delete or modify items on the fly during the attribution process
 - [x] Handles reductions (with negative amounts)
@@ -60,7 +62,7 @@ https://user-images.githubusercontent.com/67365803/187445035-cd8ae00c-e1be-445f-
 - This app works on Apple devices running iOS 15 / iPadOS 15 or higher
 - Developped using [SwiftUI](https://developer.apple.com/xcode/swiftui/), which results in native and fluid components and animations
 - The image recognition part is achieved through Apple's [Vision](https://developer.apple.com/documentation/vision) Framework
-- This project uses a single [Swift Packages](https://developer.apple.com/documentation/swift_packages) dependency: [SlideOverCard](https://github.com/joogps/SlideOverCard), that provides beautiful tutorial cards
+- This project uses two [Swift Packages](https://developer.apple.com/documentation/swift_packages) dependencies: [SlideOverCard](https://github.com/joogps/SlideOverCard), that provides beautiful tutorial cards, and [ConfettiSwiftUI](https://github.com/simibac/ConfettiSwiftUI), that provides confetti animations.
 - Split! does not collect your data. You can find the privacy policy [here](PRIVACY.md).
 
 ## Highlights
@@ -68,7 +70,8 @@ Split! was selected as a **winner of Apple's Swift Student Challenge** at WWDC 2
 
 ![](Resources/tim-cook.jpg)
 
+[^1]: Split! is **free**, **ad-free**, does **not collect your data**. It is developed independently by a student in his spare time. If you want to support the project, you can download the app and leave a tip!
 
-[^1]: Except when using Tricount's services, which require an internet connection and acceptance of [Tricount's privacy policy](https://www.tricount.com/en/privacy-policy).
+[^2]: Except when using Tricount's services, which require an internet connection and acceptance of [Tricount's privacy policy](https://www.tricount.com/en/privacy-policy).
 
-[^2]: Split! is not affiliated in any way with Tricount. It does not use the official [Tricount API](https://www.tricount.com/en/api), but a [workaround](https://github.com/hugoqnc/Split/blob/main/Split/Model/Tricount.swift).
+[^3]: Split! is not affiliated in any way with Tricount. It does not use the official [Tricount API](https://www.tricount.com/en/api), but a [workaround](https://github.com/hugoqnc/Split/blob/main/Split/Model/Tricount.swift).
