@@ -80,7 +80,7 @@ func previewModel(_ previewNumber: Int) -> ModelData {
 }
 
 
-// TODO: before running previews, add the Split! .json files to the Files App
+// TODO: before running previews, add the Split! .json files to the Files App, and remove TipsView from settings
 
 // PREVIEW 1
 struct Scan_Previews: PreviewProvider {

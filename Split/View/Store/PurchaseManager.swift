@@ -11,7 +11,7 @@ import StoreKit
 @MainActor
 class PurchaseManager: ObservableObject {
 
-    private let productIds = ["patron.small", "patron.medium", "patron.big"]
+    private let productIds = ["tip.small", "tip.medium", "tip.big"]
 
     @Published
     private(set) var products: [Product] = []
@@ -23,6 +23,7 @@ class PurchaseManager: ObservableObject {
 
     init() {
         self.updates = observeTransactionUpdates()
+        self.loadingStatus = Dictionary(uniqueKeysWithValues: self.productIds.map{ ($0, false) })
     }
 
     deinit {
@@ -36,6 +37,8 @@ class PurchaseManager: ObservableObject {
     var hasTippedAll: Bool {
         productIds.containsSameElements(as: self.purchasedProductIDs.sorted())
     }
+    
+    @Published var loadingStatus: [String: Bool] = [:]
 
     func loadProducts() async throws {
         guard !self.productsLoaded else { return }
@@ -44,6 +47,7 @@ class PurchaseManager: ObservableObject {
     }
 
     func purchase(_ product: Product) async throws -> Bool {
+        self.loadingStatus[product.id] = true
         let result = try await product.purchase()
 
         switch result {
@@ -51,6 +55,7 @@ class PurchaseManager: ObservableObject {
             // Successful purchase
             await transaction.finish()
             await self.updatePurchasedProducts()
+            self.loadingStatus[product.id] = false
             return true
         case let .success(.unverified(_, error)):
             // Successful purchase but transaction/receipt can't be verified
@@ -67,6 +72,7 @@ class PurchaseManager: ObservableObject {
         @unknown default:
             break
         }
+        self.loadingStatus[product.id] = false
         return false
     }
 

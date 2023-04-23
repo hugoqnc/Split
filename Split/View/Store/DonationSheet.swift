@@ -48,7 +48,7 @@ struct DonationSheet: View {
             
             Text(
 """
-I started developing Split! for my own needs and those of my friends. This led me to winning the Swift Student Challenge in 2022, and presenting this project in front of Tim Cook!
+I started developing Split! for my own needs and those of my friends. This led me to winning the Swift Student Challenge in 2022, and presenting this project to Apple CEO Tim Cook!
 I continue to improve this project in my spare time. With your donation, you help me considerably, especially to cover the costs of publishing this app.
 Do not hesitate to contact me if you want to discuss potential missing features, or bugs to fix.
 

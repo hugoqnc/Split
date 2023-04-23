@@ -158,7 +158,6 @@
 		4F898D0B279CC1F40067336F /* VisionParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionParameters.swift; sourceTree = "<group>"; };
 		4F8EBD8827AAF75300CBD6AD /* StatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatView.swift; sourceTree = "<group>"; };
 		4F90A7AB27A713F9003A1D97 /* UserChoicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserChoicesView.swift; sourceTree = "<group>"; };
-		4F91350129EA9FE300699C73 /* Tips.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Tips.storekit; sourceTree = "<group>"; };
 		4F91350429EAA12F00699C73 /* TipsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsView.swift; sourceTree = "<group>"; };
 		4F91350629EAA71300699C73 /* PurchaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseManager.swift; sourceTree = "<group>"; };
 		4F91350B29EADE5C00699C73 /* DonationSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonationSheet.swift; sourceTree = "<group>"; };
@@ -168,6 +167,7 @@
 		4FAACF4F29E8006F00678CBA /* StartCustomButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartCustomButtons.swift; sourceTree = "<group>"; };
 		4FAACF5E29E85C4C00678CBA /* UpdateSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateSheet.swift; sourceTree = "<group>"; };
 		4FB7813B2794821D00F5E2D8 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
+		4FD5202C29EF18620058DAC6 /* Tips.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Tips.storekit; sourceTree = "<group>"; };
 		4FD7C2D827E86EE6009C4D9D /* FillFavoriteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillFavoriteButton.swift; sourceTree = "<group>"; };
 		4FD7C2DA27E86EF2009C4D9D /* EditFavoriteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFavoriteButton.swift; sourceTree = "<group>"; };
 		4FD7C2DC27E872BE009C4D9D /* FormDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormDetailsView.swift; sourceTree = "<group>"; };
@@ -391,9 +391,10 @@
 		4F91350029EA9FB000699C73 /* Store */ = {
 			isa = PBXGroup;
 			children = (
-				4F91350129EA9FE300699C73 /* Tips.storekit */,
 				4F91350429EAA12F00699C73 /* TipsView.swift */,
 				4F91350629EAA71300699C73 /* PurchaseManager.swift */,
+				4F91350B29EADE5C00699C73 /* DonationSheet.swift */,
+				4FD5202C29EF18620058DAC6 /* Tips.storekit */,
 			);
 			path = Store;
 			sourceTree = "<group>";
@@ -447,7 +448,6 @@
 				4F37A89927883C2A00947426 /* ListSheetView.swift */,
 				4F90A7AB27A713F9003A1D97 /* UserChoicesView.swift */,
 				4F83AA7F285CD57C00F45FC6 /* DivideItemView.swift */,
-				4F91350B29EADE5C00699C73 /* DonationSheet.swift */,
 			);
 			path = Sheets;
 			sourceTree = "<group>";

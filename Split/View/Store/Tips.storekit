@@ -1,57 +1,59 @@
 {
-  "identifier" : "F3A43EDE",
+  "identifier" : "7FA7EFEE",
   "nonRenewingSubscriptions" : [
 
   ],
   "products" : [
     {
-      "displayPrice" : "1.49",
-      "familyShareable" : false,
-      "internalID" : "70CF9CE8",
-      "localizations" : [
-        {
-          "description" : "",
-          "displayName" : "Supporter",
-          "locale" : "en_US"
-        }
-      ],
-      "productID" : "patron.small",
-      "referenceName" : "Small Patron",
-      "type" : "NonConsumable"
-    },
-    {
-      "displayPrice" : "2.99",
-      "familyShareable" : false,
-      "internalID" : "EE9B7C61",
-      "localizations" : [
-        {
-          "description" : "",
-          "displayName" : "Benefactor",
-          "locale" : "en_US"
-        }
-      ],
-      "productID" : "patron.medium",
-      "referenceName" : "Medium Patron",
-      "type" : "NonConsumable"
-    },
-    {
       "displayPrice" : "5.99",
       "familyShareable" : false,
-      "internalID" : "5886A2DB",
+      "internalID" : "6447991660",
       "localizations" : [
         {
-          "description" : "",
-          "displayName" : "Patron",
+          "description" : "Big voluntary tip",
+          "displayName" : "Big Tip",
           "locale" : "en_US"
         }
       ],
-      "productID" : "patron.big",
-      "referenceName" : "Big Patron",
+      "productID" : "tip.big",
+      "referenceName" : "Big Tip",
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "3.99",
+      "familyShareable" : false,
+      "internalID" : "6447991625",
+      "localizations" : [
+        {
+          "description" : "Medium voluntary tip",
+          "displayName" : "Medium Tip",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "tip.medium",
+      "referenceName" : "Medium Tip",
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "1.99",
+      "familyShareable" : false,
+      "internalID" : "6447991525",
+      "localizations" : [
+        {
+          "description" : "Small voluntary tip",
+          "displayName" : "Small Tip",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "tip.small",
+      "referenceName" : "Small Tip",
       "type" : "NonConsumable"
     }
   ],
   "settings" : {
-
+    "_applicationInternalID" : "1642182485",
+    "_developerTeamID" : "3Z2Q6NDKC5",
+    "_lastSynchronizedDate" : 703535887.16294503
   },
   "subscriptionGroups" : [
 

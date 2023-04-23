@@ -40,7 +40,9 @@ struct TipsView: View {
                     }
                     
                     HStack {
-                        ForEach(purchaseManager.products) { product in
+                        ForEach(purchaseManager.products.sorted(by: { p1, p2 in
+                            p1.price < p2.price
+                        })) { product in
                             Button {
                                 _ = Task<Void, Never> {
                                     do {
@@ -61,18 +63,23 @@ struct TipsView: View {
                                                 .font(.caption)
                                         }
                                     } else {
-                                        VStack {
-                                            Text("\(product.displayPrice)")
-                                            Text("\(product.displayName)")
-                                                .fontWeight(.semibold)
-                                                .font(.caption)
+                                        ZStack {
+                                            VStack {
+                                                Text("\(product.displayPrice)")
+                                                Text("\(product.displayName)")
+                                                    .fontWeight(.semibold)
+                                                    .font(.caption)
+                                            }
+                                            if purchaseManager.loadingStatus[product.id] == true {
+                                                ProgressView()
+                                            }
                                         }
                                     }
                                 }
                                 .frame(minWidth:64)
                             }
                             .buttonStyle(.borderedProminent)
-                            .disabled(purchaseManager.purchasedProductIDs.contains(product.id))
+                            .disabled(purchaseManager.purchasedProductIDs.contains(product.id) || purchaseManager.loadingStatus.values.contains(where: { value in value }))
                         }
                     }
                     
