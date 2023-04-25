@@ -33,7 +33,7 @@ https://user-images.githubusercontent.com/67365803/187445035-cd8ae00c-e1be-445f-
 - [x] Scan any receipt, regardless of the brand, language or currency
 - [x] Take your scan in a single tap, with no need to manually crop it
 - [x] Reliable image recognition results, that are automatically verified by matching the price of all items to the total price
-- [x] No account, no internet connection is required to run the application (everything happens locally and no data is shared)[^3]
+- [x] No account, no internet connection is required to run the application (everything happens locally and no data is shared)[^2]
 - [x] Keeps a history of all receipts and of their distribution
 - [x] Quickly display images corresponding to the item name on the receipt, to easily understand what it refers to
 
@@ -43,7 +43,7 @@ https://user-images.githubusercontent.com/67365803/187445035-cd8ae00c-e1be-445f-
 - [x] iPad optimized version that takes advantage of the large screen
 
 ### Sharing
-- [x] Export the results to a [Tricount](https://www.tricount.com/) of your choice in just a tap[^2]
+- [x] Export the results to a [Tricount](https://www.tricount.com/) of your choice in just a tap[^3]
 - [x] Share the results as text using any app you want (individual or complete results)
 - [x] Export the scanned receipt
 
