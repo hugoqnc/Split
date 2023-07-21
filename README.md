@@ -14,11 +14,8 @@ Afterwards, one of them can scan the receipt, and attribute each expense to one 
 The app will calculate everyone's total, much faster than if you had to do it by hand.
 <br/>
 
-<p align="center">
-  <a href="https://apps.apple.com/fr/app/split-your-receipts/id1642182485">
-    <img src="Resources/app-store.svg">
-  </a>
-</p>
+> [!WARNING]\
+> Split! is no longer available on the App Store as of 15/07/2023. If you want to try it out, you can install it from a Mac using Xcode.
 
 <br/>
 
