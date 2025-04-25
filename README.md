@@ -14,8 +14,13 @@ Afterwards, one of them can scan the receipt, and attribute each expense to one 
 The app will calculate everyone's total, much faster than if you had to do it by hand.
 <br/>
 
-> [!WARNING]\
-> Split! is no longer available on the App Store as of 15/07/2023. If you want to try it out, you can install it from a Mac using Xcode.
+<p align="center">
+  <a href="https://apps.apple.com/fr/app/split-your-receipts/id1642182485">
+    <img src="Resources/app-store.svg">
+  </a>
+</p>
+
+
 
 <br/>
 
@@ -40,9 +45,12 @@ https://user-images.githubusercontent.com/67365803/187445035-cd8ae00c-e1be-445f-
 - [x] iPad optimized version that takes advantage of the large screen
 
 ### Sharing
-- [x] Export the results to a [Tricount](https://www.tricount.com/) of your choice in just a tap[^3]
+- [x] ~Export the results to a [Tricount](https://www.tricount.com/) of your choice in just a tap[^3]~
 - [x] Share the results as text using any app you want (individual or complete results)
 - [x] Export the scanned receipt
+
+> [!NOTE]\
+> Unfortunately, due to changes in Tricount services, the integration of Split! with Tricount is no longer functional
 
 ### And much more...
 - [x] Import receipt images from your photo library or files
